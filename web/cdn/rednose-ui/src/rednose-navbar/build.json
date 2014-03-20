@@ -1,0 +1,23 @@
+{
+    "name": "rednose-navbar",
+
+    "builds": {
+        "rednose-navbar": {
+            "jsfiles": [
+                "js/navbar.js"
+            ]
+        },
+
+        "rednose-navbar-css": {
+            "cssfiles": [
+                "css/navbar.css"
+            ]
+        },
+
+        "rednose-navbar-recent": {
+            "jsfiles": [
+                "js/plugins/navbar-recent.js"
+            ]
+        }
+    }
+}

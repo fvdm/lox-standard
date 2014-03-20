@@ -1,0 +1,499 @@
+[class^="icon-file"],
+[class*=" icon-file"] {
+    background-position: 0  0;
+}
+
+[class^="icon-file-16"],
+[class*=" icon-file-16"] {
+    width: 16px;
+    height: 16px;
+}
+
+[class^="icon-file-128"],
+[class*=" icon-file-128"] {
+    width: 128px;
+    height: 128px;
+}
+
+/* Folder images */
+.icon-file-16-folder {
+    background-image: url("icons/folders/16px/folder.png");
+}
+
+.icon-file-16-folder-shared {
+    background-image: url("icons/folders/16px/folder-shared.png");
+}
+
+/* File images */
+.icon-file-16-_blank {
+    background-image: url("icons/files/16px/_blank.png");
+}
+
+.icon-file-128-_blank {
+    background-image: url("icons/files/128px/_blank.png");
+}
+
+.icon-file-16-_page {
+    background-image: url("icons/files/16px/_page.png");
+}
+
+.icon-file-128-_page {
+    background-image: url("icons/files/128px/_page.png");
+}
+
+.icon-file-16-aac {
+    background-image: url("icons/files/16px/aac.png");
+}
+
+.icon-file-128-aac {
+    background-image: url("icons/files/128px/aac.png");
+}
+
+.icon-file-16-ai {
+    background-image: url("icons/files/16px/ai.png");
+}
+
+.icon-file-128-ai {
+    background-image: url("icons/files/128px/ai.png");
+}
+
+.icon-file-16-aiff {
+    background-image: url("icons/files/16px/aiff.png");
+}
+
+.icon-file-128-aiff {
+    background-image: url("icons/files/128px/aiff.png");
+}
+
+.icon-file-16-avi {
+    background-image: url("icons/files/16px/avi.png");
+}
+
+.icon-file-128-avi {
+    background-image: url("icons/files/128px/avi.png");
+}
+
+.icon-file-16-bmp {
+    background-image: url("icons/files/16px/bmp.png");
+}
+
+.icon-file-128-bmp {
+    background-image: url("icons/files/128px/bmp.png");
+}
+
+.icon-file-16-c {
+    background-image: url("icons/files/16px/c.png");
+}
+
+.icon-file-128-c {
+    background-image: url("icons/files/128px/c.png");
+}
+
+.icon-file-16-cpp {
+    background-image: url("icons/files/16px/cpp.png");
+}
+
+.icon-file-128-cpp {
+    background-image: url("icons/files/128px/cpp.png");
+}
+
+.icon-file-16-css {
+    background-image: url("icons/files/16px/css.png");
+}
+
+.icon-file-128-css {
+    background-image: url("icons/files/128px/css.png");
+}
+
+.icon-file-16-dat {
+    background-image: url("icons/files/16px/dat.png");
+}
+
+.icon-file-128-dat {
+    background-image: url("icons/files/128px/dat.png");
+}
+
+.icon-file-16-dmg {
+    background-image: url("icons/files/16px/dmg.png");
+}
+
+.icon-file-128-dmg {
+    background-image: url("icons/files/128px/dmg.png");
+}
+
+.icon-file-16-doc {
+    background-image: url("icons/files/16px/doc.png");
+}
+
+.icon-file-128-doc {
+    background-image: url("icons/files/128px/doc.png");
+}
+
+.icon-file-16-dotx {
+    background-image: url("icons/files/16px/dotx.png");
+}
+
+.icon-file-128-dotx {
+    background-image: url("icons/files/128px/dotx.png");
+}
+
+.icon-file-16-dwg {
+    background-image: url("icons/files/16px/dwg.png");
+}
+
+.icon-file-128-dwg {
+    background-image: url("icons/files/128px/dwg.png");
+}
+
+.icon-file-16-dxf {
+    background-image: url("icons/files/16px/dxf.png");
+}
+
+.icon-file-128-dxf {
+    background-image: url("icons/files/128px/dxf.png");
+}
+
+.icon-file-16-eps {
+    background-image: url("icons/files/16px/eps.png");
+}
+
+.icon-file-128-eps {
+    background-image: url("icons/files/128px/eps.png");
+}
+
+.icon-file-16-exe {
+    background-image: url("icons/files/16px/exe.png");
+}
+
+.icon-file-128-exe {
+    background-image: url("icons/files/128px/exe.png");
+}
+
+.icon-file-16-flv {
+    background-image: url("icons/files/16px/flv.png");
+}
+
+.icon-file-128-flv {
+    background-image: url("icons/files/128px/flv.png");
+}
+
+.icon-file-16-gif {
+    background-image: url("icons/files/16px/gif.png");
+}
+
+.icon-file-128-gif {
+    background-image: url("icons/files/128px/gif.png");
+}
+
+.icon-file-16-h {
+    background-image: url("icons/files/16px/h.png");
+}
+
+.icon-file-128-h {
+    background-image: url("icons/files/128px/h.png");
+}
+
+.icon-file-16-hpp {
+    background-image: url("icons/files/16px/hpp.png");
+}
+
+.icon-file-128-hpp {
+    background-image: url("icons/files/128px/hpp.png");
+}
+
+.icon-file-16-html {
+    background-image: url("icons/files/16px/html.png");
+}
+
+.icon-file-128-html {
+    background-image: url("icons/files/128px/html.png");
+}
+
+.icon-file-16-ics {
+    background-image: url("icons/files/16px/ics.png");
+}
+
+.icon-file-128-ics {
+    background-image: url("icons/files/128px/ics.png");
+}
+
+.icon-file-16-iso {
+    background-image: url("icons/files/16px/iso.png");
+}
+
+.icon-file-128-iso {
+    background-image: url("icons/files/128px/iso.png");
+}
+
+.icon-file-16-java {
+    background-image: url("icons/files/16px/java.png");
+}
+
+.icon-file-128-java {
+    background-image: url("icons/files/128px/java.png");
+}
+
+.icon-file-16-jpg {
+    background-image: url("icons/files/16px/jpg.png");
+}
+
+.icon-file-128-jpg {
+    background-image: url("icons/files/128px/jpg.png");
+}
+
+.icon-file-16-key {
+    background-image: url("icons/files/16px/key.png");
+}
+
+.icon-file-128-key {
+    background-image: url("icons/files/128px/key.png");
+}
+
+.icon-file-16-mid {
+    background-image: url("icons/files/16px/mid.png");
+}
+
+.icon-file-128-mid {
+    background-image: url("icons/files/128px/mid.png");
+}
+
+.icon-file-16-mp3 {
+    background-image: url("icons/files/16px/mp3.png");
+}
+
+.icon-file-128-mp3 {
+    background-image: url("icons/files/128px/mp3.png");
+}
+
+.icon-file-16-mp4 {
+    background-image: url("icons/files/16px/mp4.png");
+}
+
+.icon-file-128-mp4 {
+    background-image: url("icons/files/128px/mp4.png");
+}
+
+.icon-file-16-mpg {
+    background-image: url("icons/files/16px/mpg.png");
+}
+
+.icon-file-128-mpg {
+    background-image: url("icons/files/128px/mpg.png");
+}
+
+.icon-file-16-odf {
+    background-image: url("icons/files/16px/odf.png");
+}
+
+.icon-file-128-odf {
+    background-image: url("icons/files/128px/odf.png");
+}
+
+.icon-file-16-ods {
+    background-image: url("icons/files/16px/ods.png");
+}
+
+.icon-file-128-ods {
+    background-image: url("icons/files/128px/ods.png");
+}
+
+.icon-file-16-odt {
+    background-image: url("icons/files/16px/odt.png");
+}
+
+.icon-file-128-odt {
+    background-image: url("icons/files/128px/odt.png");
+}
+
+.icon-file-16-otp {
+    background-image: url("icons/files/16px/otp.png");
+}
+
+.icon-file-128-otp {
+    background-image: url("icons/files/128px/otp.png");
+}
+
+.icon-file-16-ots {
+    background-image: url("icons/files/16px/ots.png");
+}
+
+.icon-file-128-ots {
+    background-image: url("icons/files/128px/ots.png");
+}
+
+.icon-file-16-ott {
+    background-image: url("icons/files/16px/ott.png");
+}
+
+.icon-file-128-ott {
+    background-image: url("icons/files/128px/ott.png");
+}
+
+.icon-file-16-pdf {
+    background-image: url("icons/files/16px/pdf.png");
+}
+
+.icon-file-128-pdf {
+    background-image: url("icons/files/128px/pdf.png");
+}
+
+.icon-file-16-php {
+    background-image: url("icons/files/16px/php.png");
+}
+
+.icon-file-128-php {
+    background-image: url("icons/files/128px/php.png");
+}
+
+.icon-file-16-png {
+    background-image: url("icons/files/16px/png.png");
+}
+
+.icon-file-128-png {
+    background-image: url("icons/files/128px/png.png");
+}
+
+.icon-file-16-ppt {
+    background-image: url("icons/files/16px/ppt.png");
+}
+
+.icon-file-128-ppt {
+    background-image: url("icons/files/128px/ppt.png");
+}
+
+.icon-file-16-psd {
+    background-image: url("icons/files/16px/psd.png");
+}
+
+.icon-file-128-psd {
+    background-image: url("icons/files/128px/psd.png");
+}
+
+.icon-file-16-py {
+    background-image: url("icons/files/16px/py.png");
+}
+
+.icon-file-128-py {
+    background-image: url("icons/files/128px/py.png");
+}
+
+.icon-file-16-qt {
+    background-image: url("icons/files/16px/qt.png");
+}
+
+.icon-file-128-qt {
+    background-image: url("icons/files/128px/qt.png");
+}
+
+.icon-file-16-rar {
+    background-image: url("icons/files/16px/rar.png");
+}
+
+.icon-file-128-rar {
+    background-image: url("icons/files/128px/rar.png");
+}
+
+.icon-file-16-rb {
+    background-image: url("icons/files/16px/rb.png");
+}
+
+.icon-file-128-rb {
+    background-image: url("icons/files/128px/rb.png");
+}
+
+.icon-file-16-rtf {
+    background-image: url("icons/files/16px/rtf.png");
+}
+
+.icon-file-128-rtf {
+    background-image: url("icons/files/128px/rtf.png");
+}
+
+.icon-file-16-sql {
+    background-image: url("icons/files/16px/sql.png");
+}
+
+.icon-file-128-sql {
+    background-image: url("icons/files/128px/sql.png");
+}
+
+.icon-file-16-tga {
+    background-image: url("icons/files/16px/tga.png");
+}
+
+.icon-file-128-tga {
+    background-image: url("icons/files/128px/tga.png");
+}
+
+.icon-file-16-tgz {
+    background-image: url("icons/files/16px/tgz.png");
+}
+
+.icon-file-128-tgz {
+    background-image: url("icons/files/128px/tgz.png");
+}
+
+.icon-file-16-tiff {
+    background-image: url("icons/files/16px/tiff.png");
+}
+
+.icon-file-128-tiff {
+    background-image: url("icons/files/128px/tiff.png");
+}
+
+.icon-file-16-txt {
+    background-image: url("icons/files/16px/txt.png");
+}
+
+.icon-file-128-txt {
+    background-image: url("icons/files/128px/txt.png");
+}
+
+.icon-file-16-wav {
+    background-image: url("icons/files/16px/wav.png");
+}
+
+.icon-file-128-wav {
+    background-image: url("icons/files/128px/wav.png");
+}
+
+.icon-file-16-xls {
+    background-image: url("icons/files/16px/xls.png");
+}
+
+.icon-file-128-xls {
+    background-image: url("icons/files/128px/xls.png");
+}
+
+.icon-file-16-xlsx {
+    background-image: url("icons/files/16px/xlsx.png");
+}
+
+.icon-file-128-xlsx {
+    background-image: url("icons/files/128px/xlsx.png");
+}
+
+.icon-file-16-xml {
+    background-image: url("icons/files/16px/xml.png");
+}
+
+.icon-file-128-xml {
+    background-image: url("icons/files/128px/xml.png");
+}
+
+.icon-file-16-yml {
+    background-image: url("icons/files/16px/yml.png");
+}
+
+.icon-file-128-yml {
+    background-image: url("icons/files/128px/yml.png");
+}
+
+.icon-file-16-zip {
+    background-image: url("icons/files/16px/zip.png");
+}
+
+.icon-file-128-zip {
+    background-image: url("icons/files/128px/zip.png");
+}
+

@@ -1,0 +1,15 @@
+{
+    "name": "rednose-dialog",
+    "builds": {
+        "rednose-dialog": {
+            "jsfiles": [
+                "dialog.js"
+            ]
+        },
+        "rednose-dialog-css": {
+            "cssfiles": [
+                "dialog.css"
+            ]
+        }
+    }
+}

@@ -1,0 +1,31 @@
+.rednose-dd-drag, .rednose-dd-drop {
+    cursor: default;
+}
+
+.rednose-dd-drag-hover {
+    border: 2px solid #80C4E6;
+}
+
+.rednose-dd-drag-placeholder {
+    background-color: #F9F9FC;
+    border: 1px solid #0088cc;
+    margin: -1px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+
+.rednose-dd-drag-proxy {
+    overflow: hidden;
+    opacity: 0.75;
+    background-color: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    margin: -1px;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+         -o-border-radius: 5px;
+            border-radius: 5px;
+}
+
+/* YUI CSS Detection Stamp */
+#yui3-css-stamp.rednose-dd-css { display: none; }

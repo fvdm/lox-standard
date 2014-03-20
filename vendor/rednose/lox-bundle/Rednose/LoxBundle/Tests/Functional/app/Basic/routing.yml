@@ -1,0 +1,16 @@
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+
+_rednose_framework_security:
+    resource: "@RednoseFrameworkBundle/Resources/config/routing/security.xml"
+
+rednose_lox:
+    resource: "@RednoseLoxBundle/Resources/config/routing.yml"
+    prefix:   /
+
+RednoseYuiBundle:
+    resource: "@RednoseYuiBundle/Resources/config/routing.yml"
+    prefix:   /yui

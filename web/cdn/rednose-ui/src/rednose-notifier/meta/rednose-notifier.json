@@ -1,0 +1,11 @@
+{
+    "rednose-notifier" : {
+        "requires": [
+            "rednose-jquery",
+            "rednose-notifier-css"
+        ]
+    },
+    "rednose-notifier-css" : {
+    	"type": "css"
+    }
+}

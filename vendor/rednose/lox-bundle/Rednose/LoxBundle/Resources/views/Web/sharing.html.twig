@@ -1,0 +1,217 @@
+{% extends 'RednoseLoxBundle::layout.html.twig' %}
+{% import 'RednoseLoxBundle::sidenav.html.twig' as sidenav %}
+
+{% block content %}
+
+<div class="row">
+  <div class="span2 rednose-lox-sidebar">
+      {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+  </div>
+
+  <div class="span10 rednose-lox-content">
+    <section id="sharing">
+        <div class="page-header">
+            <h1>Sharing</h1>
+        </div>
+        <div id="sharing-tabs" class="hide">
+            <ul>
+                <li><a href="#">Invites</a></li>
+                <li><a href="#">My shared folders</a></li>
+            </ul>
+            <div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="span4">Name</th>
+                                <th class="span2">Sender</th>
+                                <th class="span3">Date</th>
+                                <th class="span1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if invites %}
+                            {% for invite in invites %}
+                                <tr>
+                                    <td class="span4">
+                                        {% if invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_ACCEPTED') %}
+                                            {% set path = item_manager.getPathForUser(app.user, invite.item, true) %}
+                                            <div><a href="{{ path('rednose_lox_home_path', { path: path }) }}">{{ invite.item.title }}</a></div>
+                                        {% elseif invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_PENDING') %}
+                                            <div><strong>{{ invite.share.item.title }}</strong></div>
+                                        {% else %}
+                                            <div>{{ invite.share.item.title }}</div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="span2">{{ invite.sender.bestName }}</td>
+                                    <td class="span3">{{ invite.createdAt|date }}</td>
+                                    <td class="span1">
+                                        {% if invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_ACCEPTED') %}
+                                            <a class="pull-right" rel="tooltip" title="{% trans %}Leave folder{% endtrans %}" href="{{ path('rednose_lox_invitation_revoke', { id: invite.id }) }}">
+                                                {% trans %}Leave{% endtrans %}
+                                            </a>
+                                        {% elseif invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_PENDING') %}
+                                            <a class="pull-right" rel="tooltip" title="{% trans %}Join folder{% endtrans %}" href="{{ path('rednose_lox_invitation_accept', { id: invite.id }) }}">
+                                                {% trans %}Join{% endtrans %}
+                                            </a>
+                                        {% else %}
+                                            <a class="pull-right" rel="tooltip" title="{% trans %}Rejoin folder{% endtrans %}" href="{{ path('rednose_lox_invitation_accept', { id: invite.id }) }}">
+                                                {% trans %}Rejoin{% endtrans %}
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4"><h4>You don't have any invitations at this moment</h4></td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="span6">Name</th>
+                                <th class="span3">Date</th>
+                                <th class="span1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if shares %}
+                            {% for share in shares %}
+                                <tr>
+                                    {% set path = item_manager.getPathForUser(app.user, share.item, true) %}
+                                    <td class="span6">
+                                        <div><a href="{{ path('rednose_lox_home_path', { path: path }) }}">{{ share.item.title }}</a></div>
+                                    </td>
+                                    <td class="span3">{{ share.createdAt|date }}</td>
+                                    <td class="span1">
+                                        {% set path = item_manager.getPathForUser(app.user, share.item) %}
+                                        <a class="share-settings pull-right" rel="tooltip" title="{% trans %}Shared folder settings{% endtrans %}" href="#" data-path="{{ path }}">{% trans %}Settings{% endtrans %}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="no-shares hide">
+                                <td colspan="3"><h4>Currently none of your folders are shared with other users</h4></td>
+                            </tr>
+                        {% else %}
+                            <tr class="no-shares">
+                                <td colspan="3"><h4>Currently none of your folders are shared with other users</h4></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+</div>
+<script>
+    YUI().use('lox-page', 'tabview', 'lox-app-folder-share-view', 'rednose-panel', 'rednose-dialog', 'rednose-notifier', 'rednose-tooltip', function (Y) {
+        // -- Init Page Module -----------------------------------------------------
+
+        new Y.Lox.Page().render();
+
+        new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
+
+        // -- Init TabView ---------------------------------------------------------
+
+        // Monkey patch the bindUI method so the FocusManager isn't plugged in.
+        Y.TabView.prototype.bindUI = function() {
+            this.after('render', this._setDefSelection);
+            this.after('addChild', this._afterChildAdded);
+            this.after('removeChild', this._afterChildRemoved);
+        };
+
+        var tabView = new Y.TabView({ srcNode:'#sharing-tabs'} ).render();
+
+        /* Bootstrap transformations */
+        Y.all('.yui3-tabview-list').removeClass('yui3-tabview-list').addClass('nav').addClass('nav-tabs');
+        Y.all('.yui3-tabview-panel').removeClass('yui3-tabview-panel');
+        Y.all('.yui3-tab-label').removeClass('yui3-tab-label');
+        Y.all('.yui3-tab').removeClass('yui3-tab');
+
+        Y.one('#sharing-tabs').removeClass('hide');
+
+        // -- Init Folder Share Settings ---------------------------------------
+        var view, panel;
+
+        Y.all('.share-settings').on('click', function (e) {
+            e.preventDefault();
+
+            var share = new Y.Lox.ShareModel(),
+                a     = e.currentTarget,
+                path  = a.getAttribute('data-path');
+
+            // FIXME: Duplicates code from lox-app-base.
+            share.load({ path: path }, function () {
+                view = new Y.Lox.App.FolderShareView({
+                    model: share
+                });
+
+                panel = new Y.Rednose.Panel({
+                    srcNode: view.render().get('container'),
+                    width  : 640
+                });
+
+                panel.render();
+
+                view.on(['*:buttonClose', '*:buttonCancel'], function (e) {
+                    panel.destroy();
+                });
+
+                view.on('*:buttonConfirm', function (e) {
+                    // FIXME: Duplicates code from lox-app-base.
+                    var model = e.data.model,
+                        self  = this;
+
+                    // TODO: Show spinner.
+                    model.save(function () {
+                        panel.destroy();
+                    });
+                });
+
+                view.on('*:buttonRemove', function (e) {
+                    // FIXME: Duplicates code from lox-app-base.
+                    var TEXT_UNSHARE        = 'Unshare',
+                        TEXT_UNSHARE_TITLE  = 'Unshare folder \'{item}\'?',
+                        TEXT_UNSHARE_BODY   = 'The folder will no longer be shared and will be visible to only you. Are you sure you want to stop sharing?',
+                        TEXT_TITLE_UNSHARED = 'Share removed',
+                        TEXT_ITEM_UNSHARED  = 'The folder is no longer shared';
+
+                    var model = e.data.model,
+                        self  = this;
+
+                    panel.destroy();
+
+                    Y.Rednose.Dialog.confirm({
+                        title  : Y.Lang.sub(TEXT_UNSHARE_TITLE, { item: model.get('item').get('title') }),
+                        text   : TEXT_UNSHARE_BODY,
+                        confirm: TEXT_UNSHARE,
+                        type   : 'warning'
+                    }, function () {
+                        model.destroy({ remove: true }, function () {
+                            a.ancestor('tr').remove();
+
+                            if (Y.all('.share-settings').size() === 0) {
+                                // Show 'no shares' message.
+                                Y.one('.no-shares').removeClass('hide');
+                            }
+
+                            Y.Rednose.Notifier.notify({
+                                title: TEXT_TITLE_UNSHARED,
+                                text : TEXT_ITEM_UNSHARED,
+                                type : 'success'
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

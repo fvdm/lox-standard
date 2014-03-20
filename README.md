@@ -1,0 +1,55 @@
+# LOX Standard Edition
+
+## Install instructions
+
+### Setup
+
+1. Set permissions on the writable folders (use more restrictive permissions when deploying):
+
+    ```
+    chmod -R 777 app/cache app/logs data
+
+2. Copy the `parameters.yml` file and set the required values:
+
+    ```
+    cp app/config/parameters.yml.dist app/config/parameters.yml
+
+### Global dependencies
+
+1. Install [Composer](http://getcomposer.org), if you don't have it yet.
+
+2. Install [node.js](http://nodejs.org), if you don't have it yet.
+
+### Local dependencies
+
+1. Install local dependencies:
+
+    ```
+    composer install
+
+### Initialize Symfony
+
+1. Create the database:
+
+    ```
+    app/console doctrine:database:create
+
+2. Create the database schema:
+
+    ```
+    app/console doctrine:schema:create
+
+3. Load the fixtures:
+
+    ```
+    app/console doctrine:fixtures:load -n
+
+4. Dump assets:
+
+    ```
+    app/console assetic:dump
+
+5. Install assets:
+
+    ```
+    app/console assets:install --symlink web

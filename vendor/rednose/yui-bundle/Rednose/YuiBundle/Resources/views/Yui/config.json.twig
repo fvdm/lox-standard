@@ -1,0 +1,100 @@
+{% autoescape %}
+{
+    {# Basic settings #}
+    {% if local == true %}
+        "ignoreRegistered": true,
+    {% else %}
+        "allowRollup": true,
+        "fetchCSS": true,
+    {% endif %}
+
+    {# Base URL #}
+    {% if local == true %}
+        "base": "{{ base }}cdn/yui3/build/",
+    {% else %}
+        "base": "{{ baseUrl }}/cdn/yui3/build/",
+    {% endif %}
+
+    {% if local == false %}
+        {# Debug settings #}
+        "debug": false,
+
+        {# Combo loader URL #}
+        "comboBase": "{{ baseUrl }}/cdn/combo?",
+
+        {# Combo loader root #}
+        "root": "cdn/yui3/build/",
+
+        {# Combine and filter settings #}
+        {% if app.environment == 'dev' %}
+            "combine": false,
+            "filter": "raw",
+        {% else %}
+            "combine": true,
+        {% endif %}
+    {% endif %}
+
+    {# Group configuration settings #}
+    "groups": {
+        {# Gallery configuration #}
+        "gallery": {
+            {# Base URL #}
+            {% if local == true %}
+                "base": "{{ base }}cdn/yui3-gallery/build/",
+            {% else %}
+                "base": "{{ baseUrl }}/cdn/yui3-gallery/build/",
+            {% endif %}
+
+            {% if local == false %}
+                {# Combo loader root #}
+                "root": "cdn/yui3-gallery/build/",
+
+                {# Combine and filter settings #}
+                {% if app.environment == 'dev' %}
+                    "combine": false,
+                    "filter": "raw",
+                {% else %}
+                    "combine": true,
+                {% endif %}
+            {% endif %}
+
+            {# Match by patterns, as we don't have any gallery metadata configured #}
+            "patterns": {
+                "gallery-": {},
+                "lang/gallery-": {},
+                "gallerycss-": { "type": "css" }
+            }
+        }
+
+        {# Custom group configuration #}
+        {% for group in groups %}
+            , "{{ group.name }}": {
+                {# Base URL #}
+                {% if local == true %}
+                    "base": "{{ base }}{{ group.root }}/build/",
+                {% else %}
+                    "base": "{{ baseUrl }}/{{ group.root }}/build/",
+                {% endif %}
+
+                {% if local == false %}
+                    {# Combo loader root #}
+                    "root": "{{ group.root }}/build/",
+
+                    {# Combine and filter settings #}
+                    {% if app.environment == 'dev' %}
+                        "combine": false,
+                        "debug": true,
+                        "filter": "debug",
+                    {% else %}
+                        "combine": true,
+                    {% endif %}
+                {% endif %}
+
+                {# Module metadata #}
+                "modules": {{ group.metadata|raw }}
+            }
+        {% endfor %}
+    }
+}
+
+{% endautoescape %}

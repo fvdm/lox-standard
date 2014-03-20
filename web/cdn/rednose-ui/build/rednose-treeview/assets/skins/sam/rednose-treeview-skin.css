@@ -1,0 +1,46 @@
+/* Basic item styling */
+.yui3-skin-sam .yui3-treeview-row {
+    color: #0088cc !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    text-decoration: none !important;
+    border: none !important;
+    background-image: none !important;
+    border-radius: 0 !important;
+}
+
+/* Basic hover */
+.yui3-skin-sam .yui3-treeview-notouch .yui3-treeview-row:hover {
+    color: #005580 !important;
+    background-color: #eeeeee !important;
+}
+
+/* Selected items and selected item hover. */
+.yui3-skin-sam .yui3-treeview-selected > .yui3-treeview-row,
+.yui3-skin-sam .yui3-treeview-selected:focus > .yui3-treeview-row,
+.yui3-skin-sam .yui3-treeview-children[aria-multiselectable="true"] .yui3-treeview-selected > .yui3-treeview-row,
+.yui3-skin-sam .yui3-treeview-selected > .yui3-treeview-row:hover,
+.yui3-skin-sam .yui3-treeview-notouch .yui3-treeview-selected > .yui3-treeview-row:hover {
+    color: #ffffff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+    background-color: #0088cc !important;
+}
+
+/* Drag over highlight */
+.yui3-skin-sam .yui3-treeview .rednose-treeview-drop.yui3-dd-drop-over {
+    background-color: #80C4E6 !important;
+    color: #ffffff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+    -webkit-border-radius: 5px !important;
+     -moz-border-radius: 5px !important;
+          border-radius: 5px !important;
+}
+
+/* Helper class for the inner container, so the border on the outer's container doesn't squeeze the view. */
+.rednose-treeview-drop-over-global .rednose-treeview-inner-container {
+    margin: -2px !important;
+}
+
+/* Drop over for the outer container */
+.rednose-treeview-outer-container.rednose-treeview-drop-over-global {
+    border: 2px solid #80C4E6 !important;
+}

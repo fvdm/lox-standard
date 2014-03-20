@@ -1,0 +1,37 @@
+{% extends 'RednoseLoxBundle::layout.html.twig' %}
+{% import 'RednoseLoxBundle::sidenav.html.twig' as sidenav %}
+
+{% block content %}
+
+<div class="lox-app-container"></div>
+
+<div class="row">
+  <div class="span2 rednose-lox-sidebar">
+    {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+  </div>
+
+  <div class="span10 rednose-lox-content">
+    <div class="rednose-lox-app"></div>
+  </div>
+</div>
+
+{#{% if app.environment == 'prod' %}
+<script type="text/javascript" src="{{ asset('bundles/rednoseyui/lox-app.js') }}"></script>
+{% endif %}#}
+
+<script>
+YUI().use('lox-page', 'lox-app', function (Y) {
+  new Y.Lox.Page().render();
+
+  var container = Y.one('.rednose-lox-app');
+
+  var app = new Y.Lox.App({
+    container: container,
+    viewContainer: container
+  });
+
+  app.render();
+});
+</script>
+
+{% endblock %}

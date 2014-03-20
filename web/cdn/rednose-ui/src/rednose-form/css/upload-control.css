@@ -1,0 +1,16 @@
+/* Append fix */
+.input-append.input-block-level > input {
+    width: 375px;
+}
+
+/* Uploader */
+.uploader-container {
+    float: right;
+    margin-left: -1px;
+}
+
+.yui3-uploader .btn {
+    -webkit-border-radius: 0 4px 4px 0;
+       -moz-border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;
+}

@@ -1,0 +1,10 @@
+{
+    "name": "rednose-jquery",
+    "builds": {
+        "rednose-jquery": {
+            "jsfiles": [
+                "jquery.js"
+            ]
+        }
+    }
+}

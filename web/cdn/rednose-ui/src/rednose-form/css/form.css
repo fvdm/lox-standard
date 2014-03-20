@@ -1,0 +1,4 @@
+/* Left label alignment */
+.form-horizontal .control-group .control-label{
+    text-align: left;
+}

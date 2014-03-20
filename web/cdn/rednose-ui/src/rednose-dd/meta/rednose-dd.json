@@ -1,0 +1,12 @@
+{
+    "rednose-dd" : {
+        "requires": [
+            "rednose-anim",
+            "rednose-dd-css",
+            "view"
+        ]
+    },
+    "rednose-dd-css" : {
+    	"type": "css"
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "name": "rednose-form",
+    "builds": {
+        "rednose-form": {
+            "jsfiles": [
+                "models/form.js",
+                "views/control.js",
+                "views/autocomplete-control.js",
+                "views/date-time-control.js",
+                "views/rich-text-control.js",
+                "form.js",
+                "control-view-factory.js"
+            ]
+        },
+        "rednose-form-css": {
+            "cssfiles": [
+                "autocomplete-control.css",
+                "date-time-control.css",
+                "form.css",
+                "rich-text-control.css",
+                "upload-control.css"
+            ]
+        }
+    }
+}

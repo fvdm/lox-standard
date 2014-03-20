@@ -1,0 +1,67 @@
+.rednose-dialog .btn {
+    margin-left: 8px;
+}
+
+.rednose-dialog .yui3-widget-bd,
+.rednose-dialog .form-horizontal {
+    max-height: 400px;
+    min-height: 48px;
+}
+
+.rednose-dialog .form-horizontal {
+    overflow-y: auto;
+}
+
+.rednose-dialog .icon_absolute {
+    position: absolute;
+}
+
+.rednose-dialog .icon {
+    float: left;
+    margin-right: 15px;
+    height: 48px;
+    width: 48px;
+}
+
+.dialog_message {
+    overflow-y: auto;
+    min-height: 48px;
+    padding: 15px;
+}
+
+.dialog_path {
+    padding-top: 4px;
+    font-size: 8pt;
+    float: right;
+}
+
+.dialog_message > fieldset > legend {
+    width: 100%;
+    text-align: left;
+    padding-left: 40px;
+    padding-bottom: 18px;
+}
+
+.dialog_message > fieldset > label {
+    float: left;
+    margin-left: 40px;
+    font-weight: bold;
+}
+
+.dialog_message > fieldset > input {
+    float: left;
+    width: 80%;
+    margin-left: 40px;
+}
+
+.rednose-dialog-window-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 47px 2px 57px 1px;
+}
+
+/* YUI CSS Detection Stamp */
+#yui3-css-stamp.rednose-dialog-css { display: none; }

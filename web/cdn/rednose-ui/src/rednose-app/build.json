@@ -1,0 +1,38 @@
+{
+    "name": "rednose-app",
+
+    "builds": {
+        "rednose-app-base": {
+            "jsfiles": [
+                "js/app-base.js"
+            ]
+        },
+
+        "rednose-app-templates": {
+            "jsfiles": [
+                "js/app-extensions/app-template-single-view.js",
+                "js/app-extensions/app-template-three-column.js",
+                "js/app-extensions/app-template-two-column.js",
+                "js/app-templates.js"
+            ]
+        },
+
+        "rednose-model-undo": {
+            "jsfiles": [
+                "js/model-extensions/model-undo.js"
+            ]
+        },
+
+        "rednose-model-spinner": {
+            "jsfiles": [
+                "js/model-extensions/model-spinner.js"
+            ]
+        },
+
+        "rednose-view-nav": {
+            "jsfiles": [
+                "js/view-extensions/view-nav.js"
+            ]
+        }
+    }
+}

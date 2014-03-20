@@ -1,0 +1,7 @@
+{
+    "rednose-anim" : {
+        "requires": [
+            "anim"
+        ]
+    }
+}

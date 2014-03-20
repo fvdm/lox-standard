@@ -1,0 +1,7 @@
+{
+    "rednose-tooltip" : {
+        "requires": [
+            "gallery-bootstrap-tooltip"
+        ]
+    }
+}

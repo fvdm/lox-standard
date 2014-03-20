@@ -1,0 +1,121 @@
+.yui3-panel {
+  position: absolute;
+}
+
+.yui3-panel-hidden {
+  visibility: hidden;
+}
+
+.yui3-widget-tmp-forcesize .yui3-panel-content {
+  overflow: hidden !important;
+}
+
+.yui3-panel .yui3-widget-hd {
+  position: relative;
+}
+
+.yui3-panel .yui3-widget-hd .yui3-widget-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.yui3-panel .yui3-widget-ft .yui3-widget-buttons {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+}
+
+/* Panel body styling. */
+
+.yui3-widget-stdmod .yui3-widget-bd {
+  padding: 9px 15px;
+}
+
+/* Panel header styling. */
+
+.yui3-widget-stdmod .yui3-widget-hd div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.yui3-widget-stdmod .yui3-widget-hd {
+  padding: 9px 15px;
+  margin: 0;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 27px;
+  color: inherit;
+  text-rendering: optimizelegibility;
+  background-color: transparent;
+  background-image: none;
+  border-bottom: 1px solid #eee;
+}
+
+/* Panel footer styling. */
+
+.yui3-widget-stdmod .yui3-widget-ft {
+  height: 26px;
+  padding: 14px 15px 15px;
+  margin-bottom: 0;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  -webkit-border-radius: 0 0 6px 6px;
+     -moz-border-radius: 0 0 6px 6px;
+          border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: inset 0 1px 0 #ffffff;
+     -moz-box-shadow: inset 0 1px 0 #ffffff;
+          box-shadow: inset 0 1px 0 #ffffff;
+}
+
+/* Outer panel styling. */
+
+.yui3-panel-content {
+  background-color: #ffffff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  *border: 1px solid #999;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  outline: none;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+     -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding-box;
+          background-clip: padding-box;
+}
+
+/* Mask opacity */
+
+.yui3-widget-mask {
+  opacity: 0.8 !important;
+  filter: alpha(opacity=80) !important;
+}
+
+/* FIXME: Don't focus the panel to begin with. */
+
+.yui3-panel {
+  outline: none;
+}
+
+/* FIXME: Applies to nav panel in the main view, not the grid. */
+
+.yui3-widget-stdmod {
+  height: 100%;
+}
+
+/* FIXME: Helper classes for the buttons, should prolly move up to a higer level within the framework. */
+
+.float-left {
+  float: left;
+  margin-right: 10px;
+}
+
+.float-right {
+  float: right;
+  margin-left: 10px;
+}

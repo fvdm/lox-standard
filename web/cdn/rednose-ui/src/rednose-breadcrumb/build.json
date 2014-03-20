@@ -1,0 +1,10 @@
+{
+    "name": "rednose-breadcrumb",
+    "builds": {
+        "rednose-breadcrumb": {
+            "jsfiles": [
+                "breadcrumb.js"
+            ]
+        }
+    }
+}

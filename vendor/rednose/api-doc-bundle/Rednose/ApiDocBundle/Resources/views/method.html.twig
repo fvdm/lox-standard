@@ -1,0 +1,120 @@
+<section id="{{ data.uri|replace({ '/': '', '{': '', '}': '', '_': '' }) }}{{ data.method|lower|replace({ '|': '' }) }}" class="operation">
+    <h3>
+        {% if data.deprecated %}
+        <span class="deprecated">
+            <span>DEPRECATED</span>
+        </span>
+        {% endif %}
+
+        {% if data.https %}
+            <span class="icon lock" title="HTTPS"></span>
+        {% endif %}
+        {% if data.authentication %}
+            <span class="icon keys" title="Needs authentication"></span>
+        {% endif %}
+
+        {% if data.host is defined -%}
+            {{ data.https ? 'https://' : 'http://' -}}
+            {{ data.host -}}
+        {% endif -%}
+        {{ data.uri|replace({ '{': '<', '}': '>' }) }}
+    </h3>
+
+    <dl class="dl-horizontal">
+        {% if data.description is defined %}
+            <dt>Description</dt>
+            <dd><p>{{ data.description|raw }}</p></dd>
+        {% endif %}
+
+        <dt class="url">URL</dt>
+        <dd>
+            <pre>{{ app.request.getSchemeAndHttpHost() }}{{ app.request.getBaseURL() }}{{ data.uri|replace({ '{': '<', '}': '>' }) }}</pre>
+
+            {% if data.requirements is defined  and data.requirements is not empty %}
+                <ul class="unstyled">
+                    {% for name, infos in data.requirements %}
+                        {% if infos.description is defined and infos.description is not empty %}
+                            <li><span class="param">{{ name }}</span>{{ infos.description|raw }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </dd>
+
+        <dt>Method</dt>
+        <dd><p>{{ data.method|upper }}</p></dd>
+
+        {% if (data.filters is defined and data.filters is not empty) or (data.parameters is defined and data.parameters is not empty) %}
+            <dt>Parameters</dt>
+            <dd>
+                <ul class="unstyled">
+                    {% if data.parameters is defined and data.parameters is not empty %}
+                        {% for name, infos in data.parameters %}
+                            <li><span class="param">{{ name }}</span>{{ infos.required ? '<span class="required">required</span>' : '' }}{{ infos.description|raw }}</li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if data.filters is defined and data.filters is not empty %}
+                        {% for name, infos in data.filters %}
+                            <li><span class="param">{{ name }}</span>{{ infos.description|raw }}</li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </dd>
+        {% endif %}
+
+        {% if data.documentation is defined and data.documentation is not empty %}
+            <dt>Documentation</dt>
+            <dd><p>{{ data.documentation|raw }}</p></dd>
+        {% endif %}
+
+        {% if data.response is defined and data.response is not empty %}
+            <dt>Response</dt>
+            <dd>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for name, infos in data.response %}
+                        <tr>
+                            <td><code>{{ name }}</code></td>
+                            <td>{{ infos.description|raw }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </dd>
+        {% endif %}
+
+        {% if data.statusCodes is defined and data.statusCodes is not empty %}
+            <dt>Status Codes</dt>
+            <dd>
+                <table class="table table-condensed">
+                    <tbody>
+                    {% for status_code, descriptions in data.statusCodes %}
+                        <tr>
+                            <td><a href="http://en.wikipedia.org/wiki/HTTP_{{ status_code }}" target="_blank">{{ status_code }}</a></td>
+                            <td>
+                                <ul class="unstyled">
+                                    {% for description in descriptions %}
+                                        <li>{{ description|raw }}</li>
+                                    {%  endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </dd>
+        {% endif %}
+
+        {% if data.cache is defined and data.cache is not empty %}
+            <dt>Cache</dt>
+            <dd>{{ data.cache }}s</dd>
+        {% endif %}
+    </dl>
+</section>

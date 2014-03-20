@@ -1,0 +1,24 @@
+{
+    "rednose-navbar" : {
+        "requires": [
+            "base",
+            "gallery-bootstrap-dropdown",
+            "node-event-simulate",
+            "node-pluginhost",
+            "rednose-navbar-css",
+            "widget"
+        ]
+    },
+
+    "rednose-navbar-css" : {
+        "type": "css"
+    },
+
+    "rednose-navbar-recent" : {
+        "requires": [
+            "cookie",
+            "plugin",
+            "rednose-navbar"
+        ]
+    }
+}

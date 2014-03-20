@@ -1,0 +1,17 @@
+{
+    "name": "rednose-notifier",
+    "builds": {
+        "rednose-notifier": {
+            "jsfiles": [
+                "jquery.pnotify.js",
+                "notifier.js"
+            ]
+        },
+        "rednose-notifier-css": {
+            "cssfiles": [
+                "jquery.pnotify.default.css",
+                "notifier.css"
+            ]
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "name": "rednose-nodescroll",
+    "builds": {
+        "rednose-nodescroll": {
+            "jsfiles": [
+                "nodescroll.js"
+            ]
+        }
+    }
+}

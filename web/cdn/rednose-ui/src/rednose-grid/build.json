@@ -1,0 +1,15 @@
+{
+    "name": "rednose-grid",
+    "builds": {
+        "rednose-grid": {
+            "jsfiles": [
+                "grid.js"
+            ]
+        },
+        "rednose-grid-select": {
+            "jsfiles": [
+                "js/extensions/grid-select.js"
+            ]
+        }
+    }
+}

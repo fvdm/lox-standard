@@ -1,0 +1,101 @@
+{
+    "lox-app" : {
+    	"use": [
+    		"lox-app-base",
+            "lox-app-file-browser-view",
+            "lox-app-file-movecopy-view",
+            "lox-app-file-detail-view",
+            "lox-app-file-upload-view",
+            "lox-app-folder-share-view",
+            "lox-app-folder-tree"
+    	],
+
+    	"submodules": {
+    		"lox-app-base": {
+		        "requires": [
+                    "lox-app-item-model",
+		            "rednose-app",
+                    "rednose-tooltip"
+		        ]
+    		},
+
+    		"lox-app-file-browser-view": {
+		        "requires": [
+                    "datatable-select",
+                    "gallery-affix",
+		            "lox-app-file-movecopy-view",
+                    "lox-app-item-model",
+		            "rednose-app",
+                    "rednose-breadcrumb",
+                    "rednose-contextmenu",
+                    "rednose-datatable-select",
+                    "rednose-dialog",
+                    "rednose-formatter",
+                    "rednose-navbar",
+                    "rednose-notifier"
+		        ]
+    		},
+
+            "lox-app-file-detail-view": {
+                "requires": [
+                    "rednose-app"
+                ]
+            },
+
+            "lox-app-file-upload-view": {
+                "requires": [
+                    "rednose-app",
+                    "rednose-formatter",
+                    "uploader"
+                ]
+            },
+
+            "lox-app-file-movecopy-view": {
+                "requires": [
+                    "lox-app-folder-tree",
+                    "rednose-app",
+                    "rednose-treeview"
+                ]
+            },
+
+            "lox-app-folder-share-view": {
+                "requires": [
+                    "autocomplete",
+                    "autocomplete-filters",
+                    "autocomplete-highlighters",
+                    "lox-app-share-model",
+                    "model",
+                    "model-list",
+                    "rednose-datatable",
+                    "rednose-panel",
+                    "rednose-view-nav"
+                ]
+            },
+
+            "lox-app-folder-tree": {
+                "requires": [
+                    "rednose-model-tree",
+                    "rednose-model-spinner"
+                ]
+            },
+
+    		"lox-app-item-model": {
+		        "requires": [
+                    "model",
+                    "rednose-model-spinner"
+		        ]
+    		},
+
+            "lox-app-share-model": {
+                "requires": [
+                    "io",
+                    "json",
+                    "lox-app-item-model",
+                    "model",
+                    "model-list",
+                    "rednose-model-spinner"
+                ]
+            }
+    	}
+    }
+}

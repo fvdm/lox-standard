@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Y.Rednose.DataProvider module test</title>
+	<style>
+	</style>
+</head>
+<body>
+	<div class="test"></div>
+	<script src="http://yui.yahooapis.com/3.6.0/build/yui/yui.js"></script>
+	<script>
+		YUI({
+			filter: 'raw',
+			modules: {
+				'rednose-dataprovider': {
+					fullpath: '../../../../build/rednose-dataprovider/rednose-dataprovider.js'
+				}
+			}
+		}).use('rednose-dataprovider', function (Y) {
+			var pdoSource = new Y.Rednose.DataSource.PdoSource({
+				id:        'rednose_tweedekamer.provider.minister',
+				name:      'Bewindspersonen',
+				dsn:       'mysql:host=localhost;dbname=libbit_flowgen',
+				username:  'root',
+				password:  'root',
+				table:     'libbit_flowgen_minister'
+			});
+
+			var xmlSource = new Y.Rednose.DataSource.XmlSource({
+				id:   'rednose_tweedekamer.provider.member',
+				name: 'Kamerleden',
+				xsd:  '<xsd/>',
+				xslt: '<xsl/>',
+				xml:  '<xml/>',
+				root: 'members'
+			});
+
+			var dataSourceList = new Y.Rednose.DataSource.DataSourceList();
+
+			dataSourceList.reset([pdoSource, xmlSource]);
+
+			console.log(dataSourceList.toJSON());
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+    "name": "rednose-treeview",
+
+    "builds": {
+        "rednose-treeview": {
+            "jsfiles": [
+                "js/treeview.js"
+            ]
+        },
+
+        "rednose-treeview-templates": {
+            "jsfiles": [
+                "js/treeview-templates.js"
+            ]
+        },
+
+        "rednose-treeview-anim": {
+            "jsfiles": [
+                "js/extensions/treeview-anim.js"
+            ]
+        },
+
+        "rednose-treeview-dd": {
+            "jsfiles": [
+                "js/extensions/treeview-dd.js"
+            ]
+        },
+
+        "rednose-treeview-select": {
+            "jsfiles": [
+                "js/extensions/treeview-select.js"
+            ]
+        },
+
+        "rednose-model-tree": {
+            "jsfiles": [
+                "model-tree.js"
+            ]
+        }
+    }
+}

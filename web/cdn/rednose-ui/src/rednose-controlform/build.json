@@ -1,0 +1,21 @@
+{
+    "name": "rednose-controlform",
+    "builds": {
+        "rednose-controlform": {
+            "jsfiles": [
+                "models/form.js",
+                "models/form-item.js",
+                "models/form-items.js",
+                "models/field-content.js",
+                "models/field-group.js",
+                "models/field-group-item.js",
+                "widgets/autocomplete.js",
+                "widgets/widget-factory.js",
+                "widgets/datepicker.js",
+                "widgets/rich-text-editor.js",
+                "widgets/common.js",
+                "rednose-controlform.js"
+            ]
+        }
+    }
+}

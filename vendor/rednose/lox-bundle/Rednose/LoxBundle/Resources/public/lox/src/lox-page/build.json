@@ -1,0 +1,10 @@
+{
+    "name": "lox-page",
+    "builds": {
+        "lox-page": {
+            "jsfiles": [
+                "page.js"
+            ]
+        }
+    }
+}

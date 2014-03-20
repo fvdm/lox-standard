@@ -1,0 +1,10 @@
+{
+    "name": "rednose-anim",
+    "builds": {
+        "rednose-anim": {
+            "jsfiles": [
+                "anim.js"
+            ]
+        }
+    }
+}

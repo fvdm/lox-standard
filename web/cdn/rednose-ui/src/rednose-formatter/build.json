@@ -1,0 +1,10 @@
+{
+    "name": "rednose-formatter",
+    "builds": {
+        "rednose-formatter": {
+            "jsfiles": [
+                "formatter.js"
+            ]
+        }
+    }
+}

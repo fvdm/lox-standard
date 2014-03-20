@@ -1,0 +1,15 @@
+{
+    "rednose-grid" : {
+        "requires": [
+            "handlebars",
+            "model-list",
+            "rednose-contextmenu",
+            "rednose-grid-select",
+            "rednose-util",
+            "view"
+        ],
+        "skinnable": true
+    },
+
+    "rednose-grid-select" : {}
+}

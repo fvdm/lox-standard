@@ -1,0 +1,24 @@
+{
+    "name": "gallery-bootstrap-dropdown",
+    "builds": {
+        "gallery-bootstrap-dropdown\r": {
+            "config": {
+                "supersedes": [
+                    ""
+                ],
+                "requires": [
+                    "plugin",
+                    "event",
+                    "event-outside"
+                ],
+                "optional": [
+                    ""
+                ]
+            },
+            "jsfiles": [
+                "bootstrap-dropdown.js"
+            ],
+            "meta": {}
+        }
+    }
+}

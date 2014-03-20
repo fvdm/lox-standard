@@ -1,0 +1,1 @@
+YUI.add("rednose-util",function(e,t){function r(){}var n="\u2026";r.formatLabel=function(e){return e.length>24?e.substr(0,12)+n+e.substr(e.length-12,e.length):e},r.formatDateTime=function(t){return e.Date.format(t,{format:"%x %R"})},r.isAncestor=function(e,t){return t.ancestor("#"+e.get("id"))},e.namespace("Rednose").Util=r},"1.1.0-DEV",{requires:["datatype-date"]});

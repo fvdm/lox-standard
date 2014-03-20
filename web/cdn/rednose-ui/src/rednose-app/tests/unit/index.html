@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>App Test Page</title>
+    </head>
+
+    <body class="yui3-skin-sam">
+
+        <div id="log"></div>
+        <div id="container"></div>
+
+        <script src="/build/yui/yui.js"></script>
+        <script src="/tests/yui-config.js"></script>
+        <script>
+            YUI({
+                coverage: ['rednose-app-base' ,'rednose-model-spinner', 'rednose-view-nav'],
+                filter  : (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'raw',
+
+                modules: {
+                    'app-test': {
+                        use: [
+                            'app-base-test',
+                            'model-spinner-test',
+                            'model-undo-test',
+                            'view-nav-test'
+                        ]
+                    },
+
+                    'app-base-test': {
+                        fullpath: 'assets/app-base-test.js',
+                        requires: ['rednose-app-base', 'test']
+                    },
+
+                    'model-spinner-test': {
+                        fullpath: 'assets/model-spinner-test.js',
+                        requires: ['rednose-model-spinner', 'test']
+                    },
+
+                    'model-undo-test': {
+                        fullpath: 'assets/model-undo-test.js',
+                        requires: ['rednose-model-undo', 'test']
+                    },
+
+                    'view-nav-test': {
+                        fullpath: 'assets/view-nav-test.js',
+                        requires: ['rednose-view-nav', 'test']
+                    }
+                }
+
+            }).use('app-test', 'test-console', function (Y) {
+                new Y.Test.Console().render('#log');
+                Y.Test.Runner.setName('App');
+                Y.Test.Runner.run();
+            });
+        </script>
+
+    </body>
+
+</html>

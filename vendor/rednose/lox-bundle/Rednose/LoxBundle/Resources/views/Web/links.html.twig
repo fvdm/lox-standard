@@ -1,0 +1,89 @@
+{% extends 'RednoseLoxBundle::layout.html.twig' %}
+{% import 'RednoseLoxBundle::sidenav.html.twig' as sidenav %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="span2 rednose-lox-sidebar">
+          {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+    </div>
+
+    <div class="span10 rednose-lox-content">
+        <section id="links">
+            <div class="page-header">
+                <h1>Links</h1>
+            </div>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="span5">Name</th>
+                            <th class="span3>">Date</th>
+                            <th class="span1>"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% if links %}
+                        {% for link in links %}
+                            <tr>
+                                <td class="span5"><div><a href="{{ path('rednose_lox_links_path', { path: link.uri }) }}" target="_blank">{{ link.item.title }}</a></div></td>
+                                <td class="span3">{{ link.createdAt|date }}</td>
+                                <td class="span1"><button rel="tooltip" data-record-id="{{ link.publicId }}" class="close" title="Remove link">&times;</button></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3"><h4>You haven't created any public links yet</h4></td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <script>
+    YUI().use('lox-page', 'io', 'rednose-tooltip', 'rednose-dialog', 'rednose-notifier', function (Y) {
+        new Y.Lox.Page().render();
+
+        var TEXT_TITLE_DELETED = 'Deleted',
+            TEXT_LINK_DELETED  = 'Link successfully deleted.',
+
+            TEXT_DELETE_TITLE = 'Delete link to file \'{title}\'?',
+            TEXT_DELETE       = 'Delete',
+            TEXT_DELETE_BODY  = 'The link will be removed. Are you sure you want to delete it?';
+
+        new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
+
+        Y.all('.close').on('click', function (e) {
+            var id    = e.target.getAttribute('data-record-id'),
+                tr    = e.target.ancestor('tr'),
+                title = tr.one('a').get('innerHTML');
+
+                if (id && tr) {
+                    Y.Rednose.Dialog.confirm({
+                        title  : Y.Lang.sub(TEXT_DELETE_TITLE, { title: title }),
+                        text   : TEXT_DELETE_BODY,
+                        confirm: TEXT_DELETE,
+                        type   : 'warning'
+                    }, function () {
+                        Y.io(YUI.Env.routing.link_remove + '/' + id, {
+                            method: 'POST',
+                            data: { 'token': YUI.Env.token },
+                            on : {
+                                success : function (tx, r) {
+                                    tr.remove(true);
+
+                                    Y.Rednose.Notifier.notify({
+                                        title: TEXT_TITLE_DELETED,
+                                        text : TEXT_LINK_DELETED,
+                                        type : 'success'
+                                    });
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

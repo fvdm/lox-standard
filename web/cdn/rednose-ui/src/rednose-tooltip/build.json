@@ -1,0 +1,10 @@
+{
+    "name": "rednose-tooltip",
+    "builds": {
+        "rednose-tooltip": {
+            "jsfiles": [
+                "tooltip.js"
+            ]
+        }
+    }
+}

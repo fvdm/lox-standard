@@ -1,0 +1,15 @@
+{
+    "rednose-contextmenu" : {
+        "requires": [
+            "base",
+            "overlay",
+            "panel",
+            "plugin",
+            "rednose-contextmenu-css",
+            "widget"
+        ]
+    },
+    "rednose-contextmenu-css" : {
+        "type": "css"
+    }
+}

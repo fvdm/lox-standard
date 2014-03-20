@@ -1,0 +1,17 @@
+{
+    "rednose-dataprovider" : {
+        "requires": [
+            "autocomplete",
+            "autocomplete-filters",
+            "autocomplete-highlighters",
+            "base",
+            "json",
+            "model",
+            "model-list",
+            "rednose-treeview",
+            "widget"
+        ],
+
+        "skinnable": true
+    }
+}

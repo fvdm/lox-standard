@@ -1,0 +1,10 @@
+{
+    "name": "rednose-dropdown",
+    "builds": {
+        "rednose-dropdown": {
+            "jsfiles": [
+                "dropdown.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "rednose-view-nav",
+
+    "builds": {
+        "rednose-widget-nav-container": {
+            "jsfiles": [
+                "js/widget-nav-container.js"
+            ]
+        }
+    }
+}

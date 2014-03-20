@@ -1,0 +1,15 @@
+{
+    "lox-page" : {
+        "requires": [
+            "node",
+            "base",
+            "datasource-io",
+            "datasource-polling",
+            "gallery-affix",
+            "io",
+            "json",
+            "rednose-navbar",
+            "view"
+        ]
+    }
+}

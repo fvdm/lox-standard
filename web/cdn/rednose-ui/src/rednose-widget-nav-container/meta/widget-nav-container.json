@@ -1,0 +1,9 @@
+{
+    "rednose-widget-nav-container" : {
+        "requires": [
+            "widget",
+            "widget-buttons",
+            "widget-stdmod"
+        ]
+    }
+}

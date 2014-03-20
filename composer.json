@@ -1,0 +1,31 @@
+{
+    "name": "rednose/lox-standard-edition",
+    "description": "The \"RedNose LOX Standard Edition\" distribution",
+    "license": "proprietary",
+    "minimum-stability" : "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packagist.rednose.nl/"
+        }
+    ],
+    "require": {
+        "rednose/lox-bundle": "dev-master"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "git submodule init && git submodule update",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-update-cmd": [
+            "git submodule init && git submodule update && git submodule foreach git pull origin master",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ]
+    }
+}
