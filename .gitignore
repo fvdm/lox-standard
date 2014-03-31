@@ -4,7 +4,6 @@
 /app/cache/*
 /app/logs/*
 /data/*
-/vendor/
 /composer.phar
 app/config/parameters.yml
 .idea/*
