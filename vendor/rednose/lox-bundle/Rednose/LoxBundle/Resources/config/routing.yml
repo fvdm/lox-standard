@@ -1,4 +1,0 @@
-rednose_lox:
-    resource: "@RednoseLoxBundle/Controller/"
-    type:     annotation
-    prefix:   /

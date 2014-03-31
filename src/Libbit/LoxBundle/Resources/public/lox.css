@@ -1,0 +1,226 @@
+/* Generic bootstrap additions */
+
+/* Fix cursor in tooltips */
+.tooltip-inner {
+	cursor: default;
+}
+
+.file-table table,
+#sharing table,
+#links table {
+	/* Needed to allow text-overflow ellipsis in table cells */
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+table td div {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Fix height for form inputs */
+input {
+    height: 30px !important;
+}
+
+/* Helper class */
+.full-width {
+	width: 100%;
+}
+
+#notifications-dropdown .dropdown-menu {
+	overflow-y: auto;
+	max-height: 400px;
+}
+
+#notifications-dropdown .dropdown-menu a div {
+	width: 300px;
+	word-wrap: break-word !important;
+	white-space: normal !important;
+}
+
+/* LOX */
+body {
+	position: relative;
+	padding-top: 40px;
+}
+
+section {
+	padding-top: 30px;
+}
+
+.libbit-lox-sidebar {
+	margin: 30px 0 0;
+	padding: 0;
+}
+
+.libbit-lox-header {
+    width: 780px;
+	padding-top: 30px;
+	margin-left: 0px;
+	background: #fff;
+}
+
+.libbit-lox-header .header-top {
+	width: auto;
+	height: 48px;
+}
+
+.libbit-lox-header .header-bottom {
+	height: 36px;
+	vertical-align: middle;
+	border-bottom: 1px solid #CCC;
+	background: #eee;
+	background-image: -webkit-linear-gradient(#e9e9e9, #d7d7d7);
+	background-image: -moz-linear-gradient(#e9e9e9, #d7d7d7);
+	background-image: -o-linear-gradient(#e9e9e9, #d7d7d7);
+}
+
+.libbit-lox-header .header-bottom th {
+	font-weight: bold;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.libbit-lox-header .header-bottom .item-name,
+.libbit-lox-header .header-bottom .menu {
+	padding: 8px;
+}
+
+.libbit-lox-header .breadcrumb {
+	margin-bottom: 12px;
+}
+
+.libbit-lox-header table {
+	margin-bottom: 1px;
+}
+
+/* SideNav badge correction */
+.libbit-lox-sidenav .badge {
+	margin-top: -2px;
+}
+
+/* File-upload list */
+.file-list tr,
+.file-list span {
+	cursor: default;
+
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.file-list thead {
+	display: none;
+}
+
+.file-list {
+	max-height: 150px;
+	overflow-y: auto;
+}
+
+/* File table */
+.file-table tr,
+.file-table span {
+	cursor: default;
+
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.file-table td,
+.file-table td div {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.file-table .mime-type .type {
+	color: #555;
+}
+
+.file-table .mime-type .extension {
+	color: #999;
+	margin-left: 6px;
+}
+
+.file-table .file-title a {
+	color: #000;
+}
+
+.file-table .rednose-datatable-selected .mime-type span,
+.file-table .rednose-datatable-selected .file-title a {
+	color: #fff;
+	text-decoration: none
+}
+
+/* Hide table header */
+.file-table {
+	margin-top: 114px;
+}
+
+.file-table table {
+	width: 100%;
+}
+
+.file-table thead {
+	display: none;
+}
+
+/* Autocomplete widget */
+.yui3-widget .yui3-widget-bd .yui3-aclist-content {
+	width: 608px;
+
+	border-top: 0;
+
+	-webkit-box-shadow: none;
+	   -moz-box-shadow: none;
+	        box-shadow: none;
+}
+
+/* Share view */
+.share-table {
+	height: 250px;
+	overflow-y: auto;
+}
+
+.share-table thead {
+	display: none;
+}
+
+.share-table .last {
+	padding-right: 24px;
+	width: 48px;
+}
+
+.rednose-datatable-data .close:focus {
+	outline: none;
+}
+
+.share-search {
+	width: 571px;
+}
+
+.share-button {
+	width: 38px;
+
+	/* Fix for input-append, after the autocomplete initializes the btn
+	   is no longer the last child */
+	-webkit-border-radius: 0 4px 4px 0 !important;
+	   -moz-border-radius: 0 4px 4px 0 !important;
+	        border-radius: 0 4px 4px 0 !important;
+}
+
+/* TabView Bootstrap styling */
+.nav-tabs .yui3-tab-selected > a {
+	color: #555555;
+	cursor: default;
+	background-color: #ffffff;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+}
