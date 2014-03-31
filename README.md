@@ -2,7 +2,7 @@ LocalBox
 =======
 
 Installation instructions
-------------------------------
+-------------------------
 
 ### Setup
 
@@ -32,15 +32,15 @@ Installation instructions
 
         app/console doctrine:fixtures:load -n
 
-4. Dump assets:
-
-        app/console assetic:dump
-
-5. Install assets:
+4. Install assets:
 
         app/console assets:install --symlink web
 
+5. Migrate an existing database:
+
+        app/console doctrine:migrations:migrate
+
 About
---------
+-----
 
 LocalBox is a [LiBBiT](http://www.libbit.eu) initiative.
