@@ -1,0 +1,11 @@
+.DS_Store
+/web/bundles/
+/app/bootstrap.php.cache
+/app/cache/*
+/app/logs/*
+/data/*
+/vendor/
+/composer.phar
+app/config/parameters.yml
+.idea/*
+*.swp
