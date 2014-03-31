@@ -72,4 +72,5 @@ return array(
     'CG\\' => array($vendorDir . '/jms/cg/src'),
     'Buzz' => array($vendorDir . '/kriswallsmith/buzz/lib'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
+     '' => array($baseDir . '/src'),
 );

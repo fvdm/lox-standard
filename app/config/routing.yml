@@ -5,8 +5,8 @@ _rednose_framework_device:
     resource: "@RednoseFrameworkBundle/Resources/config/routing/device.xml"
     prefix:   /lox_api
 
-rednose_lox:
-    resource: "@RednoseLoxBundle/Resources/config/routing.yml"
+libbit_lox:
+    resource: "@LibbitLoxBundle/Resources/config/routing.yml"
     prefix:   /
 
 rednose_framework_oauth2_authorize:

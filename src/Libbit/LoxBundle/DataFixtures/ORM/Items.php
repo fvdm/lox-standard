@@ -103,7 +103,7 @@ class Items extends AbstractFixture implements OrderedFixtureInterface, Containe
         $file->setOwner($admin);
         $revision = new Revision();
         $revision->setUser($admin);
-        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@RednoseLoxBundle/DataFixtures/ORM/files/test.txt')));
+        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@LibbitLoxBundle/DataFixtures/ORM/files/test.txt')));
         $file->addRevision($revision);
 
         $this->addReference('admin-test.txt', $file);
@@ -117,7 +117,7 @@ class Items extends AbstractFixture implements OrderedFixtureInterface, Containe
         $file2->setOwner($admin);
         $revision = new Revision();
         $revision->setUser($admin);
-        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@RednoseLoxBundle/DataFixtures/ORM/files/test.pdf')));
+        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@LibbitLoxBundle/DataFixtures/ORM/files/test.pdf')));
         $file2->addRevision($revision);
         $this->addReference('admin-test.pdf', $file2);
 
@@ -139,7 +139,7 @@ class Items extends AbstractFixture implements OrderedFixtureInterface, Containe
         $file->setOwner($user);
         $revision = new Revision();
         $revision->setUser($admin);
-        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@RednoseLoxBundle/DataFixtures/ORM/files/test.txt')));
+        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@LibbitLoxBundle/DataFixtures/ORM/files/test.txt')));
         $file->addRevision($revision);
 
         $em->persist($file);
@@ -171,7 +171,7 @@ class Items extends AbstractFixture implements OrderedFixtureInterface, Containe
         $file2->setIsDir(false);
         $revision = new Revision();
         $revision->setUser($admin);
-        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@RednoseLoxBundle/DataFixtures/ORM/files/test.pdf')));
+        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@LibbitLoxBundle/DataFixtures/ORM/files/test.pdf')));
         $file2->addRevision($revision);
         $file2->setOwner($user);
 
@@ -194,7 +194,7 @@ class Items extends AbstractFixture implements OrderedFixtureInterface, Containe
         $file->setOwner($user);
         $revision = new Revision();
         $revision->setUser($admin);
-        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@RednoseLoxBundle/DataFixtures/ORM/files/test.txt')));
+        $revision->setFile($this->getUploadedFile($this->kernel->locateResource('@LibbitLoxBundle/DataFixtures/ORM/files/test.txt')));
         $file->addRevision($revision);
         $this->addReference('admin-shared-test.txt', $file);
 

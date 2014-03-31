@@ -1,4 +1,4 @@
-RednoseLoxBundle
+LibbitLoxBundle
 ==================
 
 ## Installation ##
@@ -10,6 +10,6 @@ Register the bundle in `app/AppKernel.php`:
     {
         return array(
             // ...
-            new Libbit\LoxBundle\RednoseLoxBundle(),
+            new Libbit\LoxBundle\LibbitLoxBundle(),
         );
     }

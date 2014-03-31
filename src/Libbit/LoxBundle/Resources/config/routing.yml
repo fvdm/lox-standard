@@ -1,4 +1,4 @@
 libbit_lox:
-    resource: "@RednoseLoxBundle/Controller/"
+    resource: "@LibbitLoxBundle/Controller/"
     type:     annotation
     prefix:   /

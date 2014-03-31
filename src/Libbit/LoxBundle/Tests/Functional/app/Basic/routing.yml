@@ -8,7 +8,7 @@ _rednose_framework_security:
     resource: "@RednoseFrameworkBundle/Resources/config/routing/security.xml"
 
 libbit_lox:
-    resource: "@RednoseLoxBundle/Resources/config/routing.yml"
+    resource: "@LibbitLoxBundle/Resources/config/routing.yml"
     prefix:   /
 
 RednoseYuiBundle:

@@ -25,7 +25,7 @@ class WebController extends Controller
      */
     public function homeAction()
     {
-        return $this->render('RednoseLoxBundle:Web:home.html.twig');
+        return $this->render('LibbitLoxBundle:Web:home.html.twig');
     }
 
     /**
@@ -40,7 +40,7 @@ class WebController extends Controller
         $shares      = $sm->findSharesByUser($user);
         $invitations = $sm->findInvitationsForUser($user);
 
-        return $this->render('RednoseLoxBundle:Web:sharing.html.twig', array(
+        return $this->render('LibbitLoxBundle:Web:sharing.html.twig', array(
             'shares'  => $shares,
             'invites' => $invitations,
         ));
@@ -57,7 +57,7 @@ class WebController extends Controller
 
         $links = $lm->findAllByUser($user);
 
-        return $this->render('RednoseLoxBundle:Web:links.html.twig', array(
+        return $this->render('LibbitLoxBundle:Web:links.html.twig', array(
             'links' => $links,
         ));
     }

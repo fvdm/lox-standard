@@ -35,5 +35,5 @@ return array(
     new Rednose\CdnBundle\RednoseCdnBundle(),
     new Rednose\YuiBundle\RednoseYuiBundle(),
 
-    new Libbit\LoxBundle\RednoseLoxBundle(),
+    new Libbit\LoxBundle\LibbitLoxBundle(),
 );

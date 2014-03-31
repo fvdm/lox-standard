@@ -47,7 +47,7 @@ class AppKernel extends Kernel
             new Rednose\CdnBundle\RednoseCdnBundle(),
             new Rednose\YuiBundle\RednoseYuiBundle(),
 
-            new Rednose\LoxBundle\RednoseLoxBundle(),
+            new Libbit\LoxBundle\LibbitLoxBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

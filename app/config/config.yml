@@ -24,8 +24,8 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         csrf_provider: "@form.csrf_provider"
-        item_manager:  "@rednose_lox.item_manager"
-        share_manager: "@rednose_lox.share_manager"
+        item_manager:  "@libbit_lox.item_manager"
+        share_manager: "@libbit_lox.share_manager"
 
 # Assetic Configuration
 assetic:
@@ -165,10 +165,7 @@ rednose_framework:
 rednose_yui:
     groups:
         - { name: rednose-ui, root: cdn/rednose-ui }
-        - { name: lox, root: bundles/rednoselox/lox }
-
-    bundles:
-        - { name: lox-app, modules: lox-app }
+        - { name: lox, root: bundles/libbitlox/lox }
 
 rms_push_notifications:
     ios:

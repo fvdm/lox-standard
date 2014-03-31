@@ -42,7 +42,7 @@ class ExceptionListener extends ContainerAware implements EventSubscriberInterfa
         $code      = 500;
 		$message   = $exception->getMessage();
 
-		$content = $this->container->get('templating')->render('RednoseLoxBundle:Exception:error.html.twig', array(
+		$content = $this->container->get('templating')->render('LibbitLoxBundle:Exception:error.html.twig', array(
 			'message' => $message,
 			'code'    => $code,
 		));
