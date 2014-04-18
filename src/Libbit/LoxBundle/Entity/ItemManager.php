@@ -260,6 +260,16 @@ class ItemManager
         return $hash;
     }
 
+    /**
+     * Returns a children with a given name.
+     *
+     * If this is a share, it will return the shared item instance and never the source share.
+     *
+     * @param string $name
+     * @param Item $parent
+     *
+     * @return Item
+     */
     protected function getChildNamed($name, Item $parent)
     {
         $item = $this->em->createQueryBuilder()
@@ -276,7 +286,7 @@ class ItemManager
             return null;
         }
 
-        return $item->hasShareOf() ? $item->getShareOf() : $item; 
+        return $item;
     }
 
     protected function createCopy($item)
