@@ -2,23 +2,21 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Libbit\LoxBundle\Tests\Functional\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Libbit\LoxBundle\Entity\Item;
-use Rednose\FrameworkBundle\Entity\User;
 
 class FileControllerTest extends WebTestCase
 {
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\Client
+     */
     protected $client;
 
     protected $token;
 
     public function setUp()
     {
-        $this->client = self::createClient(array(
-            'test_case'   => 'Basic',
-            'root_config' => 'config.yml'
-        ));
+        $this->client = self::createClient();
 
         parent::setUp();
 

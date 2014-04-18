@@ -26,6 +26,7 @@ class Migrations extends AbstractFixture implements OrderedFixtureInterface, Con
         /** @var Connection $connection */
         $connection = $this->container->get('database_connection');
 
+        $connection->exec('DELETE FROM `migration_versions`');
         $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("20140331134636")');
     }
 

@@ -1,6 +1,6 @@
 # LiBBiT LocalBox
 
-The "LocalBox Standard Edition" distribution.
+LocalBox is built on top of the [Symfony](http://symfony.com) framework and the [YUI](http://yuilibrary.com) library.
 
 ## System Requirements
 
@@ -102,6 +102,14 @@ Users and groups can be managed by an admin from the following URL:
 API documentation can be found on the following URL:
 
     http://host/api/doc
+
+## Development
+
+### Testing
+
+1.  To run the test suite you'll need PHPUnit:
+
+        phpunit -c app/
 
 ## About
 

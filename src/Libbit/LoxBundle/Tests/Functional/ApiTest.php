@@ -2,19 +2,18 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Libbit\LoxBundle\Tests\Functional\WebTestCase;
 use Libbit\LoxBundle\Entity\Item;
 
 class ApiTest extends WebTestCase
 {
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\Client
+     */
     protected $client;
 
     public function setUp()
     {
-        $this->client = self::createClient(array(
-            'test_case'   => 'Basic',
-            'root_config' => 'config.yml'
-        ));
+        $this->client = self::createClient();
 
         parent::setUp();
 
@@ -53,56 +52,38 @@ class ApiTest extends WebTestCase
             $this->em->persist($file);
 
             $this->em->flush();
-
-            // Create OAuth2 client
-            $clientManager = $this->client->getContainer()->get('fos_oauth_server.client_manager.default');
-            $client = $clientManager->createClient();
-            $client->setName('TestClient');
-            $client->setAllowedGrantTypes(array('password'));
-            $clientManager->updateClient($client);
         }
 
-        $client = current($this->em->getRepository('Rednose\FrameworkBundle\Entity\Client')->findAll());
-
-        $this->token = $this->doGetToken($client->getPublicId(), $client->getSecret(), 'user', 'userpasswd');
-    }
-
-    public function doGetToken($id, $secret, $name, $pass)
-    {
-        $this->client->request('GET', '/oauth/v2/token?grant_type=password&client_id='.$id.'&username='.$name.'&password='.$pass.'&client_secret='.$secret);
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-
-        $data = json_decode($this->client->getResponse()->getContent(), true);
-
-        $this->assertTrue(isset($data['access_token']));
-
-        return $data['access_token'];
+        $this->client = self::createClient(array(), array(
+            'PHP_AUTH_USER' => 'user',
+            'PHP_AUTH_PW'   => 'userpasswd',
+        ));
     }
 
     public function testGetMetaReturnsFile()
     {
-        $this->client->request('GET', '/lox_api/meta/test-meta.txt?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/meta/test-meta.txt');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testGetMetaReturnsFolder()
     {
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testGetNonExistingMetaReturns404()
     {
-        $this->client->request('GET', '/lox_api/meta/meta-non-existent.txt?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/meta/meta-non-existent.txt');
 
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testGetMetaFolderReturnsHash()
     {
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -113,7 +94,7 @@ class ApiTest extends WebTestCase
 
     public function testGetMetaFolderWithHasReturns304()
     {
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -123,14 +104,14 @@ class ApiTest extends WebTestCase
 
         $hash = $data['hash'];
 
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token.'&hash='.$hash);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir?hash='.$hash);
 
         $this->assertEquals(304, $this->client->getResponse()->getStatusCode());
     }
 
     public function testGetMetaModifiedFolderWithHashReturnsFolder()
     {
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -141,16 +122,16 @@ class ApiTest extends WebTestCase
         $hash = $data['hash'];
 
         // Modify dir (add new file)
-        $this->client->request('POST', '/lox_api/files/test-meta-dir/test.txt?access_token='.$this->token, array(), array(), array(), $this->getTestFileContent());
+        $this->client->request('POST', '/lox_api/files/test-meta-dir/test.txt', array(), array(), array(), $this->getTestFileContent());
 
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token.'&hash='.$hash);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir?hash='.$hash);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testGetMetaModifiedFolderWithHashReturnsNewHash()
     {
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -161,9 +142,9 @@ class ApiTest extends WebTestCase
         $hash = $data['hash'];
 
         // Modify dir (add new file)
-        $this->client->request('POST', '/lox_api/files/test-meta-dir/test2.txt?access_token='.$this->token, array(), array(), array(), $this->getTestFileContent());
+        $this->client->request('POST', '/lox_api/files/test-meta-dir/test2.txt', array(), array(), array(), $this->getTestFileContent());
 
-        $this->client->request('GET', '/lox_api/meta/test-meta-dir?access_token='.$this->token.'&hash='.$hash);
+        $this->client->request('GET', '/lox_api/meta/test-meta-dir?hash='.$hash);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -178,28 +159,28 @@ class ApiTest extends WebTestCase
 
     public function testGetFile404Code()
     {
-        $this->client->request('GET', '/lox_api/files/non-existent.txt?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/files/non-existent.txt');
 
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testPostFile201Code()
     {
-        $this->client->request('POST', '/lox_api/files/test.txt?access_token='.$this->token, array(), array(), array(), $this->getTestFileContent());
+        $this->client->request('POST', '/lox_api/files/test.txt', array(), array(), array(), $this->getTestFileContent());
 
         $this->assertEquals(201, $this->client->getResponse()->getStatusCode());
     }
 
     public function testPostFile201Code2()
     {
-        $this->client->request('POST', '/lox_api/files/test.pdf?access_token='.$this->token, array(), array(), array(), $this->getTestFileContent2());
+        $this->client->request('POST', '/lox_api/files/test.pdf', array(), array(), array(), $this->getTestFileContent2());
 
         $this->assertEquals(201, $this->client->getResponse()->getStatusCode());
     }
 
     public function testPostFileToNonExistingPath404Code()
     {
-        $this->client->request('POST', '/lox_api/files/non-existent-folder/test.txt?access_token='.$this->token, array(), array(), array(), $this->getTestFileContent());
+        $this->client->request('POST', '/lox_api/files/non-existent-folder/test.txt', array(), array(), array(), $this->getTestFileContent());
 
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
@@ -209,7 +190,7 @@ class ApiTest extends WebTestCase
      */
     public function testGetFile200Code()
     {
-        $this->client->request('GET', '/lox_api/files/test.txt?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/files/test.txt');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
@@ -219,7 +200,7 @@ class ApiTest extends WebTestCase
      */
     public function testGetFileReturnsFileContents()
     {
-        $this->client->request('GET', '/lox_api/files/test.txt?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/files/test.txt');
 
         $this->assertEquals($this->getTestFileContent(), $this->client->getResponse()->getContent());
     }
@@ -229,7 +210,7 @@ class ApiTest extends WebTestCase
      */
     public function testGetFileReturnsFileContents2()
     {
-        $this->client->request('GET', '/lox_api/files/test.pdf?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/files/test.pdf');
 
         $this->assertEquals($this->getTestFileContent2(), $this->client->getResponse()->getContent());
     }
@@ -239,7 +220,7 @@ class ApiTest extends WebTestCase
      */
     public function testGetFileSendsCorrectMimeType()
     {
-        $this->client->request('GET', '/lox_api/files/test.txt?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/files/test.txt');
 
         $this->assertEquals('text/plain; charset=UTF-8', $this->client->getResponse()->headers->get('Content-Type'));
     }
@@ -249,7 +230,7 @@ class ApiTest extends WebTestCase
      */
     public function testGetFileSendsCorrectMimeType2()
     {
-        $this->client->request('GET', '/lox_api/files/test.pdf?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/files/test.pdf');
 
         $this->assertEquals('application/pdf', $this->client->getResponse()->headers->get('Content-Type'));
     }
@@ -259,7 +240,7 @@ class ApiTest extends WebTestCase
      */
     public function testNoContentDisposition()
     {
-        $this->client->request('GET', '/lox_api/files/test.txt?access_token='.$this->token);
+        $this->client->request('GET', '/lox_api/files/test.txt');
 
         $this->assertEquals(null, $this->client->getResponse()->headers->get('Content-Disposition'));
     }
