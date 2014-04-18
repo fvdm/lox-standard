@@ -40,5 +40,12 @@ class RednoseFrameworkExtension extends Extension
         foreach ($serviceFiles as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
+
+        $this->loadAccount($config['auto_account_creation'], $container);
+    }
+
+    private function loadAccount($config, ContainerBuilder $container)
+    {
+        $container->getDefinition('rednose_framework.user_manager')->replaceArgument(5, $config);
     }
 }

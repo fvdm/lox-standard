@@ -21,6 +21,8 @@ class Configuration implements ConfigurationInterface
         $rootNode    = $treeBuilder->root('rednose_framework', 'array');
 
         $this->addOauthSection($rootNode);
+        $this->addAclSection($rootNode);
+        $this->addAccountSection($rootNode);
 
         return $treeBuilder;
     }
@@ -30,7 +32,22 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->booleanNode('oauth')->defaultFalse()->end()
+            ->end();
+    }
+
+    private function addAclSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
                 ->booleanNode('acl')->defaultFalse()->end()
+            ->end();
+    }
+
+    private function addAccountSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->booleanNode('auto_account_creation')->defaultFalse()->end()
             ->end();
     }
 }
