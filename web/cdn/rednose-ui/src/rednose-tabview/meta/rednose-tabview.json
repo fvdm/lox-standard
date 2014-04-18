@@ -1,0 +1,7 @@
+{
+    "rednose-tabview" : {
+        "requires": [
+            "node"
+        ]
+    }
+}

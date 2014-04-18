@@ -18,8 +18,10 @@ suite.add(new Y.Test.Case({
 
         Assert.isNull(nav.title);
         Assert.isNull(nav.buttons);
+
         Assert.isNull(nav._footer);
-        Assert.isNull(nav._buttonMap);
+        Assert.isNull(nav._panel);
+        Assert.isNull(nav._toolbar);
     }
 }));
 

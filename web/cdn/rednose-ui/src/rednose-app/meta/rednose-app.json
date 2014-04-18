@@ -15,7 +15,8 @@
                     "event-custom",
                     "rednose-app-templates",
                     "rednose-panel",
-                    "rednose-tooltip"
+                    "rednose-tooltip",
+                    "rednose-util"
                 ]
             },
 
@@ -37,7 +38,9 @@
             "rednose-view-nav" : {
                 "requires": [
                     "event-custom",
+                    "rednose-navbar",
                     "rednose-panel",
+                    "rednose-util",
                     "rednose-widget-nav-container",
                     "view"
                 ]

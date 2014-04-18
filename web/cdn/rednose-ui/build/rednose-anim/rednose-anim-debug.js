@@ -222,4 +222,4 @@ Anim.morph = function (oldNode, newNode, animOut, animIn) {
 Y.namespace('Rednose').Anim = Anim;
 
 
-}, '1.1.0-DEV', {"requires": ["anim"]});
+}, '1.4.0', {"requires": ["anim"]});

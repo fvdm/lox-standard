@@ -28,6 +28,27 @@ ModelTree = Y.Base.create('modelTree', Y.Model, [], {
     },
 
     /**
+     * Overrule the default childNode icon in a ModelTree
+     *
+     * @param childModel
+     * @param className
+     *
+     * @return  boolean
+     */
+    setIcon: function(model, className) {
+        var tree = this._items,
+            node = this._treeFind(model.get('clientId'), tree);
+
+        if (node) {
+            node.icon = className;
+
+            return true;
+        }
+
+        return false;
+    },
+
+    /**
      * Get the index path of a given model
      *
      * @param model
@@ -326,4 +347,4 @@ ModelTree = Y.Base.create('modelTree', Y.Model, [], {
 Y.namespace('Rednose').ModelTree = ModelTree;
 
 
-}, '1.1.0-DEV', {"requires": ["model", "io"]});
+}, '1.4.0', {"requires": ["model", "io"]});

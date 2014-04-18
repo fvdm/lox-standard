@@ -446,7 +446,7 @@ var Dialog = Y.Base.create('dialog', Y.Widget, [], {
     @protected
     **/
     _setError: function (e) {
-        var error = e.newVal,
+        var errors = e.newVal,
             bb    = this.get('panel').get('boundingBox'),
             input;
 
@@ -459,15 +459,22 @@ var Dialog = Y.Base.create('dialog', Y.Widget, [], {
             node.all('.help-block').remove();
         });
 
-        // Append the message node at the given path (defaults to 'input')
-        input = bb.one('[data-path=' + (error.path || 'input') + ']');
-        input.ancestor('.control-group').addClass('error');
-
-        if (error.message) {
-            input.get('parentNode').append('<span class="help-block">' + error.message + '</span>');
+        if (!Y.Lang.isArray(errors)) {
+            errors = [errors];
         }
 
-        input.focus();
+        Y.each(errors, function(error) {
+            // Append the message node at the given path (defaults to 'input')
+            input = bb.one('[data-path=' + (error.path || 'input') + ']');
+            input.ancestor('.control-group').addClass('error');
+
+            if (error.message) {
+                input.get('parentNode').append('<span class="help-block">' + error.message + '</span>');
+            }
+        });
+
+        bb.one('.error').focus();
+
     },
 
     _getHighzIndex: function() {

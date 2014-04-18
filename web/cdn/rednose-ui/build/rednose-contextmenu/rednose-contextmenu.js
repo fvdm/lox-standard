@@ -10,7 +10,7 @@ Provides a context menu plugin with custom event binding.
 var ContextMenu,
 
     CSS_CONTEXT_MENU = 'rednose-context-menu',
-    CSS_CONTEXT_OPEN = 'rednose-context-open';
+    CSS_CONTEXT_OPEN = 'rednose-context-open',
 
     CSS_BOOTSTRAP_ICON_WHITE    = 'icon-white',
     CSS_BOOTSTRAP_DROPDOWN      = 'dropdown',
@@ -24,7 +24,7 @@ Provides a context menu plugin with custom event binding.
 @namespace Rednose
 @param {Object} [config] Config properties.
     @param {Object} [config.content] Contextmenu configuration object.
-    @param {Oject} [config.data] Optional object to pass with fired events.
+    @param {Object} [config.data] Optional object to pass with fired events.
     @param {Object} [config.bubbleTarget] Optional bubble target.
 @constructor
 @extends Plugin.Base
@@ -78,7 +78,7 @@ ContextMenu = Y.Base.create('contextMenu', Y.Plugin.Base, [], {
         this.data         = null;
         this._contextMenu = null;
 
-        node.detach('contextmenu');
+        node.detach('contextmenu', this._handleContextMenu);
     },
 
     // -- Public Methods -------------------------------------------------------
@@ -89,7 +89,7 @@ ContextMenu = Y.Base.create('contextMenu', Y.Plugin.Base, [], {
 
         // Remove a previous context menu if it exists, ideally we prolly wanna toggle it.
         Y.all('.' + CSS_CONTEXT_OPEN).each(function (node) {
-            node.contextMenu._contextMenu.destroy();
+            node.contextMenu._contextMenu && node.contextMenu._contextMenu.destroy();
         });
 
         contextMenu = new Y.Overlay({
@@ -228,8 +228,8 @@ ContextMenu = Y.Base.create('contextMenu', Y.Plugin.Base, [], {
         var highIndex = 0;
 
         for (var i = 0; i < elements.length - 1; i++) {
-            if (parseInt(elements[i].style.zIndex) > highIndex) {
-                highIndex = parseInt(elements[i].style.zIndex)
+            if (parseInt(elements[i].style.zIndex, 10) > highIndex) {
+                highIndex = parseInt(elements[i].style.zIndex, 10);
             }
         }
 
@@ -243,4 +243,4 @@ ContextMenu = Y.Base.create('contextMenu', Y.Plugin.Base, [], {
 Y.namespace('Rednose').ContextMenu = ContextMenu;
 
 
-}, '1.1.0-DEV', {"requires": ["base", "overlay", "panel", "plugin", "rednose-contextmenu-css", "widget"]});
+}, '1.4.0', {"requires": ["base", "overlay", "panel", "plugin", "rednose-contextmenu-css", "widget"]});

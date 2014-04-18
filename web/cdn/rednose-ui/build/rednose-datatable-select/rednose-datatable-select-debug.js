@@ -315,4 +315,4 @@ Y.extend(DataTableEditRowPlugin, Y.Plugin.Base, {
 Y.namespace('Rednose').DataTableEditRowPlugin = DataTableEditRowPlugin;
 
 
-}, '1.1.0-DEV', {"requires": ["rednose-datatable", "plugin"]});
+}, '1.4.0', {"requires": ["rednose-datatable", "plugin"]});

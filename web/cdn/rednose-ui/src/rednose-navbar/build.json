@@ -4,7 +4,8 @@
     "builds": {
         "rednose-navbar": {
             "jsfiles": [
-                "js/navbar.js"
+                "js/navbar.js",
+                "js/toolbar.js"
             ]
         },
 

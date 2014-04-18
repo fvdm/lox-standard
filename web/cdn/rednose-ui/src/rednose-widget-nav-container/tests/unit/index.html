@@ -10,22 +10,25 @@
 <div id="test"></div>
 
 <script src="/build/yui/yui.js"></script>
-<script src="/tests/yui-config.js"></script>
+<script src="../../../../../build/rednose-loader/rednose-loader.js"></script>
+
 <script>
-YUI({
-    coverage: ['rednose-widget-nav-container'],
-    filter: (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'raw',
-    modules: {
-        'widget-nav-container-test': {
-            fullpath: './assets/widget-nav-container-test.js',
-            requires: ['rednose-widget-nav-container', 'test']
-        }
-    },
-    useBrowserConsole: false
-}).use('widget-nav-container-test', 'test-console', function (Y) {
-    new Y.Test.Console().render('#log');
-    Y.Test.Runner.run();
-});
+    YUI.Env.core.push('rednose-loader');
+
+    YUI({
+        coverage: ['rednose-widget-nav-container'],
+        filter: (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'raw',
+        modules: {
+            'widget-nav-container-test': {
+                fullpath: './assets/widget-nav-container-test.js',
+                requires: ['rednose-widget-nav-container', 'test']
+            }
+        },
+        useBrowserConsole: false
+    }).use('widget-nav-container-test', 'test-console', function (Y) {
+        new Y.Test.Console().render('#log');
+        Y.Test.Runner.run();
+    });
 </script>
 
 </body>

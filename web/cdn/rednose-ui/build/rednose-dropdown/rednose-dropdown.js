@@ -143,4 +143,4 @@ Dropdown = Y.Base.create('dropdown', Y.Bootstrap.Dropdown, [], {
 Y.namespace('Rednose').Dropdown = Dropdown;
 
 
-}, '1.1.0-DEV', {"requires": ["base", "node", "gallery-bootstrap-dropdown"]});
+}, '1.4.0', {"requires": ["base", "node", "gallery-bootstrap-dropdown"]});

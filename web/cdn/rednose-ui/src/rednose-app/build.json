@@ -10,6 +10,7 @@
 
         "rednose-app-templates": {
             "jsfiles": [
+                "js/app-extensions/app-template-master-detail.js",
                 "js/app-extensions/app-template-single-view.js",
                 "js/app-extensions/app-template-three-column.js",
                 "js/app-extensions/app-template-two-column.js",

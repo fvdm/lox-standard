@@ -12,9 +12,12 @@
         <div id="container"></div>
 
         <script src="/build/yui/yui.js"></script>
-        <script src="/tests/yui-config.js"></script>
+        <script src="../../../../../build/rednose-loader/rednose-loader.js"></script>
+
         <script src="./assets/datatable-test.js"></script>
         <script>
+            YUI.Env.core.push('rednose-loader');
+
             YUI({
                 coverage: ['rednose-datatable'],
                 filter: (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'raw',

@@ -6,20 +6,10 @@ var DD, BubbleTarget;
 
 BubbleTarget = Y.Base.create('bubbleTarget', Y.Base, [], {});
 
-// NOT GENERIC YET: Dropenterglobal morphing
 DD = Y.Base.create('dd', Y.View, [], {
+    DEBUG: false,
 
     dropHighlight: false,
-
-    /**
-     * Hover events, handling complex, stacked hovers
-     */
-    events: {
-        '.rednose-dd-drag': {
-            mouseenter: '_handleMouseEnter',
-            mouseleave: '_handleMouseLeave'
-        }
-    },
 
     initializer: function() {
         this._ddMap || (this._ddMap = []);
@@ -31,14 +21,14 @@ DD = Y.Base.create('dd', Y.View, [], {
         this.bubbleTarget = new BubbleTarget();
         this.bubbleTarget.addTarget(this);
         this.bubbleTarget.on('drop:hit', this._rednoseDropHit, this);
+
+        Y.DD.DDM._debugShim = this.DEBUG;
     },
 
     destructor: function () {
-        for (var i in this._ddMap) {
-            if (this._ddMap[i]) {
-                this._ddMap[i].destroy();
-            }
-        }
+        Y.Array.each(this._ddMap, function (dd) {
+            dd.destroy();
+        });
 
         this._ddMap = [];
     },
@@ -87,24 +77,12 @@ DD = Y.Base.create('dd', Y.View, [], {
         return dd;
     },
 
-    bindGlobalDrop: function (groups, container) {
-        container = container || this.get('container');
+    destroyDrag: function (node) {
+        var dd = Y.DD.DDM.getDrag(node);
 
-        var dd;
+        dd.destroy();
 
-        container.addClass('rednose-global-drop');
-
-        // Global drop object.
-        dd = new Y.DD.Drop({
-            node   : container,
-            groups: groups,
-            bubbleTargets: this.bubbleTarget
-        });
-
-        this._ddMap.push(dd);
-
-        // Bind the global drop object.
-        dd.on('drop:enter', this._dropEnterGlobal, this);
+        node.hasClass('rednose-dd-drag') && node.removeClass('rednose-dd-drag');
     },
 
     _rednoseDropHit: function (e) {
@@ -123,9 +101,9 @@ DD = Y.Base.create('dd', Y.View, [], {
         var proxy = drag.get('node').cloneNode(true).addClass('rednose-dd-drag-proxy');
 
         drag.get('dragNode').set('innerHTML', proxy.get('outerHTML'));
-        drag.get('node').addClass('rednose-dd-drag-placeholder');
 
-        drag.get('node').setStyle('visibility', 'hidden');
+        drag.get('node').addClass('rednose-dd-drag-placeholder');
+        drag.get('node').get('childNodes').setStyle('visibility', 'hidden');
     },
 
     /**
@@ -153,7 +131,7 @@ DD = Y.Base.create('dd', Y.View, [], {
         drag.get('node').removeClass('rednose-dd-drag-placeholder');
         drag.get('dragNode').set('innerHTML', '');
 
-        drag.get('node').setStyle('visibility', '');
+        drag.get('node').get('childNodes').setStyle('visibility', '');
     },
 
     /**
@@ -180,7 +158,7 @@ DD = Y.Base.create('dd', Y.View, [], {
      */
     _dropEnter: function (e) {
         if (!e.drag || !e.drop || (e.drop !== e.target)) {
-            return false;
+            return;
         }
         if (e.drop.get('node').get('tagName').toLowerCase() === 'li') {
             this._moveItem(e.drag, e.drop);
@@ -272,61 +250,8 @@ DD = Y.Base.create('dd', Y.View, [], {
                     dropNode.get('parentNode').appendChild(dragNode);
                 }
 
-                //Resync all the targets because something moved.
+                // Resync all the targets because something moved.
                 Y.DD.DDM.syncActiveShims(true);
-            }
-        }
-    },
-
-    _dropEnterGlobal: function () {
-        if (Y.DD.DDM.activeDrag) {
-            var drag = Y.DD.DDM.activeDrag,
-                dragNode = drag.get('dragNode'),
-                obj  = drag.get('data'),
-                container,
-                templateItem;
-
-            if (obj.name === 'fieldGroup' || obj.name === 'image' || obj.name === 'table') {
-                // Bind to the document's end drag handler
-                drag.on('drag:end', this._handleEnd, this);
-
-                // Render the item
-                templateItem = new Y.TB.TemplateItem({
-                    asset: obj
-                });
-
-                var tiView = new Y.TB.TemplateItemView({
-                    model: templateItem
-                });
-
-                tiView.templateModel = this.get('model');
-
-                container = tiView.render().get('container');
-
-                // FIXME: The context menu doesn't get bound from tiView.render() for some reason
-                container.plug(Y.Rednose.ContextMenu, {
-                    content: [
-                        { title: 'Remove from template', id: 'removeTemplateItem' },
-                        { title: '-' },
-                        { title: 'Properties', id: 'templateItemProperties', disabled: true }
-                    ],
-                    bubbleTarget: tiView
-                });
-
-                var proxy = container.cloneNode(true).addClass('rednose-dd-drag-proxy');
-
-                container.addClass('rednose-dd-drag-placeholder');
-
-                // Store a reference to the model so we can access it from the DOM
-                container.setData({ model: templateItem });
-
-                // Cleanup the old node to prevent orphans in the DOM
-                drag.get('node').remove();
-                // Insert it in the dragNode (we need to reprep after dropping to keep the drag node working)
-                drag.set('node', container);
-
-                // Update the dragNode
-                Y.Rednose.Anim.morph(dragNode, proxy, Y.Rednose.Anim.fadeOut, Y.Rednose.Anim.slideIn);
             }
         }
     },
@@ -370,4 +295,4 @@ DD = Y.Base.create('dd', Y.View, [], {
 Y.namespace('Rednose').DD = DD;
 
 
-}, '1.1.0-DEV', {"requires": ["rednose-anim", "rednose-dd-css", "view"]});
+}, '1.4.0', {"requires": ["rednose-anim", "rednose-dd-css", "view"]});

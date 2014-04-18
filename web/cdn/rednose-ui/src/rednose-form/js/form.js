@@ -1,16 +1,20 @@
 /*jshint boss:true, expr:true, onevar:false */
 
-var FormView;
+var Micro = Y.Template.Micro,
+    FormView;
 
 FormView = Y.Base.create('formView', Y.View, [], {
-
-    template: '<div class="rednose-form-view">' +
-                  '<form class="rednose-form form-horizontal">' +
-                      '<fieldset>' +
-                          '<legend>{caption}</legend>' +
-                      '</fieldset>' +
-                  '</form>' +
-              '</div>',
+    template: Micro.compile(
+        '<div class="rednose-form-view">' +
+            '<form class="rednose-form form<%= data.horizontal ? \'-horizontal\' : \'\' %>">' +
+                '<fieldset>' +
+                    '<% if (data.caption) { %>' +
+                        '<legend><%= data.caption %></legend>' +
+                    '<% } %>' +
+                '</fieldset>' +
+            '</form>' +
+        '</div>'
+    ),
 
     _controlViewMap: {},
 
@@ -30,8 +34,9 @@ FormView = Y.Base.create('formView', Y.View, [], {
         this._controlViewMap = [];
         this._expressionMap  = [];
 
-        container.setHTML(Y.Lang.sub(template, {
-            caption: model.get('caption')
+        container.setHTML(template({
+            horizontal: this.get('horizontal'),
+            caption   : model.get('caption')
         }));
 
         model.get('controls').each(function (control) {
@@ -117,7 +122,13 @@ FormView = Y.Base.create('formView', Y.View, [], {
     }
 }, {
     ATTRS: {
-        model: { value: new Y.Rednose.Form.FormModel() }
+        horizontal: {
+            value: true,
+        },
+
+        model: {
+            value: new Y.Rednose.Form.FormModel()
+        }
     }
 });
 

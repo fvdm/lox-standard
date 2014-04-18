@@ -13,7 +13,8 @@
             "model-list",
             "node",
             "rednose-contextmenu",
-            "rednose-dialog"
+            "rednose-dialog",
+            "template-micro"
         ]
     }
 }

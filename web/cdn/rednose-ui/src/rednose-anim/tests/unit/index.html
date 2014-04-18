@@ -10,22 +10,25 @@
 <div id="test"></div>
 
 <script src="/build/yui/yui.js"></script>
-<script src="/tests/yui-config.js"></script>
+<script src="../../../../../build/rednose-loader/rednose-loader.js"></script>
+
 <script>
-YUI({
-    coverage: ['rednose-anim'],
-    filter: (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'raw',
-    modules: {
-        'anim-test': {
-            fullpath: './assets/anim-test.js',
-            requires: ['rednose-anim', 'test']
-        }
-    },
-    useBrowserConsole: false
-}).use('anim-test', 'test-console', function (Y) {
-    new Y.Test.Console().render('#log');
-    Y.Test.Runner.run();
-});
+    YUI.Env.core.push('rednose-loader');
+
+    YUI({
+        coverage: ['rednose-anim'],
+        filter: (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'raw',
+        modules: {
+            'anim-test': {
+                fullpath: './assets/anim-test.js',
+                requires: ['rednose-anim', 'test']
+            }
+        },
+        useBrowserConsole: false
+    }).use('anim-test', 'test-console', function (Y) {
+        new Y.Test.Console().render('#log');
+        Y.Test.Runner.run();
+    });
 </script>
 
 </body>

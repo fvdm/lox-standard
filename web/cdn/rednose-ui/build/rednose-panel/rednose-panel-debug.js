@@ -62,6 +62,14 @@ Panel = Y.Base.create('panel', Y.Panel, [], {
 
         container.setStyle('top', STYLE_POSITION_TOP);
         container.setStyle('position', 'fixed');
+
+        if (this.get('top') > 0) {
+            container.setStyle('top', this.get('top'));
+        }
+    }
+}, {
+    ATTRS: {
+        top: { value: 0 }
     }
 });
 
@@ -69,4 +77,4 @@ Panel = Y.Base.create('panel', Y.Panel, [], {
 Y.namespace('Rednose').Panel = Panel;
 
 
-}, '1.1.0-DEV', {"requires": ["panel", "rednose-panel-css"], "supersedes": ["skin-sam-widget-base", "skin-sam-panel"]});
+}, '1.4.0', {"requires": ["panel", "rednose-panel-css"], "supersedes": ["skin-sam-widget-base", "skin-sam-panel"]});

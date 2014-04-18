@@ -16,7 +16,7 @@ ControlModel = Y.Base.create('controlModel', Y.Model, [], {
 }, {
     ATTRS: {
         caption   : { value: null },
-        foreignId : { value: null },
+        identifier: { value: null },
         type      : { value: null },
         properties: {
             value : {},
@@ -26,7 +26,7 @@ ControlModel = Y.Base.create('controlModel', Y.Model, [], {
         visible   : { value: true },
         protected : { value: false },
         readonly  : { value: false },
-        sortOrder : { value: 0 },
+        sort_order: { value: 0 },
         help      : { value: null },
         value     : { value: null }
     }

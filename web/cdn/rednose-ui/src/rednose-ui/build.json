@@ -1,0 +1,16 @@
+{
+    "name": "rednose-ui",
+    "builds": {
+        "rednose-ui": {
+            "exec": [
+                "recess --compile ./less/rednose-ui.less > ./css/rednose-ui.css"
+            ],
+            "cssfiles": [
+                "rednose-ui.css"
+            ],
+            "copy" : [
+                [ "./img", "./img"]
+            ]
+        }
+    }
+}

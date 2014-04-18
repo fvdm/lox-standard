@@ -7,15 +7,18 @@
 </head>
 <body>
 	<div class="test"></div>
-	<script src="http://yui.yahooapis.com/3.6.0/build/yui/yui.js"></script>
+    <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui.js"></script>
+    <script src="../../../../../build/rednose-loader/rednose-loader.js"></script>
 	<script>
-		YUI({
+        YUI.Env.core.push('rednose-loader');
+
+        YUI({
 			filter: 'raw',
-			modules: {
-				'rednose-dataprovider': {
-					fullpath: '../../../../build/rednose-dataprovider/rednose-dataprovider.js'
-				}
-			}
+            "groups": {
+                "rednose-ui": {
+                    base: "../../../../../build/"
+                }
+            }
 		}).use('rednose-dataprovider', function (Y) {
 			var pdoSource = new Y.Rednose.DataSource.PdoSource({
 				id:        'rednose_tweedekamer.provider.minister',

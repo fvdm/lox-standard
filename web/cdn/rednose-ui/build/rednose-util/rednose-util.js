@@ -44,8 +44,32 @@ Util.isAncestor = function (ancestor, descendant) {
     return descendant.ancestor('#' + ancestor.get('id'));
 };
 
+/**
+ * Formatting helper method to capitalize the first letter of a given string
+ *
+ * @param {String} value The string to capitalize.
+ * @returns {String}
+ * @protected
+ */
+Util.capitalizeFirstLetter = function (value) {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+};
+
+/**
+ * Formatting helper method.
+ *
+ * @param {String} string The string to convert.
+ * @returns {String}
+ * @static
+ */
+Util.camelCaseToDash = function (string) {
+    return string.replace(/([A-Z])/g, function ($1) {
+        return '-' + $1.toLowerCase();
+    });
+};
+
 // -- Namespace ----------------------------------------------------------------
 Y.namespace('Rednose').Util = Util;
 
 
-}, '1.1.0-DEV', {"requires": ["datatype-date"]});
+}, '1.4.0', {"requires": ["datatype-date"]});

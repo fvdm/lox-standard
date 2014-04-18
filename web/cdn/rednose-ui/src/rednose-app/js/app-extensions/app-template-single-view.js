@@ -5,6 +5,8 @@ function AppTemplateSingleView() {}
 AppTemplateSingleView.prototype = {
     navigationBar: true,
 
+    showToolbar: false,
+
     template: '<div class="rednose-grid">' +
                   '<div class="rednose-unit-container">' +
                       '<div class="rednose-unit-main"></div>' +
@@ -24,7 +26,17 @@ AppTemplateSingleView.prototype = {
             this.set('navBar', container.one('.rednose-navbar'));
         }
 
-        this.set('gridMain', container.one('.rednose-unit-main'));
+        if (this.showToolbar) {
+            container.one('.rednose-unit-main').append(
+                '<div class="rednose-toolbar"></div>' +
+                    '<div class="rednose-viewport"></div>'
+            );
+
+            this.set('toolbar', container.one('.rednose-toolbar'));
+            this.set('gridMain', container.one('.rednose-viewport'));
+        } else {
+            this.set('gridMain', container.one('.rednose-unit-main'));
+        }
 
         this.set('viewContainer', this.get('gridMain'));
     }
