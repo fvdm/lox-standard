@@ -47,6 +47,7 @@ class AppKernel extends Kernel
             new Rednose\FrameworkBundle\RednoseFrameworkBundle(),
             new Rednose\CdnBundle\RednoseCdnBundle(),
             new Rednose\YuiBundle\RednoseYuiBundle(),
+            new Rednose\KerberosBundle\RednoseKerberosBundle(),
 
             new Libbit\LoxBundle\LibbitLoxBundle(),
         );
