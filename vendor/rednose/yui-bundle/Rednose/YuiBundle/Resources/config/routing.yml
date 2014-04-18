@@ -1,7 +1,0 @@
-rednose_yui_config:
-    pattern: /config.js
-    defaults: { _controller: RednoseYuiBundle:Yui:config }
-
-rednose_yui_package:
-    pattern: /package/{module}.js
-    defaults: { _controller: RednoseYuiBundle:Yui:package }
