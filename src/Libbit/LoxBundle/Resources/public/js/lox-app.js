@@ -1,10 +1,11 @@
+YUI.add('lox-app', function (Y, NAME) {
+
 /*jshint expr:true, onevar:false */
 
 /**
 The filemanager app.
 
 @module lox-app
-@submodule lox-app-base
 **/
 var TEXT_TITLE_ERROR    = 'Error',
 	TEXT_TITLE_COPIED   = 'Copied',
@@ -333,4 +334,19 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 });
 
 // -- Namespace ----------------------------------------------------------------
-Y.namespace('Lox').App = App;
+Y.namespace('Lox.App').App = App;
+
+
+}, '@VERSION@', {
+    "requires": [
+        "lox-app-item-model",
+        "lox-app-file-browser-view",
+        "lox-app-file-movecopy-view",
+        "lox-app-file-detail-view",
+        "lox-app-file-upload-view",
+        "lox-app-folder-share-view",
+        "lox-app-folder-tree",
+        "rednose-app",
+        "rednose-tooltip"
+    ]
+});

@@ -34,10 +34,10 @@
                             {% for invite in invites %}
                                 <tr>
                                     <td class="span4">
-                                        {% if invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_ACCEPTED') %}
+                                        {% if invite.state == constant('Libbit\\LoxBundle\\Entity\\Invitation::STATE_ACCEPTED') %}
                                             {% set path = item_manager.getPathForUser(app.user, invite.item, true) %}
                                             <div><a href="{{ path('libbit_lox_home_path', { path: path }) }}">{{ invite.item.title }}</a></div>
-                                        {% elseif invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_PENDING') %}
+                                        {% elseif invite.state == constant('Libbit\\LoxBundle\\Entity\\Invitation::STATE_PENDING') %}
                                             <div><strong>{{ invite.share.item.title }}</strong></div>
                                         {% else %}
                                             <div>{{ invite.share.item.title }}</div>
@@ -46,11 +46,11 @@
                                     <td class="span2">{{ invite.sender.bestName }}</td>
                                     <td class="span3">{{ invite.createdAt|date }}</td>
                                     <td class="span1">
-                                        {% if invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_ACCEPTED') %}
+                                        {% if invite.state == constant('Libbit\\LoxBundle\\Entity\\Invitation::STATE_ACCEPTED') %}
                                             <a class="pull-right" rel="tooltip" title="{% trans %}Leave folder{% endtrans %}" href="{{ path('libbit_lox_invitation_revoke', { id: invite.id }) }}">
                                                 {% trans %}Leave{% endtrans %}
                                             </a>
-                                        {% elseif invite.state == constant('Rednose\\LoxBundle\\Entity\\Invitation::STATE_PENDING') %}
+                                        {% elseif invite.state == constant('Libbit\\LoxBundle\\Entity\\Invitation::STATE_PENDING') %}
                                             <a class="pull-right" rel="tooltip" title="{% trans %}Join folder{% endtrans %}" href="{{ path('libbit_lox_invitation_accept', { id: invite.id }) }}">
                                                 {% trans %}Join{% endtrans %}
                                             </a>

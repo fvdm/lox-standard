@@ -15,17 +15,13 @@
   </div>
 </div>
 
-{#{% if app.environment == 'prod' %}
-<script type="text/javascript" src="{{ asset('bundles/rednoseyui/lox-app.js') }}"></script>
-{% endif %}#}
-
 <script>
 YUI().use('lox-page', 'lox-app', function (Y) {
   new Y.Lox.Page().render();
 
   var container = Y.one('.libbit-lox-app');
 
-  var app = new Y.Lox.App({
+  var app = new Y.Lox.App.App({
     container: container,
     viewContainer: container
   });

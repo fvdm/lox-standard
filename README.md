@@ -47,11 +47,15 @@ Execute the following commands after setting up a **new** LocalBox installation:
 
         app/console assets:install --symlink web
 
-7. Warm the cache:
+7. Dump Assetic assets:
+	
+        app/console --env=prod assetic:dump
+
+8. Warm the cache:
 
         app/console --env=prod cache:warm
 
-8. Reinitialize permissions on the cache folder (use more restrictive permissions when deploying):
+9. Reinitialize permissions on the cache folder (use more restrictive permissions when deploying):
 
         [sudo] chmod -R 777 app/cache
 
@@ -67,15 +71,19 @@ Execute the following commands after updating an **existing** LocalBox installat
 
         app/console --env=prod cache:clear
 
-3. Install assets:
-
-        app/console assets:install --symlink web
-
-4. Execute database migrations:
+3. Execute database migrations:
 
         app/console doctrine:migrations:migrate
 
-5. Reinitialize permissions on the cache folder (use more restrictive permissions when deploying):
+4. Install assets:
+
+        app/console assets:install --symlink web
+
+5. Dump Assetic assets:
+	
+        app/console --env=prod assetic:dump
+
+6. Reinitialize permissions on the cache folder (use more restrictive permissions when deploying):
 
         [sudo] chmod -R 777 app/cache
 

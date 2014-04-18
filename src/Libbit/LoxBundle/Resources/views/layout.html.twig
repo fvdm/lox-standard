@@ -1,14 +1,30 @@
 <html>
 <head>
     <link href="{{ asset('bundles/rednoseframework/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('bundles/rednoseframework/rednose-ui/css/rednose-ui.css') }}" type="text/css" media="screen"/>
+    <link href="{{ asset('cdn/rednose-ui/build/rednose-ui/rednose-ui.css') }}"rel="stylesheet" />
 
-    <link href="{{ asset('bundles/libbitlox/lox.css') }}" rel="stylesheet" />
-    <link href="{{ asset('bundles/libbitlox/icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/libbitlox/css/lox.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/libbitlox/css/icons.css') }}" rel="stylesheet" />
 
     <script type="text/javascript" src="{{ asset('cdn/yui3/build/yui/yui-min.js') }}"></script>
-    <script type="text/javascript" src="{{ path('rednose_yui_config') }}"></script>
+
+    {# Include LOX application JS #}
+    {% javascripts
+        '@LibbitLoxBundle/Resources/public/js/*' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {# Include the module loaders #}
+    <script type="text/javascript" src="{{ asset('cdn/rednose-ui/build/rednose-loader/rednose-loader-min.js') }}"></script>
+
     <script>
+        {# Register the loaders as part of the YUI core #}
+        YUI.Env.core.push('rednose-loader');
+
+        {# Include the YUI config object with path and URL mappings #}
+        {{ rednose_yui_config() }}
+
+        {# Pass environment variables to the YUI core #}
         YUI.Env.routing = {
             logout                  : '{{ path('_rednose_framework_security_logout') }}',
             change_password         : '{{ path('rednose_framework_change_password') }}',
@@ -35,7 +51,6 @@
         };
 
         YUI.Env.token = '{{ csrf_provider.generateCsrfToken('web') }}';
-
     </script>
 </head>
 
