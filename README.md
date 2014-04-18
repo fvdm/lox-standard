@@ -4,9 +4,12 @@ The "LocalBox Standard Edition" distribution.
 
 ## System Requirements
 
-## Checking System Configuration
+* PHP needs to be a minimum version of PHP 5.3.3
+* Your php.ini needs to have the date.timezone setting
+* The PHP intl extension needs to be installed
+* MySQL needs to be installed
 
-Execute the check.php script from the command line, in the application's root directory:
+To check the system configuration, run the check.php script from the command line, in the application's root directory:
 
     php app/check.php
     
