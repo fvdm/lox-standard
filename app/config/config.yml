@@ -165,7 +165,6 @@ rednose_framework:
 rednose_yui:
     groups:
         - { name: rednose-ui, root: cdn/rednose-ui }
-        - { name: lox, root: bundles/libbitlox/lox }
 
 rms_push_notifications:
     ios:
