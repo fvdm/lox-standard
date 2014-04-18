@@ -55,9 +55,9 @@ Execute the following commands after setting up a **new** LocalBox installation:
 
         app/console --env=prod cache:warm
 
-9. Reinitialize permissions on the cache folder (use more restrictive permissions when deploying):
+9. Reinitialize permissions on the cache and data folder (use more restrictive permissions when deploying):
 
-        [sudo] chmod -R 777 app/cache
+        [sudo] chmod -R 777 app/cache data
 
 ### Initializing an updated installation
 

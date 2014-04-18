@@ -46,6 +46,8 @@ var FolderShareView = Y.Base.create('folderShareView', Y.View, [ Y.Rednose.View.
 
     close: true,
 
+    padding: true,
+
     buttons: {
         confirm: {
             position: 'right',

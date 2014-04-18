@@ -74,7 +74,9 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 
     close: true,
 
-	/**
+	padding: true,
+
+    /**
 	Container template.
 
 	@property {String} template

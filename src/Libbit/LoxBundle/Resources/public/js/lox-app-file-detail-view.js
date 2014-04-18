@@ -28,7 +28,9 @@ Provides a detail view when clicked on a file.
 @uses Rednose.View.Nav
 **/
 var FileDetailView = Y.Base.create('fileDetailView', Y.View, [ Y.Rednose.View.Nav ], {
-	template:
+	padding: true,
+
+    template:
 		'<div>' +
 			'<p class="' + CSS_BOOTSTRAP_TEXT_CENTER + '"><i class="{iconClass}"></i></p>' +
 			'<p class="' + CSS_BOOTSTRAP_TEXT_CENTER + '">{mimeType}</p>' +

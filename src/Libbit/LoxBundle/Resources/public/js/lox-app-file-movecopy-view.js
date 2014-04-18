@@ -35,7 +35,9 @@ var FileMoveCopyView = Y.Base.create('fileMoveCopyView', Y.View, [ Y.Rednose.Vie
 
 	template: '<div><div class="{treeviewClass}"></div></div>',
 
-	close: true,
+	padding: true,
+    
+    close: true,
 
 	buttons: {
 		confirm: {
