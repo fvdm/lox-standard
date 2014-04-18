@@ -87,7 +87,16 @@ class ConfigBuilder
      */
     public function getConfigObject($baseUrl, $local = false)
     {
-        return sprintf('YUI_config = %s;', $this->getJson($this->getGroups(), $local, $baseUrl));
+        $groups = array();
+
+        foreach ($this->groups as $name => $root) {
+            $groups[] = array(
+                'name'     => $name,
+                'root'     => $root,
+            );
+        }
+
+        return sprintf('YUI_config = %s;', $this->getJson($groups, $local, $baseUrl));
     }
 
     /**
