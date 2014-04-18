@@ -261,7 +261,7 @@ class ItemManager
     }
 
     /**
-     * Returns a children with a given name.
+     * Returns a child with a given name.
      *
      * If this is a share, it will return the shared item instance and never the source share.
      *
