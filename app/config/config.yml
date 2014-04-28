@@ -144,7 +144,8 @@ vich_uploader:
             delete_on_update: false # Don't delete on update, it breaks cloning
             upload_destination: %kernel.root_dir%/../data
             namer: vich_uploader.namer_uniqid
-            directory_namer: directory_namer.dir_path 
+            directory_namer: directory_namer.dir_path
+            inject_on_load: true
 
 rednose_framework:
     oauth: true
