@@ -26,7 +26,18 @@ class Migrations extends AbstractFixture implements OrderedFixtureInterface, Con
         /** @var Connection $connection */
         $connection = $this->container->get('database_connection');
 
-        $connection->exec('DELETE FROM `migration_versions`');
+        try {
+            $connection->exec('DELETE FROM `migration_versions`');
+        } catch (\Exception $e) {
+            // There is no migrations table yet.
+            $connection->exec(
+                'CREATE TABLE IF NOT EXISTS `migration_versions` (' .
+                '`version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,' .
+                'PRIMARY KEY (`version`)' .
+                ') ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;'
+            );
+        }
+
         $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("20140331134636")');
     }
 
