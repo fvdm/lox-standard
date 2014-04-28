@@ -50,7 +50,7 @@ class ChangePasswordController extends ContainerAware
      */
     protected function getRedirectionUrl(UserInterface $user)
     {
-        return $this->container->get('router')->generate('libbit_lox_home');
+        return $this->container->get('router')->generate('rednose_lox_home');
     }
 
     /**

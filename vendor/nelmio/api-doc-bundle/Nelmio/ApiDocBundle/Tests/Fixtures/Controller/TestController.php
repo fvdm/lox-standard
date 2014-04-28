@@ -21,6 +21,15 @@ class TestController
 {
     /**
      * @ApiDoc(
+     *     resource="TestResource"
+     * )
+     */
+    public function namedResourceAction()
+    {
+    }
+
+    /**
+     * @ApiDoc(
      *  resource=true,
      *  description="index action",
      *  filters={
@@ -71,10 +80,10 @@ class TestController
      *
      * @ApiDoc()
      *
-     * @param int $id   A nice comment
+     * @param int $id        A nice comment
      * @param int $page
      * @param int $paramType The param type
-     * @param int $param The param id
+     * @param int $param     The param id
      */
     public function myCommentedAction()
     {
@@ -158,7 +167,8 @@ class TestController
 
     /**
      * @ApiDoc(
-     *  authentication=true
+     *  authentication=true,
+     *  authenticationRoles={"ROLE_USER","ROLE_FOOBAR"}
      * )
      */
     public function authenticatedAction()
@@ -187,6 +197,86 @@ class TestController
      * )
      */
     public function jmsReturnNestedOutputAction()
+    {
+    }
+
+    /**
+     * @ApiDoc(
+     *     output="Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsChild"
+     * )
+     */
+    public function jmsReturnNestedExtendedOutputAction()
+    {
+    }
+
+    /**
+     * @ApiDoc(
+     *     output="Nelmio\ApiDocBundle\Tests\Fixtures\Model\MultipleTest"
+     * )
+     */
+    public function zReturnJmsAndValidationOutputAction()
+    {
+    }
+
+    /**
+     * @ApiDoc(
+     *  description="Returns a collection of Object",
+     *  requirements={
+     *      {"name"="limit", "dataType"="integer", "requirement"="\d+", "description"="how many objects to return"}
+     *  },
+     *  parameters={
+     *      {"name"="categoryId", "dataType"="integer", "required"=true, "description"="category id"}
+     *  }
+     * )
+     */
+    public function cgetAction($id)
+    {
+    }
+
+    /**
+     * @ApiDoc(
+     *     input={
+     *          "class"="Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType",
+     *          "parsers"={
+     *              "Nelmio\ApiDocBundle\Parser\FormTypeParser",
+     *          }
+     *     }
+     * )
+     */
+    public function zReturnSelectedParsersInputAction()
+    {
+    }
+
+    /**
+     * @ApiDoc(
+     *     output={
+     *          "class"="Nelmio\ApiDocBundle\Tests\Fixtures\Model\MultipleTest",
+     *          "parsers"={
+     *              "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
+     *              "Nelmio\ApiDocBundle\Parser\ValidationParser"
+     *          }
+     *     }
+     * )
+     */
+    public function zReturnSelectedParsersOutputAction()
+    {
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="private"
+     * )
+     */
+    public function privateAction()
+    {
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="exclusive"
+     * )
+     */
+    public function exclusiveAction()
     {
     }
 }

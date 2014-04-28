@@ -69,9 +69,4 @@ class JsonpCallbackValidatorTest extends \PHPUnit_Framework_TestCase
             array("array_of_functions['\'']",     self::IS_VALID),
         );
     }
-
-    public function testCallStatically()
-    {
-        $this->assertTrue(\JsonpCallbackValidator::validate('foo'));
-    }
 }

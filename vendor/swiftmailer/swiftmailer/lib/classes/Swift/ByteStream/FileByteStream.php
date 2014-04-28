@@ -46,6 +46,9 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
      */
     public function __construct($path, $writable = false)
     {
+        if (empty($path)) {
+            throw new Swift_IoException('The path cannot be empty');
+        }
         $this->_path = $path;
         $this->_mode = $writable ? 'w+b' : 'rb';
 
@@ -74,7 +77,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
      *
      * @param integer $length
      *
-     * @return string
+     * @return string|boolean
      *
      * @throws Swift_IoException
      */
@@ -90,13 +93,21 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
                 ini_set('magic_quotes_runtime', 1);
             }
             $this->_offset = ftell($fp);
+            
+            // If we read one byte after reaching the end of the file
+            // feof() will return false and an empty string is returned
+            if ($bytes === '' && feof($fp)) {
+            	$this->_resetReadHandle();
+            	
+            	return false;
+            }
 
             return $bytes;
-        } else {
-            $this->_resetReadHandle();
-
-            return false;
         }
+
+        $this->_resetReadHandle();
+
+        return false;
     }
 
     /**

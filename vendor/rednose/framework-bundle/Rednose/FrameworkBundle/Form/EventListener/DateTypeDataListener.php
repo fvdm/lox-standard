@@ -12,7 +12,7 @@
 namespace Rednose\FrameworkBundle\Form\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Event\FilterDataEvent;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -25,13 +25,13 @@ class DateTypeDataListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(FormEvents::SET_DATA => 'setData');
+        return array(FormEvents::PRE_SET_DATA => 'setData');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setData(FilterDataEvent $event)
+    public function setData(FormEvent $event)
     {
         if ($event->getData() == null) {
             $event->setData(new \DateTime);

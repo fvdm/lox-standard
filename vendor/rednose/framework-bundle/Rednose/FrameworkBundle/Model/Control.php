@@ -2,9 +2,6 @@
 
 namespace Rednose\FrameworkBundle\Model;
 
-use Rednose\FrameworkBundle\Exception\InvalidArgument;
-use Rednose\FrameworkBundle\Model\ContentDefinitionInterface;
-
 /**
  * The abstract control class.
  */
@@ -12,20 +9,24 @@ abstract class Control implements ContentDefinitionInterface, ControlInterface
 {
     protected $id;
     protected $value;
+    protected $handle;
     protected $caption;
     protected $type;
     protected $properties;
-    protected $weight;
+    protected $controlForm;
+    protected $sortOrder;
     protected $required;
     protected $visible;
     protected $protected;
+    protected $alignment;
     protected $readonly;
+    protected $help;
 
     public function __construct()
     {
         $this->type       = ContentDefinitionInterface::TYPE_TEXT;
         $this->properties = array();
-        $this->weight     = 0;
+        $this->sortOrder  = 0;
         $this->required   = false;
         $this->visible    = true;
         $this->protected  = false;
@@ -69,23 +70,19 @@ abstract class Control implements ContentDefinitionInterface, ControlInterface
     }
 
     /**
-     * Gets the caption of the control
-     *
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->caption;
-    }
-
-    /**
-     * Sets the caption of the control
-     *
-     * @param string $caption
+     * @param mixed $caption
      */
     public function setCaption($caption)
     {
         $this->caption = $caption;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCaption()
+    {
+        return $this->caption;
     }
 
     /**
@@ -213,29 +210,29 @@ abstract class Control implements ContentDefinitionInterface, ControlInterface
     }
 
     /**
-     * Gets the weight, for ordering
+     * Gets the sortOrder
      *
      * @return integer
      */
-    public function getWeight()
+    public function getSortOrder()
     {
-        return $this->weight;
+        return $this->sortOrder;
     }
 
     /**
-     * Sets the weight
+     * Sets the sortOrder
      *
-     * @param integer $weight
+     * @param integer $sortOrder
      */
-    public function setWeight($weight)
+    public function setSortOrder($sortOrder)
     {
-        $this->weight = $weight;
+        $this->sortOrder = $sortOrder;
     }
 
     /**
      * Get parent ControlForm
      *
-     * @return \ControlForm
+     * @return ControlFormInterface
      */
     public function getControlForm()
     {
@@ -245,7 +242,7 @@ abstract class Control implements ContentDefinitionInterface, ControlInterface
     /**
      * Sets the parent ControlForm
      *
-     * @param \ControlForm $form
+     * @param ControlFormInterface $form
      */
     public function setControlForm(ControlFormInterface $form)
     {

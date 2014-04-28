@@ -27,7 +27,7 @@ class FOSOAuthServerExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $processor     = new Processor();
-        $configuration = new Configuration($container->get('kernel.debug'));
+        $configuration = new Configuration();
 
         $config = $processor->processConfiguration($configuration, $configs);
 
@@ -43,6 +43,10 @@ class FOSOAuthServerExtension extends Extension
         $container->setAlias('fos_oauth_server.access_token_manager', $config['service']['access_token_manager']);
         $container->setAlias('fos_oauth_server.refresh_token_manager', $config['service']['refresh_token_manager']);
         $container->setAlias('fos_oauth_server.auth_code_manager', $config['service']['auth_code_manager']);
+
+        if (null !== $config['service']['user_provider']) {
+            $container->setAlias('fos_oauth_server.user_provider', new Alias($config['service']['user_provider'], false));
+        }
 
         $container->setParameter('fos_oauth_server.server.options', $config['service']['options']);
 
@@ -73,11 +77,6 @@ class FOSOAuthServerExtension extends Extension
 
         if (!empty($config['authorize'])) {
             $this->loadAuthorize($config['authorize'], $container, $loader);
-        }
-
-        if (null !== $userProvider = $config['service']['user_provider']) {
-            $container->getDefinition($config['service']['storage'])
-                ->replaceArgument(4, new Reference($userProvider));
         }
     }
 

@@ -2,10 +2,8 @@
 
 namespace Vich\UploaderBundle\Storage;
 
-use Vich\UploaderBundle\Storage\StorageInterface;
 use Gaufrette\Exception\FileNotFound;
 use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
-use Vich\UploaderBundle\Mapping\PropertyMapping;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -28,16 +26,23 @@ class GaufretteStorage extends AbstractStorage
     protected $filesystemMap;
 
     /**
+     * @var string
+     */
+    protected $protocol;
+
+    /**
      * Constructs a new instance of FileSystemStorage.
      *
      * @param \Vich\UploaderBundle\Mapping\PropertyMappingFactory $factory       The factory.
-     * @param FilesystemMap                                       $filesystemMap Gaufrete filesystem factory.
+     * @param \Knp\Bundle\GaufretteBundle\FilesystemMap           $filesystemMap Gaufrete filesystem factory.
+     * @param string                                              $protocol      Gaufrette stream wrapper protocol.
      */
-    public function __construct(PropertyMappingFactory $factory, FilesystemMap $filesystemMap)
+    public function __construct(PropertyMappingFactory $factory, FilesystemMap $filesystemMap, $protocol = 'gaufrette')
     {
         parent::__construct($factory);
 
         $this->filesystemMap = $filesystemMap;
+        $this->protocol      = $protocol;
     }
 
     /**
@@ -71,8 +76,9 @@ class GaufretteStorage extends AbstractStorage
 
         while (!$src->eof()) {
             $data = $src->read(100000);
-            $written = $dst->write($data);
+            $dst->write($data);
         }
+
         $dst->close();
         $src->close();
     }
@@ -89,7 +95,6 @@ class GaufretteStorage extends AbstractStorage
         } catch (FileNotFound $e) {
             return false;
         }
-
     }
 
     /**
@@ -97,6 +102,6 @@ class GaufretteStorage extends AbstractStorage
      */
     protected function doResolvePath($dir, $name)
     {
-        return 'gaufrette://' . $dir . '/' . $name;
+        return $this->protocol.'://' . $dir . '/' . $name;
     }
 }

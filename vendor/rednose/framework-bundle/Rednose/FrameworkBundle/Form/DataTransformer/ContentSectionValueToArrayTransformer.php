@@ -14,6 +14,9 @@ namespace Rednose\FrameworkBundle\Form\DataTransformer;
 use Rednose\FrameworkBundle\Model\ContentSectionValueInterface;
 use Rednose\FrameworkBundle\Model\ContentValueInterface;
 use Symfony\Component\Form\DataTransformerInterface;
+use Rednose\FrameworkBundle\Model\ContentDefinitionInterface;
+use Rednose\FrameworkBundle\Model\Node\Value\OutputValueNodeInterface;
+use Rednose\FrameworkBundle\Model\Node\Value\InputValueNodeInterface;
 
 /**
  * Transforms all controls and their values within a content section to an array that can be parsed by
@@ -44,6 +47,11 @@ class ContentSectionValueToArrayTransformer implements DataTransformerInterface
         $this->contentSectionValue = $contentSectionValue;
 
         $data = array();
+
+        // Initialize defaults.
+        foreach ($contentSectionValue->getContentSection()->getDefinitions() as $contentDefinition) {
+            $data[$contentDefinition->getContentId()] = $this->getValue($contentDefinition);
+        }
 
         // Transform all definitions that have a value assigned.
         foreach ($contentSectionValue->getContents() as $contentValue) {
@@ -77,11 +85,36 @@ class ContentSectionValueToArrayTransformer implements DataTransformerInterface
             // Check for existing form data for this definition.
             if (isset($data[$contentDefinition->getContentId()])) {
 
-                // Add the content to the section value.
-                $contentSectionValue->addContent($contentDefinition->getContentItem(), $data[$contentDefinition->getContentId()]);
+                // Check if the field is not flagged as readonly to prevent creating unwanted content
+                if ($contentDefinition->getContentItem()->isReadonly() === false) {
+                    // Add the content to the section value.
+                    $contentSectionValue->addContent($contentDefinition->getContentItem(), $data[$contentDefinition->getContentId()]);
+                }
             }
         }
 
         return $contentSectionValue;
+    }
+
+    /**
+     * Gets an initial value, either from an input node graph or a default value.
+     *
+     * @param ContentDefinitionInterface $definition
+     *
+     * @return string
+     */
+    protected function getValue(ContentDefinitionInterface $definition)
+    {
+        if ($definition instanceof OutputValueNodeInterface) {
+            $inputNode = $definition->getInput();
+
+            if ($inputNode !== null) {
+                if ($inputNode instanceof InputValueNodeInterface) {
+                    return $inputNode->getOutputValue();
+                }
+            }
+        }
+
+        return $definition->getDefaultValue();
     }
 }

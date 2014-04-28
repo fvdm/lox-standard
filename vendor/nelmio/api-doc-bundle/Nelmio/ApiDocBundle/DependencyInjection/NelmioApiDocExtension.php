@@ -29,6 +29,7 @@ class NelmioApiDocExtension extends Extension
         $config = $processor->processConfiguration($configuration, $configs);
 
         $container->setParameter('nelmio_api_doc.motd.template', $config['motd']['template']);
+        $container->setParameter('nelmio_api_doc.exclude_sections', $config['exclude_sections']);
         $container->setParameter('nelmio_api_doc.api_name', $config['name']);
         $container->setParameter('nelmio_api_doc.sandbox.enabled',  $config['sandbox']['enabled']);
         $container->setParameter('nelmio_api_doc.sandbox.endpoint', $config['sandbox']['endpoint']);
@@ -49,5 +50,26 @@ class NelmioApiDocExtension extends Extension
         if (isset($config['sandbox']['authentication'])) {
             $container->setParameter('nelmio_api_doc.sandbox.authentication', $config['sandbox']['authentication']);
         }
+
+        // backwards compatibility for Symfony2.1 https://github.com/nelmio/NelmioApiDocBundle/issues/231
+        if (!interface_exists('\Symfony\Component\Validator\MetadataFactoryInterface')) {
+            $container->setParameter('nelmio_api_doc.parser.validation_parser.class', 'Nelmio\ApiDocBundle\Parser\ValidationParserLegacy');
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return 'http://nelmio.github.io/schema/dic/nelmio_api_doc';
+    }
+
+    /**
+     * @return string
+     */
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__ . '/../Resources/config/schema';
     }
 }

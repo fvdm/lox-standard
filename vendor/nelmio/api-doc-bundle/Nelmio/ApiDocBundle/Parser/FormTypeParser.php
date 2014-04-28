@@ -25,6 +25,11 @@ class FormTypeParser implements ParserInterface
     protected $formFactory;
 
     /**
+     * @var \Symfony\Component\Form\FormRegistry
+     */
+    protected $formRegistry;
+
+    /**
      * @var array
      */
     protected $mapTypes = array(
@@ -77,7 +82,7 @@ class FormTypeParser implements ParserInterface
 
         $form = $this->formFactory->create($type);
 
-        return $this->parseForm($form, $form->getName());
+        return $this->parseForm($form, array_key_exists('name', $item) ? $item['name'] : $form->getName());
     }
 
     private function parseForm($form, $prefix = null)
@@ -97,6 +102,12 @@ class FormTypeParser implements ParserInterface
                 } elseif ('collection' === $type->getName()) {
                     if (is_string($config->getOption('type')) && isset($this->mapTypes[$config->getOption('type')])) {
                         $bestType = sprintf('array of %ss', $this->mapTypes[$config->getOption('type')]);
+                    } else {
+                        // Embedded form collection
+                        $subParameters = $this->parseForm($this->formFactory->create($config->getOption('type'), null, $config->getOption('options', array())), $name . '[]');
+                        $parameters = array_merge($parameters, $subParameters);
+
+                        continue 2;
                     }
                 }
             }

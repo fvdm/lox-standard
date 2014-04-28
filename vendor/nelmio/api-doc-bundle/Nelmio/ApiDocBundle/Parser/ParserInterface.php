@@ -19,7 +19,7 @@ interface ParserInterface
     /**
      * Return true/false whether this class supports parsing the given class.
      *
-     * @param  array  $item containing the following fields: class, groups. Of which groups is optional
+     * @param  array   $item containing the following fields: class, groups. Of which groups is optional
      * @return boolean
      */
     public function supports(array $item);
@@ -33,6 +33,8 @@ interface ParserInterface
      *  - readonly          boolean
      *  - children          (optional) array of nested property names mapped to arrays
      *                      in the format described here
+     *  - class             (optional) the fully-qualified class name of the item, if
+     *                      it is represented by an object
      *
      * @param  string $item The string type of input to parse.
      * @return array

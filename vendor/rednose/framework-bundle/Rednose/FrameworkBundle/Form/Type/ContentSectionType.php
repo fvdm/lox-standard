@@ -20,8 +20,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Rednose\FrameworkBundle\Model\Node\Value\OutputValueNodeInterface;
-use Rednose\FrameworkBundle\Model\Node\Value\InputValueNodeInterface;
 
 class ContentSectionType extends AbstractType
 {
@@ -42,25 +40,32 @@ class ContentSectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (isset($options['data']) === false) {
-            throw new \InvalidArgumentException('Data needs to be passed on form type construction.');
+        if (isset($options['data']) === false && isset($options['form']) === false) {
+            throw new \InvalidArgumentException('Data needs to be passed on form type construction, or option `form` needs to be specified.');
         }
 
-        $data = $options['data'];
+        $contentSection = null;
 
-        if (!$data instanceof ContentSectionValueInterface) {
-            throw new \InvalidArgumentException('Form data must implement ContentSectionValueInterface');
+        if (isset($options['form'])) {
+            $contentSection = $options['form'];
+        } else if (isset($options['data'])) {
+            $data = $options['data'];
+
+            if (!$data instanceof ContentSectionValueInterface) {
+                throw new \InvalidArgumentException('Form data must implement ContentSectionValueInterface');
+            }
+
+            $contentSection = $data->getContentSection();
         }
-
-        $contentSection = $data->getContentSection();
 
         if (!$contentSection instanceof ContentSectionInterface) {
             throw new \InvalidArgumentException('Content section must implement ContentSectionInterface');
         }
 
         foreach ($contentSection->getDefinitions() as $contentDefinition) {
-            $type    = null;
-            $options = array();
+            $properties = $contentDefinition->getProperties();
+            $type       = null;
+            $options    = array();
 
             $baseOptions = array(
                 'label'     => $contentDefinition->getCaption(),
@@ -75,9 +80,11 @@ class ContentSectionType extends AbstractType
             }
 
             if ($contentDefinition->getContentItem() instanceof ExtrinsicObjectInterface) {
+                // FIXME: Overriding the `attr` key in the $options array doens't merge correctly.
                 $baseOptions = array_merge_recursive($baseOptions, array(
                     'attr' => array(
-                        'data-id' => $contentDefinition->getContentItem()->getForeignId(),
+                        'data-id'   => $contentDefinition->getContentItem()->getForeignId(),
+                        'data-type' => $contentDefinition->getContentItem()->getType(),
                     ),
                 ));
             }
@@ -86,32 +93,88 @@ class ContentSectionType extends AbstractType
                 case ContentDefinitionInterface::TYPE_TEXT:
                     $type = 'text';
 
+                    break;
+
+                case ContentDefinitionInterface::TYPE_AUTOCOMPLETE:
+                    $type = 'rednose_autocomplete';
+
+                    // FIXME: See above.
                     $options = array(
-                        'data' => $this->getValue($contentDefinition)
+                        'attr' => array(
+                            'data-id'     => $contentDefinition->getContentItem()->getForeignId(),
+                            'data-type'   => $contentDefinition->getContentItem()->getType(),
+                            'placeholder' => $this->translator->trans('type_to_search_placeholder'),
+                        )
                     );
+
+                    if (isset($properties['choices'])) {
+                        $options['choices'] = $properties['choices'];
+                    }
+
+                    if (isset($properties['datasource'])) {
+                        $options['datasource'] = $properties['datasource'];
+                    }
+
+                    break;
+
+                case ContentDefinitionInterface::TYPE_DATETIME:
+                    $type = 'datetime';
+
+                    $date = new \DateTime();
+
+                    $options = array(
+                        'input'        => 'string',
+                        'with_seconds' => false,
+                        'date_format'  => \IntlDateFormatter::LONG,
+                        'data'         => $date->format('Y-m-d H:i:s'),
+                    );
+
+                    break;
+
+                case ContentDefinitionInterface::TYPE_CHECKBOX:
+                    $type = 'checkbox';
 
                     break;
 
                 case ContentDefinitionInterface::TYPE_HTML:
                     $type = 'rednose_widget_editor';
 
+                    // FIXME: See above.
                     $options = array(
                         'required' => false,
-                        'data'     => $this->getValue($contentDefinition),
                         'attr'     => array(
                             'data-id'       => $contentDefinition->getContentItem()->getForeignId(),
-                            'placeholder'   => $this->translator->trans('Type here...'),
+                            'data-type'     => $contentDefinition->getContentItem()->getType(),
+                            'placeholder'   => $this->translator->trans('type_here_placeholder'),
                             'data-required' => $contentDefinition->isRequired()
                         )
                     );
+
+                    if (isset($properties['height'])) {
+                        $options['height'] = $properties['height'];
+                    }
+
+                    if (isset($properties['inline'])) {
+                        $options['inline'] = $properties['inline'];
+                    }
+
+                    if (isset($properties['purify'])) {
+                        $options['purify'] = $properties['purify'];
+                    }
+
+                    if (isset($properties['scayt'])) {
+                        $options['scayt']  = $properties['scayt'];
+                    }
+
+                    if (isset($properties['toolbar'])) {
+                        $options['toolbar'] = $properties['toolbar'];
+                    }
 
                     break;
 
                 case ContentDefinitionInterface::TYPE_DROPDOWN:
                 case ContentDefinitionInterface::TYPE_RADIO:
                     $type = 'choice';
-
-                    $properties = $contentDefinition->getProperties();
 
                     $options = array(
                         'choices'     => $properties['choices'],
@@ -122,7 +185,16 @@ class ContentSectionType extends AbstractType
                     break;
             }
 
-            $builder->add((string) $contentDefinition->getContentId(), $type, array_merge($baseOptions, $options));
+            $formOptions = array_merge($baseOptions, $options);
+
+            // Initial form-connection implementation.
+            $connections = is_array($properties) && isset($properties['connections']) ? $properties['connections'] : null;
+
+            if ($connections) {
+                $formOptions['attr']['data-connections'] = json_encode($connections);
+            }
+
+            $builder->add((string) $contentDefinition->getContentId(), $type, $formOptions);
         }
 
         $builder->addViewTransformer(new ContentSectionValueToArrayTransformer);
@@ -135,6 +207,7 @@ class ContentSectionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => null,
+            'form'       => null,
         ));
     }
 
@@ -144,27 +217,5 @@ class ContentSectionType extends AbstractType
     public function getName()
     {
         return 'content_section';
-    }
-
-    /**
-     * Gets an initial value, either from an input node graph or a default value.
-     *
-     * @param ContentDefinitionInterface $definition
-     *
-     * @return string
-     */
-    protected function getValue(ContentDefinitionInterface $definition)
-    {
-        if ($definition instanceof OutputValueNodeInterface) {
-            $inputNode = $definition->getInput();
-
-            if ($inputNode !== null) {
-                if ($inputNode instanceof InputValueNodeInterface) {
-                    return $inputNode->getOutputValue();
-                }
-            }
-        }
-
-        return $definition->getDefaultValue();
     }
 }

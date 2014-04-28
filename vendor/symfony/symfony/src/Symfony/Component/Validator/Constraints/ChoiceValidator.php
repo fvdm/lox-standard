@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ChoiceValidator extends ConstraintValidator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint)
     {
@@ -45,8 +45,8 @@ class ChoiceValidator extends ConstraintValidator
         }
 
         if ($constraint->callback) {
-            if (is_callable(array($this->context->getCurrentClass(), $constraint->callback))) {
-                $choices = call_user_func(array($this->context->getCurrentClass(), $constraint->callback));
+            if (is_callable(array($this->context->getClassName(), $constraint->callback))) {
+                $choices = call_user_func(array($this->context->getClassName(), $constraint->callback));
             } elseif (is_callable($constraint->callback)) {
                 $choices = call_user_func($constraint->callback);
             } else {

@@ -1,8 +1,6 @@
 <?php
 
-namespace Vich\UploaderBundle\Tests\Storage;
-
-use Vich\UploaderBundle\Tests\DummyEntity;
+namespace Vich\UploaderBundle\Tests\Naming;
 
 use Vich\UploaderBundle\Naming\OrignameNamer;
 
@@ -29,17 +27,23 @@ class OrignameNamerTest extends \PHPUnit_Framework_TestCase
         $file = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
             ->disableOriginalConstructor()
             ->getMock();
-
         $file
             ->expects($this->any())
             ->method('getClientOriginalName')
             ->will($this->returnValue($name));
 
-        $entity = new DummyEntity;
-        $entity->setFile($file);
+        $entity = new \DateTime();
+
+        $mapping = $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMapping')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mapping->expects($this->once())
+            ->method('getFile')
+            ->with($entity)
+            ->will($this->returnValue($file));
 
         $namer = new OrignameNamer();
 
-        $this->assertRegExp($pattern, $namer->name($entity, 'file'));
+        $this->assertRegExp($pattern, $namer->name($entity, $mapping));
     }
 }

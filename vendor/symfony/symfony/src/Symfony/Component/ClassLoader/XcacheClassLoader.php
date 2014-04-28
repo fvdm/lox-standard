@@ -51,6 +51,9 @@ class XcacheClassLoader
      * @param string $prefix      A prefix to create a namespace in Xcache
      * @param object $classFinder An object that implements findFile() method.
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     *
      * @api
      */
     public function __construct($prefix, $classFinder)
@@ -70,7 +73,7 @@ class XcacheClassLoader
     /**
      * Registers this instance as an autoloader.
      *
-     * @param Boolean $prepend Whether to prepend the autoloader or not
+     * @param bool    $prepend Whether to prepend the autoloader or not
      */
     public function register($prepend = false)
     {
@@ -90,7 +93,7 @@ class XcacheClassLoader
      *
      * @param string $class The name of the class
      *
-     * @return Boolean|null True, if loaded
+     * @return bool|null    True, if loaded
      */
     public function loadClass($class)
     {
@@ -113,7 +116,8 @@ class XcacheClassLoader
         if (xcache_isset($this->prefix.$class)) {
             $file = xcache_get($this->prefix.$class);
         } else {
-            xcache_set($this->prefix.$class, $file = $this->classFinder->findFile($class));
+            $file = $this->classFinder->findFile($class);
+            xcache_set($this->prefix.$class, $file);
         }
 
         return $file;

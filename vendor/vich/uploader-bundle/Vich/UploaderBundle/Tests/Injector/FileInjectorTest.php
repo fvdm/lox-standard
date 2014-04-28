@@ -9,6 +9,8 @@ use Vich\UploaderBundle\Tests\DummyEntity;
 /**
  * FileInjectorTest.
  *
+ * @todo use vfsStream (http://phpunit.de/manual/current/en/test-doubles.html#test-doubles.mocking-the-filesystem)
+ *
  * @author Dustin Dobervich <ddobervich@gmail.com>
  */
 class FileInjectorTest extends \PHPUnit_Framework_TestCase
@@ -44,44 +46,31 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
 
         $obj = $this->getMock('Vich\UploaderBundle\Tests\DummyEntity');
 
-        $prop = $this->getMockBuilder('\ReflectionProperty')
+        $fileMapping = $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMapping')
             ->disableOriginalConstructor()
             ->getMock();
-
-        $prop
-            ->expects($this->once())
-            ->method('setValue');
-
-        $fileNameProp = $this->getMockBuilder('\ReflectionProperty')
-                        ->disableOriginalConstructor()
-                        ->getMock();
-
-        $fileMapping = $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMapping')
-                       ->disableOriginalConstructor()
-                       ->getMock();
-
         $fileMapping
             ->expects($this->once())
             ->method('getInjectOnLoad')
             ->will($this->returnValue(true));
-
         $fileMapping
-            ->expects($this->exactly(2))
-            ->method('getProperty')
-            ->will($this->returnValue($prop));
-
-
-        $mappings = array($fileMapping);
+            ->expects($this->once())
+            ->method('getFilePropertyName')
+            ->will($this->returnValue('file'));
+        $fileMapping
+            ->expects($this->once())
+            ->method('setFile');
 
         $this->factory
             ->expects($this->once())
             ->method('fromObject')
             ->with($obj)
-            ->will($this->returnValue($mappings));
+            ->will($this->returnValue(array($fileMapping)));
 
         $this->storage
             ->expects($this->once())
             ->method('resolvePath')
+            ->with($obj, 'file')
             ->will($this->returnValue($uploadDir));
 
         $inject = new FileInjector($this->factory, $this->storage);
@@ -104,64 +93,33 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
 
         $obj = $this->getMock('Vich\UploaderBundle\Tests\TwoFieldsDummyEntity');
 
-        $fileProp = $this->getMockBuilder('\ReflectionProperty')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fileProp
-            ->expects($this->once())
-            ->method('setValue');
-
-        $fileNameProp = $this->getMockBuilder('\ReflectionProperty')
-                        ->disableOriginalConstructor()
-                        ->getMock();
-
-        $imageProp = $this->getMockBuilder('\ReflectionProperty')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $imageProp
-            ->expects($this->once())
-            ->method('setValue');
-
-        $imageNameProp = $this->getMockBuilder('\ReflectionProperty')
-                         ->disableOriginalConstructor()
-                         ->getMock();
         $fileMapping = $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMapping')
-                       ->disableOriginalConstructor()
-                       ->getMock();
-
+            ->disableOriginalConstructor()
+            ->getMock();
         $fileMapping
             ->expects($this->once())
             ->method('getInjectOnLoad')
             ->will($this->returnValue(true));
-
         $fileMapping
-            ->expects($this->exactly(2))
-            ->method('getProperty')
-            ->will($this->returnValue($fileProp));
+            ->expects($this->once())
+            ->method('setFile');
 
         $imageMapping = $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMapping')
-                       ->disableOriginalConstructor()
-                       ->getMock();
-
+            ->disableOriginalConstructor()
+            ->getMock();
         $imageMapping
             ->expects($this->once())
             ->method('getInjectOnLoad')
             ->will($this->returnValue(true));
-
         $imageMapping
-            ->expects($this->exactly(2))
-            ->method('getProperty')
-            ->will($this->returnValue($imageProp));
-
-        $mappings = array($fileMapping, $imageMapping);
+            ->expects($this->once())
+            ->method('setFile');
 
         $this->factory
             ->expects($this->once())
             ->method('fromObject')
             ->with($obj)
-            ->will($this->returnValue($mappings));
+            ->will($this->returnValue(array($fileMapping, $imageMapping)));
 
         $this->storage
             ->expects($this->exactly(2))
@@ -183,18 +141,17 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
     {
         $obj = $this->getMock('Vich\UploaderBundle\Tests\DummyEntity');
 
-        $fileNameProp = $this->getMockBuilder('\ReflectionProperty')
-                        ->disableOriginalConstructor()
-                        ->getMock();
-
         $fileMapping = $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMapping')
-                       ->disableOriginalConstructor()
-                       ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $fileMapping
             ->expects($this->once())
             ->method('getInjectOnLoad')
             ->will($this->returnValue(false));
+        $fileMapping
+            ->expects($this->never())
+            ->method('setValue');
 
         $this->factory
             ->expects($this->once())
@@ -205,7 +162,7 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
         $inject = new FileInjector($this->factory, $this->storage);
         $inject->injectFiles($obj);
 
-        $this->assertEquals(null, $obj->getFile());
+        $this->assertNull($obj->getFile());
     }
 
     /**
@@ -218,35 +175,17 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
 
         $obj = $this->getMock('Vich\UploaderBundle\Tests\DummyEntity');
 
-        $fileNameProp = $this->getMockBuilder('\ReflectionProperty')
-                        ->disableOriginalConstructor()
-                        ->getMock();
         $fileMapping = $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMapping')
-                       ->disableOriginalConstructor()
-                       ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $fileMapping
             ->expects($this->once())
             ->method('getInjectOnLoad')
             ->will($this->returnValue(true));
-
-        $prop = $this->getMockBuilder('\ReflectionProperty')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $prop
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue('test_adapter'));
-
-        $prop
-            ->expects($this->once())
-            ->method('setValue');
-
         $fileMapping
-            ->expects($this->exactly(2))
-            ->method('getProperty')
-            ->will($this->returnValue($prop));
+            ->expects($this->never())
+            ->method('setValue');
 
         $this->factory
             ->expects($this->once())
@@ -257,12 +196,12 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
         $this->storage
             ->expects($this->once())
             ->method('resolvePath')
-            ->will($this->returnValue($uploadDir));
+            ->will($this->throwException(new \InvalidArgumentException));
 
         $inject = new FileInjector($this->factory, $this->storage);
         $inject->injectFiles($obj);
 
-        $this->assertEquals(null, $obj->getFile());
+        $this->assertNull($obj->getFile());
     }
 
     /**
@@ -273,8 +212,8 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
     protected function getMockMappingFactory()
     {
         return $this->getMockBuilder('Vich\UploaderBundle\Mapping\PropertyMappingFactory')
-               ->disableOriginalConstructor()
-               ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**
@@ -285,8 +224,7 @@ class FileInjectorTest extends \PHPUnit_Framework_TestCase
     protected function getMockStorage()
     {
         return $this->getMockBuilder('Vich\UploaderBundle\Storage\GaufretteStorage')
-               ->disableOriginalConstructor()
-               ->getMock()
-        ;
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }

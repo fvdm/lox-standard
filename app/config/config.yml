@@ -3,19 +3,14 @@ imports:
     - { resource: security.yml }
 
 framework:
-    #esi:             ~
-    translator:      { fallback: "%locale%" }
-    secret:          "%secret%"
-    router:
-        resource: "%kernel.root_dir%/config/routing.yml"
-        strict_requirements: "%kernel.debug%"
+    translator:      { fallback: 'nl' }
+    secret:          %secret%
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
     form:            true
     csrf_protection: true
     validation:      { enable_annotations: true }
+    default_locale:  %locale%
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-    default_locale:  "%locale%"
-    trust_proxy_headers: false # Deprecated in 2.0; will be removed in 2.3 (used trusted_proxies instead)
-    trusted_proxies: ~
     session:         ~
 
 # Twig Configuration
@@ -88,21 +83,21 @@ sonata_block:
         sonata.block.service.action:
         sonata.block.service.rss:
 
-sonata_notification:
-    backend: sonata.notification.backend.doctrine
-
-    queues:
-        - { queue: catchall, default: true }
-
-    backends:
-       rabbitmq:
-           exchange:     amq.direct
-           connection:
-               host:     localhost
-               user:     guest
-               pass:     guest
-               port:     5672
-               vhost:    /
+#sonata_notification:
+#    backend: sonata.notification.backend.doctrine
+#
+#    queues:
+#        - { queue: catchall, default: true }
+#
+#    backends:
+#       rabbitmq:
+#           exchange:     amq.direct
+#           connection:
+#               host:     localhost
+#               user:     guest
+#               pass:     guest
+#               port:     5672
+#               vhost:    /
 
 fos_rest:
     param_fetcher_listener: true

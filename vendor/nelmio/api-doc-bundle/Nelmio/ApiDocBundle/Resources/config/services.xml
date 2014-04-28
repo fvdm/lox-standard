@@ -12,10 +12,11 @@
         <parameter key="nelmio_api_doc.extractor.handler.fos_rest.class">Nelmio\ApiDocBundle\Extractor\Handler\FosRestHandler</parameter>
         <parameter key="nelmio_api_doc.extractor.handler.jms_security.class">Nelmio\ApiDocBundle\Extractor\Handler\JmsSecurityExtraHandler</parameter>
         <parameter key="nelmio_api_doc.extractor.handler.sensio_framework_extra.class">Nelmio\ApiDocBundle\Extractor\Handler\SensioFrameworkExtraHandler</parameter>
+        <parameter key="nelmio_api_doc.extractor.handler.phpdoc.class">Nelmio\ApiDocBundle\Extractor\Handler\PhpDocHandler</parameter>
     </parameters>
 
     <services>
-        <service id='nelmio_api_doc.doc_comment_extractor' class='%nelmio_api_doc.doc_comment_extractor.class%' />
+        <service id='nelmio_api_doc.doc_comment_extractor' class="%nelmio_api_doc.doc_comment_extractor.class%" />
 
         <service id="nelmio_api_doc.extractor.api_doc_extractor" class="%nelmio_api_doc.extractor.api_doc_extractor.class%">
             <argument type="service" id="service_container"/>
@@ -47,6 +48,10 @@
             <tag name="nelmio_api_doc.extractor.handler"/>
         </service>
 
+        <service id="nelmio_api_doc.extractor.handler.phpdoc" class="%nelmio_api_doc.extractor.handler.phpdoc.class%" public="false">
+            <argument type="service" id="nelmio_api_doc.doc_comment_extractor" />
+            <tag name="nelmio_api_doc.extractor.handler"/>
+        </service>
     </services>
 
 </container>

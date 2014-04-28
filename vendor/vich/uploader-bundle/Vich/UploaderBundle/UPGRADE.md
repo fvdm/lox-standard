@@ -1,8 +1,10 @@
-Upgrading from v0.7.0 to master
+Upgrading from v0.9.0 to master
 ===============================
 
-Upgrading from v0.6.0 to 0.7.0
-===============================
+- `inject_on_load` config param defaults to false. Set it to
+true if you want to keep your old behavior.
+
+- the `NamerInterface` and `DirectoryNamerInterface` were modified.
 
 Upgrading from v0.5.0 to 0.6.0
 ===============================

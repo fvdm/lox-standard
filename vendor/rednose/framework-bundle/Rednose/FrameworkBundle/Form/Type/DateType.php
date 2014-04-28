@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToTimestampTra
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * A localized wrapper to implement the YUI datepicker widget.
@@ -42,22 +43,21 @@ class DateType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view
-            ->set('disable', $form->getAttribute('disable'))
-            // TODO: Inject dependency
-            ->set('locale', 'nl')
-        ;
+        $view->vars['disable'] = $form->getConfig()->getAttribute('disable');
+
+        // TODO: Inject dependency
+        $view->vars['locale'] = 'nl';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => null,
             'disable'    => 'false',
-        );
+        ));
     }
 
     /**

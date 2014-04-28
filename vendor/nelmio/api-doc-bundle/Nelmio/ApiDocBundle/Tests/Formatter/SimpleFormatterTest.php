@@ -60,6 +60,7 @@ class SimpleFormatterTest extends WebTestCase
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 1 =>
@@ -94,6 +95,7 @@ class SimpleFormatterTest extends WebTestCase
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 2 =>
@@ -134,6 +136,7 @@ class SimpleFormatterTest extends WebTestCase
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 3 =>
@@ -174,6 +177,7 @@ class SimpleFormatterTest extends WebTestCase
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
             ),
@@ -196,6 +200,7 @@ class SimpleFormatterTest extends WebTestCase
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 1 =>
@@ -205,6 +210,7 @@ class SimpleFormatterTest extends WebTestCase
                     'description' => 'Action without HTTP verb',
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 2 =>
@@ -223,6 +229,7 @@ class SimpleFormatterTest extends WebTestCase
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 3 =>
@@ -231,6 +238,7 @@ class SimpleFormatterTest extends WebTestCase
                     'uri' => '/authenticated',
                     'https' => false,
                     'authentication' => true,
+                    'authenticationRoles' => array('ROLE_USER','ROLE_FOOBAR'),
                     'deprecated' => false,
                 ),
                 4 =>
@@ -431,6 +439,7 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 5 =>
@@ -450,6 +459,7 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 6 =>
@@ -490,6 +500,7 @@ And, it supports multilines until the first \'@\' char.',
                     'description' => 'This method is useful to test if the getDocComment works.',
                     'documentation' => "This method is useful to test if the getDocComment works.\nAnd, it supports multilines until the first '@' char.",
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 7 =>
@@ -498,6 +509,7 @@ And, it supports multilines until the first \'@\' char.',
                     'uri' => '/return-nested-output',
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                     'response' =>
                     array (
@@ -695,17 +707,9 @@ With multiple lines.',
                 array(
                     'method' => 'ANY',
                     'uri' => '/secure-route',
-                    'requirements' =>
-                    array(
-                        '_scheme' =>
-                        array(
-                            'requirement' => 'https',
-                            'dataType' => '',
-                            'description' => '',
-                        ),
-                    ),
                     'https' => true,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 9 =>
@@ -723,6 +727,7 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 10 =>
@@ -731,6 +736,7 @@ With multiple lines.',
                     'uri' => '/z-action-with-deprecated-indicator',
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => true,
                 ),
                 11 =>
@@ -748,6 +754,7 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 12 =>
@@ -764,6 +771,7 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 13 =>
@@ -781,6 +789,7 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
                 14 =>
@@ -799,6 +808,143 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
+                    'deprecated' => false,
+                ),
+                15 =>
+                array(
+                    'method' => 'ANY',
+                    'uri' => '/z-return-jms-and-validator-output',
+                    'https' => false,
+                    'authentication' => false,
+                    'deprecated' => false,
+                    'response' => array (
+                        'bar' => array(
+                            'dataType' => 'DateTime',
+                            'required' => null,
+                            'readonly' => null
+                        ),
+                        'number' => array(
+                            'dataType' => 'DateTime',
+                            'required' => false,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null
+                        ),
+                        'objects' => array(
+                            'dataType' => 'array of objects (Test)',
+                            'readonly' => null,
+                            'required' => null,
+                            'children' => array(
+                                'a' => array(
+                                    'dataType' => 'string',
+                                    'format' => '{length: min: foo}, {not blank}',
+                                    'required' => true,
+                                    'readonly' => null
+                                ),
+                                'b' => array(
+                                    'dataType' => 'DateTime',
+                                    'required' => null,
+                                    'readonly' => null
+                                )
+                            )
+                        )
+                    ),
+                    'authenticationRoles' => array(),
+                ),
+                16 =>
+                array(
+                    'method' => "ANY",
+                    'uri' => "/z-return-selected-parsers-input",
+                    'https' => false,
+                    'authentication' => false,
+                    'deprecated' => false,
+                    'authenticationRoles' => array(),
+                    'parameters' =>
+                    array(
+                        'a' => array(
+                            'dataType' => 'string',
+                            'required' => true,
+                            'description' => 'A nice description',
+                            'readonly' => false,
+                        ),
+                        'b' => array(
+                            'dataType' => 'string',
+                            'required' => false,
+                            'description' => '',
+                            'readonly' => false,
+                        ),
+                        'c' => array(
+                            'dataType' => 'boolean',
+                            'required' => true,
+                            'description' => '',
+                            'readonly' => false,
+                        ),
+                    )
+                ),
+                17 =>
+                array(
+                    'method' => "ANY",
+                    'uri' => "/z-return-selected-parsers-output",
+                    'https' => false,
+                    'authentication' => false,
+                    'deprecated' => false,
+                    'response' => array (
+                        'bar' => array(
+                            'dataType' => 'DateTime',
+                            'required' => null,
+                            'readonly' => null
+                        ),
+                        'number' => array(
+                            'dataType' => 'DateTime',
+                            'required' => false,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null
+                        ),
+                        'objects' => array(
+                            'dataType' => 'array of objects (Test)',
+                            'readonly' => null,
+                            'required' => null,
+                            'children' => array(
+                                'a' => array(
+                                    'dataType' => 'string',
+                                    'format' => '{length: min: foo}, {not blank}',
+                                    'required' => true,
+                                    'readonly' => null
+                                ),
+                                'b' => array(
+                                    'dataType' => 'DateTime',
+                                    'required' => null,
+                                    'readonly' => null
+                                )
+                            )
+                        )
+                    ),
+                    'authenticationRoles' => array(),
+                )
+            ),
+            '/tests2' =>
+            array(
+                0 =>
+                array(
+                    'method' => 'POST',
+                    'uri' => '/tests2.{_format}',
+                    'description' => 'post test 2',
+                    'requirements' =>
+                    array(
+                        '_format' =>
+                        array(
+                            'requirement' => '',
+                            'dataType' => '',
+                            'description' => '',
+                        ),
+                    ),
+                    'https' => false,
+                    'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
             ),
@@ -820,27 +966,19 @@ With multiple lines.',
                     ),
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
             ),
-            '/tests2' =>
+            'TestResource' =>
             array(
                 0 =>
                 array(
-                    'method' => 'POST',
-                    'uri' => '/tests2.{_format}',
-                    'description' => 'post test 2',
-                    'requirements' =>
-                    array(
-                        '_format' =>
-                        array(
-                            'requirement' => '',
-                            'dataType' => '',
-                            'description' => '',
-                        ),
-                    ),
+                    'method' => 'ANY',
+                    'uri' => '/named-resource',
                     'https' => false,
                     'authentication' => false,
+                    'authenticationRoles' => array(),
                     'deprecated' => false,
                 ),
             ),
@@ -878,7 +1016,8 @@ With multiple lines.',
             ),
             'https' => false,
             'authentication' => false,
-                    'deprecated' => false,
+            'authenticationRoles' => array(),
+            'deprecated' => false,
         );
 
         $this->assertEquals($expected, $result);

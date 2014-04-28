@@ -35,13 +35,24 @@ class RednoseFrameworkExtension extends Extension
             $loader->load('acl.xml');
         }
 
-        $serviceFiles = array('admin', 'grid', 'orm', 'services');
+        $serviceFiles = array('grid', 'orm', 'services', 'twig');
 
         foreach ($serviceFiles as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
 
-        $this->loadAccount($config['auto_account_creation'], $container);
+        if ($config['user']) {
+            $loader->load('admin.xml');
+            $this->loadAccount($config['auto_account_creation'], $container);
+        }
+
+        $this->loadForm($config['form'], $container);
+    }
+
+    private function loadForm(array $config, ContainerBuilder $container)
+    {
+        $container->getDefinition('form.type.rednose_widget_editor')->replaceArgument(2, $config['editor']);
+        $container->setParameter('form.type.rednose_widget_editor.type', $config['editor']);
     }
 
     private function loadAccount($config, ContainerBuilder $container)

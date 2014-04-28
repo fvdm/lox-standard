@@ -3,46 +3,34 @@
 namespace Vich\UploaderBundle\Adapter\ORM;
 
 use Vich\UploaderBundle\Adapter\AdapterInterface;
-use Doctrine\Common\EventArgs;
-use Doctrine\ORM\Proxy\Proxy;
+use Vich\UploaderBundle\Adapter\Doctrine\DoctrineAdapter;
 
 /**
  * DoctrineORMAdapter.
  *
  * @author Dustin Dobervich <ddobervich@gmail.com>
  */
-class DoctrineORMAdapter implements AdapterInterface
+class DoctrineORMAdapter extends DoctrineAdapter implements AdapterInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function getObjectFromArgs(EventArgs $e)
+    public function getObjectFromArgs($event)
     {
-        return $e->getEntity();
+        return $event->getEntity();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function recomputeChangeSet(EventArgs $e)
+    public function recomputeChangeSet($event)
     {
-        $obj = $this->getObjectFromArgs($e);
+        $object = $this->getObjectFromArgs($event);
 
-        $em = $e->getEntityManager();
+        $em = $event->getEntityManager();
         $uow = $em->getUnitOfWork();
-        $metadata = $em->getClassMetadata(get_class($obj));
-        $uow->recomputeSingleEntityChangeSet($metadata, $obj);
+        $metadata = $em->getClassMetadata(get_class($object));
+        $uow->recomputeSingleEntityChangeSet($metadata, $object);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getReflectionClass($obj)
-    {
-        if ($obj instanceof Proxy) {
-            return new \ReflectionClass(get_parent_class($obj));
-        }
-
-        return new \ReflectionClass($obj);
-    }
 }

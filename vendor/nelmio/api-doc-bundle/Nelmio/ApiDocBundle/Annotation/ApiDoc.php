@@ -50,6 +50,11 @@ class ApiDoc
     private $output = null;
 
     /**
+     * @var string
+     */
+    private $link = null;
+
+    /**
      * Most of the time, a single line of text describing the action.
      *
      * @var string
@@ -73,7 +78,7 @@ class ApiDoc
     /**
      * @var Boolean
      */
-    private $isResource = false;
+    private $resource = false;
 
     /**
      * @var string
@@ -111,6 +116,11 @@ class ApiDoc
     private $authentication = false;
 
     /**
+     * @var array
+     */
+    private $authenticationRoles = array();
+
+    /**
      * @var int
      */
     private $cache;
@@ -127,7 +137,7 @@ class ApiDoc
 
     public function __construct(array $data)
     {
-        $this->isResource = isset($data['resource']) && $data['resource'];
+        $this->resource = !empty($data['resource']) ? $data['resource'] : false;
 
         if (isset($data['description'])) {
             $this->description = $data['description'];
@@ -148,6 +158,39 @@ class ApiDoc
             }
         }
 
+        if (isset($data['requirements'])) {
+            foreach ($data['requirements'] as $requirement) {
+                if (!isset($requirement['name'])) {
+                    throw new \InvalidArgumentException('A "requirement" element has to contain a "name" attribute');
+                }
+
+                $name = $requirement['name'];
+                unset($requirement['name']);
+
+                $this->addRequirement($name, $requirement);
+            }
+        }
+
+        if (isset($data['parameters'])) {
+            foreach ($data['parameters'] as $parameter) {
+                if (!isset($parameter['name'])) {
+                    throw new \InvalidArgumentException('A "parameter" element has to contain a "name" attribute');
+                }
+
+                if (!isset($parameter['dataType'])) {
+                    throw new \InvalidArgumentException(sprintf(
+                        '"%s" parameter element has to contain a "dataType" attribute',
+                        $parameter['name']
+                    ));
+                }
+
+                $name = $parameter['name'];
+                unset($parameter['name']);
+
+                $this->addParameter($name, $parameter);
+            }
+        }
+
         if (isset($data['output'])) {
             $this->output = $data['output'];
         }
@@ -162,6 +205,12 @@ class ApiDoc
             $this->setAuthentication((bool) $data['authentication']);
         }
 
+        if (isset($data['authenticationRoles'])) {
+            foreach ($data['authenticationRoles'] as $key => $role) {
+                $this->authenticationRoles[] = $role;
+            }
+        }
+
         if (isset($data['cache'])) {
             $this->setCache($data['cache']);
         }
@@ -172,6 +221,10 @@ class ApiDoc
 
         if (isset($data['deprecated'])) {
             $this->deprecated = $data['deprecated'];
+        }
+
+        if (isset($data['https'])) {
+            $this->https = $data['https'];
         }
     }
 
@@ -243,6 +296,14 @@ class ApiDoc
     }
 
     /**
+     * @param string $link
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
+
+    /**
      * @param string $section
      */
     public function setSection($section)
@@ -267,11 +328,27 @@ class ApiDoc
     }
 
     /**
+     * @return string
+     */
+    public function getDocumentation()
+    {
+        return $this->documentation;
+    }
+
+    /**
      * @return Boolean
      */
     public function isResource()
     {
-        return $this->isResource;
+        return (bool) $this->resource;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResource()
+    {
+        return $this->resource && is_string($this->resource) ? $this->resource : false;
     }
 
     /**
@@ -375,6 +452,22 @@ class ApiDoc
     }
 
     /**
+     * @return array
+     */
+    public function getAuthenticationRoles()
+    {
+        return $this->authenticationRoles;
+    }
+
+    /**
+     * @param array $authenticationRoles
+     */
+    public function setAuthenticationRoles($authenticationRoles)
+    {
+        $this->authenticationRoles = $authenticationRoles;
+    }
+
+    /**
      * @return int
      */
     public function getCache()
@@ -420,6 +513,7 @@ class ApiDoc
     public function setDeprecated($deprecated)
     {
         $this->deprecated = (bool) $deprecated;
+
         return $this;
     }
 
@@ -439,6 +533,10 @@ class ApiDoc
 
         if ($description = $this->description) {
             $data['description'] = $description;
+        }
+
+        if ($link = $this->link) {
+            $data['link'] = $link;
         }
 
         if ($documentation = $this->documentation) {
@@ -475,6 +573,7 @@ class ApiDoc
 
         $data['https'] = $this->https;
         $data['authentication'] = $this->authentication;
+        $data['authenticationRoles'] = $this->authenticationRoles;
         $data['deprecated'] = $this->deprecated;
 
         return $data;

@@ -98,7 +98,9 @@ class JmsMetadataParser implements ParserInterface
         }
 
         $exclusionStrategies   = array();
-        $exclusionStrategies[] = new GroupsExclusionStrategy($groups);
+        if ($groups) {
+            $exclusionStrategies[] = new GroupsExclusionStrategy($groups);
+        }
 
         $params = array();
 
@@ -120,11 +122,15 @@ class JmsMetadataParser implements ParserInterface
                     'dataType'     => $dataType['normalized'],
                     'required'     => false,
                     //TODO: can't think of a good way to specify this one, JMS doesn't have a setting for this
-                    'description'  => $this->getDescription($className, $item),
+                    'description'  => $this->getDescription($item),
                     'readonly'     => $item->readOnly,
                     'sinceVersion' => $item->sinceVersion,
                     'untilVersion' => $item->untilVersion,
                 );
+
+                if (!is_null($dataType['class'])) {
+                    $params[$name]['class'] = $dataType['class'];
+                }
 
                 // if class already parsed, continue, to avoid infinite recursion
                 if (in_array($dataType['class'], $visited)) {
@@ -178,6 +184,14 @@ class JmsMetadataParser implements ParserInterface
             );
         }
 
+        // we can use type property also for custom handlers, then we don't have here real class name
+        if (!class_exists($type)) {
+            return array(
+                'normalized' => sprintf("custom handler result for (%s)", $type),
+                'class' => null
+            );
+        }
+
         // if we got this far, it's a general class name
         $exp = explode("\\", $type);
 
@@ -215,9 +229,9 @@ class JmsMetadataParser implements ParserInterface
         return null;
     }
 
-    protected function getDescription($className, PropertyMetadata $item)
+    protected function getDescription(PropertyMetadata $item)
     {
-        $ref = new \ReflectionClass($className);
+        $ref = new \ReflectionClass($item->class);
         if ($item instanceof VirtualPropertyMetadata) {
             $extracted = $this->commentExtractor->getDocCommentText($ref->getMethod($item->getter));
         } else {

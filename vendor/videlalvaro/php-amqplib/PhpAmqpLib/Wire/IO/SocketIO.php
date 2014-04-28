@@ -3,6 +3,7 @@
 namespace PhpAmqpLib\Wire\IO;
 
 use PhpAmqpLib\Exception\AMQPIOException;
+use PhpAmqpLib\Exception\AMQPRuntimeException;
 
 class SocketIO extends AbstractIO
 {
@@ -10,12 +11,24 @@ class SocketIO extends AbstractIO
 
     public function __construct($host, $port, $timeout)
     {
+        $this->host = $host;
+        $this->port = $port;
+        $this->timeout = $timeout;
+    }
+
+    /**
+     * Setup the socket connection
+     *
+     * @throws \Exception
+     */
+    public function connect()
+    {
         $this->sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 
-        socket_set_option($this->sock, SOL_SOCKET, SO_RCVTIMEO, array('sec' => $timeout, 'usec' => 0));
-        socket_set_option($this->sock, SOL_SOCKET, SO_SNDTIMEO, array('sec' => $timeout, 'usec' => 0));
+        socket_set_option($this->sock, SOL_SOCKET, SO_RCVTIMEO, array('sec' => $this->timeout, 'usec' => 0));
+        socket_set_option($this->sock, SOL_SOCKET, SO_SNDTIMEO, array('sec' => $this->timeout, 'usec' => 0));
 
-        if (!socket_connect($this->sock, $host, $port)) {
+        if (!socket_connect($this->sock, $this->host, $this->port)) {
             $errno = socket_last_error($this->sock);
             $errstr = socket_strerror($errno);
             throw new AMQPIOException("Error Connecting to server($errno): $errstr ", $errno);
@@ -25,13 +38,26 @@ class SocketIO extends AbstractIO
         socket_set_option($this->sock, SOL_TCP, TCP_NODELAY, 1);
     }
 
+    /**
+     * Reconnect the socket
+     */
+    public function reconnect()
+    {
+        $this->close();
+        $this->connect();
+    }
+
     public function read($n)
     {
         $res = '';
         $read = 0;
 
         $buf = socket_read($this->sock, $n);
-        while ($read < $n && $buf !== '') {
+        while ($read < $n && $buf !== '' && $buf !== false) {
+            // Null sockets are invalid, throw exception
+            if (is_null($this->sock)) {
+                throw new AMQPRuntimeException("Socket was null! Last SocketError was: ".socket_strerror(socket_last_error()));
+            }
             $read += strlen($buf);
             $res .= $buf;
             $buf = socket_read($this->sock, $n - $read);
@@ -50,9 +76,14 @@ class SocketIO extends AbstractIO
         $len = strlen($data);
 
         while (true) {
+            // Null sockets are invalid, throw exception
+            if (is_null($this->sock)) {
+                throw new AMQPRuntimeException("Socket was null! Last SocketError was: ".socket_strerror(socket_last_error()));
+            }
+
             $sent = socket_write($this->sock, $data, $len);
             if ($sent === false) {
-                throw new AMQPIOException("Error sending data");
+                throw new AMQPIOException ("Error sending data. Last SocketError: ".socket_strerror(socket_last_error()));
             }
             // Check if the entire message has been sent
             if ($sent < $len) {

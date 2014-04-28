@@ -69,10 +69,11 @@ abstract class AbstractFormatter implements FormatterInterface
             $newName = $this->getNewName($name, $info, $parentName);
 
             $newParams[$newName] = array(
-                'description'   => $info['description'],
                 'dataType'      => $info['dataType'],
-                'readonly'      => $info['readonly'],
+                'readonly'      => array_key_exists('readonly', $info) ? $info['readonly'] : null,
                 'required'      => $info['required'],
+                'description'   => array_key_exists('description', $info) ? $info['description'] : null,
+                'format'        => array_key_exists('format', $info) ? $info['format'] : null,
                 'sinceVersion'  => array_key_exists('sinceVersion', $info) ? $info['sinceVersion'] : null,
                 'untilVersion'  => array_key_exists('untilVersion', $info) ? $info['untilVersion'] : null,
             );
@@ -117,6 +118,8 @@ abstract class AbstractFormatter implements FormatterInterface
         if (isset($annotation['response'])) {
             $annotation['response'] = $this->compressNestedParameters($annotation['response']);
         }
+
+        $annotation['id'] = strtolower($annotation['method']).'-'.str_replace('/', '-', $annotation['uri']);
 
         return $annotation;
     }

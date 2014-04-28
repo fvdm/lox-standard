@@ -7,7 +7,6 @@ use Nelmio\ApiDocBundle\Tests\Fixtures;
 use Symfony\Component\Form\Extension\Core\CoreExtension;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryBuilder;
-use Symfony\Component\Form\FormRegistry;
 use Symfony\Component\Form\ResolvedFormTypeFactory;
 
 class FormTypeParserTest extends \PHPUnit_Framework_TestCase
@@ -64,8 +63,84 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                         'description' => '',
                         'readonly' => false
                     ),
-                    'collection_type[b]' => array(
+                    'collection_type[b][][a]' => array(
                         'dataType' => 'string',
+                        'required' => true,
+                        'description' => 'A nice description',
+                        'readonly' => false
+                    ),
+                    'collection_type[b][][b]' => array(
+                        'dataType' => 'string',
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false
+                    ),
+                    'collection_type[b][][c]' => array(
+                        'dataType' => 'boolean',
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false
+                    )
+                )
+            ),
+            array(
+                array(
+                    'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType',
+                    'name' => '',
+                ),
+                array(
+                    'a' => array(
+                        'dataType' => 'array of strings',
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false
+                    ),
+                    'b[][a]' => array(
+                        'dataType' => 'string',
+                        'required' => true,
+                        'description' => 'A nice description',
+                        'readonly' => false
+                    ),
+                    'b[][b]' => array(
+                        'dataType' => 'string',
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false
+                    ),
+                    'b[][c]' => array(
+                        'dataType' => 'boolean',
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false
+                    )
+                )
+            ),
+            array(
+                array(
+                    'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType',
+                    'name' => null,
+                ),
+                array(
+                    'a' => array(
+                        'dataType' => 'array of strings',
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false
+                    ),
+                    'b[][a]' => array(
+                        'dataType' => 'string',
+                        'required' => true,
+                        'description' => 'A nice description',
+                        'readonly' => false
+                    ),
+                    'b[][b]' => array(
+                        'dataType' => 'string',
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false
+                    ),
+                    'b[][c]' => array(
+                        'dataType' => 'boolean',
                         'required' => true,
                         'description' => '',
                         'readonly' => false

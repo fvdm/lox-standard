@@ -14,20 +14,14 @@
 
 namespace Doctrine\Bundle\FixturesBundle\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
-use Symfony\Component\Finder\Finder;
-use Doctrine\Bundle\FrameworkBundle\Util\Filesystem;
-use Doctrine\Bundle\FixturesBundle\Common\DataFixtures\Loader as DataFixturesLoader;
+use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Internal\CommitOrderCalculator;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use InvalidArgumentException;
 
 /**
@@ -43,7 +37,7 @@ class LoadDataFixturesDoctrineCommand extends DoctrineCommand
         $this
             ->setName('doctrine:fixtures:load')
             ->setDescription('Load data fixtures to your database.')
-            ->addOption('fixtures', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The directory or file to load data fixtures from.')
+            ->addOption('fixtures', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The directory to load data fixtures from.')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Append the data fixtures instead of deleting all data from the database first.')
             ->addOption('em', null, InputOption::VALUE_REQUIRED, 'The entity manager to use for this command.')
             ->addOption('purge-with-truncate', null, InputOption::VALUE_NONE, 'Purge data by using a database-level TRUNCATE statement')
@@ -70,20 +64,17 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $emName = $input->getOption('em');
-        $emName = $emName ? $emName : 'default';
-        $emServiceName = sprintf('doctrine.orm.%s_entity_manager', $emName);
+        /** @var $doctrine \Doctrine\Common\Persistence\ManagerRegistry */
+        $doctrine = $this->getContainer()->get('doctrine');
+        $em = $doctrine->getManager($input->getOption('em'));
 
-        if (!$this->getContainer()->has($emServiceName)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Could not find an entity manager configured with the name "%s". Check your '.
-                    'application configuration to configure your Doctrine entity managers.', $emName
-                )
-            );
+        if ($input->isInteractive() && !$input->getOption('append')) {
+            $dialog = $this->getHelperSet()->get('dialog');
+            if (!$dialog->askConfirmation($output, '<question>Careful, database will be purged. Do you want to continue Y/N ?</question>', false)) {
+                return;
+            }
         }
 
-        $em = $this->getContainer()->get($emServiceName);
         $dirOrFile = $input->getOption('fixtures');
         if ($dirOrFile) {
             $paths = is_array($dirOrFile) ? $dirOrFile : array($dirOrFile);

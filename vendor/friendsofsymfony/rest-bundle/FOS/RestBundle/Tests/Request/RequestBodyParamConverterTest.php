@@ -14,18 +14,32 @@ namespace FOS\RestBundle\Tests\Request;
 use FOS\RestBundle\Request\RequestBodyParamConverter;
 use JMS\Serializer\Exception\RuntimeException;
 use JMS\Serializer\Exception\UnsupportedFormatException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Tyler Stroud <tyler@tylerstroud.com>
  */
-class RequestBodyParamConverterTest extends \PHPUnit_Framework_TestCase
+class RequestBodyParamConverterTest extends AbstractRequestBodyParamConverterTest
 {
     protected $serializer;
     protected $converter;
 
     public function setUp()
     {
+        // skip the test if the installed version of SensioFrameworkExtraBundle
+        // is not compatible with the RequestBodyParamConverter class
+        $parameter = new \ReflectionParameter(
+            array(
+                'Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface',
+                'supports',
+            ),
+            'configuration'
+        );
+        if ('Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter' != $parameter->getClass()->getName()) {
+            $this->markTestSkipped(
+                'skipping RequestBodyParamConverterTest due to an incompatible version of the SensioFrameworkExtraBundle'
+            );
+        }
+
         $this->serializer = $this->getMock('JMS\Serializer\SerializerInterface');
         $this->converter = $this->getMock(
             'FOS\RestBundle\Request\RequestBodyParamConverter',
@@ -299,78 +313,5 @@ class RequestBodyParamConverterTest extends \PHPUnit_Framework_TestCase
         $request = $this->createRequest();
 
         $this->converter->apply($request, $config);
-    }
-
-    protected function createConfiguration($class = null, $name = null, $options = null)
-    {
-        $config = $this->getMock(
-            'Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface',
-            array('getClass', 'getAliasName', 'getOptions', 'getName', 'allowArray')
-        );
-
-        if ($name !== null) {
-            $config->expects($this->any())
-               ->method('getName')
-               ->will($this->returnValue($name));
-        }
-
-        if ($class !== null) {
-            $config->expects($this->any())
-               ->method('getClass')
-               ->will($this->returnValue($class));
-        }
-
-        if ($options !== null) {
-            $config->expects($this->any())
-               ->method('getOptions')
-               ->will($this->returnValue($options));
-        }
-
-        return $config;
-    }
-
-    protected function createRequest($body = null, $contentType = null)
-    {
-        $request = new Request(
-            array(),
-            array(),
-            array(),
-            array(),
-            array(),
-            array(),
-            $body
-        );
-        $request->headers->set('CONTENT_TYPE', $contentType);
-
-        return $request;
-    }
-
-    protected function createDeserializationContext($groups = null, $version = null)
-    {
-        $context = $this->getMock('JMS\Serializer\DeserializationContext');
-        if (null !== $groups) {
-            $context->expects($this->once())
-                ->method('setGroups')
-                ->with($groups);
-        }
-        if (null !== $version) {
-            $context->expects($this->once())
-                ->method('setVersion')
-                ->with($version);
-        }
-
-        return $context;
-    }
-}
-
-class Post
-{
-    public $name;
-    public $body;
-
-    public function __construct($name, $body)
-    {
-        $this->name = $name;
-        $this->body = $body;
     }
 }

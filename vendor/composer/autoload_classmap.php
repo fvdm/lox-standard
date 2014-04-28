@@ -7,10 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CSSmin' => $vendorDir . '/oyatel/minify/min/lib/CSSMin.php',
+    'Collator' => $vendorDir . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/Collator.php',
     'DooDigestAuth' => $vendorDir . '/oyatel/minify/min/lib/DooDigestAuth.php',
     'FirePHP' => $vendorDir . '/oyatel/minify/min/lib/FirePHP.php',
     'HTTP_ConditionalGet' => $vendorDir . '/oyatel/minify/min/lib/HTTP/ConditionalGet.php',
     'HTTP_Encoder' => $vendorDir . '/oyatel/minify/min/lib/HTTP/Encoder.php',
+    'IntlDateFormatter' => $vendorDir . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/IntlDateFormatter.php',
     'JSCompilerContext' => $vendorDir . '/oyatel/minify/min/lib/JSMinPlus.php',
     'JSMin' => $vendorDir . '/oyatel/minify/min/lib/JSMin.php',
     'JSMinPlus' => $vendorDir . '/oyatel/minify/min/lib/JSMinPlus.php',
@@ -21,6 +23,7 @@ return array(
     'JSParser' => $vendorDir . '/oyatel/minify/min/lib/JSMinPlus.php',
     'JSToken' => $vendorDir . '/oyatel/minify/min/lib/JSMinPlus.php',
     'JSTokenizer' => $vendorDir . '/oyatel/minify/min/lib/JSMinPlus.php',
+    'Locale' => $vendorDir . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/Locale.php',
     'Minify' => $vendorDir . '/oyatel/minify/min/lib/Minify.php',
     'Minify_Build' => $vendorDir . '/oyatel/minify/min/lib/Minify/Build.php',
     'Minify_CSS' => $vendorDir . '/oyatel/minify/min/lib/Minify/CSS.php',
@@ -51,4 +54,7 @@ return array(
     'Minify_YUI_CssCompressor' => $vendorDir . '/oyatel/minify/min/lib/Minify/YUI/CssCompressor.php',
     'MrClay\\Cli' => $vendorDir . '/oyatel/minify/min/lib/MrClay/Cli.php',
     'MrClay\\Cli\\Arg' => $vendorDir . '/oyatel/minify/min/lib/MrClay/Cli/Arg.php',
+    'NumberFormatter' => $vendorDir . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/NumberFormatter.php',
+    'SessionHandlerInterface' => $vendorDir . '/symfony/symfony/src/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
+    'SqlFormatter' => $vendorDir . '/jdorn/sql-formatter/lib/SqlFormatter.php',
 );

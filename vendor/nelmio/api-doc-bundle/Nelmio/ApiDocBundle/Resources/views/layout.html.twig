@@ -26,7 +26,7 @@
                     <option value="json"{{ defaultRequestFormat == 'json' ? ' selected' : '' }}>JSON</option>
                     <option value="xml"{{ defaultRequestFormat == 'xml' ? ' selected' : '' }}>XML</option>
                 </select>
-                {% if authentication and authentication.delivery in ['query', 'http_basic'] %}
+                {% if authentication and authentication.delivery in ['query', 'http_basic', 'header'] %}
                     api key: <input type="text" id="api_key" value=""/>
                 {% endif %}
                 {% if authentication and authentication.delivery in ['http_basic'] %}
@@ -48,8 +48,20 @@
             Documentation auto-generated on {{ date }}
         </p>
         <script type="text/javascript">
+
+            $(window).load(function() {
+                var id = (window.location.hash || '').substr(1).replace( /([:\.\[\]\{\}])/g, "\\$1");
+                var elem = $('#' + id);
+                if (elem.length) {
+                    setTimeout(function() {
+                        $('body,html').scrollTop(elem.position().top);
+                    });
+                    elem.find('a.toggler').click();
+                }
+            });
+
             $('.toggler').click(function() {
-                $(this).next().slideToggle('slow');
+                $(this).next().slideToggle('fast');
             });
 
             {% if enableSandbox %}
@@ -242,7 +254,7 @@
                     }
 
                     // prepare the api enpoint
-                    {% if endpoint == '' and app.request is defined and app.request.host -%}
+                    {% if endpoint == '' and app.request is not null and app.request.host -%}
                     var endpoint = '{{ app.request.getBaseUrl() }}';
                     {% else -%}
                     var endpoint = '{{ endpoint }}';
@@ -271,6 +283,8 @@
                         beforeSend: function (xhr) {
                             if (authentication_delivery == 'http_basic') {
                                 xhr.setRequestHeader('Authorization', 'Basic ' + btoa($('#api_key').val() + ':' + $('#api_pass').val()));
+                            }else if(authentication_delivery == 'header') {
+                                xhr.setRequestHeader(api_key_parameter, $('#api_key').val());
                             }
                         },
                         complete: function(xhr) {
@@ -284,19 +298,26 @@
                     return false;
                 });
 
-                $('.pane.sandbox').delegate('.to-raw', 'click', function(e) {
+                $('.operations').on('click', '.operation > a', function(e) {
+                    if (history.pushState) {
+                        history.pushState(null, null, $(this).attr('href'));
+                        e.preventDefault();
+                    }
+                });
+
+                $('.pane.sandbox').on('click', '.to-raw', function(e) {
                     renderRawBody($(this).parents('.pane').find('.response'));
 
                     e.preventDefault();
                 });
 
-                $('.pane.sandbox').delegate('.to-prettify', 'click', function(e) {
+                $('.pane.sandbox').on('click', '.to-prettify', function(e) {
                     renderPrettifiedBody($(this).parents('.pane').find('.response'));
 
                     e.preventDefault();
                 });
 
-                $('.pane.sandbox').delegate('.to-expand, .to-shrink', 'click', function(e) {
+                $('.pane.sandbox').on('click', '.to-expand, .to-shrink', function(e) {
                     var $headers = $(this).parents('.result').find('.headers');
                     var $label = $(this).parents('.result').find('a.to-expand');
 
@@ -372,6 +393,9 @@
 
                     $('#api_key').val(api_key);
                 }
+                {% elseif authentication and authentication.delivery == 'header' %}
+                var authentication_delivery = '{{ authentication.delivery }}';
+                var api_key_parameter = '{{ authentication.name }}';
                 {% else %}
                 var authentication_delivery = false;
                 {% endif %}

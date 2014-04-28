@@ -17,5 +17,8 @@
     },
     "autoload": {
         "psr-0": { "JsonpCallbackValidator": "src/" }
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }

@@ -2,9 +2,6 @@
 
 namespace Vich\UploaderBundle\Storage;
 
-use Vich\UploaderBundle\Storage\StorageInterface;
-use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
-use Vich\UploaderBundle\Mapping\PropertyMapping;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -21,6 +18,7 @@ class FileSystemStorage extends AbstractStorage
     {
         $uploadDir = $this->getUploadDirectory($dir, $name);
         $fileName = basename($name);
+
         return $file->move($uploadDir, $fileName);
     }
 
@@ -36,6 +34,7 @@ class FileSystemStorage extends AbstractStorage
     protected function doRemove($dir, $name)
     {
         $file = $dir . DIRECTORY_SEPARATOR . $name;
+
         return file_exists($file) ? unlink($file) : false;
     }
 
@@ -50,26 +49,12 @@ class FileSystemStorage extends AbstractStorage
     /**
      * {@inheritDoc}
      */
-    public function resolveUri($obj, $field)
+    public function resolveUri($obj, $field, $className = null)
     {
-        $mapping = $this->factory->fromField($obj, $field);
-        if (null === $mapping) {
-            throw new \InvalidArgumentException(sprintf(
-                'Unable to find uploadable field named: "%s"',
-                $field
-            ));
-        }
-
-        $name = $mapping->getFileNameProperty()->getValue($obj);
-        if ($name === null) {
-            throw new \InvalidArgumentException(sprintf(
-                'Unable to get filename property value: "%s"',
-                $field
-            ));
-        }
-
+        list($mapping, $name) = $this->getFilename($obj, $field, $className);
         $uriPrefix = $mapping->getUriPrefix();
-        $parts = explode($uriPrefix, $this->convertWindowsDirectorySeparator($mapping->getUploadDir($obj, $field)));
+        $parts = explode($uriPrefix, $this->convertWindowsDirectorySeparator($mapping->getUploadDir($obj)));
+
         return sprintf('%s/%s', $uriPrefix . array_pop($parts), $name);
     }
 

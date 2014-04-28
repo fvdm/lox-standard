@@ -2,8 +2,10 @@
 
 namespace Vich\UploaderBundle\Mapping;
 
-use Vich\UploaderBundle\Naming\NamerInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
+use Vich\UploaderBundle\Naming\NamerInterface;
 
 /**
  * PropertyMapping.
@@ -12,16 +14,6 @@ use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
  */
 class PropertyMapping
 {
-    /**
-     * @var \ReflectionProperty $property
-     */
-    protected $property;
-
-    /**
-     * @var \ReflectionProperty $fileNameProperty
-     */
-    protected $fileNameProperty;
-
     /**
      * @var NamerInterface $namer
      */
@@ -43,55 +35,105 @@ class PropertyMapping
     protected $mappingName;
 
     /**
-     * Gets the reflection property that represents the
-     * annotated property.
-     *
-     * @return \ReflectionProperty The property.
+     * @var string $filePropertyPath
      */
-    public function getProperty()
+    protected $filePropertyPath;
+
+    /**
+     * @var string $fileNamePropertyPath
+     */
+    protected $fileNamePropertyPath;
+
+    /**
+     * @var PropertyAccess $accessor
+     */
+    protected $accessor;
+
+    /**
+     * @param string $filePropertyPath     The path to the "file" property.
+     * @param string $fileNamePropertyPath The path to the "filename" property.
+     */
+    public function __construct($filePropertyPath, $fileNamePropertyPath)
     {
-        return $this->property;
+        $this->filePropertyPath = $filePropertyPath;
+        $this->fileNamePropertyPath = $fileNamePropertyPath;
     }
 
     /**
-     * Sets the reflection property that represents the annotated
-     * property.
+     * Gets the file property value for the given object.
      *
-     * @param \ReflectionProperty $property The reflection property.
+     * @param  object       $obj The object.
+     * @return UploadedFile The file.
      */
-    public function setProperty(\ReflectionProperty $property)
+    public function getFile($obj)
     {
-        $this->property = $property;
-        $this->property->setAccessible(true);
+        $propertyPath = $this->fixPropertyPath($obj, $this->filePropertyPath);
+
+        return $this->getAccessor()->getValue($obj, $propertyPath);
     }
 
     /**
-     * Gets the reflection property that represents the property
-     * which holds the file name for the mapping.
+     * Modifies the file property value for the given object.
      *
-     * @return \ReflectionProperty The reflection property.
+     * @param object       $obj  The object.
+     * @param UploadedFile $file The new file.
      */
-    public function getFileNameProperty()
+    public function setFile($obj, $file)
     {
-        return $this->fileNameProperty;
+        $propertyPath = $this->fixPropertyPath($obj, $this->filePropertyPath);
+        $this->getAccessor()->setValue($obj, $propertyPath, $file);
     }
 
     /**
-     * Sets the reflection property that represents the property
-     * which holds the file name for the mapping.
+     * Gets the fileName property of the given object.
      *
-     * @param \ReflectionProperty $fileNameProperty The reflection property.
+     * @param object $obj The object.
+     *
+     * @return string The filename.
      */
-    public function setFileNameProperty(\ReflectionProperty $fileNameProperty)
+    public function getFileName($obj)
     {
-        $this->fileNameProperty = $fileNameProperty;
-        $this->fileNameProperty->setAccessible(true);
+        $propertyPath = $this->fixPropertyPath($obj, $this->fileNamePropertyPath);
+
+        return $this->getAccessor()->getValue($obj, $propertyPath);
+    }
+
+    /**
+     * Modifies the fileName property of the given object.
+     *
+     * @param object $obj The object.
+     * @param $value
+     */
+    public function setFileName($obj, $value)
+    {
+        $propertyPath = $this->fixPropertyPath($obj, $this->fileNamePropertyPath);
+        $this->getAccessor()->setValue($obj, $propertyPath, $value);
+    }
+
+    /**
+     * Gets the configured file property name.
+     *
+     * @return string The name.
+     */
+    public function getFilePropertyName()
+    {
+        return $this->filePropertyPath;
+    }
+
+    /**
+     * Gets the configured filename property name.
+     *
+     * @return string The name.
+     */
+    public function getFileNamePropertyName()
+    {
+        return $this->fileNamePropertyPath;
     }
 
     /**
      * Gets the configured namer.
      *
-     * @return null|NamerInterface The namer.
+     * @return null|\Vich\UploaderBundle\Naming\NamerInterface The namer.
      */
     public function getNamer()
     {
@@ -121,7 +163,7 @@ class PropertyMapping
     /**
      * Gets the configured directory namer.
      *
-     * @return null|DirectoryNamerInterface The directory namer.
+     * @return null|\Vich\UploaderBundle\Naming\DirectoryNamerInterface The directory namer.
      */
     public function getDirectoryNamer()
     {
@@ -131,7 +173,7 @@ class PropertyMapping
     /**
      * Sets the directory namer.
      *
-     * @param DirectoryNamerInterface $directoryNamer The directory namer.
+     * @param \Vich\UploaderBundle\Naming\DirectoryNamerInterface $directoryNamer The directory namer.
      */
     public function setDirectoryNamer(DirectoryNamerInterface $directoryNamer)
     {
@@ -171,7 +213,7 @@ class PropertyMapping
     /**
      * Sets the configured configuration mapping name.
      *
-     * @param $mappingName The mapping name.
+     * @param string $mappingName The mapping name.
      */
     public function setMappingName($mappingName)
     {
@@ -179,49 +221,28 @@ class PropertyMapping
     }
 
     /**
-     * Gets the name of the annotated property.
-     *
-     * @return string The name.
-     */
-    public function getPropertyName()
-    {
-        return $this->property->getName();
-    }
-
-    /**
-     * Gets the value of the annotated property.
-     *
-     * @param  object       $obj The object.
-     * @return UploadedFile The file.
-     */
-    public function getPropertyValue($obj)
-    {
-        return $this->property->getValue($obj);
-    }
-
-    /**
-     * Gets the configured file name property name.
-     *
-     * @return string The name.
-     */
-    public function getFileNamePropertyName()
-    {
-        return $this->fileNameProperty->getName();
-    }
-
-    /**
      * Gets the configured upload directory.
      *
-     * @param null $obj
-     * @param null $field
+     * @param object|null $obj
+     *
      * @return string The configured upload directory.
      */
-    public function getUploadDir($obj = null, $field = null)
+    public function getUploadDir($obj = null)
     {
         if ($this->hasDirectoryNamer()) {
-            return $this->getDirectoryNamer()->directoryName($obj, $field, $this->mapping['upload_destination']);
+            return $this->getDirectoryNamer()->directoryName($obj, $this);
         }
 
+        return $this->getUploadDestination();
+    }
+
+    /**
+     * Gets the base upload directory.
+     *
+     * @return string The configured upload directory.
+     */
+    public function getUploadDestination()
+    {
         return $this->mapping['upload_destination'];
     }
 
@@ -267,5 +288,34 @@ class PropertyMapping
     public function getUriPrefix()
     {
         return $this->mapping['uri_prefix'];
+    }
+
+    /**
+     * Fixes a given propertyPath to make it usable both with arrays and
+     * objects.
+     * Ie: if the given object is in fact an array, the property path must
+     * look like [myPath].
+     *
+     * @param object|array $object       The object to inspect.
+     * @param string       $propertyPath The property path to fix.
+     *
+     * @return string The fixed property path.
+     */
+    protected function fixPropertyPath($object, $propertyPath)
+    {
+        if (!is_array($object)) {
+            return $propertyPath;
+        }
+
+        return $propertyPath[0] === '[' ? $propertyPath : sprintf('[%s]', $propertyPath);
+    }
+
+    protected function getAccessor()
+    {
+        if ($this->accessor !== null) {
+            return $this->accessor;
+        }
+
+        return $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 }

@@ -11,7 +11,7 @@
 
 namespace Symfony\Component\Security\Acl\Voter;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Acl\Exception\NoAceFoundException;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
@@ -134,7 +134,7 @@ class AclVoter implements VoterInterface
      *
      * @param string $class The class name
      *
-     * @return Boolean
+     * @return bool
      */
     public function supportsClass($class)
     {

@@ -2,23 +2,28 @@
 
 namespace Knp\Menu\Renderer;
 
-use \Knp\Menu\ItemInterface;
+use Knp\Menu\ItemInterface;
+use Knp\Menu\Matcher\MatcherInterface;
 
 /**
  * Renders MenuItem tree as unordered list
  */
 class ListRenderer extends Renderer implements RendererInterface
 {
-    private $defaultOptions;
+    protected $matcher;
+    protected $defaultOptions;
 
     /**
-     * @param array $defaultOptions
-     * @param string $charset
+     * @param MatcherInterface $matcher
+     * @param array            $defaultOptions
+     * @param string           $charset
      */
-    public function __construct(array $defaultOptions = array(), $charset = null)
+    public function __construct(MatcherInterface $matcher, array $defaultOptions = array(), $charset = null)
     {
+        $this->matcher = $matcher;
         $this->defaultOptions = array_merge(array(
             'depth' => null,
+            'matchingDepth' => null,
             'currentAsLink' => true,
             'currentClass' => 'current',
             'ancestorClass' => 'current_ancestor',
@@ -26,23 +31,23 @@ class ListRenderer extends Renderer implements RendererInterface
             'lastClass' => 'last',
             'compressed' => false,
             'allow_safe_labels' => false,
+            'clear_matcher' => true,
         ), $defaultOptions);
 
         parent::__construct($charset);
     }
 
-    /**
-     * Renders a menu with the specified renderer.
-     *
-     * @param \Knp\Menu\ItemInterface $item
-     * @param array $options
-     * @return string
-     */
     public function render(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->defaultOptions, $options);
 
-        return $this->renderList($item, $item->getChildrenAttributes(), $options);
+        $html = $this->renderList($item, $item->getChildrenAttributes(), $options);
+
+        if ($options['clear_matcher']) {
+            $this->matcher->clear();
+        }
+
+        return $html;
     }
 
     protected function renderList(ItemInterface $item, array $attributes, array $options)
@@ -72,8 +77,9 @@ class ListRenderer extends Renderer implements RendererInterface
      * has children).
      * This method updates the depth for the children.
      *
-     * @param \Knp\Menu\ItemInterface $item
-     * @param array $options The options to render the item.
+     * @param ItemInterface $item
+     * @param array         $options The options to render the item.
+     *
      * @return string
      */
     protected function renderChildren(ItemInterface $item, array $options)
@@ -81,6 +87,10 @@ class ListRenderer extends Renderer implements RendererInterface
         // render children with a depth - 1
         if (null !== $options['depth']) {
             $options['depth'] = $options['depth'] - 1;
+        }
+
+        if (null !== $options['matchingDepth'] && $options['matchingDepth'] > 0) {
+            $options['matchingDepth'] = $options['matchingDepth'] - 1;
         }
 
         $html = '';
@@ -97,8 +107,9 @@ class ListRenderer extends Renderer implements RendererInterface
      * This renders the li tag to fit into the parent ul as well as its
      * own nested ul tag if this menu item has children
      *
-     * @param \Knp\Menu\ItemInterface $item
-     * @param array $options The options to render the item
+     * @param ItemInterface $item
+     * @param array         $options The options to render the item
+     *
      * @return string
      */
     protected function renderItem(ItemInterface $item, array $options)
@@ -111,9 +122,9 @@ class ListRenderer extends Renderer implements RendererInterface
         // create an array than can be imploded as a class list
         $class = (array) $item->getAttribute('class');
 
-        if ($item->isCurrent()) {
+        if ($this->matcher->isCurrent($item)) {
             $class[] = $options['currentClass'];
-        } elseif ($item->isCurrentAncestor()) {
+        } elseif ($this->matcher->isAncestor($item, $options['matchingDepth'])) {
             $class[] = $options['ancestorClass'];
         }
 
@@ -160,8 +171,9 @@ class ListRenderer extends Renderer implements RendererInterface
      * the current item and if the text has to be rendered
      * as a link or not.
      *
-     * @param \Knp\Menu\ItemInterface $item The item to render the link or label for
-     * @param array $options The options to render the item
+     * @param ItemInterface $item    The item to render the link or label for
+     * @param array         $options The options to render the item
+     *
      * @return string
      */
     protected function renderLink(ItemInterface $item, array $options = array())
@@ -199,10 +211,11 @@ class ListRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param  string $html The html to render in an (un)formatted way
-     * @param  string $type The type [ul,link,li] of thing being rendered
+     * @param string  $html    The html to render in an (un)formatted way
+     * @param string  $type    The type [ul,link,li] of thing being rendered
      * @param integer $level
-     * @param array $options
+     * @param array   $options
+     *
      * @return string
      */
     protected function format($html, $type, $level, array $options)

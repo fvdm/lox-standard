@@ -3,22 +3,30 @@ language: php
 php:
   - 5.3
   - 5.4
+  - 5.5
+  - hhvm
 
 env:
-    - SYMFONY_VERSION=2.0.*
-    - SYMFONY_VERSION=2.1.*
-    - SYMFONY_VERSION=dev-master
-
+    - SYMFONY_VERSION="~2.0.0" DOCTRINE_VERSION="~2.2.0"
+    - SYMFONY_VERSION="~2.1.0" DOCTRINE_VERSION=">=2.2.3,<2.5-dev"
+    - SYMFONY_VERSION="~2.2.0" DOCTRINE_VERSION="~2.2,>=2.2.3"
+    - SYMFONY_VERSION="~2.3.0" DOCTRINE_VERSION=">=2.2.3,<2.4-dev"
+    - SYMFONY_VERSION="dev-master symfony/event-dispatcher:dev-master" DOCTRINE_VERSION="~2.2,>=2.2.3"
 
 before_script:
-    - curl -s http://getcomposer.org/installer | php
-    - wget http://pecl.php.net/get/mongo-1.2.10.tgz
-    - tar -xzf mongo-1.2.10.tgz
-    - sh -c "cd mongo-1.2.10 && phpize && ./configure && sudo make install"
+    - composer selfupdate
+    - wget http://pecl.php.net/get/mongo-1.4.5.tgz
+    - tar -xzf mongo-1.4.5.tgz
+    - sh -c "cd mongo-1.4.5 && phpize && ./configure && sudo make install"
     - echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
-    - php composer.phar require symfony/framework-bundle:${SYMFONY_VERSION}
-    - php composer.phar install --dev
+    - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
+    - composer require --dev --no-update "doctrine/orm":"${DOCTRINE_VERSION}"
+    - composer install
 
 notifications:
   email:
     - tassi.francesco@gmail.com
+
+matrix:
+  allow_failures:
+    - php: hhvm

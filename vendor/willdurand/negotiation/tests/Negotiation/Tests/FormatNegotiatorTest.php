@@ -144,7 +144,7 @@ class FormatNegotiatorTest extends TestCase
                     'application/rss+xml',
                     '*/*',
                 ),
-                'text/html'
+                'application/rss+xml'
             ),
             // See: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
             array(
@@ -235,6 +235,58 @@ class FormatNegotiatorTest extends TestCase
                     ),
                 )
             ),
+            array(
+                '*/*',
+                array(),
+                array(
+                    'value'      => '*/*',
+                    'quality'    => 0.01,
+                    'parameters' => array(),
+                ),
+            ),
+            // Incompatible
+            array(
+                'text/html',
+                array(
+                    'application/rss'
+                ),
+                null
+            ),
+            array(
+                'text/rdf+n3; q=0.8, application/rdf+json; q=0.8, text/turtle; q=1.0, text/n3; q=0.8, application/ld+json; q=0.5, application/rdf+xml; q=0.8',
+                array(),
+                'text/turtle'
+            ),
+            array(
+                'application/rdf+xml;q=0.5,text/html;q=.3',
+                array(),
+                'application/rdf+xml'
+            ),
+            array(
+                'application/xhtml+xml;q=0.5',
+                array(),
+                'application/xhtml+xml'
+            ),
+            array(
+                'application/rdf+xml;q=0.5,text/html;q=.5',
+                array(),
+                'application/rdf+xml'
+            ),
+            array(
+                'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c',
+                array(),
+                'text/html',
+            ),
+            // IE8 Accept header
+            array(
+                'image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, */*',
+                array(
+                    'text/html',
+                    'application/xhtml+xml',
+                    '*/*'
+                ),
+                'text/html',
+            ),
         );
     }
 
@@ -245,7 +297,7 @@ class FormatNegotiatorTest extends TestCase
             array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array(), 'html'),
             array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array('html', 'json', '*/*'), 'html'),
             array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array('html', 'json', '*/*'), 'html'),
-            array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array('rss', '*/*'), 'html'),
+            array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array('rss', '*/*'), 'rss'),
             array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array('xml'), 'xml'),
             array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array('json', 'xml'), 'xml'),
             array('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', array('json'), 'json'),
@@ -254,6 +306,7 @@ class FormatNegotiatorTest extends TestCase
             array('text/html,application/xhtml+xml,application/xml', array('json'), null),
             array('text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c', array('*/*'), 'html'),
             array('text/html, application/json;q=0.8, text/csv;q=0.7', array(), 'html'),
+            array('text/html', array('text/xml'), null),
         );
     }
 
@@ -283,5 +336,24 @@ class FormatNegotiatorTest extends TestCase
     public function testRegisterFormatWithExistingFormat()
     {
         $this->negotiator->registerFormat('html', array());
+    }
+
+    /**
+     * @dataProvider dataProviderForNormalizePriorities
+     */
+    public function testNormalizePriorities($priorities, $expected)
+    {
+        $priorities = $this->negotiator->normalizePriorities($priorities);
+
+        $this->assertEquals($expected, $priorities);
+    }
+
+    public static function dataProviderForNormalizePriorities()
+    {
+        return array(
+            array(array('application/json', 'application/xml'), array('application/json', 'application/xml')),
+            array(array('json', 'application/xml', 'text/*', 'rdf', '*/*'), array('application/json', 'application/x-json', 'application/xml', 'text/*', 'application/rdf+xml', '*/*')),
+            array(array('json', 'html', '*/*'), array('application/json', 'application/x-json', 'text/html', 'application/xhtml+xml', '*/*')),
+        );
     }
 }

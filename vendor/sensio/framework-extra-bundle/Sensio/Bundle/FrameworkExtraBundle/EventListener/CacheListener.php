@@ -3,7 +3,8 @@
 namespace Sensio\Bundle\FrameworkExtraBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /*
  * This file is part of the Symfony framework.
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author     Fabien Potencier <fabien@symfony.com>
  */
-class CacheListener
+class CacheListener implements EventSubscriberInterface
 {
     /**
      * Modifies the response to apply HTTP expiration header fields.
@@ -35,7 +36,7 @@ class CacheListener
 
         $response = $event->getResponse();
 
-        if (!$response->isSuccessful()) {
+        if (!in_array($response->getStatusCode(), array(200, 203, 300, 301, 302, 404, 410))) {
             return;
         }
 
@@ -61,5 +62,12 @@ class CacheListener
         }
 
         $event->setResponse($response);
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::RESPONSE => 'onKernelResponse',
+        );
     }
 }

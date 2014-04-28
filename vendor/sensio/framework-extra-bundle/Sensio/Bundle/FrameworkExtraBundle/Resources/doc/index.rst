@@ -22,6 +22,12 @@ Then, like for any other bundle, include it in your Kernel class::
         ...
     }
 
+If you plan to use or create annotations for controllers, make sure to update
+your ``autoload.php`` by adding the following line::
+
+    Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+
+
 Configuration
 -------------
 
@@ -122,7 +128,7 @@ This example shows all the available annotations in action::
          * @Route("/{id}")
          * @Method("GET")
          * @ParamConverter("post", class="SensioBlogBundle:Post")
-         * @Template("SensioBlogBundle:Annot:post.html.twig", vars={"post"})
+         * @Template("SensioBlogBundle:Annot:show.html.twig", vars={"post"})
          * @Cache(smaxage="15")
          */
         public function showAction(Post $post)

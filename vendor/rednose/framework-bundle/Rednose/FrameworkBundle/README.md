@@ -27,12 +27,19 @@ Configuration reference:
     # app/config/config.yml
     
     rednose_framework:
+    	user: true # Enables user / group account support
+    	
 		auto_account_creation: false # Auto creates user accounts on first login, useful for single-sign-on
-
+        
         oauth: false # Enables Oauth2 authentication
+        acl:   false # Enables ACL services and permission maps
+        
+		form:
+			editor: tinymce # WYSIWYG editor, either `tinymce` or `ckeditor`
 		    
 About
 -----
 
 FrameworkBundle is a [RedNose](http://www.rednose.nl) initiative.
+		
 

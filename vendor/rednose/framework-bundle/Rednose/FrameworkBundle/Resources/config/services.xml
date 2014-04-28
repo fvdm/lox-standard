@@ -32,11 +32,11 @@
 
         <!-- Form extensions -->
         <service id="form.type.label_extension" class="Rednose\FrameworkBundle\Form\Extension\LabelFormTypeExtension">
-            <tag name="form.type_extension" alias="field" />
+            <tag name="form.type_extension" alias="form" />
         </service>
 
-        <service id="form.type.help_extionsion" class="Rednose\FrameworkBundle\Form\Extension\HelpFormTypeExtension">
-            <tag name="form.type_extension" alias="field" />
+        <service id="form.type.help_extension" class="Rednose\FrameworkBundle\Form\Extension\HelpFormTypeExtension">
+            <tag name="form.type_extension" alias="form" />
         </service>
 
         <!-- Form types -->
@@ -47,12 +47,22 @@
 
         <service id="form.type.rednose_widget_editor" class="Rednose\FrameworkBundle\Form\Type\EditorType">
             <argument type="service" id="request" strict="false" />
+            <argument type="service" id="rednose_framework.form.listener.edit_type_data" />
+            <argument></argument>
             <tag name="form.type" alias="rednose_widget_editor" />
         </service>
 
         <service id="form.type.rednose_date" class="Rednose\FrameworkBundle\Form\Type\DateType">
             <argument type="service" id="request" strict="false" />
             <tag name="form.type" alias="rednose_date" />
+        </service>
+
+        <service id="form.type.rednose_autocomplete" class="Rednose\FrameworkBundle\Form\Type\AutocompleteType">
+            <tag name="form.type" alias="rednose_autocomplete" />
+        </service>
+
+        <service id="rednose_framework.form.listener.edit_type_data" class="Rednose\FrameworkBundle\Form\EventListener\EditorTypeDataListener">
+            <argument type="service" id="rednose_framework.purifier" />
         </service>
 
         <!-- JMS Object constructor alias -->
@@ -63,6 +73,12 @@
 
         <service id="jms_serializer.object_constructor" alias="rednose_framework.doctrine_object_constructor" public="false"/>
 
+        <service id="rednose_framework.array_collection_handler" class="Rednose\FrameworkBundle\Serializer\Handler\ArrayCollectionHandler">
+            <tag name="jms_serializer.subscribing_handler" />
+        </service>
+
+        <service id="jms_serializer.array_collection_handler" alias="rednose_framework.array_collection_handler"/>
+
         <!-- Doctrine event listener -->
         <service id="rednose_framework.doctrine_listener" class="%rednose_framework.doctrine_listener.class%">
             <argument type="service" id="event_dispatcher" />
@@ -71,8 +87,10 @@
             <tag name="doctrine.event_listener" event="postRemove" />
         </service>
 
-        <!-- HTML purifier -->
+        <!-- HTML purifier / lexer -->
         <service id="rednose_framework.purifier.factory" class="%rednose_framework.purifier.factory.class%"/>
         <service id="rednose_framework.purifier" factory-method="create" factory-service="rednose_framework.purifier.factory" class="%rednose_framework.purifier.factory.class%"/>
+        <service id="rednose_framework.purifier.lexer" factory-method="createLexer" factory-service="rednose_framework.purifier.factory" class="%rednose_framework.purifier.factory.class%"/>
+
     </services>
 </container>
