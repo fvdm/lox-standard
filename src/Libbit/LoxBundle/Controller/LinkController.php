@@ -18,7 +18,7 @@ class LinkController extends Controller
     // -- Web Methods ---------------------------------------------------------
 
     /**
-     * @Route("/public/{path}", name="libbit_lox_links_path", requirements={"path" = ".+"})
+     * @Route("/public/{path}", name="libbit_lox_links_path", defaults={"path": null}, requirements={"path" = ".+"})
      * @Method({"GET"})
      */
     public function getAction($path)
@@ -48,7 +48,7 @@ class LinkController extends Controller
     }
 
     /**
-     * @Route("/links/create/{path}", name="libbit_lox_links_create", requirements={"path" = ".+"})
+     * @Route("/links/create/{path}", name="libbit_lox_links_create", defaults={"path": null}, requirements={"path" = ".+"})
      * @Method({"GET"})
      */
     public function createAction($path)
@@ -57,7 +57,7 @@ class LinkController extends Controller
     }
 
     /**
-     * @Route("/links/remove/{id}", name="libbit_lox_links_remove")
+     * @Route("/links/remove/{id}", defaults={"id": null}, name="libbit_lox_links_remove")
      * @Method({"POST"})
      */
     public function removeAction($id)
