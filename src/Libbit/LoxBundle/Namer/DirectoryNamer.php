@@ -32,10 +32,10 @@ class DirectoryNamer implements DirectoryNamerInterface
     }
 
     /**
-     * Get a pseusdo random directory name based on internal logic
-     * The maxumum amount of the combinations is 30.000 to avoid inodes overloads.
+     * Get a pseudo random directory name based on internal logic
+     * The maximum amount of the combinations is 30.000 to avoid inodes overloads.
      *
-     * @return string A pseusdo random directory
+     * @return string A pseudo random directory
      */
     private function getDirectory()
     {

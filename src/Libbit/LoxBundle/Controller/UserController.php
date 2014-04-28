@@ -32,4 +32,31 @@ class UserController extends Controller
 
         return new JsonResponse($data);
     }
+
+    /**
+     * Returns users and groups
+     *
+     * @Route("/lox_api/idenities/{query}", defaults={"query"=""}, name="libbit_lox_api_identities")
+     *
+     * @param $query Optional query string to find users and groups
+     *
+     * @Method({"GET"})
+     *
+     * @ApiDoc(
+     *     section="User"
+     * )
+     */
+    public function getIdentitiesAction($query)
+    {
+        if ($query) {
+            $request = $this->get('request');
+            $request->query->set('q', $query);
+        }
+
+        $identManager = $this->get('libbit_lox.identity_manager');
+
+        return new JsonResponse(
+            $identManager->getIdentities()
+        );
+    }
 }

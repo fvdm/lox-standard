@@ -151,80 +151,20 @@ class ShareController extends Controller
     }
 
     /**
-     * @Route("/identities", name="libbit_lox_identities")
+     * @Route("/share/identities", name="libbit_lox_identities")
      * @Method({"GET"})
      */
     public function getIdentitiesAction()
     {
-        $request = $this->get('request');
+        $callback = $this->get('request')->query->get('callback');
 
-        $query    = $request->query->get('q');
-        $callback = $request->query->get('callback');
+        $identManager = $this->get('libbit_lox.identity_manager');
 
-        $groups = $this->getGroups($query);
-        $users  = $this->getUsers($query);
-
-        $serializedGroups = array();
-        $serializedUsers  = array();
-
-        foreach ($groups as $group) {
-            $serializedGroups[] = array(
-                'id'    => 'group_'.$group->getId(),
-                'title' => $group->getName(),
-                'type'  => 'group',
-            );
-        }
-
-        foreach ($users as $user) {
-            $serializedUsers[] = array(
-                'id'    => 'user_'.$user->getId(),
-                'title' => $user->getBestName(),
-                'type'  => 'user',
-            );
-        }
-
-        $data = json_encode(array_merge($serializedGroups, $serializedUsers));
+        $data = $identManager->getIdentities();
+        $data = json_encode($data);
 
         return new Response($callback ? $callback.'('.$data.');' : $data, 200, array(
             'Content-Type' => 'application/json'
         ));
-    }
-
-    protected function getGroups($query = '')
-    {
-        $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
-
-        $qb->select('g');
-        $qb->from('RednoseFrameworkBundle:Group', 'g');
-
-        if ($query !== null) {
-            $qb->add('where', $qb->expr()->like('g.name', ':name'));
-            $qb->setParameter('name', '%'.$query.'%');
-        }
-
-        $qb->orderBy('g.name', 'ASC');
-
-        return $qb->getQuery()->execute();
-    }
-
-    protected function getUsers($query = '')
-    {
-        $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
-
-        $qb->select('u');
-        $qb->from('RednoseFrameworkBundle:User', 'u');
-
-        if ($query !== null) {
-            $qb->add('where', $qb->expr()->orX(
-                $qb->expr()->like('u.username', ':name'),
-                $qb->expr()->like('u.realname', ':name')
-            ));
-
-            $qb->setParameter('name', '%'.$query.'%');
-        }
-
-        $qb->orderBy('u.realname, u.username', 'ASC');
-
-        return $qb->getQuery()->execute();
     }
 }

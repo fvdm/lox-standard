@@ -185,6 +185,26 @@ class ApiTest extends WebTestCase
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
+    public function testGetIdentities()
+    {
+        $this->client->request('GET', '/lox_api/idenities');
+
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals('Demo user', $data[0]['title']);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testGetIdentitiesSearch()
+    {
+        $this->client->request('GET', '/lox_api/idenities/dem');
+
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals('Demo user', $data[0]['title']);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
     /**
      * @depends testPostFile201Code
      */
