@@ -36,7 +36,7 @@ class UserController extends Controller
     /**
      * Returns users and groups
      *
-     * @Route("/lox_api/idenities/{query}", defaults={"query"=""}, name="libbit_lox_api_identities")
+     * @Route("/lox_api/identities/{query}", defaults={"query"=""}, name="libbit_lox_api_identities")
      *
      * @param $query Optional query string to find users and groups
      *

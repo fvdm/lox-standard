@@ -187,7 +187,7 @@ class ApiTest extends WebTestCase
 
     public function testGetIdentities()
     {
-        $this->client->request('GET', '/lox_api/idenities');
+        $this->client->request('GET', '/lox_api/identities');
 
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
@@ -197,7 +197,7 @@ class ApiTest extends WebTestCase
 
     public function testGetIdentitiesSearch()
     {
-        $this->client->request('GET', '/lox_api/idenities/dem');
+        $this->client->request('GET', '/lox_api/identities/dem');
 
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
