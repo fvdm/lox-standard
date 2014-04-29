@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Rednose\FrameworkBundle\Entity\User;
+use Libbit\LoxBundle\Entity\KeyPair;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -14,21 +17,45 @@ class UserController extends Controller
 
     /**
      * Returns info about the user.
+     * <p><strong>Example JSON response</strong></p>
+     * <pre>{
+     *     "name": "Demo User",
+     *     "public_key": "GYRBAC54vZVXjK...WvruVr/PX",
+     *     "private_key": "iBEgIJGRSiUCYR...GMgEOjEFg"
+     * }</pre>
      *
      * @Route("/lox_api/user", name="libbit_lox_api_get_user")
      * @Method({"GET"})
      *
      * @ApiDoc(
-     *     section="User"
+     *     section="User",
+     *     description="Returns info about the user",
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
      * )
      */
     public function getUserAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw new \RuntimeException();
+        }
 
         $data = array(
-            'name' => $user->getBestName(),
+            'name' => $user->getBestname()
         );
+
+        $keyPair = $this->getKeyPair($user);
+
+        if ($keyPair->getPublicKey()) {
+            $data['public_key'] = $keyPair->getPublicKey();
+        }
+
+        if ($keyPair->getPrivateKey()) {
+            $data['private_key'] = $keyPair->getPrivateKey();
+        }
 
         return new JsonResponse($data);
     }
@@ -58,5 +85,84 @@ class UserController extends Controller
         return new JsonResponse(
             $identManager->getIdentities()
         );
+    }
+
+    /**
+     * Updates the current user by posting a JSON object.
+     * <p><strong>Example JSON request</strong></p>
+     * <pre>{
+     *     "public_key": "GYRBAC54vZVXjK...WvruVr/PX",
+     *     "private_key": "iBEgIJGRSiUCYR...GMgEOjEFg"
+     * }</pre>
+     *
+     *
+     * @Route("/lox_api/user", name="libbit_lox_api_post_user")
+     * @Method({"POST"})
+     *
+     * @ApiDoc(
+     *     section="User",
+     *     description="Updates the current user and returns the updated user object",
+     *     statusCodes={
+     *         200="Returned when successful.",
+     *         400="Returned when the specified parameters are invalid."
+     *     }
+     * )
+     */
+    public function postUserAction()
+    {
+        $request = $this->getRequest();
+        $user    = $this->getUser();
+
+        $data = json_decode($request->getContent(), true);
+
+        if ($data === null) {
+            $response = new Response();
+
+            $response->setstatuscode(400);
+            $response->setcontent(json_encode(array(
+                'error' => 'No parameters specified.',
+            )));
+
+            return $response;
+        }
+
+        $em      = $this->getDoctrine()->getManager();
+        $keyPair = $this->getKeyPair($user);
+
+        if (array_key_exists('public_key', $data)) {
+            $keyPair->setPublicKey($data['public_key']);
+        }
+
+        if (array_key_exists('private_key', $data)) {
+            $keyPair->setPrivateKey($data['private_key']);
+        }
+
+        $em->persist($keyPair);
+        $em->flush();
+
+        return $this->getUserAction();
+    }
+
+    /**
+     * Returns the key pair for a given user.
+     *
+     * @param User $user
+     *
+     * @return KeyPair
+     */
+    protected function getKeyPair(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $keyPair = $em->getRepository('Libbit\LoxBundle\Entity\KeyPair')->findOneBy(array('user' => $user));
+
+        if ($keyPair) {
+            return $keyPair;
+        }
+
+        $keyPair = new KeyPair();
+        $keyPair->setUser($user);
+
+        return $keyPair;
     }
 }
