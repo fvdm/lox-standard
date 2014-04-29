@@ -44,9 +44,9 @@ var Page = Y.Base.create('page', Y.View, [], {
         }
 
         this._initBadge();
-
         this._updateNotifications();
         this._bindMarkRead();
+        this._initRegisterApp();
     },
 
     destructor: function () {
@@ -83,6 +83,23 @@ var Page = Y.Base.create('page', Y.View, [], {
         };
 
         ds.setInterval(SHORT_POLLING_INTERVAL * 6000, request);
+    },
+
+    _initRegisterApp: function () {
+        var menuItem = Y.one('[data-id=registerApp]').get('parentNode');
+
+        var isMobile = {
+            Android: function() {
+                return /Android/i.test(navigator.userAgent);
+            },
+            iOS: function() {
+                return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            }
+        };
+
+        if (isMobile.Android() === true || isMobile.iOS() === true) {
+            menuItem.show();
+        }
     },
 
     _updateNotifications: function () {
