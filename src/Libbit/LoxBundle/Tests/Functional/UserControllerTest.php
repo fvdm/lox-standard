@@ -107,6 +107,26 @@ class UserControllerTest extends WebTestCase
         $this->assertFalse(array_key_exists('private_key', $data));
     }
 
+    public function testGetIdentities()
+    {
+        $this->client->request('GET', '/lox_api/identities');
+
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals('Test user', $data[0]['title']);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testGetIdentitiesSearch()
+    {
+        $this->client->request('GET', '/lox_api/identities/tes');
+
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals('Test user', $data[0]['title']);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
     /**
      * @depends testPostEmptyUserKeyPair
      */
