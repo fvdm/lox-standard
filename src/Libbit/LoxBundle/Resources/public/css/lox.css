@@ -95,6 +95,12 @@ section {
 	margin-bottom: 1px;
 }
 
+/* lox brand correction */
+.navbar .lox-brand {
+	padding: 0px;
+	padding-top: 6px;
+}
+
 /* SideNav badge correction */
 .libbit-lox-sidenav .badge {
 	margin-top: -2px;

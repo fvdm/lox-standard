@@ -63,12 +63,22 @@ class WebController extends Controller
     }
 
     /**
-     * @Route("/register_app", name="libbit_lox_register_app", requirements={"_scheme" = "http"})
+     * @Route("/register_app", name="libbit_lox_register_app")
      * @Route("/register_app.json", name="libbit_lox_register_app_lbox", requirements={"_scheme" = "lbox"})
      * @Method({"GET"})
      */
     public function registerAppAction()
     {
-        return $this->render('LibbitLoxBundle:Web:register_app.html.twig');
+        $clientManager = $this->get('fos_oauth_server.client_manager.default');
+        $clients = $clientManager->findClientsBy(array());
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $this->render(
+            'LibbitLoxBundle:Web:register_app.json.twig',
+            array('clients' => $clients),
+            $response
+        );
     }
 }

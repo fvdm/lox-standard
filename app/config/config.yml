@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+
 framework:
     translator:      { fallback: 'nl' }
     secret:          %secret%
@@ -13,6 +14,7 @@ framework:
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     session:         ~
 
+
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
@@ -21,6 +23,14 @@ twig:
         csrf_provider: "@form.csrf_provider"
         item_manager:  "@libbit_lox.item_manager"
         share_manager: "@libbit_lox.share_manager"
+
+        # Localbox settings
+        application_title: LocalBox
+        application_logo: "bundles/libbitlox/logo/whitebox.png"
+
+        app_backcolor: "0x1B1B1B"
+        app_fontcolor: "0x999999"
+
 
 # Assetic Configuration
 assetic:

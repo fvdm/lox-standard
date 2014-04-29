@@ -1,0 +1,20 @@
+{
+    "BaseUrl"   : "{{ url('libbit_lox_index') }}",
+    "Name"      : "{{ application_title }}",
+    "User"      : "{{ app.user.username }}",
+    "LogoUrl"   : "{{ asset('')}}{{ application_logo }}",
+    "BackColor" : "{{ app_backcolor }}",
+    "FontColor" : "{{ app_fontcolor }}",
+    "APIKeys"   : [
+        {% for client in clients %}
+            {
+                "Name"    : "{{ client.name }}",
+                "Key"     : "{{ client.publicId }}",
+                "Sectret" : "{{ client.secret }}"
+            }
+            {% if loop.last == false %}
+                ,
+            {% endif %}
+        {% endfor %}
+    ]
+}
