@@ -70,7 +70,10 @@ class UserController extends Controller
      * @Method({"GET"})
      *
      * @ApiDoc(
-     *     section="User"
+     *     section="User",
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
      * )
      */
     public function getIdentitiesAction($query)
@@ -85,6 +88,41 @@ class UserController extends Controller
         return new JsonResponse(
             $identManager->getIdentities()
         );
+    }
+
+    /**
+     * Returns a list of usernames in a group
+     *
+     * @Route("/lox_api/identities/group/{id}", name="libbit_lox_api_identities_group")
+     *
+     * @param $id The group id
+     *
+     * @Method({"GET"})
+     *
+     * @ApiDoc(
+     *     section="User",
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
+     * )
+     */
+    public function getIdentitiesGroupAction($id)
+    {
+        $buffer = array();
+
+        // In case the $id parameter is set with group_<id>
+        if (strpos($id, 'group_') !== false) {
+            $id = (int)substr($id, strpos($id, '_') + 1);
+        }
+
+        $identManager = $this->get('libbit_lox.identity_manager');
+        $users = $identManager->getUsersByGroup($id);
+
+        foreach ($users as $user) {
+            $buffer[] = array('id' => 'user_' . $user->getId(), 'username' => $user->getUsername());
+        }
+
+        return new JsonResponse($buffer);
     }
 
     /**

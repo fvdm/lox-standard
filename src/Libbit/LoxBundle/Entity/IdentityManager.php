@@ -64,6 +64,20 @@ class IdentityManager
     }
 
     /*
+     * Get all users in a group
+     *
+     * @return ArrayCollection
+     */
+    public function getUsersByGroup($id)
+    {
+        $id    = (int)$id;
+        $group = $this->em->getRepository('RednoseFrameworkBundle:Group')->findOneById($id);
+        $users = $group->getUsers();
+
+        return $users;
+    }
+
+    /*
      * Get or find groups
      *
      * @param string $query
