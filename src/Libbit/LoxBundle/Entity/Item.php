@@ -100,6 +100,11 @@ class Item
     protected $share;
 
     /**
+     * @ORM\OneToMany(targetEntity="Libbit\LoxBundle\Entity\ItemKey", mappedBy="item", cascade={"persist", "remove"})
+     */
+    protected $keys;
+
+    /**
      * @ORM\OneToMany(targetEntity="Libbit\LoxBundle\Entity\Revision", mappedBy="item", cascade={"persist", "remove"})
      * @ORM\OrderBy({"revision" = "DESC"})
      */
@@ -313,6 +318,18 @@ class Item
 	{
 		return $this->shares->isEmpty() === false;
 	}
+
+    public function addKey($key)
+    {
+        $key->setItem($this);
+
+        $this->keys->add($key);
+    }
+
+    public function getKeys()
+    {
+        return $this->keys;
+    }
 
     public function addRevision(Revision $revision)
     {

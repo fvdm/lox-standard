@@ -157,7 +157,7 @@ class UserController extends Controller
             $response = new Response();
 
             $response->setstatuscode(400);
-            $response->setcontent(json_encode(array(
+            $response->setContent(json_encode(array(
                 'error' => 'No parameters specified.',
             )));
 

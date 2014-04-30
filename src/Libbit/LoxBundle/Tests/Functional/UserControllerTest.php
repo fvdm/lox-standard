@@ -199,7 +199,7 @@ class UserControllerTest extends WebTestCase
      */
     protected function getPublicKey()
     {
-        return file_get_contents(__DIR__.'/Fixtures/id_rsa.pub');
+        return file_get_contents(__DIR__.'/Fixtures/private.pem');
     }
 
     /**
@@ -207,6 +207,6 @@ class UserControllerTest extends WebTestCase
      */
     protected function getPrivateKey()
     {
-        return file_get_contents(__DIR__.'/Fixtures/id_rsa');
+        return file_get_contents(__DIR__.'/Fixtures/public.pem');
     }
 }
