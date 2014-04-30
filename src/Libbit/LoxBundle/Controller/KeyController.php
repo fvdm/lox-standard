@@ -2,9 +2,12 @@
 
 namespace Libbit\LoxBundle\Controller;
 
+namespace Libbit\LoxBundle\Entity\ItemKey;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class KeyController extends Controller
 {
@@ -17,10 +20,13 @@ class KeyController extends Controller
      */
     public function setKeyPathAction($path)
     {
+        // TODO: Create key manager
+
         $request = $this->get('request');
+
         $data = json_decode($request->getContent(), true);
 
-        // STUB...
+        return new JsonResponse(array());
     }
 
     /**
