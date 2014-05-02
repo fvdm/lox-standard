@@ -4,6 +4,7 @@ namespace Libbit\LoxBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\SecurityContext;
 use Rednose\FrameworkBundle\Entity\User;
 
 class ItemManager
@@ -12,10 +13,16 @@ class ItemManager
 
     protected $repository;
 
-    public function __construct(EntityManager $em)
+    protected $keyRepository;
+
+    protected $securityContext;
+
+    public function __construct(EntityManager $em, SecurityContext $securityContext)
     {
-        $this->em         = $em;
-        $this->repository = $em->getRepository('Libbit\LoxBundle\Entity\Item');
+        $this->em              = $em;
+        $this->repository      = $em->getRepository('Libbit\LoxBundle\Entity\Item');
+        $this->keyRepository   = $em->getRepository('Libbit\LoxBundle\Entity\ItemKey');
+        $this->securityContext = $securityContext;
     }
 
     public function createRootItem(User $user)
@@ -63,6 +70,40 @@ class ItemManager
         $item->setIsDir(true);
 
         return $item;
+    }
+
+    /**
+     * Adds or replaces a ItemKey for the supplied Item
+     *
+     * @param Item $item
+     * @param User $user
+     * @param string $key   The base64 encoded key
+     * @param string $iv    The base64 encoded iv
+     *
+     * @return boolean
+     */
+    public function addKeyToItem(Item $item, User $user, $key, $iv)
+    {
+        $owner = $this->securityContext->getToken()->getUser();
+
+        $itemKey = new ItemKey;
+        $itemKey->setKey($key);
+        $itemKey->setIv($iv);
+        $itemKey->setOwner($owner);
+
+        if ($item->getOwner()->getId() !== $owner->getId()) {
+            return false;
+        }
+
+        // If there is a existing item key remove it
+        if ($existingItemKey = $this->keyRepository->findBy(array('owner' => $owner, 'item' => $item))) {
+            $this->em->remove($existingItemKey);
+        }
+
+        $this->em->persist($itemKey);
+        $this->em->flush();
+
+        return true;
     }
 
     public function saveItem($item, $silent = false)

@@ -14,6 +14,7 @@
     <services>
         <service id="libbit_lox.item_manager" class="%libbit_lox.item_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.context" />
         </service>
 
         <service id="libbit_lox.link_manager" class="%libbit_lox.link_manager.class%">

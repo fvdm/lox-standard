@@ -2,12 +2,11 @@
 
 namespace Libbit\LoxBundle\Controller;
 
-namespace Libbit\LoxBundle\Entity\ItemKey;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class KeyController extends Controller
 {
@@ -20,13 +19,33 @@ class KeyController extends Controller
      */
     public function setKeyPathAction($path)
     {
-        // TODO: Create key manager
-
+        $im      = $this->get('libbit_lox.item_manager');
         $request = $this->get('request');
+        $data    = json_decode($request->getContent(), true);
+        $user    = $this->get('security.context')->getToken()->getUser();
+        $item    = null;
 
-        $data = json_decode($request->getContent(), true);
+        if (!isset($data['key']) || !isset($data['iv'])) {
+            return new Response('Missing or incomplete parameters', 500);
+        }
 
-        return new JsonResponse(array());
+        if (isset($data['user']) && is_numeric($data['user'])) {
+            $user = $this->get('fos_user.util.user_manipulator')->findOneById($data['user']);
+        }
+
+        $item = $im->findItemByPath($user, $path);
+
+        if ($item && $item->getIsDir() === true) {
+            if ($im->addKeyToItem($item, $user, $data['key'], $data['iv'])) {
+                return new JsonResponse($item->getId());
+            } else {
+                return new Response('Forbidden, wrong owner', 403);
+            }
+        } else {
+            return new Response('Path not found', 404);
+        }
+
+        return new JsonResponse($item->getId());
     }
 
     /**

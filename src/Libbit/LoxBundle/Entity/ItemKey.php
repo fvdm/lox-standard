@@ -30,6 +30,14 @@ class ItemKey
     protected $user;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $owner;
+
+    /**
      * @var Item
      *
      * @ORM\ManyToOne(targetEntity="Item")
@@ -77,6 +85,22 @@ class ItemKey
     public function getItem()
     {
         return $this->item;
+    }
+
+    /**
+     * @param User $owner
+     */
+    public function setOwner(User $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 
     /**

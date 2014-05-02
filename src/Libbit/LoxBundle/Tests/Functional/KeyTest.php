@@ -105,7 +105,8 @@ class KeyTest extends WebTestCase
             '/lox_api/key/' . $item->getTitle(),
             array(), array(), array(), json_encode(array(
                 'key'  => base64_encode($key),
-                'iv' => base64_encode($this->iv)
+                'iv'   => base64_encode($this->iv),
+                'user' => $user
             ))
         );
 
