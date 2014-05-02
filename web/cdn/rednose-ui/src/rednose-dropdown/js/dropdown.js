@@ -1,140 +1,373 @@
 /*jshint boss:true, expr:true, onevar:false */
 
 /**
-Provides a dropdown plugin with custom event binding.
+ * Provides the Y.Rednose.Dropdown widget.
+ *
+ * @module rednose-dropdown
+ */
 
-@module rednose-dropdown
-**/
-var Dropdown;
+var Micro = Y.Template.Micro;
 
 /**
-Provides a context menu plugin with custom event binding.
+ * Dropdown widget.
+ *
+ * @class Dropdown
+ * @constructor
+ * @param {Object} [config] Config options.
+ * @param {Array} [config.items] Dropdown items.
+ * @extends Rednose.DropdownBase
+ * @uses View
+ */
 
-@class Dropdown
-@namespace Rednose
-@constructor
-@extends Bootstrap.Dropdown
-**/
-Dropdown = Y.Base.create('dropdown', Y.Bootstrap.Dropdown, [], {
+/**
+ * Fired when a menu item is clicked.
+ *
+ * You can subscribe to specific menu item through the following event: "select#id".
+ *
+ * @event select
+ * @param {Rednose.DropdownItem} item The item that was clicked.
+ * @param {EventFacade} originEvent Original click event.
+ * @preventable _defSelectFn
+ */
+var EVT_SELECT = 'select';
+
+var Dropdown = Y.Base.create('dropdown', Y.Rednose.DropdownBase, [Y.View], {
+
+    /**
+     * Templates used by this dropdown.
+     *
+     * @property {Object} templates
+     */
+    templates: {
+        menu: Micro.compile(
+            '<ul class="<%= data.classNames.menu %>"></ul>'
+        ),
+
+        caret: Micro.compile(
+            '<%== data.content %> <span class="<%= data.classNames.caret %>"></span>'
+        ),
+
+        item: Micro.compile(
+            '<% if (data.item.type === "divider") { %>' +
+                '<li class="<%= data.classNames.divider %>"></li>' +
+            '<% } else { %>' +
+                    '<li class="' +
+                        '<% if (data.item.isDisabled()) { %>' +
+                            '<%= data.classNames.disabled %> ' +
+                        '<% } %>' +
+                        '<% if (data.item.hasChildren()) { %>' +
+                            '<%= data.classNames.submenu %>' +
+                        '<% } %>' +
+                    '">' +
+
+                    '<% if (data.item.html) { %>' +
+                        '<%== data.item.html %>' +
+                    '<% } else { %>' +
+                        '<a href="<%= data.item.url %>" data-id="<%= data.item.id %>">' +
+                            '<% if (data.item.icon) { %>' +
+                                '<i class="<%= data.classNames.icon %> <%= data.item.icon %>"></i> ' +
+                            '<% } %>' +
+                            '<%= data.item.title %>' +
+                        '</a>' +
+                    '<% } %>' +
+
+                '</li>' +
+            '<% } %>'
+        ),
+
+        content: Micro.compile(
+            '<% if (data.item.icon) { %>' +
+                '<i class="<%= data.classNames.icon %> <%= data.item.icon %>"></i> ' +
+                '<% } %>' +
+            '<%= data.item.title %>'
+        )
+    },
+
+    /**
+     * CSS class names used by this dropdown.
+     *
+     * @property {Object} classNames
+     */
+    classNames: {
+        disabled: 'disabled',
+        caret   : 'caret',
+        menu    : 'dropdown-menu',
+        toggle  : 'dropdown-toggle',
+        open    : 'open',
+        divider : 'divider',
+        dropdown: 'dropdown',
+        dropup  : 'dropup',
+        icon    : 'icon',
+        submenu : 'dropdown-submenu'
+    },
+
+    /**
+     * Whether or not this dropdown has been rendered.
+     *
+     * @property {Boolean} rendered
+     * @default false
+     */
+    rendered: false,
+
     // -- Lifecycle methods ----------------------------------------------------
 
-    initializer: function () {
-        var node      = this._node,
-            menuNode  = null,
-            direction = this.config.dropup ? 'dropup' : 'dropdown';
+    initializer: function (config) {
+        // Allow all extensions to initialize in case they provide custom getters for the container.
+        this.onceAfter('initializedChange', function () {
+            this.get('container').addClass(this.classNames.dropdown);
 
-        node.wrap('<div class="dropdown-wrapper ' + direction + '"></div>');
-        node.addClass('dropdown-toggle');
-        node.setAttribute('data-toggle', 'dropdown');
-        this.node = node;
-
-        menuNode = node.get('parentNode');
-        menuNode.append(this._buildHTML(
-            this.get('content')
-        ));
-
-        // Close the dropdown on click.
-        menuNode.delegate('click', function(e) {
-            e.preventDefault();
-
-            if (e.target.hasClass('disabled') !== true) {
-                if (e.target.getAttribute('data-id')) {
-                    node.dropdown.fire(e.target.getAttribute('data-id'));
-                }
-
-                node.dropdown.toggle();
-            } else {
-                e.target.blur();
-            }
-        }, 'a');
-
-        this.set('node', menuNode);
+            this._attachDropdownEvents();
+        });
     },
 
     destructor: function () {
-        this.get('node').replace(this.node);
-
-        this.node.removeClass('dropdown-toggle');
-        this.node.removeAttribute('data-toggle');
-
-        delete this.node;
+        this._detachDropdownEvents();
     },
 
     // -- Public methods -------------------------------------------------------
 
-    enable: function (id) {
-        // FIXME: Shouldn't we rename this to toggle?
-        this.disable(id);
+    /**
+     * @param {Rednose.DropdownItem} item
+     * @return {Node}
+     * @private
+     */
+    getHTMLNode: function (item) {
+        var container = this.get('container');
+
+        return container.one('[data-id="' + item.id + '"]');
     },
 
-    disable: function (id) {
-        var container = this.get('node'),
-            node = container.one('[data-id=' + id + ']');
+    /**
+     * @chainable
+     */
+    render: function () {
+        var container = this.get('container');
 
-        if (node.ancestor('li').hasClass('disabled')) {
-            node.removeClass('disabled');
-            node.ancestor('li').removeClass('disabled');
-        } else {
-            node.addClass('disabled');
-            node.ancestor('li').addClass('disabled');
+        if (this._rootItems) {
+            container.append(this._renderMenu(this._rootItems));
         }
-    },
 
-    rename: function (id, title) {
-        var container = this.get('node'),
-            node = container.one('[data-id=' + id + ']');
+        if (!container.inDoc()) {
+            Y.one('body').append(container);
+        }
 
-        node.setHTML(title);
+        this.rendered = true;
+
+        return this;
     },
 
     // -- Protected methods ----------------------------------------------------
 
-    _buildHTML: function (content) {
-        var template = '<ul class="dropdown-menu"></ul>';
-        var node = Y.Node.create(template);
+    _attachDropdownEvents: function () {
+        this._events || (this._events = []);
 
-        if (content === '') {
-            return content;
+        var container  = this.get('container'),
+            classNames = this.classNames;
+
+        this._events.push(
+            this.after({
+                open   : this._afterOpen,
+                close  : this._afterClose,
+                enable : this._afterEnable,
+                disable: this._afterDisable,
+                rename : this._afterRename,
+                reset  : this._afterReset
+            }),
+
+            container.delegate('click', this._afterItemClick, '.' + classNames.menu + ' a', this),
+            container.on('clickoutside', this._onClickOutside, this)
+        );
+    },
+
+    _detachDropdownEvents: function () {
+        (new Y.EventHandle(this._events)).detach();
+    },
+
+    /**
+     * @param {Array} items
+     * @return {Node}
+     * @private
+     */
+    _renderMenu: function (items) {
+        var menuNode = Y.Node.create(this.templates.menu({
+            classNames: this.classNames
+        }));
+
+        for (var i = 0, len = items.length; i < len; i++) {
+            menuNode.append(this._renderItem(items[i]));
         }
 
-        Y.Array.each(content, function (item) {
-            var elLi = Y.Node.create('<li>');
-            var elA = Y.Node.create('<a href="#">');
-            var html = item.title;
+        return menuNode;
+    },
 
-            if (item.className) {
-                elLi.addClass(item.className);
-            }
+    /**
+     * @param {Rednose.DropdownItem} item
+     * @return {Node}
+     * @private
+     */
+    _renderItem: function (item) {
+        var itemNode = Y.Node.create(this.templates.item({
+            classNames: this.classNames,
+            item      : item
+        }));
 
-            if (item.title !== '-') {
-                if (item.icon) {
-                    html = '<i class="icon ' + item.icon + '"></i> ' + html;
-                }
+        if (item.children) {
+            itemNode.append(this._renderMenu(item.children));
+        }
 
-                elA.set('innerHTML', html);
-                elA.setAttribute('data-id', item.id);
+        return itemNode;
+    },
 
-                elLi.append(elA);
+    // -- Protected Event Handlers ---------------------------------------------
 
-                if (item.disabled === true) {
-                    elLi.addClass('disabled');
-                    elA.addClass('disabled');
-                }
-            } else {
-                elLi.addClass('divider');
-            }
+    /**
+     * @param e {EventFacade}
+     * @private
+     */
+    _onClickOutside: function (e) {
+        this.close();
+    },
 
-            node.append(elLi);
+    /**
+     * @param e {EventFacade}
+     * @private
+     */
+    _afterItemClick: function (e) {
+        var target      = e.target,
+            originEvent = e.originEvent,
+            item        = this.getItemById(target.getAttribute('data-id')),
+            itemEvent   = EVT_SELECT + '#' + item.id;
+
+        if (item.isDisabled() ||  item.url === '#') {
+            e.preventDefault();
+        }
+
+        if (item.isDisabled() || item.hasChildren()) {
+            return;
+        }
+
+        if (!this._published[itemEvent]) {
+            this._published[itemEvent] = this.publish(itemEvent, {
+                defaultFn: this._defItemSelectFn
+            });
+        }
+
+        if (!this._published[EVT_SELECT]) {
+            this._published[EVT_SELECT] = this.publish(EVT_SELECT, {
+                defaultFn: this._defSelectFn
+            });
+        }
+
+        this.fire(itemEvent, {
+            originEvent: originEvent,
+            item       : item
         });
+    },
 
-        return node.get('outerHTML');
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _afterOpen: function (e) {
+        if (!this.rendered) {
+            this.render();
+        }
+
+        var container  = this.get('container'),
+            classNames = this.classNames;
+
+        container.addClass(classNames.open);
+    },
+
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _afterClose: function (e) {
+        var container  = this.get('container'),
+            classNames = this.classNames;
+
+        container.removeClass(classNames.open);
+    },
+
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _afterEnable: function (e) {
+        var node = this.getHTMLNode(e.item);
+
+        if (node) {
+            node.get('parentNode').removeClass(this.classNames.disabled);
+        }
+    },
+
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _afterDisable: function (e) {
+        var node = this.getHTMLNode(e.item);
+
+        if (node) {
+            node.get('parentNode').addClass(this.classNames.disabled);
+        }
+    },
+
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _afterRename: function (e) {
+        var node = this.getHTMLNode(e.item);
+
+        if (node) {
+            node.setContent(this.templates.content({
+                classNames: this.classNames,
+                item      : e.item
+            }));
+        }
+    },
+
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _afterReset: function (e) {
+        if (!this.rendered) {
+            return;
+        }
+
+        var container  = this.get('container'),
+            classNames = this.classNames;
+
+        container.one('.' + classNames.menu).remove();
+
+        this.render();
+    },
+
+    // -- Default Event Handlers -----------------------------------------------
+
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _defSelectFn: function (e) {
+        e.item.dropdown.toggle();
+    },
+
+    /**
+     * @param {EventFacade} e
+     * @private
+     */
+    _defItemSelectFn: function (e) {
+        this.fire(EVT_SELECT, {
+            originEvent: e.originEvent,
+            item       : e.item
+        });
     }
 }, {
-    NS : 'dropdown',
-    ATTRS : {
-        content: { value: [] },
-        node: { value: null }
-    }
+    NS: 'dropdown'
 });
 
 // -- Namespace ----------------------------------------------------------------

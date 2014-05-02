@@ -716,6 +716,7 @@ Y.namespace('Rednose').Toolbar = Toolbar;
         "json",
         "node-event-simulate",
         "node-pluginhost",
+        "rednose-dropdown",
         "rednose-navbar-css",
         "rednose-util",
         "view",

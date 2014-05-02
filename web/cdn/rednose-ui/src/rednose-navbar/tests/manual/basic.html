@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Y.Rednose.ControlForm module test</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../../../build/rednose-ui/rednose-ui.css" rel="stylesheet"/>
+
+    <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui.js"></script>
+    <script src="../../../../build/rednose-loader/rednose-loader.js"></script>
+</head>
+<body>
+<div class="rednose-navbar"></div>
+<script>
+    YUI.Env.core.push('rednose-loader');
+
+    YUI({
+        filter: 'raw',
+        "groups": {
+            "rednose-ui": {
+                base: "../../../../build/"
+            }
+        }
+    }).use('rednose-navbar', function (Y) {
+        var navbar = new Y.Rednose.Navbar({
+            title: 'App',
+            columnLayout: true,
+
+            menu: [
+                { id: 'dropdown1', title: 'Dropdown 1', items: [
+                    { id: 'action1', title: 'Action 1' },
+                    { id: 'action2', title: 'Action 2', disabled: true },
+                    { title: '-' },
+                    { id: 'action3', title: 'Action 3' }
+                ]},
+                { id: 'dropdown2', title: 'Dropdown 2', items: [
+                    { id: 'action1', title: 'Action 1' },
+                    { id: 'action2', title: 'Action 2', disabled: true },
+                    { title: '-' },
+                    { id: 'action3', title: 'Action 3' }
+                ]}
+            ],
+
+            menuSecondary: [
+                { id: 'dropdown3', title: 'Dropdown 3', items: [
+                    { id: 'action1', title: 'Action 1' },
+                    { id: 'action2', title: 'Action 2', disabled: true },
+                    { title: '-' },
+                    { id: 'action3', title: 'Action 3' }
+                ]}
+            ],
+
+            srcNode: Y.one('.rednose-navbar')
+        });
+
+        navbar.render();
+
+        navbar.on('navbar:action1', function (e) {
+            console.log(e);
+        });
+
+        console.log(Y.Rednose.Navbar);
+    });
+</script>
+</body>
+</html>

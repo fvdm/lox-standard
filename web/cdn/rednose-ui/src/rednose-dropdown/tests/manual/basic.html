@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Y.Rednose.Navbar module test</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../../../build/rednose-ui/rednose-ui.css" rel="stylesheet"/>
+
+    <script src="../../../../../yui3/build/yui/yui.js"></script>
+    <script src="../../../../build/rednose-loader/rednose-loader.js"></script>
+</head>
+<body>
+
+<div id="test-container" class="container">
+    <div class="row">
+        <div class="span12">
+            <section>
+                <h1>Dropdown menu</h1>
+                <div id="dropdown"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script>
+    YUI.Env.core.push('rednose-loader');
+
+    YUI({
+        filter: 'raw',
+        "groups": {
+            "rednose-ui": {
+                base: "../../../../build/"
+            }
+        }
+    }).use('rednose-dropdown', function (Y) {
+        var items = [
+            { id: 'action1', title: 'Action 1', icon: 'icon-tag' },
+            { id: 'action2', title: 'Action 2', disabled: true },
+            { type: 'divider' },
+            { id: 'action3', title: 'URL', url: 'http://www.rednose.nl' },
+            { title: 'Submenu', children: [
+                { id: 'action1', title: 'Action 1' },
+                { id: 'action2', title: 'Action 2', disabled: true },
+                { type: 'divider' },
+                { id: 'action3', title: 'Action 3' }
+            ]},
+            { title: 'HTML', children: [
+                { html: '<a href="http://www.rednose.nl"><div>You joined the folder <strong>Demo user\'s shared folder</strong></div><div><small class="muted">39 minutes ago</small></div></a>' },
+                { html: '<a href="http://www.rednose.nl"><div>Demo user invited you to the folder <strong>Demo user\'s shared folder</strong></div><div><small class="muted">39 minutes ago</small></div></a>' },
+                { html: '<a href="http://www.rednose.nl"><div>You invited Demo user to join the folder <strong>Folder 5</strong></div><div><small class="muted">39 minutes ago</small></div></a>' }
+            ]}
+        ];
+
+        var dropdown = new Y.Rednose.Dropdown({
+            container: Y.one('#dropdown'),
+            items    : items
+        });
+
+        dropdown.render();
+        dropdown.open();
+
+        dropdown.getItemById('action1').disable();
+        dropdown.getItemById('action2').enable();
+
+        dropdown.getItemById('action1').rename('Renamed item');
+
+        dropdown.on('select', function (e) {
+            console.log(e);
+        });
+
+        dropdown.on('select#action3', function (e) {
+            console.log(e);
+        });
+    });
+</script>
+</body>
+</html>

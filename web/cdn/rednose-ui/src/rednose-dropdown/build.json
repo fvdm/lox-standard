@@ -3,7 +3,10 @@
     "builds": {
         "rednose-dropdown": {
             "jsfiles": [
-                "dropdown.js"
+                "dropdown-item.js",
+                "dropdown-base.js",
+                "dropdown.js",
+                "plugins/dropdown-plugin.js"
             ]
         }
     }

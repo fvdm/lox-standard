@@ -1,211 +1,151 @@
 YUI.add('dropdown-base-test', function (Y) {
 
-var Assert = Y.Assert,
-    suite;
+    var Assert = Y.Assert,
+        suite;
 
-suite = new Y.Test.Suite('Dropdown');
+    suite = new Y.Test.Suite('DropdownBase');
 
-suite.add(new Y.Test.Case({
-    name: 'Lifecycle',
+    suite.add(new Y.Test.Case({
+        name: 'Basic',
 
-    setUp: function () {
-        Y.one('#container').append(Y.Node.create('<button id="button">Test</button>'));
-    },
+        setUp: function () {
+            this.dropdown = new Y.Rednose.DropdownBase({
+                items: [
+                    { id: 'testItem1', title: 'Test Item 1' },
+                    { id: 'testItem2', title: 'Test Item 2', disabled: true }
+                ]
+            });
+        },
 
-    tearDown: function () {
-        Y.one('#button').remove();
-    },
+        tearDown: function () {
+            this.dropdown.destroy();
+        },
 
-    '`plug()` should bind the dropdown': function () {
-        var button = Y.one('#button');
+        '`open` should enable the dropdown open state': function () {
+            var dropdown = this.dropdown;
 
-        button.plug(Y.Rednose.Dropdown, {
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+            Assert.isFalse(dropdown.isOpen());
 
-        Assert.isInstanceOf(Y.Rednose.Dropdown, button.hasPlugin('dropdown'));
-        Assert.isObject(Y.one('.dropdown-menu'));
+            dropdown.open();
 
-        button.unplug('dropdown');
-    },
+            Assert.isTrue(dropdown.isOpen());
+        },
 
-    '`unplug()` should purge the dropdown': function () {
-        var button = Y.one('#button');
+        '`close` should disable the dropdown open state': function () {
+            var dropdown = this.dropdown;
 
-        button.plug(Y.Rednose.Dropdown, {
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+            dropdown.open();
 
-        button.unplug('dropdown');
+            Assert.isTrue(dropdown.isOpen());
 
-        Assert.isUndefined(button.hasPlugin('dropdown'));
-        Assert.isNull(Y.one('.dropdown-menu'));
-    }
-}));
+            dropdown.close();
 
-suite.add(new Y.Test.Case({
-    name: 'Config',
+            Assert.isFalse(dropdown.isOpen());
+        },
 
-    setUp: function () {
-        Y.one('#container').append(Y.Node.create('<button id="button">Test</button>'));
-    },
+        '`toggle` should toggle the dropdown open state': function () {
+            var dropdown = this.dropdown;
 
-    tearDown: function () {
-        Y.one('#button').remove();
-    },
+            Assert.isFalse(dropdown.isOpen());
 
-    '`dropup` set to `false` should render the menu downwards': function () {
-        var button = Y.one('#button');
+            dropdown.toggle();
 
-        button.plug(Y.Rednose.Dropdown, {
-            dropup: false,
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+            Assert.isTrue(dropdown.isOpen());
 
-        Assert.isTrue(button.get('parentNode').hasClass('dropdown'));
-        button.unplug('dropdown');
-    },
+            dropdown.toggle();
 
-    '`dropup` set to `true` should render the menu upwards': function () {
-        var button = Y.one('#button');
+            Assert.isFalse(dropdown.isOpen());
+        },
 
-        button.plug(Y.Rednose.Dropdown, {
-            dropup: true,
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+        '`disable` should disable an item': function () {
+            var dropdown = this.dropdown,
+                item     = dropdown.getItemById('testItem1');
 
-        Assert.isTrue(button.get('parentNode').hasClass('dropup'));
+            Assert.isFalse(item.isDisabled());
 
-        button.unplug('dropdown');
-    }
-}));
+            item.disable();
 
-suite.add(new Y.Test.Case({
-    name: 'Events',
+            Assert.isTrue(item.isDisabled());
+        },
 
-    setUp: function () {
-        Y.one('#container').append(Y.Node.create('<button id="button">Test</button>'));
-    },
+        '`enable` should enable an item': function () {
+            var dropdown = this.dropdown,
+                item     = dropdown.getItemById('testItem2');
 
-    tearDown: function () {
-    },
+            Assert.isTrue(item.isDisabled());
 
-    'Dropdown should be invisible when initialized': function () {
-        var button = Y.one('#button');
+            item.enable();
 
-        button.plug(Y.Rednose.Dropdown, {
-            dropup: false,
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+            Assert.isFalse(item.isDisabled());
+        },
 
-        Assert.isFalse(button.get('parentNode').hasClass('open'));
+        '`rename` should rename an item': function () {
+            var dropdown = this.dropdown,
+                item     = dropdown.getItemById('testItem1');
 
-        button.unplug('dropdown');
-        button.remove();
-    },
+            Assert.areEqual('Test Item 1', item.title);
 
-    'Dropdown should be visible when host is clicked': function () {
-        var button = Y.one('#button');
+            item.rename('Renamed Item');
 
-        button.plug(Y.Rednose.Dropdown, {
-            dropup: false,
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+            Assert.areEqual('Renamed Item', item.title);
+        },
 
-        button.simulate('click');
+        '`reset` should reset the dropdown items': function () {
+            var dropdown = this.dropdown;
 
-        Assert.isTrue(button.get('parentNode').hasClass('open'));
+            dropdown.reset([
+                { id: 'testItem3', title: 'Test Item 3' },
+                { id: 'testItem4', title: 'Test Item 4', disabled: true }
+            ]);
 
-        button.unplug('dropdown');
-        button.remove();
-    },
+            Assert.isInstanceOf(Y.Rednose.DropdownItem, dropdown.getItemById('testItem3'));
+        }
+    }));
 
-    'Dropdown should toggle when host is clicked multiple times': function () {
-        var button = Y.one('#button');
+    suite.add(new Y.Test.Case({
+        name: 'Events',
 
-        button.plug(Y.Rednose.Dropdown, {
-            dropup: false,
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+        setUp: function () {
+            this.dropdown = new Y.Rednose.DropdownBase({
+                items: [
+                    { id: 'testItem1', title: 'Test Item 1' },
+                    { id: 'testItem2', title: 'Test Item 2' }
+                ]
+            });
+        },
 
-        button.simulate('click');
-        Assert.isTrue(button.get('parentNode').hasClass('open'));
+        tearDown: function () {
+            this.dropdown.destroy();
+        },
 
-        button.simulate('click');
-        Assert.isFalse(button.get('parentNode').hasClass('open'));
+        '`open` event should fire when the dropdown opens': function () {
+            var calls    = 0,
+                dropdown = this.dropdown;
 
-        button.simulate('click');
-        Assert.isTrue(button.get('parentNode').hasClass('open'));
+            dropdown.on('open', function (e) {
+                calls++;
+            });
 
-        button.unplug('dropdown');
-        button.remove();
-    },
+            dropdown.open();
 
-    'Dropdown should hide when clicked outside': function () {
-        var button = Y.one('#button');
+            Assert.areEqual(1, calls);
+        },
 
-        button.plug(Y.Rednose.Dropdown, {
-            dropup: false,
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
+        '`close` event should fire when the dropdown opens': function () {
+            var calls    = 0,
+                dropdown = this.dropdown;
 
-        button.simulate('click');
-        Assert.isTrue(button.get('parentNode').hasClass('open'));
+            dropdown.on('close', function (e) {
+                calls++;
+            });
 
-        Y.one('body').simulate('click');
-        Assert.isFalse(button.get('parentNode').hasClass('open'));
+            dropdown.open().close();
 
-        button.unplug('dropdown');
-        button.remove();
-    },
+            Assert.areEqual(1, calls);
+        }
+    }));
 
-    'Dropdown should hide when an item is clicked': function () {
-        var button = Y.one('#button');
-
-        button.plug(Y.Rednose.Dropdown, {
-            dropup: false,
-            content: [
-                { id: 'testItem1', title: 'Test Item 1' },
-                { id: 'testItem2', title: 'Test Item 2' }
-            ]
-        });
-
-        button.simulate('click');
-        Assert.isTrue(button.get('parentNode').hasClass('open'));
-
-        button.get('parentNode').one('a').simulate('click');
-        Assert.isFalse(button.get('parentNode').hasClass('open'));
-
-        button.unplug('dropdown');
-        button.remove();
-    }
-}));
-
-Y.Test.Runner.add(suite);
+    Y.Test.Runner.add(suite);
 
 }, '@VERSION@', {
     requires: ['rednose-dropdown', 'test', 'node-event-simulate']

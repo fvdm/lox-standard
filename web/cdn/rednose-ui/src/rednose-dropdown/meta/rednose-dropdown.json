@@ -3,7 +3,10 @@
         "requires": [
             "base",
             "node",
-            "gallery-bootstrap-dropdown"
+            "template-micro",
+            "view",
+            "node-pluginhost",
+            "plugin"
         ]
     }
 }
