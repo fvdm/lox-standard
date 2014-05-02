@@ -3,38 +3,34 @@ YUI.add('lox-page', function (Y, NAME) {
 /*jshint boss:true, expr:true, onevar:false */
 
 /**
-Base page.
-
-@module lox-page
-**/
+ * Base page.
+ *
+ * @module lox-page
+*/
 var TEXT_MENU_CHANGE_PASSWORD = 'Change password',
     TEXT_MENU_SIGN_OUT        = 'Sign out';
 
-var SHORT_POLLING_INTERVAL = 10;
-
 /**
-Base page.
-
-@class Page
-@namespace Lox
-@constructor
-@extends View
-**/
+ * Renders and controls the basic page elements like menu items and dropdowns.
+ *
+ * @class Page
+ * @namespace Lox
+ * @constructor
+ * @extends View
+ */
 var Page = Y.Base.create('page', Y.View, [], {
+
+    /**
+     * Debug flag.
+     *
+     * @property {Boolean} debug
+     * @default false
+     */
+    debug: false,
 
     // -- Lifecycle methods ----------------------------------------------------
 
     initializer: function () {
-        var dropdown = Y.one('#user-dropdown');
-
-        this.navBar = new Y.Rednose.Navbar();
-
-        this.navBar.createDropdown(dropdown, [
-            { title: TEXT_MENU_CHANGE_PASSWORD, url: YUI.Env.routing.change_password },
-            { title: '-' },
-            { title: TEXT_MENU_SIGN_OUT, url: YUI.Env.routing.logout }
-        ]);
-
         if (Y.one('.libbit-lox-sidenav')) {
             Y.one('.libbit-lox-sidenav').plug(Y.Plugin.Affix, {
                 offset: {
@@ -43,53 +39,108 @@ var Page = Y.Base.create('page', Y.View, [], {
             });
         }
 
-        this._initBadge();
-        this._updateNotifications();
-        this._bindMarkRead();
-        this._initRegisterApp();
+        this._userDropdown       = Y.one('#user-dropdown');
+        this._notifyDropdown     = Y.one('#notifications-dropdown');
+        this._badgeNotifications = Y.one('#badge-notifications');
+        this._registerAppMenu    = Y.one('[data-id=registerApp]').get('parentNode');
+
+        this._initDropdowns();
     },
 
     destructor: function () {
-        this.navBar.destroy();
+        this._userDropdown.dropdown.destroy();
+        this._notifyDropdown.dropdown.destroy();
 
-        this.navBar = null;
+        this._userDropdown       = null;
+        this._notifyDropdown     = null;
+        this._badgeNotifications = null;
+        this._registerAppMenu    = null;
     },
 
     // -- Public methods -------------------------------------------------------
 
     render: function () {
-        this.navBar.render();
+        this._isMobile() && this._registerAppMenu.show();
+
+        this._updateNotifications();
+        this._updateBadge();
 
         return this;
     },
 
     // -- Protected methods ----------------------------------------------------
 
-    _initBadge: function () {
-        var request, ds;
+    /**
+     * Initializes the dropdown menus within the navigation bar.
+     *
+     * @private
+     */
+    _initDropdowns: function () {
+        this._userDropdown.plug(Y.Rednose.Plugin.Dropdown, {
+            showCaret: false,
 
-        ds = new Y.DataSource.IO({
-            source: YUI.Env.routing.notifications_unread
+            items: [
+                { title: TEXT_MENU_CHANGE_PASSWORD, url: YUI.Env.routing.change_password },
+                { type: 'divider' },
+                { title: TEXT_MENU_SIGN_OUT, url: YUI.Env.routing.logout }
+            ]
         });
 
-        request = {
-            callback: {
-                success: function (e) {
-                    var count = parseInt(e.response.results[0].responseText, 10);
+        this._notifyDropdown.plug(Y.Rednose.Plugin.Dropdown, {
+            showCaret: false
+        });
 
-                    Y.one('#badge-notifications').setContent(count > 0 ? count : null);
-                }
-            }
-        };
-
-        ds.setInterval(SHORT_POLLING_INTERVAL * 6000, request);
+        this._notifyDropdown.dropdown.after('open', this._afterNotifyOpen, this);
     },
 
-    _initRegisterApp: function () {
-        var menuItem = Y.one('[data-id=registerApp]').get('parentNode');
+    /**
+     * Updates the notification dropdown.
+     *
+     * @private
+     */
+    _updateNotifications: function () {
+        var notifyDropdown = this._notifyDropdown;
 
-        var isMobile = {
-            Android: function() {
+        Y.io(YUI.Env.routing.notifications, {
+            method: 'GET',
+            on : {
+                success : function (tx, r) {
+                    notifyDropdown.dropdown.reset(Y.JSON.parse(r.responseText));
+                }
+            }
+        });
+    },
+
+    /**
+     * Updates the badge count for unread notifications.
+     *
+     * @private
+     */
+    _updateBadge: function () {
+        var badgeNotifications = this._badgeNotifications,
+            debug              = this.debug;
+
+        Y.io(YUI.Env.routing.notifications_unread, {
+            method: 'GET',
+            on : {
+                success : function (tx, r) {
+                    var count = parseInt(r.responseText, 10);
+
+                    badgeNotifications.setContent(count === 0 && !debug ? null : count);
+                }
+            }
+        });
+    },
+
+    /**
+     * Renders whether this page is visited on an Android or iOS device.
+     *
+     * @return {Boolean}
+     * @private
+     */
+    _isMobile: function () {
+        var IsMobile = {
+            android: function() {
                 return /Android/i.test(navigator.userAgent);
             },
             iOS: function() {
@@ -97,51 +148,32 @@ var Page = Y.Base.create('page', Y.View, [], {
             }
         };
 
-        if (isMobile.Android() === true || isMobile.iOS() === true) {
-            menuItem.show();
-        }
+        return IsMobile.android() === true || IsMobile.iOS() === true;
     },
 
-    _updateNotifications: function () {
-        var self = this;
+    // -- Protected Event Handlers ---------------------------------------------
 
-        Y.io(YUI.Env.routing.notifications, {
-            method: 'GET',
+    /**
+     * Marks all notifications as `read`, and updates the notifications dropdown.
+     *
+     * @param {EventFacade} e
+     * @private
+     */
+    _afterNotifyOpen: function (e) {
+        var badgeNotifications = this._badgeNotifications,
+            debug              = this.debug;
+
+        Y.io(YUI.Env.routing.notifications_mark_read, {
+            method: 'POST',
             on : {
-                success : function (tx, r) {
-                    var dropdown = Y.one('#notifications-dropdown'),
-                        data     = Y.JSON.parse(r.responseText),
-                        config   = [];
-
-                    dropdown.one('.dropdown-menu').empty();
-
-                    Y.Array.each(data, function (item) {
-                        config.push({ node: Y.Node.create(item.html) });
-                    });
-
-                    self.navBar.createDropdown(dropdown, config);
+                success : function () {
+                    // Reset the badge.
+                    badgeNotifications.setContent(debug ? 0 : null);
                 }
             }
         });
-    },
 
-    _bindMarkRead: function () {
-        var dropdown = Y.one('#notifications-dropdown'),
-            self     = this;
-
-        dropdown.on('click', function () {
-            Y.io(YUI.Env.routing.notifications_mark_read, {
-                method: 'POST',
-                on : {
-                    success : function () {
-                        self._updateNotifications();
-
-                        // Reset the badge.
-                        Y.one('#badge-notifications').setContent(null);
-                    }
-                }
-            });
-        });
+        this._updateNotifications();
     }
 });
 
@@ -158,7 +190,7 @@ Y.namespace('Lox').Page = Page;
         "gallery-affix",
         "io",
         "json",
-        "rednose-navbar",
+        "rednose-dropdown",
         "view"
     ]
 });
