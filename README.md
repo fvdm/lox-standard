@@ -37,7 +37,7 @@ The installation script uses 777 permissions on the writable dirs for platform p
 
 Execute the following commands after updating an **existing** LocalBox installation:
 
-1. Run the post installation script:
+1. Run the post update script:
 
         [sudo] app/deployment/post-update.sh
 
