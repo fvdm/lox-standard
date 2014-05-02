@@ -23,69 +23,25 @@ Basic Symfony console commands that need to be executed from the application's r
 
 Execute the following commands after setting up a **new** LocalBox installation:
 
-1. Set permissions on the writable folders (use more restrictive permissions when deploying):
-
-        [sudo] chmod -R 777 app/cache app/logs data
-
-2. Copy the `parameters.yml` file and set the required values:
+1. Copy the `parameters.yml` file and set the required values:
 
         cp app/config/parameters.yml.dist app/config/parameters.yml
 
-3. Create the database:
+2. Run the post installation script:
 
-        app/console doctrine:database:create
+        [sudo] app/deployment/post-install.sh
 
-4. Create the database schema:
-
-        app/console doctrine:schema:create
-
-5. Load the fixtures:
-
-        app/console doctrine:fixtures:load
-
-6. Install assets:
-
-        app/console assets:install --symlink web
-
-7. Dump Assetic assets:
-	
-        app/console --env=prod assetic:dump
-
-8. Warm the cache:
-
-        app/console --env=prod cache:warm
-
-9. Reinitialize permissions on the cache and data folder (use more restrictive permissions when deploying):
-
-        [sudo] chmod -R 777 app/cache data
+The installation script uses 777 permissions on the writable dirs for platform portability. For more restrictive permissions, use something like ACL, depending on your platform. Write permissions are required for both the console user and the apache user.
 
 ### Initializing an updated installation
 
 Execute the following commands after updating an **existing** LocalBox installation:
 
-1. Set permissions on the cache folder (use more restrictive permissions when deploying):
+1. Run the post installation script:
 
-        [sudo] chmod -R 777 app/cache
+        [sudo] app/deployment/post-update.sh
 
-2. Clear the current cache and warmup a new version:
-
-        app/console --env=prod cache:clear
-
-3. Execute database migrations:
-
-        app/console doctrine:migrations:migrate
-
-4. Install assets:
-
-        app/console assets:install --symlink web
-
-5. Dump Assetic assets:
-	
-        app/console --env=prod assetic:dump
-
-6. Reinitialize permissions on the cache folder (use more restrictive permissions when deploying):
-
-        [sudo] chmod -R 777 app/cache
+The update script uses 777 permissions on the writable dirs for platform portability. For more restrictive permissions, use something like ACL, depending on your platform. Write permissions are required for both the console user and the apache user.
 
 ## Default User Accounts
 
