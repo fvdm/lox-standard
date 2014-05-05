@@ -14,6 +14,10 @@
                 <source>th_date</source>
                 <target>Date</target>
             </trans-unit>
+            <trans-unit id="th_sender">
+                <source>th_sender</source>
+                <target>Sender</target>
+            </trans-unit>
             <trans-unit id="td_no_links_yet">
                 <source>td_no_links_yet</source>
                 <target>You haven't created any public links yet</target>
@@ -41,6 +45,78 @@
             <trans-unit id="confirmation_delete_link_body">
                 <source>confirmation_delete_link_body</source>
                 <target>The link will be removed. Are you sure you want to delete it?</target>
+            </trans-unit>
+            <trans-unit id="header_sharing">
+                <source>header_sharing</source>
+                <target>Sharing</target>
+            </trans-unit>
+            <trans-unit id="tab_invites">
+                <source>tab_invites</source>
+                <target>Invites</target>
+            </trans-unit>
+            <trans-unit id="tab_shared_folders">
+                <source>tab_shared_folders</source>
+                <target>My shared folders</target>
+            </trans-unit>
+            <trans-unit id="btn_leave_folder">
+                <source>btn_leave_folder</source>
+                <target>Leave</target>
+            </trans-unit>
+            <trans-unit id="tooltip_leave_folder">
+                <source>tooltip_leave_folder</source>
+                <target>Leave folder</target>
+            </trans-unit>
+            <trans-unit id="btn_join_folder">
+                <source>btn_join_folder</source>
+                <target>Join</target>
+            </trans-unit>
+            <trans-unit id="tooltip_join_folder">
+                <source>tooltip_join_folder</source>
+                <target>Join folder</target>
+            </trans-unit>
+            <trans-unit id="btn_rejoin_folder">
+                <source>btn_rejoin_folder</source>
+                <target>Rejoin</target>
+            </trans-unit>
+            <trans-unit id="tooltip_rejoin_folder">
+                <source>tooltip_rejoin_folder</source>
+                <target>Rejoin folder</target>
+            </trans-unit>
+            <trans-unit id="td_no_invites_yet">
+                <source>td_no_invites_yet</source>
+                <target>You don't have any invitations at this moment</target>
+            </trans-unit>
+            <trans-unit id="btn_shared_folder_settings">
+                <source>btn_shared_folder_settings</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="tooltip_shared_folder_settings">
+                <source>tooltip_shared_folder_settings</source>
+                <target>Shared folder settings</target>
+            </trans-unit>
+            <trans-unit id="td_no_shared_folders">
+                <source>td_no_shared_folders</source>
+                <target>Currently none of your folders are shared with other users</target>
+            </trans-unit>
+            <trans-unit id="confirmation_btn_unshare">
+                <source>confirmation_btn_unshare</source>
+                <target>Unshare</target>
+            </trans-unit>
+            <trans-unit id="confirmation_title_unshare">
+                <source>confirmation_title_unshare</source>
+                <target>Unshare folder \"{item}\"?</target>
+            </trans-unit>
+            <trans-unit id="confirmation_body_unshare">
+                <source>confirmation_body_unshare</source>
+                <target>The folder will no longer be shared and will be visible to only you. Are you sure you want to stop sharing?</target>
+            </trans-unit>
+            <trans-unit id="notification_title_share_removed">
+                <source>notification_title_share_removed</source>
+                <target>Share removed</target>
+            </trans-unit>
+            <trans-unit id="notification_body_share_removed">
+                <source>notification_body_share_removed</source>
+                <target>The folder is no longer shared</target>
             </trans-unit>
         </body>
     </file>
