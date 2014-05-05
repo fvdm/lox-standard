@@ -11,14 +11,14 @@
     <div class="span10 libbit-lox-content">
         <section id="links">
             <div class="page-header">
-                <h1>Links</h1>
+                <h1>{% trans %}header_links{% endtrans %}</h1>
             </div>
             <div>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="span5">Name</th>
-                            <th class="span3>">Date</th>
+                            <th class="span5">{% trans %}th_name{% endtrans %}</th>
+                            <th class="span3>">{% trans %}th_date{% endtrans %}</th>
                             <th class="span1>"></th>
                         </tr>
                     </thead>
@@ -28,12 +28,12 @@
                             <tr>
                                 <td class="span5"><div><a href="{{ path('libbit_lox_links_path', { path: link.uri }) }}" target="_blank">{{ link.item.title }}</a></div></td>
                                 <td class="span3">{{ link.createdAt|date }}</td>
-                                <td class="span1"><button rel="tooltip" data-record-id="{{ link.publicId }}" class="close" title="Remove link">&times;</button></td>
+                                <td class="span1"><button rel="tooltip" data-record-id="{{ link.publicId }}" class="close" title="{% trans %}tooltip_remove_link{% endtrans %}">&times;</button></td>
                             </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="3"><h4>You haven't created any public links yet</h4></td>
+                            <td colspan="3"><h4>{% trans %}td_no_links_yet{% endtrans %}</h4></td>
                         </tr>
                     {% endif %}
                     </tbody>
@@ -45,12 +45,12 @@
     YUI().use('lox-page', 'io', 'rednose-tooltip', 'rednose-dialog', 'rednose-notifier', function (Y) {
         new Y.Lox.Page().render();
 
-        var TEXT_TITLE_DELETED = 'Deleted',
-            TEXT_LINK_DELETED  = 'Link successfully deleted.',
+        var TEXT_TITLE_DELETED = '{% trans %}notification_title_deleted{% endtrans %}',
+            TEXT_LINK_DELETED  = '{% trans %}notification_body_deleted{% endtrans %}',
 
-            TEXT_DELETE_TITLE = 'Delete link to file \'{title}\'?',
-            TEXT_DELETE       = 'Delete',
-            TEXT_DELETE_BODY  = 'The link will be removed. Are you sure you want to delete it?';
+            TEXT_DELETE_TITLE = '{% trans %}confirmation_delete_link_title{% endtrans %}',
+            TEXT_DELETE       = '{% trans %}confirmation_delete_link_btn{% endtrans %}',
+            TEXT_DELETE_BODY  = '{% trans %}confirmation_delete_link_body{% endtrans %}';
 
         new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
 
