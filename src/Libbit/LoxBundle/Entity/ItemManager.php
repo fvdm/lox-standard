@@ -82,7 +82,7 @@ class ItemManager
      *
      * @return boolean
      */
-    public function addKeyToItem(Item $item, User $user, $key, $iv)
+    public function addItemKey(Item $item, User $user, $key, $iv)
     {
         $owner = $this->securityContext->getToken()->getUser();
 
@@ -90,13 +90,14 @@ class ItemManager
         $itemKey->setKey($key);
         $itemKey->setIv($iv);
         $itemKey->setOwner($owner);
+        $itemKey->setItem($item);
 
         if ($item->getOwner()->getId() !== $owner->getId()) {
             return false;
         }
 
         // If there is a existing item key remove it
-        if ($existingItemKey = $this->keyRepository->findBy(array('owner' => $owner, 'item' => $item))) {
+        if ($existingItemKey = $this->keyRepository->findOneBy(array('owner' => $owner, 'item' => $item))) {
             $this->em->remove($existingItemKey);
         }
 
@@ -104,6 +105,23 @@ class ItemManager
         $this->em->flush();
 
         return true;
+    }
+
+    /**
+     * Gets the key and iv for an item
+     *
+     * @param Item $item
+     * @param User $user
+     *
+     * @return mixed ItemKey or false on failure
+     */
+    public function getItemKey(Item $item, User $user)
+    {
+        if ($key = $this->keyRepository->findOneBy(array('owner' => $user, 'item' => $item))) {
+            return $key;
+        }
+
+        return false;
     }
 
     public function saveItem($item, $silent = false)

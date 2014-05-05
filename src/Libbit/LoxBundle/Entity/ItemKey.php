@@ -74,7 +74,7 @@ class ItemKey
     /**
      * @param Item $item
      */
-    public function setItem($item)
+    public function setItem(Item $item)
     {
         $this->item = $item;
     }

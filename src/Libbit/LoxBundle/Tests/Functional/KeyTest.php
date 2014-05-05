@@ -14,6 +14,13 @@ class KeyTest extends WebTestCase
     protected $testString = 'Please There’s a crazy man that’s creeping outside my door, I live on the corner of Grey Street and the end of the world';
 
     /**
+     * Private key passphrase
+     *
+     * @var String
+     */
+    protected $passphrase = 'test';
+
+    /**
      * The encryption key
      *
      * @var String
@@ -111,6 +118,40 @@ class KeyTest extends WebTestCase
         );
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        return array($this->iv, $key, $this->key);
+    }
+
+    /**
+     * @depends testSetRSAEncyptedKeyForUser
+     */
+    public function testGetRSAEncyptedKeyForUser($keyPack)
+    {
+        $iv       = $keyPack[0];
+        $key      = $keyPack[1];
+        $keyPlain = $keyPack[2];
+
+        $rsaPrivateKey = $this->getPrivateKey();
+
+        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user');
+        $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => 'encrypted-dir'));
+
+        $this->client->request(
+            'GET',
+            '/lox_api/key/' . $item->getTitle()
+        );
+
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals($iv, base64_decode($data['iv']));
+        $this->assertEquals($key, base64_decode($data['key']));
+
+        $decrypterPointer = openssl_get_privatekey($rsaPrivateKey, $this->passphrase);
+
+        openssl_private_decrypt($key, $keyDecrypted, $decrypterPointer);
+
+        $this->assertEquals($keyPlain, $keyDecrypted);
     }
 
     public function testEncryption()
@@ -132,7 +173,7 @@ class KeyTest extends WebTestCase
         $iv         = $encrypted[2];
 
         $plainText = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $cipherText, MCRYPT_MODE_CBC, $iv);
-        $plainText = rtrim($plainText); // Cut off the block padding
+        $plainText = rtrim($plainText); // Cut off the block padding (Warning: not binary safe)
 
         $this->assertEquals($plainText, $this->testString);
     }
@@ -153,6 +194,6 @@ class KeyTest extends WebTestCase
      */
     protected function getPrivateKey()
     {
-        return file_get_contents(__DIR__.'/Fixtures/id_rsa');
+        return file_get_contents(__DIR__.'/Fixtures/private.pem');
     }
 }
