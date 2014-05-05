@@ -118,6 +118,26 @@
                 <source>notification_body_share_removed</source>
                 <target>The folder is no longer shared</target>
             </trans-unit>
+            <trans-unit id="menu_register_app">
+                <source>menu_register_app</source>
+                <target>Register app</target>
+            </trans-unit>
+            <trans-unit id="menu_notifications">
+                <source>menu_notifications</source>
+                <target>Notifications</target>
+            </trans-unit>
+            <trans-unit id="side_nav_home">
+                <source>side_nav_home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="side_nav_sharing">
+                <source>side_nav_sharing</source>
+                <target>Sharing</target>
+            </trans-unit>
+            <trans-unit id="side_nav_links">
+                <source>side_nav_links</source>
+                <target>Links</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
