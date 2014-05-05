@@ -8,9 +8,9 @@
     "APIKeys"   : [
         {% for client in clients %}
             {
-                "Name"    : "{{ client.name }}",
-                "Key"     : "{{ client.publicId }}",
-                "Sectret" : "{{ client.secret }}"
+                "Name"   : "{{ client.name }}",
+                "Key"    : "{{ client.publicId }}",
+                "Secret" : "{{ client.secret }}"
             }
             {% if loop.last == false %}
                 ,

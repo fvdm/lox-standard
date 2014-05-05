@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="" >
+        <body>
+            <trans-unit id="header_links">
+                <source>header_links</source>
+                <target>Links</target>
+            </trans-unit>
+            <trans-unit id="th_name">
+                <source>th_name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="th_date">
+                <source>th_date</source>
+                <target>Date</target>
+            </trans-unit>
+            <trans-unit id="td_no_links_yet">
+                <source>td_no_links_yet</source>
+                <target>You haven't created any public links yet</target>
+            </trans-unit>
+            <trans-unit id="tooltip_remove_link">
+                <source>tooltip_remove_link</source>
+                <target>Remove link</target>
+            </trans-unit>
+            <trans-unit id="notification_title_deleted">
+                <source>notification_title_deleted</source>
+                <target>Deleted</target>
+            </trans-unit>
+            <trans-unit id="notification_body_deleted">
+                <source>notification_body_deleted</source>
+                <target>Link successfully deleted.</target>
+            </trans-unit>
+            <trans-unit id="confirmation_delete_link_title">
+                <source>confirmation_delete_link_title</source>
+                <target>Delete link to file "{title}"?</target>
+            </trans-unit>
+            <trans-unit id="confirmation_delete_link_btn">
+                <source>confirmation_delete_link_btn</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="confirmation_delete_link_body">
+                <source>confirmation_delete_link_body</source>
+                <target>The link will be removed. Are you sure you want to delete it?</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
