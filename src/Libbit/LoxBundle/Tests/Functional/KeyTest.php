@@ -164,7 +164,7 @@ class KeyTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/lox_api/key_revoke/' . $item->getTitle(),
+            $this->getRoute('libbit_lox_api_revoke_key_path', array('path' => '/' . $item->getTitle())),
             array(), array(), array(), json_encode(array(
                 'username' => 'user'
             ))
@@ -214,5 +214,10 @@ class KeyTest extends WebTestCase
     protected function getPrivateKey()
     {
         return file_get_contents(__DIR__.'/Fixtures/private.pem');
+    }
+
+    protected function getRoute($name, $variables)
+    {
+        return $this->client->getContainer()->get('router')->generate($name, $variables, false);
     }
 }

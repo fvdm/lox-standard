@@ -57,7 +57,7 @@ class ShareController extends Controller
      */
     public function newShareAction($path)
     {
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->get('doctrine')->getManager();
         $sm = $this->get('libbit_lox.share_manager');
 
         $user  = $this->get('security.context')->getToken()->getUser();
@@ -91,7 +91,7 @@ class ShareController extends Controller
     public function editShareAction($id)
     {
         // TODO: Use Share manager so we create invites
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->get('doctrine')->getManager();
         $sm = $this->get('libbit_lox.share_manager');
 
         $share = $em->getRepository('Libbit\LoxBundle\Entity\Share')->findOneById($id);
@@ -175,30 +175,29 @@ class ShareController extends Controller
 
 
     /**
-     * Get shared settings for an Item
+     * Get share settings for an Item
      *
      * <p><strong>Example JSON response</strong></p>
      * <pre>{
-     *    "id":11,
-     *    "item":{
-     *        "is_dir":true,
-     *        "title":"Folder 5",
-     *        "modified_at":"2014-04-30T18:28:42+0200",
-     *        "is_shared":true,
-     *        "is_share":false,
-     *        "path":"\/Folder 5",
-     *        "icon":"folder-shared"
+     *    "id": 11,
+     *    "item": {
+     *        "is_dir"     : true,
+     *        "title"      : "Folder 5",
+     *        "modified_at": "2014-04-30T18:28:42+0200",
+     *        "is_shared"  : true,
+     *        "is_share"   : false,
+     *        "path"       : "\/Folder 5",
+     *        "icon"       : "folder-shared"
      *    },
-     *    "identities":[
+     *    "identities": [
      *        {
-     *            "id":"group_57",
-     *            "title":"Administrator",
-     *            "type":"group"
-     *        },
-     *        {
-     *            "id":"user_39",
-     *            "title":"Demo user",
-     *            "type":"user"
+     *            "id"   : "group_57",
+     *            "title": "Administrator",
+     *            "type" : "group"
+     *        }, {
+     *            "id"   : "user_39",
+     *            "title": "Demo user",
+     *            "type" : "user"
      *        }
      *    ]
      *}</pre>
@@ -223,8 +222,63 @@ class ShareController extends Controller
     }
 
     /**
+     * Create new share settings for an Item
+     *
+     * <p><strong>Example JSON request</strong></p>
+     * <pre>{
+     *    "identities":[
+     *        {
+     *            "id":"group_57",
+     *            "type":"group"
+     *        }, {
+     *            "id":"user_39",
+     *            "type":"user"
+     *        }
+     *    ]
+     *}</pre>
+     *
+     * @Route("/lox_api/share_create/{path}", name="libbit_lox_api_shares_new", requirements={"path" = ".+"}, defaults={"path" = ""})
+     * @Method({"POST"})
+     *
+     * @ApiDoc(
+     *     section="Share",
+     *
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
+     * )
+     */
+    public function newApiShareAction($path)
+    {
+        return $this->newShareAction($path);
+    }
+
+    /**
+     * Update share settings for an Item
+     *
+     * <p><strong>Example JSON request</strong></p>
+     * <pre>{
+     *    "identities":[
+     *        {
+     *            "id":"group_57",
+     *            "type":"group"
+     *        }, {
+     *            "id":"user_39",
+     *            "type":"user"
+     *        }
+     *    ]
+     *}</pre>
+     *
      * @Route("/lox_api/shares/{id}/edit", name="libbit_lox_api_shares_edit")
      * @Method({"POST"})
+     *
+     * @ApiDoc(
+     *     section="Share",
+     *
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
+     * )
      */
     public function editApiShareAction($id)
     {

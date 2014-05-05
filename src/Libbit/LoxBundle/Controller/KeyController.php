@@ -29,7 +29,7 @@ class KeyController extends Controller
      * }</pre>
      *
      *
-     * @Route("/lox_api/key/{path}", name="libbit_lox_set_key_path", requirements={"path" = ".+"})
+     * @Route("/lox_api/key/{path}", name="libbit_lox_api_set_key_path", requirements={"path" = ".+"})
      * @Method({"POST"})
      *
      * @ApiDoc(
@@ -85,7 +85,7 @@ class KeyController extends Controller
      * }</pre>
      *
      *
-     * @Route("/lox_api/key/{path}", name="libbit_lox_get_key_path", requirements={"path" = ".+"})
+     * @Route("/lox_api/key/{path}", name="libbit_lox_api_get_key_path", requirements={"path" = ".+"})
      * @Method({"GET"})
      *
      * @ApiDoc(
@@ -123,7 +123,7 @@ class KeyController extends Controller
      *     "username" : "username",
      * }</pre>
      *
-     * @Route("/lox_api/key_revoke/{path}", name="libbit_lox_revoke_key_path", requirements={"path" = ".+"})
+     * @Route("/lox_api/key_revoke/{path}", name="libbit_lox_api_revoke_key_path", requirements={"path" = ".+"})
      * @Method({"POST"})
      *
      * @ApiDoc(
