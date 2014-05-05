@@ -192,5 +192,9 @@ Y.namespace('Lox').Page = Page;
         "json",
         "rednose-dropdown",
         "view"
+    ],
+    "lang": [
+        "en",
+        "nl"
     ]
 });

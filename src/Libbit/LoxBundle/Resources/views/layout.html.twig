@@ -24,6 +24,19 @@
         {# Include the YUI config object with path and URL mappings #}
         {{ rednose_yui_config() }}
 
+        YUI.GlobalConfig = {
+            groups: {
+                lox: {
+                    base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/lox/',
+                    modules: {
+                        "lox-page": {
+                            "lang": [ "en", "nl" ]
+                        }
+                    }
+                }
+            }
+        };
+
         {# Pass environment variables to the YUI core #}
         YUI.Env.routing = {
             logout                  : '{{ path('_rednose_framework_security_logout') }}',
