@@ -63,10 +63,10 @@ class ShareControllerTest extends WebTestCase
         }
 
         // Create a group
-        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test Group');
+        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test group');
 
         if ($group === null) {
-            $group = new Group('Test Group', array('ROLE_USER'));
+            $group = new Group('Test group', array('ROLE_USER'));
 
             $this->groupManager->updateGroup($group, false);
         }
@@ -101,7 +101,10 @@ class ShareControllerTest extends WebTestCase
         return json_decode($this->client->getResponse()->getContent());
     }
 
-    public function testUpdateShare()
+    /**
+     * @depends testCreateShare
+     */
+    public function testUpdateShare($item)
     {
         // STUB...
     }

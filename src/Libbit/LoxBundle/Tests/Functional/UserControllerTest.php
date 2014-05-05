@@ -18,18 +18,18 @@ class UserControllerTest extends WebTestCase
         parent::setUp();
 
         $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('test');
-        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test Group');
+        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test group');
 
         if ($user === null) {
             $userUtil = $this->client->getContainer()->get('fos_user.util.user_manipulator');
             $user = $userUtil->create('test', 'testpasswd', 'test@libbit.eu', true, false);
-            $user->setRealname('Test User');
+            $user->setRealname('Test user');
             $this->em->persist($user);
         }
 
         if ($group === null) {
             $group = new Group();
-            $group->setName('Test Group');
+            $group->setName('Test group');
 
             $user->addGroup($group);
 
@@ -55,7 +55,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals('Test User', $data['name']);
+        $this->assertEquals('Test user', $data['name']);
     }
 
     /**
@@ -121,7 +121,7 @@ class UserControllerTest extends WebTestCase
 
     public function testGetIdentitiesGroup()
     {
-        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test Group');
+        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test group');
 
         $this->client->request('GET', '/lox_api/identities/group/group_' . $group->getId());
 
@@ -141,11 +141,11 @@ class UserControllerTest extends WebTestCase
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
         foreach ($data as $identity) {
-            if ($identity['title'] === 'Test User') {
+            if ($identity['title'] === 'Test user') {
                 $user = true;
             }
 
-            if ($identity['title'] === 'Test Group') {
+            if ($identity['title'] === 'Test group') {
                 $group = true;
             }
         }
@@ -165,11 +165,11 @@ class UserControllerTest extends WebTestCase
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
         foreach ($data as $identity) {
-            if ($identity['title'] === 'Test User') {
+            if ($identity['title'] === 'Test user') {
                 $user = true;
             }
 
-            if ($identity['title'] === 'Test Group') {
+            if ($identity['title'] === 'Test group') {
                 $group = true;
             }
         }
