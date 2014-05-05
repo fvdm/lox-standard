@@ -41,8 +41,8 @@ class WebTestCase extends BaseWebTestCase
                 $st = new SchemaTool($this->em);
 
                 $classes = $this->em->getMetadataFactory()->getAllMetadata();
-                //$st->dropSchema($classes);
-                //$st->createSchema($classes);
+                $st->dropSchema($classes);
+                $st->createSchema($classes);
 
                 static::$schemaSetUp = true;
             }

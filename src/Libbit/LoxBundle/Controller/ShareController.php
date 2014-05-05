@@ -8,11 +8,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 
 class ShareController extends Controller
 {
+    // -- Web Methods ----------------------------------------------------------
+
     /**
      * @Route("/shares/{path}", name="libbit_lox_shares_get", requirements={"path" = ".+"}, defaults={"path" = ""})
      * @Method({"GET"})
@@ -166,5 +169,65 @@ class ShareController extends Controller
         return new Response($callback ? $callback.'('.$data.');' : $data, 200, array(
             'Content-Type' => 'application/json'
         ));
+    }
+
+    // -- API Methods ----------------------------------------------------------
+
+
+    /**
+     * Get shared settings for an Item
+     *
+     * <p><strong>Example JSON response</strong></p>
+     * <pre>{
+     *    "id":11,
+     *    "item":{
+     *        "is_dir":true,
+     *        "title":"Folder 5",
+     *        "modified_at":"2014-04-30T18:28:42+0200",
+     *        "is_shared":true,
+     *        "is_share":false,
+     *        "path":"\/Folder 5",
+     *        "icon":"folder-shared"
+     *    },
+     *    "identities":[
+     *        {
+     *            "id":"group_57",
+     *            "title":"Administrator",
+     *            "type":"group"
+     *        },
+     *        {
+     *            "id":"user_39",
+     *            "title":"Demo user",
+     *            "type":"user"
+     *        }
+     *    ]
+     *}</pre>
+     *
+     * @Route("/lox_api/shares/{path}", name="libbit_lox_api_shares_get", requirements={"path" = ".+"}, defaults={"path" = ""})
+     * @Method({"GET"})
+     *
+     * @ApiDoc(
+     *     section="Share",
+     *     output={ "class"="Libbit\LoxBundle\Entity\Share",
+     *         "groups"={"details"}
+     *     },
+     *
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
+     * )
+     */
+    public function getApiShareAction($path)
+    {
+        return $this->getShareAction($path);
+    }
+
+    /**
+     * @Route("/lox_api/shares/{id}/edit", name="libbit_lox_api_shares_edit")
+     * @Method({"POST"})
+     */
+    public function editApiShareAction($id)
+    {
+        return $this->editShareAction($id);
     }
 }
