@@ -111,9 +111,9 @@ class KeyTest extends WebTestCase
             'POST',
             '/lox_api/key/' . $item->getTitle(),
             array(), array(), array(), json_encode(array(
-                'key'  => base64_encode($key),
-                'iv'   => base64_encode($this->iv),
-                'user' => $user
+                'key'      => base64_encode($key),
+                'iv'       => base64_encode($this->iv),
+                'username' => $user->getUsername()
             ))
         );
 
@@ -152,6 +152,25 @@ class KeyTest extends WebTestCase
         openssl_private_decrypt($key, $keyDecrypted, $decrypterPointer);
 
         $this->assertEquals($keyPlain, $keyDecrypted);
+    }
+
+    /**
+     * @depends testGetRSAEncyptedKeyForUser
+     */
+    public function testRevokeKeyForUser()
+    {
+        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user');
+        $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => 'encrypted-dir'));
+
+        $this->client->request(
+            'POST',
+            '/lox_api/key_revoke/' . $item->getTitle(),
+            array(), array(), array(), json_encode(array(
+                'username' => 'user'
+            ))
+        );
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testEncryption()

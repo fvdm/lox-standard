@@ -7,8 +7,8 @@ LocalBox is built on top of the [Symfony](http://symfony.com) framework and the 
 * PHP needs to be a minimum version of PHP 5.3.3
 * Your php.ini needs to have the date.timezone setting
 * The PHP intl extension needs to be installed
-* Optional: For ItemKey support php5-mcrypt and php5-openssl
 * MySQL needs to be installed
+* *Optional: For ItemKey support php5-mcrypt and php5-openssl*
 
 To check the system configuration, run the check.php script from the command line, in the application's root directory:
 

@@ -124,6 +124,32 @@ class ItemManager
         return false;
     }
 
+    /**
+     * Revokes an ItemKey
+     *
+     * @param Item $item
+     * @param User $user
+     *
+     * @return mixed ItemKey or false on failure
+     */
+    public function revokeItemKey(Item $item, User $user)
+    {
+        $owner = $this->securityContext->getToken()->getUser();
+
+        if ($key = $this->keyRepository->findOneBy(array('owner' => $user, 'item' => $item))) {
+            if ($key->getOwner()->getId() !== $owner->getId()) {
+                return false;
+            }
+
+            $this->em->remove($key);
+            $this->em->flush();
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
     public function saveItem($item, $silent = false)
     {
         $this->em->persist($item);

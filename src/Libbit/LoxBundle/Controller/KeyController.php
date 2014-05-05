@@ -23,9 +23,9 @@ class KeyController extends Controller
      *
      * <p><strong>Example JSON request</strong></p>
      * <pre>{
-     *     "key" : "GYRBAC54vZVXjK...WvruVr/PX",
-     *     "iv"  : "iBEgIJGRSiUCYR...GMgEOjEFg",
-     *     "user": 2
+     *     "key"     : "GYRBAC54vZVXjK...WvruVr/PX",
+     *     "iv"      : "iBEgIJGRSiUCYR...GMgEOjEFg",
+     *     "username": "user"
      * }</pre>
      *
      *
@@ -54,8 +54,10 @@ class KeyController extends Controller
             return new Response('Missing or incomplete parameters', 500);
         }
 
-        if (isset($data['user']) && is_numeric($data['user'])) {
-            $user = $this->get('fos_user.util.user_manipulator')->findOneById($data['user']);
+        if (isset($data['username'])) {
+            $user = $this->get('rednose_framework.user_manager')->findUserBy(
+                array('username' => $data['username'])
+            );
         }
 
         $item = $im->findItemByPath($user, $path);
@@ -74,7 +76,7 @@ class KeyController extends Controller
     }
 
     /**
-     * Get a  a path's key and initialization vector for the session user.
+     * Get a path's key and initialization vector for the session user.
      *
      * <p><strong>Example JSON response</strong></p>
      * <pre>{
@@ -107,6 +109,53 @@ class KeyController extends Controller
                 );
             } else {
                 return new Response('Key not found', 404);
+            }
+        }
+
+        return new Response('Path not found', 404);
+    }
+
+    /**
+     * Revoke a path's key for the session user or a supplied user.
+     *
+     * <p><strong>Example JSON request (optional)</strong></p>
+     * <pre>{
+     *     "username" : "username",
+     * }</pre>
+     *
+     * @Route("/lox_api/key_revoke/{path}", name="libbit_lox_revoke_key_path", requirements={"path" = ".+"})
+     * @Method({"POST"})
+     *
+     * @ApiDoc(
+     *     section="Key",
+     *     statusCodes={
+     *         200="Returned when successful.",
+     *         403="Forbidden, key has wrong owner.",
+     *         404="Returned when the path."
+     *     }
+     * )
+     */
+    public function revokeKeyPathAction($path)
+    {
+        $im      = $this->get('libbit_lox.item_manager');
+        $request = $this->get('request');
+        $user    = $this->get('security.context')->getToken()->getUser();
+
+        if ($data = json_decode($request->getContent(), true)) {
+            if (isset($data['username'])) {
+                $user = $this->get('rednose_framework.user_manager')->findUserBy(
+                    array('username' => $data['username'])
+                );
+            }
+        }
+
+        $item = $im->findItemByPath($user, $path);
+
+        if ($item) {
+            if ($im->revokeItemKey($item, $user)) {
+                return new Response('Success', 200);
+            } else {
+                return new Response('Forbidden, wrong owner', 403);
             }
         }
 
