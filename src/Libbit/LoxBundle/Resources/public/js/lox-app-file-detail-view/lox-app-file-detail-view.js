@@ -8,10 +8,7 @@ Provides a detail view when clicked on a file.
 @module lox-app
 @submodule lox-app-file-detail-view
 **/
-var TEXT_DOWNLOAD = 'Download',
-    TEXT_SHARE    = 'Share',
-
-    CSS_ICON_PREFIX  = 'icon-file-128-',
+var CSS_ICON_PREFIX  = 'icon-file-128-',
 
     CSS_BOOTSTRAP_INFO        = 'btn-info',
     CSS_BOOTSTRAP_TEXT_CENTER = 'text-center';
@@ -40,13 +37,13 @@ var FileDetailView = Y.Base.create('fileDetailView', Y.View, [ Y.Rednose.View.Na
 
 	buttons: {
 		download: {
-			value: TEXT_DOWNLOAD,
+			value: Y.Intl.get('lox-app-file-detail-view').download,
 			position: 'right',
 			primary: true
 		},
 
 		share: {
-			value: TEXT_SHARE,
+			value: Y.Intl.get('lox-app-file-detail-view').share,
 			position: 'right',
 			className: CSS_BOOTSTRAP_INFO
 		}
@@ -133,4 +130,4 @@ var FileDetailView = Y.Base.create('fileDetailView', Y.View, [ Y.Rednose.View.Na
 Y.namespace('Lox.App').FileDetailView = FileDetailView;
 
 
-}, '@VERSION@', {"requires": ["rednose-view-nav", "view"]});
+}, '@VERSION@', {"requires": ["rednose-view-nav", "view"], "lang": ["en"]});
