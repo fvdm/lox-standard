@@ -918,7 +918,7 @@ Notfier class, wraps around Pines Notify
 **/
 
 /**
-Notfier class, wraps around Pines Notify
+Notifier class, wraps around Pines Notify
 
 @class Notifier
 @namespace Rednose
@@ -935,7 +935,7 @@ $.pnotify.defaults.styling = 'bootstrap';
 Triggers a notification.
 
 @method notify
-@param {notification} notification Notify notification object.
+@param {Object} notification Notify notification object.
 @static
 @public
 **/

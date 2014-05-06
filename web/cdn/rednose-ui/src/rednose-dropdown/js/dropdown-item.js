@@ -1,10 +1,36 @@
 /*jshint expr:true, onevar:false */
 
 /**
- * @class Rednose.DropdownItem
- * @param {Rednose.Dropdown} dropdown
- * @param {Object} [config]
+ * Provides Rednose.Dropdown.Item class.
+ *
+ * @module rednose-dropdown
+ * @submodule rednose-dropdown-item
+ */
+
+/**
+ * A single item within a `Rednose.Dropdown`.
+ *
+ * @class Rednose.Dropdown.Item
  * @constructor
+ * @param {Rednose.Dropdown} dropdown `Rednose.Dropdown` instance.
+ * @param {Object} [config] Configuration hash for this item.
+ *     @param {Boolean} [config.id] The id for this item.
+ *
+ *     @param {String} [config.type='item'] The type for this dropdown item.
+ *         Can be 'item' or 'divider'.
+ *
+ *     @param {Array} [config.children=[]] Array of child config objects for this item.
+ *
+ *     @param {Boolean} [config.disabled=false] Whether this item is disabled or not. Disabled
+ *         items can't be clicked and won't trigger any events.
+ *
+ *     @param {String} [config.icon] Icon CSS class for this item.
+ *
+ *     @param {String} [config.title] The text label for this item.
+ *
+ *     @param {String} [config.url] URL that will be opened when this item is clicked.
+ *
+ *     @param {String} [config.html] Custom HTML string to render the contents of this item.
  */
 function DropdownItem(dropdown, config) {
     config || (config = {});
@@ -57,7 +83,7 @@ DropdownItem.prototype = {
     /**
      * The icon for this node.
      *
-     * @property {Boolean} disabled
+     * @property {String} icon
      * @readOnly
      */
 
@@ -144,4 +170,4 @@ DropdownItem.prototype = {
 };
 
 // -- Namespace ----------------------------------------------------------------
-Y.namespace('Rednose').DropdownItem = DropdownItem;
+Y.namespace('Rednose.Dropdown').Item = DropdownItem;

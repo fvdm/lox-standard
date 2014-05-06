@@ -1,0 +1,28 @@
+{
+    "name": "rednose-datetimepicker",
+    "builds": {
+        "rednose-datepicker-plugin": {
+            "jsfiles": [
+                "plugins/datepicker-plugin.js"
+            ]
+        },
+        "rednose-timepicker-plugin": {
+            "jsfiles": [
+                "plugins/timepicker-plugin.js"
+            ]
+        },
+        "rednose-datetimepicker-base": {
+            "jsfiles": [
+                "bootstrap-datetimepicker.min.js",
+                "locales/bootstrap-datetimepicker.de.js",
+                "locales/bootstrap-datetimepicker.fr.js",
+                "locales/bootstrap-datetimepicker.nl.js"
+            ]
+        },
+        "rednose-datetimepicker-base-css": {
+            "cssfiles": [
+                "bootstrap-datetimepicker.min.css"
+            ]
+        }
+    }
+}

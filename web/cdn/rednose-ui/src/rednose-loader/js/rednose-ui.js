@@ -122,6 +122,33 @@ Y.mix(YUI.Env[Y.version].modules, {
             "plugin"
         ]
     },
+    "rednose-datepicker-plugin": {
+        "group": "rednose-ui",
+        "requires": [
+            "rednose-datetimepicker-base"
+        ]
+    },
+    "rednose-datetimepicker": {
+        "group": "rednose-ui",
+        "use": [
+            "rednose-datepicker-plugin",
+            "rednose-timepicker-plugin"
+        ]
+    },
+    "rednose-datetimepicker-base": {
+        "group": "rednose-ui",
+        "requires": [
+            "base",
+            "node",
+            "plugin",
+            "rednose-datetimepicker-base-css",
+            "rednose-jquery"
+        ]
+    },
+    "rednose-datetimepicker-base-css": {
+        "group": "rednose-ui",
+        "type": "css"
+    },
     "rednose-dd": {
         "group": "rednose-ui",
         "requires": [
@@ -154,9 +181,31 @@ Y.mix(YUI.Env[Y.version].modules, {
     "rednose-dropdown": {
         "group": "rednose-ui",
         "requires": [
-            "base",
+            "event-outside",
             "node",
-            "gallery-bootstrap-dropdown"
+            "rednose-dropdown-base",
+            "template-micro",
+            "view"
+        ]
+    },
+    "rednose-dropdown-base": {
+        "group": "rednose-ui",
+        "requires": [
+            "rednose-dropdown-item"
+        ]
+    },
+    "rednose-dropdown-item": {
+        "group": "rednose-ui",
+        "requires": [
+            "base"
+        ]
+    },
+    "rednose-dropdown-plugin": {
+        "group": "rednose-ui",
+        "requires": [
+            "rednose-dropdown",
+            "node-pluginhost",
+            "plugin"
         ]
     },
     "rednose-form": {
@@ -241,6 +290,7 @@ Y.mix(YUI.Env[Y.version].modules, {
             "json",
             "node-event-simulate",
             "node-pluginhost",
+            "rednose-dropdown",
             "rednose-navbar-css",
             "rednose-util",
             "view",
@@ -298,6 +348,12 @@ Y.mix(YUI.Env[Y.version].modules, {
         "group": "rednose-ui",
         "requires": [
             "node"
+        ]
+    },
+    "rednose-timepicker-plugin": {
+        "group": "rednose-ui",
+        "requires": [
+            "rednose-datetimepicker-base"
         ]
     },
     "rednose-tooltip": {
@@ -376,4 +432,4 @@ Y.mix(YUI.Env[Y.version].modules, {
         ]
     }
 });
-YUI.Env[Y.version].md5 = '67703f1c7de0df5a1b98dede67c36788';
+YUI.Env[Y.version].md5 = '011781d380c4349585f0c0441c87831d';

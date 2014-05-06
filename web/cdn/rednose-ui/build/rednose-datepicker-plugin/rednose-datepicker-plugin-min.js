@@ -1,0 +1,1 @@
+YUI.add("rednose-datepicker-plugin",function(e,t){e.namespace("Rednose.Plugin").Datepicker=e.Base.create("datepicker",e.Base,[e.Plugin.Base],{initializer:function(t){this._host=t.host;var n=e.config.lang||null;$(this._host.getDOMNode()).datetimepicker({pickTime:!1,language:n})}},{NS:"datepicker"})},"1.4.0",{requires:["rednose-datetimepicker-base"]});

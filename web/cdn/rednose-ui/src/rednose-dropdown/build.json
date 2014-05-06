@@ -1,12 +1,28 @@
 {
     "name": "rednose-dropdown",
+
     "builds": {
         "rednose-dropdown": {
             "jsfiles": [
-                "dropdown-item.js",
-                "dropdown-base.js",
-                "dropdown.js",
-                "plugins/dropdown-plugin.js"
+                "js/dropdown.js"
+            ]
+        },
+
+        "rednose-dropdown-base": {
+            "jsfiles": [
+                "js/dropdown-base.js"
+            ]
+        },
+
+        "rednose-dropdown-item": {
+            "jsfiles": [
+                "js/dropdown-item.js"
+            ]
+        },
+
+        "rednose-dropdown-plugin": {
+            "jsfiles": [
+                "js/plugins/dropdown-plugin.js"
             ]
         }
     }

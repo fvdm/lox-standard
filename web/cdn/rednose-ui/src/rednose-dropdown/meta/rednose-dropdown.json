@@ -1,10 +1,29 @@
 {
     "rednose-dropdown" : {
         "requires": [
-            "base",
+            "event-outside",
             "node",
+            "rednose-dropdown-base",
             "template-micro",
-            "view",
+            "view"
+        ]
+    },
+
+    "rednose-dropdown-base" : {
+        "requires": [
+            "rednose-dropdown-item"
+        ]
+    },
+
+    "rednose-dropdown-item" : {
+        "requires": [
+            "base"
+        ]
+    },
+
+    "rednose-dropdown-plugin" : {
+        "requires": [
+            "rednose-dropdown",
             "node-pluginhost",
             "plugin"
         ]

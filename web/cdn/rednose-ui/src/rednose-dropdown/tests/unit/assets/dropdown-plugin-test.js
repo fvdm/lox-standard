@@ -234,5 +234,5 @@ YUI.add('dropdown-plugin-test', function (Y) {
     Y.Test.Runner.add(suite);
 
 }, '@VERSION@', {
-    requires: ['rednose-dropdown', 'test', 'node-event-simulate']
+    requires: ['rednose-dropdown-plugin', 'test', 'node-event-simulate']
 });

@@ -1,22 +1,39 @@
 /*jshint boss:true, expr:true, onevar:false */
 
 /**
+ * Provides Rednose.Dropdown.Base
+ *
+ * @module rednose-dropdown
+ * @submodule rednose-dropdown-base
+ */
+
+/**
+ * Base dropdown functionality.
+ *
+ * @class Rednose.Dropdown.Base
+ * @constructor
+ * @param {Object} [config] Config object.
+ *     @param {Object[]} [config.items] Array of dropdown config objects.
+ * @extends Base
+ */
+
+/**
  * @event enable
- * @param {Rednose.DropdownItem}
+ * @param {Rednose.Dropdown.Item}
  * @preventable _defEnableFn
  */
 var EVT_ENABLE = 'enable';
 
 /**
  * @event disable
- * @param {Rednose.DropdownItem}
+ * @param {Rednose.Dropdown.Item}
  * @preventable _defDisableFn
  */
 var EVT_DISABLE = 'disable';
 
 /**
  * @event rename
- * @param {Rednose.DropdownItem}
+ * @param {Rednose.Dropdown.Item}
  * @preventable _defRenameFn
  */
 var EVT_RENAME = 'rename';
@@ -30,7 +47,7 @@ var EVT_RENAME = 'rename';
 var EVT_CLOSE = 'close';
 
 /**
- * Fired the dropdown is opened.
+ * Fired when the dropdown is opened.
  *
  * @event open
  * @preventable _defOpenFn
@@ -38,18 +55,18 @@ var EVT_CLOSE = 'close';
 var EVT_OPEN = 'open';
 
 /**
- * Fired when the menu items are reset.
+ * Fired when the dropdown items are reset.
  *
  * @event reset
- * @param {Array} items New menu items
+ * @param {Array} items Array of new dropdown config objects
  * @preventable _defResetFn
  **/
-EVT_RESET = 'reset';
+var EVT_RESET = 'reset';
 
 var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
 
     /**
-     * Whether the dropdown is currenty open or not.
+     * Whether the dropdown is currently open or not.
      *
      * @property {Boolean} open
      * @default false
@@ -153,7 +170,7 @@ var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
 
     /**
      * @param {String} id
-     * @return {Rednose.DropdownItem}
+     * @return {Rednose.Dropdown.Item}
      * @private
      */
     getItemById: function (id) {
@@ -161,7 +178,7 @@ var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
     },
 
     /**
-     * @param {Rednose.DropdownItem} item
+     * @param {Rednose.Dropdown.Item} item
      * @chainable
      */
     enableItem: function (item) {
@@ -175,7 +192,7 @@ var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
     },
 
     /**
-     * @param {Rednose.DropdownItem} item
+     * @param {Rednose.Dropdown.Item} item
      * @chainable
      */
     disableItem: function (item) {
@@ -189,7 +206,7 @@ var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
     },
 
     /**
-     * @param {Rednose.DropdownItem} item
+     * @param {Rednose.Dropdown.Item} item
      * @param {String} title
      * @chainable
      */
@@ -207,11 +224,11 @@ var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
      * Create a dropdown item.
      *
      * @param {Object} config
-     * @return {Rednose.DropdownItem}
+     * @return {Rednose.Dropdown.Item}
      * @private
      */
     _createItem: function (config) {
-        var dropdownItem = new Y.Rednose.DropdownItem(this, config);
+        var dropdownItem = new Y.Rednose.Dropdown.Item(this, config);
 
         if (config.children) {
             for (var i = 0, len = config.children.length; i < len; i++) {
@@ -231,7 +248,7 @@ var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
     /**
      * Create a dropdown item.
      *
-     * @param {Rednose.DropdownItem} item
+     * @param {Rednose.Dropdown.Item} item
      * @private
      */
     _destroyItem: function (item) {
@@ -335,4 +352,4 @@ var DropdownBase = Y.Base.create('dropdownBase', Y.Base, [], {
 });
 
 // -- Namespace ----------------------------------------------------------------
-Y.namespace('Rednose').DropdownBase = DropdownBase;
+Y.namespace('Rednose.Dropdown').Base = DropdownBase;

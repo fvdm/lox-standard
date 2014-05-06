@@ -4,6 +4,7 @@
  * Provides the Y.Rednose.Dropdown widget.
  *
  * @module rednose-dropdown
+ * @main rednose-dropdown
  */
 
 var Micro = Y.Template.Micro;
@@ -11,11 +12,11 @@ var Micro = Y.Template.Micro;
 /**
  * Dropdown widget.
  *
- * @class Dropdown
+ * @class Rednose.Dropdown
  * @constructor
  * @param {Object} [config] Config options.
  * @param {Array} [config.items] Dropdown items.
- * @extends Rednose.DropdownBase
+ * @extends Rednose.Dropdown.Base
  * @uses View
  */
 
@@ -31,7 +32,7 @@ var Micro = Y.Template.Micro;
  */
 var EVT_SELECT = 'select';
 
-var Dropdown = Y.Base.create('dropdown', Y.Rednose.DropdownBase, [Y.View], {
+var Dropdown = Y.Base.create('dropdown', Y.Rednose.Dropdown.Base, [Y.View], {
 
     /**
      * Templates used by this dropdown.
@@ -370,5 +371,4 @@ var Dropdown = Y.Base.create('dropdown', Y.Rednose.DropdownBase, [Y.View], {
     NS: 'dropdown'
 });
 
-// -- Namespace ----------------------------------------------------------------
-Y.namespace('Rednose').Dropdown = Dropdown;
+Y.Rednose.Dropdown = Y.mix(Dropdown, Y.Rednose.Dropdown);

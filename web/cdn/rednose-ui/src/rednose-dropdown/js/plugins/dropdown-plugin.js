@@ -7,6 +7,8 @@
  */
 
 /**
+ * Node plugin that attaches a dropdown to the given node.
+ *
  * @class Rednose.Plugin.Dropdown
  * @constructor
  * @extends Rednose.Dropdown

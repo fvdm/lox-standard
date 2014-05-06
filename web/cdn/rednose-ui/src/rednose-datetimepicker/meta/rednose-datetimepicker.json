@@ -1,0 +1,36 @@
+{
+    "rednose-datetimepicker": {
+        "use": [
+            "rednose-datepicker-plugin",
+            "rednose-timepicker-plugin"
+        ],
+
+        "submodules": {
+            "rednose-datetimepicker-base-css": {
+                "type": "css"
+            },
+
+            "rednose-datetimepicker-base": {
+                "requires": [
+                    "base",
+                    "node",
+                    "plugin",
+                    "rednose-datetimepicker-base-css",
+                    "rednose-jquery"
+                ]
+            },
+
+            "rednose-datepicker-plugin": {
+                "requires": [
+                    "rednose-datetimepicker-base"
+                ]
+            },
+
+            "rednose-timepicker-plugin": {
+                "requires": [
+                    "rednose-datetimepicker-base"
+                ]
+            }
+        }
+    }
+}

@@ -3,13 +3,13 @@ YUI.add('dropdown-base-test', function (Y) {
     var Assert = Y.Assert,
         suite;
 
-    suite = new Y.Test.Suite('DropdownBase');
+    suite = new Y.Test.Suite('Dropdown.Base');
 
     suite.add(new Y.Test.Case({
         name: 'Basic',
 
         setUp: function () {
-            this.dropdown = new Y.Rednose.DropdownBase({
+            this.dropdown = new Y.Rednose.Dropdown.Base({
                 items: [
                     { id: 'testItem1', title: 'Test Item 1' },
                     { id: 'testItem2', title: 'Test Item 2', disabled: true }
@@ -98,7 +98,7 @@ YUI.add('dropdown-base-test', function (Y) {
                 { id: 'testItem4', title: 'Test Item 4', disabled: true }
             ]);
 
-            Assert.isInstanceOf(Y.Rednose.DropdownItem, dropdown.getItemById('testItem3'));
+            Assert.isInstanceOf(Y.Rednose.Dropdown.Item, dropdown.getItemById('testItem3'));
         }
     }));
 
@@ -106,7 +106,7 @@ YUI.add('dropdown-base-test', function (Y) {
         name: 'Events',
 
         setUp: function () {
-            this.dropdown = new Y.Rednose.DropdownBase({
+            this.dropdown = new Y.Rednose.Dropdown.Base({
                 items: [
                     { id: 'testItem1', title: 'Test Item 1' },
                     { id: 'testItem2', title: 'Test Item 2' }
@@ -148,5 +148,5 @@ YUI.add('dropdown-base-test', function (Y) {
     Y.Test.Runner.add(suite);
 
 }, '@VERSION@', {
-    requires: ['rednose-dropdown', 'test', 'node-event-simulate']
+    requires: ['rednose-dropdown-base', 'test', 'node-event-simulate']
 });

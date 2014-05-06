@@ -1,0 +1,16 @@
+{
+    "name": "rednose-bootstrap",
+    "builds": {
+        "rednose-bootstrap": {
+            "cssfiles": [
+                "bootstrap.css"
+            ],
+            "jsfiles": [
+                "bootstrap.js"
+            ],
+            "copy" : [
+                [ "./img", "./img"]
+            ]
+        }
+    }
+}
