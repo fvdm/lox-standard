@@ -237,7 +237,7 @@ var Dropdown = Y.Base.create('dropdown', Y.Rednose.Dropdown.Base, [Y.View], {
      */
     _afterItemClick: function (e) {
         var target      = e.target,
-            originEvent = e.originEvent,
+            originEvent = e,
             item        = this.getItemById(target.getAttribute('data-id')),
             itemEvent   = EVT_SELECT + '#' + item.id;
 

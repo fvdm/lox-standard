@@ -49,7 +49,7 @@ var EVT_RENAME = 'rename';
 var EVT_CLOSE = 'close';
 
 /**
- * Fired the when dropdown is opened.
+ * Fired when the dropdown is opened.
  *
  * @event open
  * @preventable _defOpenFn
@@ -57,10 +57,10 @@ var EVT_CLOSE = 'close';
 var EVT_OPEN = 'open';
 
 /**
- * Fired when the menu items are reset.
+ * Fired when the dropdown items are reset.
  *
  * @event reset
- * @param {Array} items New menu items
+ * @param {Array} items Array of new dropdown config objects
  * @preventable _defResetFn
  **/
 var EVT_RESET = 'reset';

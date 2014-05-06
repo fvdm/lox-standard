@@ -161,15 +161,13 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
             items = Y.Lox.Item.Menu.file;
         }
 
-        // FIXME
-
-//        container.one('.menu').on('click', function (e) {
-//            // Stop propagation so we don't trigger a deselect on the datatable.
-//            e.stopImmediatePropagation();
-//        });
-
         anchorNode.plug(Y.Rednose.Plugin.Dropdown, {
             items: items
+        });
+
+        anchorNode.dropdown.on('select', function (e) {
+            // Stop propagation so we don't trigger a deselect on the data table.
+            e.stopPropagation();
         });
 
         anchorNode.dropdown.addTarget(this);
