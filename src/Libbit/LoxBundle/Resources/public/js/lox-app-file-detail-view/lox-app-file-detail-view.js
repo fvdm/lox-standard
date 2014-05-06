@@ -8,13 +8,13 @@ Provides a detail view when clicked on a file.
 @module lox-app
 @submodule lox-app-file-detail-view
 **/
-	var TEXT_DOWNLOAD = 'Download',
-		TEXT_SHARE    = 'Share',
+var TEXT_DOWNLOAD = 'Download',
+    TEXT_SHARE    = 'Share',
 
-        CSS_ICON_PREFIX  = 'icon-file-128-',
+    CSS_ICON_PREFIX  = 'icon-file-128-',
 
-		CSS_BOOTSTRAP_INFO        = 'btn-info',
-		CSS_BOOTSTRAP_TEXT_CENTER = 'text-center';
+    CSS_BOOTSTRAP_INFO        = 'btn-info',
+    CSS_BOOTSTRAP_TEXT_CENTER = 'text-center';
 
 /**
 Provides a detail view when clicked on a file.

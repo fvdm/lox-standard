@@ -8,12 +8,6 @@
 
     <script type="text/javascript" src="{{ asset('cdn/yui3/build/yui/yui-min.js') }}"></script>
 
-    {# Include LOX application JS #}
-    {#{% javascripts#}
-        {#'@LibbitLoxBundle/Resources/public/js/*' %}#}
-        {#<script src="{{ asset_url }}"></script>#}
-    {#{% endjavascripts %}#}
-
     {# Include the module loaders #}
     <script type="text/javascript" src="{{ asset('cdn/rednose-ui/build/rednose-loader/rednose-loader-min.js') }}"></script>
 
@@ -98,6 +92,7 @@
                         },
 
                         "lox-app-file-movecopy-view": {
+                            "lang": ["en"],
                             "requires": ["lox-app-folder-tree", "rednose-treeview", "rednose-view-nav", "view"]
                         },
 
