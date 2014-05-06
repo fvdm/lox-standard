@@ -45,20 +45,6 @@ var SHARE_CONTEXT_MENU_CONTENT = [
         { title: TEXT_COPY,     icon: 'check',              id: 'copy' }
     ];
 
-var	TEXT_CREATE_FOLDER_TITLE = 'Create a new folder...',
-	TEXT_CREATE_FOLDER_LABEL = 'Name',
-	TEXT_BUTTON_CREATE       = 'Create',
-	TEXT_BUTTON_CANCEL       = 'Cancel',
-	TEXT_TITLE_CREATED       = 'Created',
-	TEXT_FOLDER_CREATED      = 'Folder successfully created.',
-
-	TEXT_NAME        = 'Name',
-    TEXT_SIZE        = 'Size',
-    TEXT_MODIFIED    = 'Modified',
-    TEXT_UPLOAD_FILE = 'Upload files',
-    TEXT_NEW_FOLDER  = 'New folder',
-    TEXT_MENU        = 'Actions';
-
 /**
 Header subview.
 **/
@@ -119,15 +105,16 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
 
 	initializer: function () {
 		var container = this.get('container'),
-			item      = this.get('model');
+			item      = this.get('model'),
+            strings   = this.get('strings');
 
 		container.setHTML(Y.Lang.sub(this.template, {
-			name          : TEXT_NAME,
-			size          : TEXT_SIZE,
-			modified      : TEXT_MODIFIED,
-			titleUpload   : TEXT_UPLOAD_FILE,
-			titleNewFolder: TEXT_NEW_FOLDER,
-            menu          : TEXT_MENU
+			name          : strings.name,
+			size          : strings.size,
+			modified      : strings.modified,
+			titleUpload   : strings.upload_file,
+			titleNewFolder: strings.new_folder,
+            menu          : strings.menu
 		}));
 
         container.one('.libbit-lox-header').plug(Y.Plugin.Affix, {
@@ -193,15 +180,16 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
 	@protected
 	**/
 	_handleCreateFolder: function () {
-		var dialog = new Y.Rednose.Dialog(),
-			path   = this.get('model').get('path'),
-			self   = this;
+		var dialog  = new Y.Rednose.Dialog(),
+			path    = this.get('model').get('path'),
+            strings = this.get('strings'),
+			self    = this;
 
 		dialog.prompt({
-			title  : TEXT_CREATE_FOLDER_TITLE,
-			text   : TEXT_CREATE_FOLDER_LABEL,
-			confirm: TEXT_BUTTON_CREATE,
-			cancel : TEXT_BUTTON_CANCEL
+			title  : strings.create_folder_title,
+			text   : strings.create_folder_label,
+			confirm: strings.button_create,
+			cancel : strings.button_cancel
 		}, function (value) {
 
             Y.io(YUI.Env.routing.operations_create_folder, {
@@ -219,8 +207,8 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
                         self.fire('itemAdded', { data: item });
 
 						Y.Rednose.Notifier.notify({
-							title: TEXT_TITLE_CREATED,
-							text : TEXT_FOLDER_CREATED,
+							title: strings.title_created,
+							text : strings.folder_created,
 							type : 'success'
 						});
                     },
@@ -281,6 +269,18 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
 }, {
     ATTRS: {
         /**
+         * Translation dictionary used by the Lox.Page module.
+         *
+         * @attribute strings
+         * @type Object
+         */
+        strings: {
+            valueFn: function () {
+                return Y.Intl.get('lox-item-view');
+            }
+        },
+
+        /**
         The current selection.
 
         @attribute selection
@@ -302,6 +302,9 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
         "rednose-navbar",
         "rednose-notifier",
         "view"
+    ],
+    "lang": [
+        "en"
     ]
 });
 
