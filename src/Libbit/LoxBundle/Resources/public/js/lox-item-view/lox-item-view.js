@@ -6,6 +6,8 @@ YUI.add('lox-item-view', function (Y, NAME) {
 Header subview.
 **/
 Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
+
+    // View templates
 	template: '<div class="libbit-lox-header">' +
                   '<div class="header-top">' +
                       '<div id="breadcrumb" class="pull-left"></div>' +
@@ -21,24 +23,25 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
                       '</form>' +
                   '</div>' +
                   '<div class="header-bottom">' +
-                      '<table class="table">' +
-                          '<thead>' +
-                              '<tr>' +
-                                  '<th class="span4">{name}</th>' +
-                                  '<th class="span2">{size}</th>' +
-                                  '<th class="span2">{modified}</th>' +
-                              '</tr>' +
-                          '<thead>' +
-                      '</table>' +
-                      '<div class="details" style="display: none;">' +
-                          '<div class="item-name pull-left"></div>' +
-                          '<div class="menu dropdown pull-right">' +
-                              '<a href="#" class="dropdown-toggle" data-toggle="dropdown">{menu} <b class="caret"></b></a>' +
-                              '<ul class="dropdown-menu"></ul>' +
-                          '</div>' +
-                      '</div>' +
                   '</div>' +
               '</div>',
+
+    headerTemplate: '<table class="table">' +
+                         '<thead>' +
+                             '<tr>' +
+                                 '<th class="span4">{name}</th>' +
+                                 '<th class="span2">{size}</th>' +
+                                 '<th class="span2">{modified}</th>' +
+                             '</tr>' +
+                         '<thead>' +
+                     '</table>',
+
+    detailsTemplate: '<div class="details">' +
+                         '<div class="item-name pull-left">{item}</div>' +
+                         '<div class="menu dropdown pull-right">' +
+                             '<a href="#" class="dropdown-toggle" data-toggle="dropdown">{menu}</a>' +
+                         '</div>' +
+                     '</div>',
 
 	/**
 	UI delegation events
@@ -60,18 +63,16 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
 		}
 	},
 
-	initializer: function () {
+    // -- Life Cycle Methods ---------------------------------------------------
+
+    initializer: function () {
 		var container = this.get('container'),
 			item      = this.get('model'),
             strings   = this.get('strings');
 
 		container.setHTML(Y.Lang.sub(this.template, {
-			name          : strings.name,
-			size          : strings.size,
-			modified      : strings.modified,
-			titleUpload   : strings.upload_file,
-			titleNewFolder: strings.new_folder,
-            menu          : strings.menu
+            titleUpload   : strings.upload_file,
+            titleNewFolder: strings.new_folder
 		}));
 
         container.one('.libbit-lox-header').plug(Y.Plugin.Affix, {
@@ -91,14 +92,6 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
 		this.on('*:navigate', this._handleNavigate);
 
         this.after('selectionChange', this._afterSelectionChange, this);
-
-        // Init dropdown.
-        var dropdown = container.one('.menu');
-
-        dropdown.on('click', function (e) {
-            // Stop propagation so we don't trigger a deselect on the datatable.
-            e.stopImmediatePropagation();
-        });
 	},
 
 	destructor: function () {
@@ -107,11 +100,66 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
         delete this.breadcrumbView;
 	},
 
-	render: function () {
+    // -- Public Methods -------------------------------------------------------
+
+    /**
+     * @chainable
+     */
+    render: function () {
 		this.breadcrumbView.render();
+
+        this._renderHeader();
 
 		return this;
 	},
+
+    // -- Protected Methods ----------------------------------------------------
+
+    /**
+     * Renders the table header in case no item is selected.
+     *
+     * @private
+     */
+    _renderHeader: function () {
+        var container = this.get('container'),
+            strings   = this.get('strings');
+
+        container.one('.header-bottom').setContent(Y.Lang.sub(this.headerTemplate, {
+            name    : strings.name,
+            size    : strings.size,
+            modified: strings.modified
+        }));
+    },
+
+    /**
+     * Renders the detail pane for a given selected model.
+     *
+     * @param {Lox.ItemModel} model
+     * @private
+     */
+    _renderDetails: function (model) {
+        var container = this.get('container'),
+            items;
+
+        if (model.get('isDir')) {
+            if (model.get('isShare')) {
+                items = Y.Lox.Item.Menu.share;
+            } else if (model.get('isShared')) {
+                items = Y.Lox.Item.Menu.shared;
+            } else {
+                items = Y.Lox.Item.Menu.folder;
+            }
+        } else {
+            items = Y.Lox.Item.Menu.file;
+        }
+
+        container.one('.header-bottom').setContent(Y.Lang.sub(this.detailsTemplate, {
+            item: model.get('title'),
+            menu: this.get('strings.menu')
+        }));
+    },
+
+    // -- Protected Event Handlers ---------------------------------------------
 
 	_handleNavigate: function (e) {
 		var path = e.data;
@@ -191,37 +239,38 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
         var model     = e.newVal,
             container = this.get('container');
 
-        if (model !== null) {
-            var dropdown = container.one('.menu'),
-                navBar   = new Y.Rednose.Navbar(),
-                content  = null;
+        model ? this._renderDetails(model) : this._renderHeader();
 
-            container.one('.item-name').setContent(model.get('title'));
-
-            dropdown.one('ul').empty();
-
-            navBar.addTarget(this);
-
-            if (model.get('isDir')) {
-                if (model.get('isShare')) {
-                    content = Y.Lox.Item.Menu.share;
-                } else if (model.get('isShared')) {
-                    content = Y.Lox.Item.Menu.shared;
-                } else {
-                    content = Y.Lox.Item.Menu.folder;
-                }
-            } else {
-                content = Y.Lox.Item.Menu.file;
-            }
-
-            navBar.createDropdown(dropdown, content);
-
-            container.one('.table').hide();
-            container.one('.details').show();
-        } else {
-            container.one('.details').hide();
-            container.one('.table').show();
-        }
+//            var dropdown = container.one('.menu'),
+//                navBar   = new Y.Rednose.Navbar(),
+//                content  = null;
+//
+//            container.one('.item-name').setContent(model.get('title'));
+//
+//            dropdown.one('ul').empty();
+//
+//            navBar.addTarget(this);
+//
+//            if (model.get('isDir')) {
+//                if (model.get('isShare')) {
+//                    content = Y.Lox.Item.Menu.share;
+//                } else if (model.get('isShared')) {
+//                    content = Y.Lox.Item.Menu.shared;
+//                } else {
+//                    content = Y.Lox.Item.Menu.folder;
+//                }
+//            } else {
+//                content = Y.Lox.Item.Menu.file;
+//            }
+//
+//            navBar.createDropdown(dropdown, content);
+//
+//            container.one('.table').hide();
+//            container.one('.details').show();
+//        } else {
+//            container.one('.details').hide();
+//            container.one('.table').show();
+//        }
     }
 }, {
     ATTRS: {
@@ -256,7 +305,6 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
         "rednose-app",
         "rednose-breadcrumb",
         "rednose-dialog",
-        "rednose-navbar",
         "rednose-notifier",
         "view"
     ],
