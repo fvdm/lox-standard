@@ -10,51 +10,8 @@ var CSS_ICON_PREFIX = 'icon-file-16-',
     ITEM_FOLDER_SIZE     = '--',
     ITEM_FOLDER_MODIFIED = '--';
 
-var TEXT_DOWNLOAD       = 'Download',
-    TEXT_SHARE          = 'Share folder',
-    TEXT_SHARE_SETTINGS = 'Share settings',
-    TEXT_LINK           = 'Create link',
-    TEXT_DELETE         = 'Delete',
-    TEXT_LEAVE_SHARE    = 'Leave share',
-    TEXT_RENAME         = 'Rename',
-    TEXT_MOVE           = 'Move',
-    TEXT_COPY           = 'Copy';
-
-var SHARE_CONTEXT_MENU_CONTENT = [
-        { title: TEXT_LEAVE_SHARE, icon: 'share',              id: 'leave'},
-        { title: TEXT_DELETE,      icon: 'remove-circle',      id: 'delete'},
-        { title: TEXT_RENAME,      icon: 'edit',               id: 'rename' },
-        { title: TEXT_MOVE,        icon: 'circle-arrow-right', id: 'move' },
-        { title: TEXT_COPY,        icon: 'check',              id: 'copy' }
-    ],
-
-    SHARED_CONTEXT_MENU_CONTENT = [
-        { title: TEXT_SHARE_SETTINGS, icon: 'share',              id: 'share'},
-        { title: TEXT_DELETE,         icon: 'remove-circle',      id: 'delete'},
-        { title: TEXT_RENAME,         icon: 'edit',               id: 'rename' },
-        { title: TEXT_MOVE,           icon: 'circle-arrow-right', id: 'move' },
-        { title: TEXT_COPY,           icon: 'check',              id: 'copy' }
-    ],
-
-    FOLDER_CONTEXT_MENU_CONTENT = [
-        { title: TEXT_SHARE,  icon: 'share',              id: 'share'},
-        { title: TEXT_DELETE, icon: 'remove-circle',      id: 'delete'},
-        { title: TEXT_RENAME, icon: 'edit',               id: 'rename' },
-        { title: TEXT_MOVE,   icon: 'circle-arrow-right', id: 'move' },
-        { title: TEXT_COPY,   icon: 'check',              id: 'copy' }
-    ],
-
-    FILE_CONTEXT_MENU_CONTENT = [
-        { title: TEXT_LINK,     icon: 'globe',              id: 'link'},
-        { title: TEXT_DOWNLOAD, icon: 'download',           id: 'download' },
-        { title: TEXT_DELETE,   icon: 'remove-circle',      id: 'delete'},
-        { title: TEXT_RENAME,   icon: 'edit',               id: 'rename' },
-        { title: TEXT_MOVE,     icon: 'circle-arrow-right', id: 'move' },
-        { title: TEXT_COPY,     icon: 'check',              id: 'copy' }
-    ];
-
 /**
- List subview.
+List subview.
  **/
 Y.Lox.ItemListView = Y.Base.create('itemListView', Y.View, [], {
     // -- Public Properties ----------------------------------------------------
@@ -220,14 +177,14 @@ Y.Lox.ItemListView = Y.Base.create('itemListView', Y.View, [], {
 
         if (model.get('isDir')) {
             if (model.get('isShare')) {
-                content = SHARE_CONTEXT_MENU_CONTENT;
+                content = Y.Lox.Item.Menu.share;
             } else if (model.get('isShared')) {
-                content = SHARED_CONTEXT_MENU_CONTENT;
+                content = Y.Lox.Item.Menu.shared;
             } else {
-                content = FOLDER_CONTEXT_MENU_CONTENT;
+                content = Y.Lox.Item.Menu.folder;
             }
         } else {
-            content = FILE_CONTEXT_MENU_CONTENT;
+            content = Y.Lox.Item.Menu.file;
         }
 
         if (node.contextMenu) {
@@ -246,7 +203,6 @@ Y.Lox.ItemListView = Y.Base.create('itemListView', Y.View, [], {
 
 }, '@VERSION@', {
     "requires": [
-        "datatable-select",
         "rednose-contextmenu",
         "rednose-datatable-select",
         "rednose-formatter",
