@@ -145,7 +145,7 @@ class Item
      * @Serializer\Type("array")
      * @Serializer\Accessor(getter="getMappedChildren")
      * @Serializer\MaxDepth(1)
-     * @Serializer\Groups({"details"})
+     * @Serializer\Groups({"web", "api"})
      */
 	protected $content;
 

@@ -8,12 +8,12 @@ use Rednose\FrameworkBundle\Entity\Group;
 class ShareControllerTest extends WebTestCase
 {
     /**
-     * @var \FOS\UserBundle\Doctrine\GroupManagers
+     * @var \Libbit\LoxBundle\Entity\ShareManager
      */
     protected $shareManager = null;
 
     /**
-     * @var \FOS\UserBundle\Doctrine\GroupManagers
+     * @var \FOS\UserBundle\Doctrine\GroupManager
      */
     protected $groupManager = null;
 
@@ -32,10 +32,10 @@ class ShareControllerTest extends WebTestCase
         parent::setUp();
 
         // Create a group
-        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test group');
+        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Share test group');
 
         if ($group === null) {
-            $group = new Group('Test group', array('ROLE_USER'));
+            $group = new Group('Share test group', array('ROLE_USER'));
 
             $this->groupManager->updateGroup($group, true);
         }
@@ -129,7 +129,7 @@ class ShareControllerTest extends WebTestCase
     public function testUpdateShare($settings)
     {
         $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('test3');
-        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test group');
+        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Share test group');
         $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByTitle('shared-dir');
 
         $share = $item->getShare();

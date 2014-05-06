@@ -22,10 +22,14 @@ class Invitation
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"details"})
      */
     protected $id;
 
     /**
+     * @Serializer\Groups({"details"})
+     *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
@@ -43,11 +47,15 @@ class Invitation
     protected $receiver;
 
     /**
+     * @Serializer\Groups({"details"})
+     *
      * @ORM\Column(type="string")
      */
     protected $state;
 
     /**
+     * @Serializer\Groups({"details"})
+     *
      * @ORM\ManyToOne(targetEntity="Libbit\LoxBundle\Entity\Share")
      * @ORM\JoinColumn(name="share_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -55,6 +63,8 @@ class Invitation
 
     /**
      * The shared folder entry in the user's tree.
+     *
+     * @Serializer\Groups({"details"})
      *
      * @ORM\ManyToOne(targetEntity="Libbit\LoxBundle\Entity\Item")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="SET NULL")

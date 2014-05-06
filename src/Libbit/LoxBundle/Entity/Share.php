@@ -32,7 +32,7 @@ class Share
      * @ORM\OneToOne(targetEntity="Libbit\LoxBundle\Entity\Item")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="CASCADE")
      *
-     * @Serializer\Groups({"details"})
+     * @Serializer\Groups({"details", "list"})
      */
     protected $item;
 
