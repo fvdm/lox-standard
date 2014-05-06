@@ -171,7 +171,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand brand-navbar lox-brand" href="{{ path('libbit_lox_home')}}"><img src="{{ asset('') }}{{ application_logo }}" /> {{ application_title }}</a>
+                <a class="brand brand-navbar lox-brand" href="{{ path('libbit_lox_home')}}"><img src="{{ asset('') }}{{ application_logo }}" /> {{ application_title }} <small><small>v{{ constant('Libbit\\LoxBundle\\LibbitLoxBundle::VERSION') }}</small></small></a>
                 <ul class="nav pull-right">
                     <li tabindex="-1" class="nav-item" style="display: none;">
                         <a tabindex="-1" data-id="registerApp" href="{{ path('libbit_lox_register_app_lbox')}}">{% trans %}menu_register_app{% endtrans %}</a>
