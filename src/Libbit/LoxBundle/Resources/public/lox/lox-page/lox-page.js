@@ -7,8 +7,6 @@ YUI.add('lox-page', function (Y, NAME) {
  *
  * @module lox-page
 */
-var TEXT_MENU_CHANGE_PASSWORD = 'Change password',
-    TEXT_MENU_SIGN_OUT        = 'Sign out';
 
 /**
  * Renders and controls the basic page elements like menu items and dropdowns.
@@ -18,7 +16,7 @@ var TEXT_MENU_CHANGE_PASSWORD = 'Change password',
  * @constructor
  * @extends View
  */
-var Page = Y.Base.create('page', Y.View, [], {
+Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
 
     /**
      * Debug flag.
@@ -80,9 +78,9 @@ var Page = Y.Base.create('page', Y.View, [], {
             showCaret: false,
 
             items: [
-                { title: TEXT_MENU_CHANGE_PASSWORD, url: YUI.Env.routing.change_password },
+                { title: this.get('strings.user_settings'), url: YUI.Env.routing.change_password },
                 { type: 'divider' },
-                { title: TEXT_MENU_SIGN_OUT, url: YUI.Env.routing.logout }
+                { title: this.get('strings.user_sign_out'), url: YUI.Env.routing.logout }
             ]
         });
 
@@ -175,11 +173,21 @@ var Page = Y.Base.create('page', Y.View, [], {
 
         this._updateNotifications();
     }
+}, {
+    ATTRS: {
+        /**
+         * Translation dictionary used by the Lox.Page module.
+         *
+         * @attribute strings
+         * @type Object
+         */
+        strings: {
+            valueFn: function () {
+                return Y.Intl.get('lox-page');
+            }
+        }
+    }
 });
-
-// -- Namespace ----------------------------------------------------------------
-Y.namespace('Lox').Page = Page;
-
 
 }, '@VERSION@', {
     "requires": [
@@ -194,7 +202,6 @@ Y.namespace('Lox').Page = Page;
         "view"
     ],
     "lang": [
-        "en",
-        "nl"
+        "en"
     ]
 });
