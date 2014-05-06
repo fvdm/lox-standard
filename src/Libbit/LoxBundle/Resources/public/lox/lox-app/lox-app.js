@@ -24,19 +24,21 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 		},
 
 		uploadView: {
-			type  : 'Lox.App.FileUploadView',
-			parent: 'itemView',
-            width : '640px',
-            height: '250px',
-			modal : true
+			type    : 'Lox.App.FileUploadView',
+			lazyload: 'lox-app-file-upload-view',
+            parent  : 'itemView',
+            width   : '640px',
+            height  : '250px',
+			modal   : true
 		},
 
 		detailView: {
-			type  : 'Lox.App.FileDetailView',
-			parent: 'itemView',
-            width : '500px',
-            height: '300px',
-			modal : true
+			type    : 'Lox.App.FileDetailView',
+            lazyload: 'lox-app-file-detail-view',
+			parent  : 'itemView',
+            width   : '500px',
+            height  : '300px',
+			modal   : true
 		},
 
 		moveCopyView: {

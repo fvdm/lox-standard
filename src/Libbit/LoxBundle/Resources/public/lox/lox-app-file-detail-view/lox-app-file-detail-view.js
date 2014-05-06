@@ -133,4 +133,4 @@ var FileDetailView = Y.Base.create('fileDetailView', Y.View, [ Y.Rednose.View.Na
 Y.namespace('Lox.App').FileDetailView = FileDetailView;
 
 
-}, '@VERSION@', {"requires": ["rednose-app"]});
+}, '@VERSION@', {"requires": ["rednose-view-nav", "view"]});

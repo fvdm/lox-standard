@@ -8,13 +8,7 @@ Provides a view to upload multiple files.
 @module lox-app
 @submodule lox-app-file-upload-view
 **/
-var TEXT_CHOOSE_FILES    = 'Choose files',
-	TEXT_CANCEL          = 'Close',
-	TEXT_UPLOAD_FILES    = 'Upload files...',
-	TEXT_UPLOAD_BODY     = 'Upload files to LocalBox.',
-	TEXT_UPLOAD_SUB_BODY = 'You can upload more then one file at a time.',
-
-    UPLOAD_URL = YUI.Env.routing.upload,
+var UPLOAD_URL = YUI.Env.routing.upload,
 
 	STYLE_UPLOADER_BUTTON_WIDTH = 104,
 	STYLE_UPLOAD_BUTTON_HEIGHT  = 30,
@@ -70,7 +64,7 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 
 	@property {String} title
 	**/
-	title: TEXT_UPLOAD_FILES,
+	title: Y.Intl.get('lox-app-file-upload-view').upload_files,
 
     close: true,
 
@@ -95,7 +89,7 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 	**/
 	buttons: {
 		cancel: {
-			value: TEXT_CANCEL,
+			value: Y.Intl.get('lox-app-file-upload-view').cancel,
 			position: 'right'
 		}
 	},
@@ -125,12 +119,13 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 	initializer: function () {
 		this._dialogViewEvents || (this._dialogViewEvents = []);
 
-        var container = this.get('container');
+        var container = this.get('container'),
+            strings   = this.get('strings');
 
         container.setContent(Y.Lang.sub(this.template, {
             classBody    : CSS_BODY_TEXT,
-            textBody     : TEXT_UPLOAD_BODY,
-            textSubBody  : TEXT_UPLOAD_SUB_BODY,
+            textBody     : strings.upload_body,
+            textSubBody  : strings.upload_sub_body,
 			classFileList: CSS_FILE_LIST,
 			classProgress: CSS_BOOTSTRAP_PROGRESS,
 			classBar     : CSS_BOOTSTRAP_BAR
@@ -272,7 +267,7 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 
 			Y.Uploader.SELECT_FILES_BUTTON = Y.Lang.sub(this.UPLOADER_TEMPLATE, {
 				buttonClass: CSS_BOOTSTRAP_BTN + ' ' + CSS_BOOTSTRAP_BTN_PRIMARY + ' ' + CSS_BOOTSTRAP_FLOAT_RIGHT,
-				buttonText : TEXT_CHOOSE_FILES
+				buttonText : this.get('strings.choose_files')
 			});
 
 			this._uploader = new Y.Uploader({
@@ -410,7 +405,19 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 	}
 }, {
 	ATTRS: {
-		path: {
+        /**
+         * Translation dictionary used by the Lox.App.FileUploadView module.
+         *
+         * @attribute strings
+         * @type Object
+         */
+        strings: {
+            valueFn: function () {
+                return Y.Intl.get('lox-app-file-upload-view');
+            }
+        },
+
+        path: {
 			value: '/'
 		}
 	}
@@ -420,4 +427,4 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 Y.namespace('Lox.App').FileUploadView = FileUploadView;
 
 
-}, '@VERSION@', {"requires": ["rednose-app", "rednose-formatter", "uploader"]});
+}, '@VERSION@', {"requires": ["rednose-formatter", "uploader", "view"], "lang": ["en"]});
