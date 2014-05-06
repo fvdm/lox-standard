@@ -344,13 +344,10 @@ Y.namespace('Lox.App').App = App;
 
 }, '@VERSION@', {
     "requires": [
-        "lox-app-item-model",
         "lox-app-file-browser-view",
-        "lox-app-file-movecopy-view",
-        "lox-app-file-detail-view",
-        "lox-app-file-upload-view",
-        "lox-app-folder-share-view",
-        "lox-app-folder-tree",
+        "lox-app-item-model",
+        "lox-app-share-model",
+        "model-list",
         "rednose-app",
         "rednose-tooltip"
     ],

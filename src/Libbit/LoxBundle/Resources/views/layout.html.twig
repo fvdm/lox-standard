@@ -9,10 +9,10 @@
     <script type="text/javascript" src="{{ asset('cdn/yui3/build/yui/yui-min.js') }}"></script>
 
     {# Include LOX application JS #}
-    {% javascripts
-        '@LibbitLoxBundle/Resources/public/js/*' %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {#{% javascripts#}
+        {#'@LibbitLoxBundle/Resources/public/js/*' %}#}
+        {#<script src="{{ asset_url }}"></script>#}
+    {#{% endjavascripts %}#}
 
     {# Include the module loaders #}
     <script type="text/javascript" src="{{ asset('cdn/rednose-ui/build/rednose-loader/rednose-loader-min.js') }}"></script>
@@ -30,11 +30,70 @@
                     base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/lox/',
                     modules: {
                         "lox-app": {
-                            "lang": ["en"]
+                            "lang": ["en"],
+                            "requires": [
+                                "lox-app-file-browser-view",
+                                "lox-app-item-model",
+                                "lox-app-share-model",
+                                "model-list",
+                                "rednose-app",
+                                "rednose-tooltip"
+                            ]
+                        },
+
+                        "lox-app-item-model": {
+                            "requires": ["model", "rednose-model-spinner"]
+                        },
+
+                        "lox-app-share-model": {
+                            "requires": ["io", "json", "lox-app-item-model", "model", "model-list", "rednose-model-spinner"]
+                        },
+
+                        "lox-app-file-browser-view": {
+                            "lang": ["en"],
+                            "requires": [
+                                "lox-item-view",
+                                "lox-item-list-view",
+                                "rednose-dialog",
+                                "rednose-notifier",
+                                "view"
+                            ]
+                        },
+
+                        "lox-item-view": {
+                            "requires": [
+                                "gallery-affix",
+                                "lox-app-item-model",
+                                "rednose-app",
+                                "rednose-breadcrumb",
+                                "rednose-dialog",
+                                "rednose-navbar",
+                                "rednose-notifier",
+                                "view"
+                            ]
+                        },
+
+                        "lox-item-list-view": {
+                            "requires": [
+                                "datatable-select",
+                                "rednose-contextmenu",
+                                "rednose-datatable-select",
+                                "rednose-formatter",
+                                "view"
+                            ]
                         },
 
                         "lox-page": {
-                            "lang": ["en"]
+                            "lang": ["en"],
+                            "requires": [
+                                "node",
+                                "base",
+                                "gallery-affix",
+                                "io",
+                                "json",
+                                "rednose-dropdown",
+                                "view"
+                            ]
                         }
                     }
                 }

@@ -196,8 +196,6 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
     "requires": [
         "node",
         "base",
-        "datasource-io",
-        "datasource-polling",
         "gallery-affix",
         "io",
         "json",
