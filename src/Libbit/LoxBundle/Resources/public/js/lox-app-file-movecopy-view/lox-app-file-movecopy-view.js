@@ -161,4 +161,4 @@ var FileMoveCopyView = Y.Base.create('fileMoveCopyView', Y.View, [ Y.Rednose.Vie
 Y.namespace('Lox.App').FileMoveCopyView = FileMoveCopyView;
 
 
-}, '@VERSION@', {"requires": ["lox-app-folder-tree", "rednose-app", "rednose-treeview"]});
+}, '@VERSION@', {"requires": ["lox-app-folder-tree", "rednose-treeview", "rednose-view-nav", "view"]});

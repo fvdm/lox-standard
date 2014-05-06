@@ -27,12 +27,13 @@
         YUI.GlobalConfig = {
             groups: {
                 lox: {
-                    base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/lox/',
+                    base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/js/',
                     modules: {
                         "lox-app": {
                             "lang": ["en"],
                             "requires": [
                                 "lox-app-file-browser-view",
+                                "lox-app-folder-tree",
                                 "lox-app-item-model",
                                 "lox-app-share-model",
                                 "model-list",
@@ -47,6 +48,10 @@
 
                         "lox-app-share-model": {
                             "requires": ["io", "json", "lox-app-item-model", "model", "model-list", "rednose-model-spinner"]
+                        },
+
+                        "lox-app-folder-tree": {
+                            "requires": ["rednose-model-tree", "rednose-model-spinner"]
                         },
 
                         "lox-app-file-browser-view": {
@@ -90,6 +95,22 @@
                         "lox-app-file-upload-view": {
                             "lang": ["en"],
                             "requires": ["rednose-formatter", "uploader", "view"]
+                        },
+
+                        "lox-app-file-movecopy-view": {
+                            "requires": ["lox-app-folder-tree", "rednose-treeview", "rednose-view-nav", "view"]
+                        },
+
+                        "lox-app-folder-share-view": {
+                            "requires": [
+                                "autocomplete",
+                                "autocomplete-filters",
+                                "autocomplete-highlighters",
+                                "rednose-datatable",
+                                "rednose-panel",
+                                "rednose-view-nav",
+                                "view"
+                            ]
                         },
 
                         "lox-page": {

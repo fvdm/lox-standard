@@ -257,11 +257,9 @@ Y.namespace('Lox.App').FolderShareView = FolderShareView;
         "autocomplete",
         "autocomplete-filters",
         "autocomplete-highlighters",
-        "lox-app-share-model",
-        "model",
-        "model-list",
         "rednose-datatable",
         "rednose-panel",
-        "rednose-view-nav"
+        "rednose-view-nav",
+        "view"
     ]
 });

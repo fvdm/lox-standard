@@ -42,19 +42,21 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 		},
 
 		moveCopyView: {
-			type  : 'Lox.App.FileMoveCopyView',
-			parent: 'itemView',
-            width : '500px',
-            height: '400px',
-			modal : true
+			type    : 'Lox.App.FileMoveCopyView',
+            lazyload: 'lox-app-file-movecopy-view',
+			parent  : 'itemView',
+            width   : '500px',
+            height  : '400px',
+			modal   : true
 		},
 
 		folderShareView: {
-			type  : 'Lox.App.FolderShareView',
-			parent: 'itemView',
-            width : '640px',
-            height: '400px',
-			modal : true
+			type    : 'Lox.App.FolderShareView',
+            lazyload: 'lox-app-folder-share-view',
+			parent  : 'itemView',
+            width   : '640px',
+            height  : '400px',
+			modal   : true
 		}
 	},
 
@@ -347,6 +349,7 @@ Y.namespace('Lox.App').App = App;
 }, '@VERSION@', {
     "requires": [
         "lox-app-file-browser-view",
+        "lox-app-folder-tree",
         "lox-app-item-model",
         "lox-app-share-model",
         "model-list",
