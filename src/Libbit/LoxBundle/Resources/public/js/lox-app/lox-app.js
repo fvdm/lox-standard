@@ -7,16 +7,6 @@ The filemanager app.
 
 @module lox-app
 **/
-var TEXT_TITLE_ERROR    = 'Error',
-	TEXT_TITLE_COPIED   = 'Copied',
-	TEXT_ITEM_COPIED    = 'Item successfully copied.',
-	TEXT_TITLE_MOVED    = 'Moved',
-	TEXT_ITEM_MOVED     = 'Item successfully moved.',
-	TEXT_UNSHARE        = 'Unshare',
-	TEXT_UNSHARE_TITLE  = 'Unshare folder \'{item}\'?',
-	TEXT_UNSHARE_BODY   = 'The folder will no longer be shared and will be visible to only you. Are you sure you want to stop sharing?',
-	TEXT_TITLE_UNSHARED = 'Share removed',
-	TEXT_ITEM_UNSHARED  = 'The folder is no longer shared';
 
 /**
 The filemanager app.
@@ -34,35 +24,39 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 		},
 
 		uploadView: {
-			type  : 'Lox.App.FileUploadView',
-			parent: 'itemView',
-            width : '640px',
-            height: '250px',
-			modal : true
+			type    : 'Lox.App.FileUploadView',
+			lazyload: 'lox-app-file-upload-view',
+            parent  : 'itemView',
+            width   : '640px',
+            height  : '250px',
+			modal   : true
 		},
 
 		detailView: {
-			type  : 'Lox.App.FileDetailView',
-			parent: 'itemView',
-            width : '500px',
-            height: '300px',
-			modal : true
+			type    : 'Lox.App.FileDetailView',
+            lazyload: 'lox-app-file-detail-view',
+			parent  : 'itemView',
+            width   : '500px',
+            height  : '300px',
+			modal   : true
 		},
 
 		moveCopyView: {
-			type  : 'Lox.App.FileMoveCopyView',
-			parent: 'itemView',
-            width : '500px',
-            height: '400px',
-			modal : true
+			type    : 'Lox.App.FileMoveCopyView',
+            lazyload: 'lox-app-file-movecopy-view',
+			parent  : 'itemView',
+            width   : '500px',
+            height  : '400px',
+			modal   : true
 		},
 
 		folderShareView: {
-			type  : 'Lox.App.FolderShareView',
-			parent: 'itemView',
-            width : '640px',
-            height: '400px',
-			modal : true
+			type    : 'Lox.App.FolderShareView',
+            lazyload: 'lox-app-folder-share-view',
+			parent  : 'itemView',
+            width   : '640px',
+            height  : '400px',
+			modal   : true
 		}
 	},
 
@@ -71,6 +65,7 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 	initializer: function (config) {
 		config || (config = {});
 
+        // Tooltip delegate.
 		new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
 
 		this.on({
@@ -188,7 +183,6 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 		});
 	},
 
-	// TODO: Prevent folder recursion.
 	_handleMoveCopyConfirm: function (e) {
 		var type  = e.data.type,
 			model = e.data.model,
@@ -206,8 +200,8 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 					self.fire('reload');
 
 					Y.Rednose.Notifier.notify({
-						title: (type === 'move') ? TEXT_TITLE_MOVED : TEXT_TITLE_COPIED,
-						text : (type === 'move') ? TEXT_ITEM_MOVED : TEXT_ITEM_COPIED,
+						title: (type === 'move') ? self.get('strings.title_moved') : self.get('strings.title_copied'),
+						text : (type === 'move') ? self.get('strings.item_moved') : self.get('strings.item_copied'),
 						type : 'success'
 					});
                 },
@@ -215,7 +209,7 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
                     var err = r.responseText && Y.JSON.parse(r.responseText);
 
 					Y.Rednose.Notifier.notify({
-						title: TEXT_TITLE_ERROR,
+						title: self.get('strings.title_error'),
 						text : err.error,
 						type : 'error'
 					});
@@ -228,7 +222,6 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 		var model = e.data.model,
 			self  = this;
 
-		// TODO: Show spinner.
 		model.save(function () {
 			self.popModalView();
 
@@ -243,15 +236,15 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 		this.popModalView();
 
 		Y.Rednose.Dialog.confirm({
-			title  : Y.Lang.sub(TEXT_UNSHARE_TITLE, { item: model.get('item').get('title') }),
-			text   : TEXT_UNSHARE_BODY,
-			confirm: TEXT_UNSHARE,
+			title  : Y.Lang.sub(this.get('strings.unshare_title'), { item: model.get('item').get('title') }),
+			text   : this.get('strings.unshare_body'),
+			confirm: this.get('strings.unshare'),
 			type   : 'warning'
 		}, function () {
 			model.destroy({ remove: true }, function () {
 				Y.Rednose.Notifier.notify({
-					title: TEXT_TITLE_UNSHARED,
-					text : TEXT_ITEM_UNSHARED,
+					title: self.get('strings.title_unshared'),
+					text : self.get('strings.item_unshared'),
 					type : 'success'
 				});
 
@@ -311,8 +304,25 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
     }
 }, {
 	ATTRS: {
-        item    : { value: new Y.Lox.ItemModel() },
-        children: { value: new Y.ModelList({ model: Y.Lox.ItemModel })},
+        /**
+         * Translation dictionary used by the Lox.App module.
+         *
+         * @attribute strings
+         * @type Object
+         */
+        strings: {
+            valueFn: function () {
+                return Y.Intl.get('lox-app');
+            }
+        },
+
+        item: {
+            value: new Y.Lox.ItemModel()
+        },
+
+        children: {
+            value: new Y.ModelList({ model: Y.Lox.ItemModel })
+        },
 
 		root: {
 			value: YUI.Env.routing.home
@@ -336,17 +346,17 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 // -- Namespace ----------------------------------------------------------------
 Y.namespace('Lox.App').App = App;
 
-
 }, '@VERSION@', {
     "requires": [
-        "lox-app-item-model",
         "lox-app-file-browser-view",
-        "lox-app-file-movecopy-view",
-        "lox-app-file-detail-view",
-        "lox-app-file-upload-view",
-        "lox-app-folder-share-view",
         "lox-app-folder-tree",
+        "lox-app-item-model",
+        "lox-app-share-model",
+        "model-list",
         "rednose-app",
         "rednose-tooltip"
+    ],
+    "lang": [
+        "en"
     ]
 });

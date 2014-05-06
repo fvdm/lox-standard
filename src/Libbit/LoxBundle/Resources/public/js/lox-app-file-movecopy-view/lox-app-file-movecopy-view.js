@@ -8,15 +8,9 @@ A view to copy or move files to a destination folder.
 @module lox-app
 @submodule lox-app-file-movecopy-view
 **/
-var TEXT_COPY       = 'Copy',
-	TEXT_MOVE       = 'Move',
-	TEXT_CANCEL     = 'Cancel',
-	TEXT_MOVE_TITLE = 'Move file to...',
-	TEXT_COPY_TITLE = 'Copy file to...',
+var CSS_FOLDER_TREEVIEW = 'lox-folder-treeview',
 
-	CSS_FOLDER_TREEVIEW = 'lox-folder-treeview',
-
-	STYLE_TREEVIEW_HEIGHT = '150px',
+	STYLE_TREEVIEW_HEIGHT = '100%',
 
 	TYPE_MOVE = 'move',
 	TYPE_COPY = 'copy';
@@ -46,7 +40,7 @@ var FileMoveCopyView = Y.Base.create('fileMoveCopyView', Y.View, [ Y.Rednose.Vie
 		},
 
 		cancel: {
-			value: TEXT_CANCEL,
+            value: Y.Intl.get('lox-app-file-movecopy-view').cancel,
 			position: 'right'
 		}
 	},
@@ -60,7 +54,8 @@ var FileMoveCopyView = Y.Base.create('fileMoveCopyView', Y.View, [ Y.Rednose.Vie
 	initializer: function () {
 		this._dialogViewEvents || (this._dialogViewEvents = []);
 
-		var container = this.get('container');
+		var container = this.get('container'),
+            strings   = this.get('strings');
 
 		this._dialogViewEvents.push(
 			this.on({
@@ -72,13 +67,13 @@ var FileMoveCopyView = Y.Base.create('fileMoveCopyView', Y.View, [ Y.Rednose.Vie
 
 		switch (this.get('type')) {
 			case TYPE_MOVE:
-				this.title = TEXT_MOVE_TITLE;
-				this.buttons.confirm.value = TEXT_MOVE;
+				this.title = strings.move_title;
+				this.buttons.confirm.value = strings.move;
 				break;
 
 			case TYPE_COPY:
-				this.title = TEXT_COPY_TITLE;
-				this.buttons.confirm.value = TEXT_COPY;
+				this.title = strings.copy_title;
+				this.buttons.confirm.value = strings.copy;
 				break;
 		}
 
@@ -138,7 +133,19 @@ var FileMoveCopyView = Y.Base.create('fileMoveCopyView', Y.View, [ Y.Rednose.Vie
 	}
 }, {
 	ATTRS: {
-		type: {
+        /**
+         * Translation dictionary used by the Lox.App.FileMoveCopyView module.
+         *
+         * @attribute strings
+         * @type Object
+         */
+        strings: {
+            valueFn: function () {
+                return Y.Intl.get('lox-app-file-movecopy-view');
+            }
+        },
+
+        type: {
 			value: TYPE_MOVE
 		},
 
@@ -161,4 +168,4 @@ var FileMoveCopyView = Y.Base.create('fileMoveCopyView', Y.View, [ Y.Rednose.Vie
 Y.namespace('Lox.App').FileMoveCopyView = FileMoveCopyView;
 
 
-}, '@VERSION@', {"requires": ["lox-app-folder-tree", "rednose-app", "rednose-treeview"]});
+}, '@VERSION@', {"requires": ["lox-app-folder-tree", "rednose-treeview", "rednose-view-nav", "view"], "lang": ["en"]});

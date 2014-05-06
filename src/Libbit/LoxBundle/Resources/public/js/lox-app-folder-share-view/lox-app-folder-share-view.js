@@ -8,15 +8,7 @@ A view to share a folder with users and groups
 @module lox-app
 @submodule lox-app-folder-share-view
 **/
-var TEXT_CANCEL             = 'Cancel',
-    TEXT_SHARE              = 'Share',
-    TEXT_UPDATE             = 'Update',
-    TEXT_REMOVE_SHARE       = 'Remove share',
-    TEXT_SHARE_TITLE        = 'Share folder with...',
-    TEXT_PLACEHOLDER_INVITE = 'Invite users and groups...',
-    TEXT_REMOVE             = 'Remove',
-
-    CSS_BOOTSTRAP_BTN        = 'btn',
+var CSS_BOOTSTRAP_BTN        = 'btn',
     CSS_BOOTSTRAP_BTN_DANGER = 'btn-danger',
     CSS_BOOTSTRAP_TOOLTIP    = 'tooltip',
     CSS_BOOTSTRAP_CLOSE      = 'close',
@@ -55,7 +47,7 @@ var FolderShareView = Y.Base.create('folderShareView', Y.View, [ Y.Rednose.View.
         },
 
         cancel: {
-            value   : TEXT_CANCEL,
+            value   : Y.Intl.get('lox-app-folder-share-view').cancel,
             position: 'right'
         }
     },
@@ -83,6 +75,7 @@ var FolderShareView = Y.Base.create('folderShareView', Y.View, [ Y.Rednose.View.
 
         var container = this.get('container'),
             model     = this.get('model'),
+            strings   = this.get('strings'),
             self      = this;
 
         this._folderShareViewEvents.push(
@@ -92,24 +85,23 @@ var FolderShareView = Y.Base.create('folderShareView', Y.View, [ Y.Rednose.View.
             })
         );
 
-        this.title                 = TEXT_SHARE_TITLE;
-        this.buttons.confirm.value = model.isNew() ? TEXT_SHARE : TEXT_UPDATE;
+        this.title                 = strings.share_title;
+        this.buttons.confirm.value = model.isNew() ? strings.share : strings.update;
 
         if (model.isNew()) {
             delete this.buttons.remove;
 
-            // XXX: We shouldn't have to reset this.
             model.get('identities').reset();
         } else {
             this.buttons.remove = {
-                value    : TEXT_REMOVE_SHARE,
+                value    : strings.remove_share,
                 position : 'left',
                 className: CSS_BOOTSTRAP_BTN + ' ' + CSS_BOOTSTRAP_BTN_DANGER
             };
         }
 
         container.setContent(Y.Lang.sub(this.template, {
-            placeholder: TEXT_PLACEHOLDER_INVITE
+            placeholder: strings.placeholder_invite
         }));
 
         var inputNode = container.one('input');
@@ -118,7 +110,7 @@ var FolderShareView = Y.Base.create('folderShareView', Y.View, [ Y.Rednose.View.
             return Y.Array.map(raw, function (result) {
                 return Y.Lang.sub('<span><i class="{icon}"></i> {title}</span>', {
                     title: result.raw.title,
-                    icon : result.raw.type === 'group' ? CSS_BOOTSTRAP_ICON_GROUP : CSS_BOOTSTRAP_ICON_USER,
+                    icon : result.raw.type === 'group' ? CSS_BOOTSTRAP_ICON_GROUP : CSS_BOOTSTRAP_ICON_USER
                 });
             });
         }
@@ -165,7 +157,7 @@ var FolderShareView = Y.Base.create('folderShareView', Y.View, [ Y.Rednose.View.
 
                         o.cell.set('innerHTML', Y.Lang.sub('<button rel="tooltip" class="{class}" title="{title}">&times;</button>', {
                             class: CSS_BOOTSTRAP_CLOSE,
-                            title: TEXT_REMOVE
+                            title: strings.remove
                         }));
                     }
                 }
@@ -242,6 +234,18 @@ var FolderShareView = Y.Base.create('folderShareView', Y.View, [ Y.Rednose.View.
     }
 }, {
     ATTRS: {
+        /**
+         * Translation dictionary used by the Lox.App.FolderShareView module.
+         *
+         * @attribute strings
+         * @type Object
+         */
+        strings: {
+            valueFn: function () {
+                return Y.Intl.get('lox-app-folder-share-view');
+            }
+        },
+
         model: {
             value: new Y.Lox.ShareModel()
         }
@@ -258,10 +262,12 @@ Y.namespace('Lox.App').FolderShareView = FolderShareView;
         "autocomplete-filters",
         "autocomplete-highlighters",
         "lox-app-share-model",
-        "model",
-        "model-list",
         "rednose-datatable",
         "rednose-panel",
-        "rednose-view-nav"
+        "rednose-view-nav",
+        "view"
+    ],
+    "lang": [
+        "en"
     ]
 });

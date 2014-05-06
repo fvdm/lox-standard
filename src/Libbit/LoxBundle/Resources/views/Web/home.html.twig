@@ -3,31 +3,31 @@
 
 {% block content %}
 
-<div class="lox-app-container"></div>
+    <div class="lox-app-container"></div>
 
-<div class="row">
-  <div class="span2 libbit-lox-sidebar">
-    {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
-  </div>
+    <div class="row">
+        <div class="span2 libbit-lox-sidebar">
+            {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+        </div>
 
-  <div class="span10 libbit-lox-content">
-    <div class="libbit-lox-app"></div>
-  </div>
-</div>
+        <div class="span10 libbit-lox-content">
+            <div class="libbit-lox-app"></div>
+        </div>
+    </div>
 
-<script>
-YUI().use('lox-page', 'lox-app', function (Y) {
-  new Y.Lox.Page().render();
+    <script>
+        YUI().use('lox-page', 'lox-app', function (Y) {
+            new Y.Lox.Page().render();
 
-  var container = Y.one('.libbit-lox-app');
+            var container = Y.one('.libbit-lox-app');
 
-  var app = new Y.Lox.App.App({
-    container: container,
-    viewContainer: container
-  });
+            var app = new Y.Lox.App.App({
+                container    : container,
+                viewContainer: container
+            });
 
-  app.render();
-});
-</script>
+            app.render();
+        });
+    </script>
 
 {% endblock %}
