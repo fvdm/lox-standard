@@ -319,6 +319,11 @@ class Item
 		return $this->shares->isEmpty() === false;
 	}
 
+	public function getShare()
+	{
+		return $this->share;
+	}
+
     public function addKey($key)
     {
         $key->setItem($this);

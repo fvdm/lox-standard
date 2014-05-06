@@ -173,7 +173,6 @@ class ShareController extends Controller
 
     // -- API Methods ----------------------------------------------------------
 
-
     /**
      * Get share settings for an Item
      *
