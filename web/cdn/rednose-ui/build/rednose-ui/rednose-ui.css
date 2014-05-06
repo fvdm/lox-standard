@@ -95,7 +95,6 @@ li.disabled [class*=" icon-"] {
   opacity: 0.35;
 }
 
-.icon-white,
 .nav-pills > .active > a > [class^="icon-"],
 .nav-pills > .active > a > [class*=" icon-"],
 .nav-list > .active > a > [class^="icon-"],

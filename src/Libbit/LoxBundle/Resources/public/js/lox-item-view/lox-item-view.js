@@ -138,8 +138,16 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
      * @private
      */
     _renderDetails: function (model) {
-        var container = this.get('container'),
+        var container  = this.get('container'),
+            anchorNode,
             items;
+
+        container.one('.header-bottom').setContent(Y.Lang.sub(this.detailsTemplate, {
+            item: model.get('title'),
+            menu: this.get('strings.menu')
+        }));
+
+        anchorNode = container.one('a');
 
         if (model.get('isDir')) {
             if (model.get('isShare')) {
@@ -153,10 +161,18 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
             items = Y.Lox.Item.Menu.file;
         }
 
-        container.one('.header-bottom').setContent(Y.Lang.sub(this.detailsTemplate, {
-            item: model.get('title'),
-            menu: this.get('strings.menu')
-        }));
+        // FIXME
+
+//        container.one('.menu').on('click', function (e) {
+//            // Stop propagation so we don't trigger a deselect on the datatable.
+//            e.stopImmediatePropagation();
+//        });
+
+        anchorNode.plug(Y.Rednose.Plugin.Dropdown, {
+            items: items
+        });
+
+        anchorNode.dropdown.addTarget(this);
     },
 
     // -- Protected Event Handlers ---------------------------------------------
@@ -240,37 +256,6 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
             container = this.get('container');
 
         model ? this._renderDetails(model) : this._renderHeader();
-
-//            var dropdown = container.one('.menu'),
-//                navBar   = new Y.Rednose.Navbar(),
-//                content  = null;
-//
-//            container.one('.item-name').setContent(model.get('title'));
-//
-//            dropdown.one('ul').empty();
-//
-//            navBar.addTarget(this);
-//
-//            if (model.get('isDir')) {
-//                if (model.get('isShare')) {
-//                    content = Y.Lox.Item.Menu.share;
-//                } else if (model.get('isShared')) {
-//                    content = Y.Lox.Item.Menu.shared;
-//                } else {
-//                    content = Y.Lox.Item.Menu.folder;
-//                }
-//            } else {
-//                content = Y.Lox.Item.Menu.file;
-//            }
-//
-//            navBar.createDropdown(dropdown, content);
-//
-//            container.one('.table').hide();
-//            container.one('.details').show();
-//        } else {
-//            container.one('.details').hide();
-//            container.one('.table').show();
-//        }
     }
 }, {
     ATTRS: {
@@ -305,6 +290,7 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
         "rednose-app",
         "rednose-breadcrumb",
         "rednose-dialog",
+        "rednose-dropdown-plugin",
         "rednose-notifier",
         "view"
     ],

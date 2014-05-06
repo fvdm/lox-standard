@@ -46,15 +46,15 @@ var FileBrowserView = Y.Base.create('fileBrowserView', Y.View, [], {
 
         this._fileBrowserViewEvents.push(
             this.on({
-                '*:link'    : this._handleCreateLink,
-                '*:download': this._handleDownload,
-                '*:delete'  : this._handleDelete,
-                '*:rename'  : this._handleRename,
+                'dropdown:select#link'    : this._handleCreateLink,
+                'dropdown:select#download': this._handleDownload,
+                'dropdown:select#delete'  : this._handleDelete,
+                'dropdown:select#rename'  : this._handleRename,
 
-                '*:leave': this._prepEvent,
-                '*:share': this._prepEvent,
-                '*:move' : this._prepEvent,
-                '*:copy' : this._prepEvent,
+                'dropdown:select#leave': this._prepEvent,
+                'dropdown:select#share': this._prepEvent,
+                'dropdown:select#move' : this._prepEvent,
+                'dropdown:select#copy' : this._prepEvent,
 
                 '*:itemAdded': this._handleItemAdded,
                 '*:select'   : this._handleSelect

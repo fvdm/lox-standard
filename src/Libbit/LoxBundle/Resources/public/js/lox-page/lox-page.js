@@ -199,7 +199,7 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
         "gallery-affix",
         "io",
         "json",
-        "rednose-dropdown",
+        "rednose-dropdown-plugin",
         "view"
     ],
     "lang": [

@@ -1,7 +1,5 @@
 <html>
 <head>
-    <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/libbitlox/icons/favicon.png') }}" />
-
     <link href="{{ asset('bundles/rednoseframework/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('cdn/rednose-ui/build/rednose-ui/rednose-ui.css') }}"rel="stylesheet" />
 
@@ -172,7 +170,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand brand-navbar lox-brand" href="{{ path('libbit_lox_home')}}"><img src="{{ asset('') }}{{ application_logo }}" /> {{ application_title }} <small><small>v{{ constant('Libbit\\LoxBundle\\LibbitLoxBundle::VERSION') }}</small></small></a>
+                <a class="brand brand-navbar lox-brand" href="{{ path('libbit_lox_home')}}"><img src="{{ asset('') }}{{ application_logo }}" /> {{ application_title }}</a>
                 <ul class="nav pull-right">
                     <li tabindex="-1" class="nav-item" style="display: none;">
                         <a tabindex="-1" data-id="registerApp" href="{{ path('libbit_lox_register_app_lbox')}}">{% trans %}menu_register_app{% endtrans %}</a>

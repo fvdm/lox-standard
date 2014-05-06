@@ -79,10 +79,10 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 			'*:showItemDetail': this._showDetailItem,
 			'*:upload'        : this._handleUpload,
 
-			'*:leave': this._handleLeaveShare,
-			'*:share': this._handleShareFolder,
-			'*:move' : this._handleMoveCopy,
-			'*:copy' : this._handleMoveCopy,
+			'dropdown:select#leave': this._handleLeaveShare,
+			'dropdown:select#share': this._handleShareFolder,
+			'dropdown:select#move' : this._handleMoveCopy,
+			'dropdown:select#copy' : this._handleMoveCopy,
 
 			'fileMoveCopyView:buttonConfirm': this._handleMoveCopyConfirm,
 			'folderShareView:buttonConfirm' : this._handleShareConfirm,
