@@ -57,6 +57,9 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
 
     // -- Public methods -------------------------------------------------------
 
+    /**
+     * @chainable
+     */
     render: function () {
         this._isMobile() && this._registerAppMenu.show();
 

@@ -29,8 +29,12 @@
                 lox: {
                     base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/lox/',
                     modules: {
+                        "lox-app": {
+                            "lang": ["en"]
+                        },
+
                         "lox-page": {
-                            "lang": [ "en" ]
+                            "lang": ["en"]
                         }
                     }
                 }
