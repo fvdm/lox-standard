@@ -1,7 +1,9 @@
 <html>
 <head>
-    <link href="{{ asset('bundles/rednoseframework/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('cdn/rednose-ui/build/rednose-ui/rednose-ui.css') }}"rel="stylesheet" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/libbitlox/icons/favicon.png') }}" />
+
+    <link href="{{ asset('cdn/rednose-ui/build/rednose-bootstrap/rednose-bootstrap-min.css') }}"rel="stylesheet" />
+    <link href="{{ asset('cdn/rednose-ui/build/rednose-ui/rednose-ui-min.css') }}"rel="stylesheet" />
 
     <link href="{{ asset('bundles/libbitlox/css/lox.css') }}" rel="stylesheet" />
     <link href="{{ asset('bundles/libbitlox/css/icons.css') }}" rel="stylesheet" />
@@ -68,6 +70,7 @@
                                 "rednose-app",
                                 "rednose-breadcrumb",
                                 "rednose-dialog",
+                                "rednose-dropdown-plugin",
                                 "rednose-notifier",
                                 "view"
                             ]
@@ -124,7 +127,7 @@
                                 "gallery-affix",
                                 "io",
                                 "json",
-                                "rednose-dropdown",
+                                "rednose-dropdown-plugin",
                                 "view"
                             ]
                         }
@@ -170,7 +173,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand brand-navbar lox-brand" href="{{ path('libbit_lox_home')}}"><img src="{{ asset('') }}{{ application_logo }}" /> {{ application_title }}</a>
+                <a class="brand brand-navbar lox-brand" href="{{ path('libbit_lox_home')}}"><img src="{{ asset('') }}{{ application_logo }}" /> {{ application_title }} <small><small>v{{ constant('Libbit\\LoxBundle\\LibbitLoxBundle::VERSION') }}</small></small></a>
                 <ul class="nav pull-right">
                     <li tabindex="-1" class="nav-item" style="display: none;">
                         <a tabindex="-1" data-id="registerApp" href="{{ path('libbit_lox_register_app_lbox')}}">{% trans %}menu_register_app{% endtrans %}</a>
