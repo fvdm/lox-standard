@@ -261,6 +261,7 @@ Y.namespace('Lox.App').FolderShareView = FolderShareView;
         "autocomplete",
         "autocomplete-filters",
         "autocomplete-highlighters",
+        "lox-app-share-model",
         "rednose-datatable",
         "rednose-panel",
         "rednose-view-nav",
