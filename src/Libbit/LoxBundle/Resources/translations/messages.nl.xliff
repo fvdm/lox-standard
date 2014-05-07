@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="nl" datatype="plaintext" original="" >
+        <body>
+            <trans-unit id="header_links">
+                <source>header_links</source>
+                <target>Links</target>
+            </trans-unit>
+            <trans-unit id="th_name">
+                <source>th_name</source>
+                <target>Naam</target>
+            </trans-unit>
+            <trans-unit id="th_date">
+                <source>th_date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="th_sender">
+                <source>th_sender</source>
+                <target>Sender</target>
+            </trans-unit>
+            <trans-unit id="td_no_links_yet">
+                <source>td_no_links_yet</source>
+                <target>Je hebt nog geen links aangemaakt.</target>
+            </trans-unit>
+            <trans-unit id="tooltip_remove_link">
+                <source>tooltip_remove_link</source>
+                <target>Link verwijderen</target>
+            </trans-unit>
+            <trans-unit id="notification_title_deleted">
+                <source>notification_title_deleted</source>
+                <target>Verwijderd</target>
+            </trans-unit>
+            <trans-unit id="notification_body_deleted">
+                <source>notification_body_deleted</source>
+                <target>Link succesvol verwijderd.</target>
+            </trans-unit>
+            <trans-unit id="confirmation_delete_link_title">
+                <source>confirmation_delete_link_title</source>
+                <target>Link naar het bestand "{title}" verwijderen?</target>
+            </trans-unit>
+            <trans-unit id="confirmation_delete_link_btn">
+                <source>confirmation_delete_link_btn</source>
+                <target>Verwijderen</target>
+            </trans-unit>
+            <trans-unit id="confirmation_delete_link_body">
+                <source>confirmation_delete_link_body</source>
+                <target>Weet je zeker dat je de link wilt verwijderen?</target>
+            </trans-unit>
+            <trans-unit id="header_sharing">
+                <source>header_sharing</source>
+                <target>Delen</target>
+            </trans-unit>
+            <trans-unit id="tab_invites">
+                <source>tab_invites</source>
+                <target>Uitnodigingen</target>
+            </trans-unit>
+            <trans-unit id="tab_shared_folders">
+                <source>tab_shared_folders</source>
+                <target>Mijn gedeelde mappen</target>
+            </trans-unit>
+            <trans-unit id="btn_leave_folder">
+                <source>btn_leave_folder</source>
+                <target>Verlaten</target>
+            </trans-unit>
+            <trans-unit id="tooltip_leave_folder">
+                <source>tooltip_leave_folder</source>
+                <target>Map verlaten</target>
+            </trans-unit>
+            <trans-unit id="btn_join_folder">
+                <source>btn_join_folder</source>
+                <target>Lid worden</target>
+            </trans-unit>
+            <trans-unit id="tooltip_join_folder">
+                <source>tooltip_join_folder</source>
+                <target>Lid worden van map</target>
+            </trans-unit>
+            <trans-unit id="btn_rejoin_folder">
+                <source>btn_rejoin_folder</source>
+                <target>Opnieuw lid worden</target>
+            </trans-unit>
+            <trans-unit id="tooltip_rejoin_folder">
+                <source>tooltip_rejoin_folder</source>
+                <target>Opnieuw lid worden van map</target>
+            </trans-unit>
+            <trans-unit id="td_no_invites_yet">
+                <source>td_no_invites_yet</source>
+                <target>Je hebt momenteel geen uitnodigingen.</target>
+            </trans-unit>
+            <trans-unit id="btn_shared_folder_settings">
+                <source>btn_shared_folder_settings</source>
+                <target>Instellingen</target>
+            </trans-unit>
+            <trans-unit id="tooltip_shared_folder_settings">
+                <source>tooltip_shared_folder_settings</source>
+                <target>Instellingen voor gedeelde map</target>
+            </trans-unit>
+            <trans-unit id="td_no_shared_folders">
+                <source>td_no_shared_folders</source>
+                <target>Je deelt momenteel geen mappen met andere gebruikers.</target>
+            </trans-unit>
+            <trans-unit id="confirmation_btn_unshare">
+                <source>confirmation_btn_unshare</source>
+                <target>Niet meer delen</target>
+            </trans-unit>
+            <trans-unit id="confirmation_title_unshare">
+                <source>confirmation_title_unshare</source>
+                <target>Map \"{item}\" niet meer delen?</target>
+            </trans-unit>
+            <trans-unit id="confirmation_body_unshare">
+                <source>confirmation_body_unshare</source>
+                <target>De map zal niet langer worden gedeeld en zal alleen zichtbaar zijn voor jezelf. Weet je zeker dat je de map niet meer wilt delen?</target>
+            </trans-unit>
+            <trans-unit id="notification_title_share_removed">
+                <source>notification_title_share_removed</source>
+                <target>Map niet meer gedeeld</target>
+            </trans-unit>
+            <trans-unit id="notification_body_share_removed">
+                <source>notification_body_share_removed</source>
+                <target>De map wordt niet meer gedeeld.</target>
+            </trans-unit>
+            <trans-unit id="menu_register_app">
+                <source>menu_register_app</source>
+                <target>App registreren</target>
+            </trans-unit>
+            <trans-unit id="menu_notifications">
+                <source>menu_notifications</source>
+                <target>Gebeurtenissen</target>
+            </trans-unit>
+            <trans-unit id="side_nav_home">
+                <source>side_nav_home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="side_nav_sharing">
+                <source>side_nav_sharing</source>
+                <target>Delen</target>
+            </trans-unit>
+            <trans-unit id="side_nav_links">
+                <source>side_nav_links</source>
+                <target>Links</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
