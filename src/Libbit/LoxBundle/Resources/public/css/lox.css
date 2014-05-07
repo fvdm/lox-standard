@@ -24,6 +24,17 @@ input {
     height: 30px !important;
 }
 
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 10;
+    left: 0;
+    right: 0;
+    color: gray;
+    text-align: right;
+}
+
+
 /* Helper class */
 .full-width {
 	width: 100%;
@@ -98,7 +109,7 @@ section {
 /* lox brand correction */
 .navbar .lox-brand {
 	padding: 0px;
-	padding-top: 6px;
+	padding-top: 7px;
 }
 
 /* SideNav badge correction */
