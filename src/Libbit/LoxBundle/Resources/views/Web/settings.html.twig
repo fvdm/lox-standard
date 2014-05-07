@@ -13,24 +13,85 @@
                 <div class="page-header">
                     <h1>{% trans %}header_settings{% endtrans %}</h1>
                 </div>
-                <h3><small>header_account</small></h3>
+                <h3><small>{% trans %}header_account{% endtrans %}</small></h3>
                 <p>{{ user.bestname }}</p>
                 <p>{{ user.email }}</p>
                 <hr/>
-                <h3><small>header_security</small></h3>
-                <p><button class="btn btn-link" style="border: 0; padding: 0;">Change password</button></p>
+                <h3><small>{% trans %}header_security{% endtrans %}</small></h3>
+                <p><button id="change-password-button" class="btn btn-link" style="border: 0; padding: 0;">{% trans %}button_change_password{% endtrans %}</button></p>
                 <hr/>
-                <h3><small>header_language</small></h3>
-                <p>English <a href="#">button_change</a></p>
-                {#<p><button class="btn btn-link" style="border: 0; padding: 0;">Change password</button></p>#}
-                <h3><small>header_email_notifications</small></h3>
+                <h3><small>{% trans %}header_language{% endtrans %}</small></h3>
+                <p>English <a id="change-language-button" href="#">{% trans %}button_change{% endtrans %}</a></p>
+                <h3><small>{% trans %}header_email_notifications{% endtrans %}</small></h3>
                 <label class="checkbox">
-                    <input type="checkbox"> email_notifications_invites
+                    <input type="checkbox"> {% trans %}email_notifications_invites{% endtrans %}
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox"> email_notifications_add_update
+                    <input type="checkbox"> {% trans %}email_notifications_add_update{% endtrans %}
                 </label>
             </section>
         </div>
     </div>
+
+    <script>
+        YUI().use('lox-page', 'rednose-dialog', function (Y) {
+            new Y.Lox.Page().render();
+
+            var changePasswordButton = Y.one('#change-password-button'),
+                changeLanguageButton = Y.one('#change-language-button');
+
+            changePasswordButton.on('click', function (e) {
+                e.target.blur();
+
+                console.log('Change password');
+            });
+
+            changeLanguageButton.on('click', function (e) {
+                e.preventDefault();
+
+                console.log('Change language');
+            });
+
+            var html =
+                '<fieldset>' +
+                    '<div class="control-group">' +
+                        '<label class="control-label" for="current">{current}</label>' +
+                        '<div class="controls">' +
+                            '<input class="input-block-level" id="current" type="password" autofocus/>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="control-group">' +
+                        '<label class="control-label" for="password">{password}</label>' +
+                        '<div class="controls">' +
+                            '<input class="input-block-level" id="password" type="password"/>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="control-group">' +
+                        '<label class="control-label" for="verification">{verification}</label>' +
+                        '<div class="controls">' +
+                            '<input class="input-block-level" id="verification" type="password"/>' +
+                        '</div>' +
+                    '</div>' +
+                '</fieldset>';
+
+            var dialog = Y.Rednose.Dialog.prompt({
+                title: 'Change your password',
+                confirm: 'Change password',
+
+                html: Y.Lang.sub(html, {
+                    current     : 'Current password',
+                    password    : 'New password',
+                    verification: 'Verification'
+                })
+            }, function (node) {
+                var current      = node.one('#current').get('value'),
+                    password     = node.one('#password').get('value'),
+                    verification = node.one('#verification').get('value');
+
+                console.log(current);
+                console.log(password);
+                console.log(verification);
+            });
+        });
+    </script>
 {% endblock %}

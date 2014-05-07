@@ -20,7 +20,7 @@ table td div {
 }
 
 /* Fix height for form inputs */
-input[type="text"] {
+input[type="text"], input[type="password"] {
     height: 30px !important;
 }
 
