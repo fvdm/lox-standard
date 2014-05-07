@@ -187,6 +187,10 @@ class InvitationController extends Controller
     {
         $response = $this->acceptAction($id);
 
+        if ($response->getStatusCode() === Codes::HTTP_FOUND) {
+            $response->setStatusCode(Codes::HTTP_OK);
+        }
+
         return new Response('', $response->getStatusCode());
     }
 
@@ -209,6 +213,10 @@ class InvitationController extends Controller
     public function revokeInviteAction($id)
     {
         $response = $this->revokeAction($id);
+
+        if ($response->getStatusCode() === Codes::HTTP_FOUND) {
+            $response->setStatusCode(Codes::HTTP_OK);
+        }
 
         return new Response('', $response->getStatusCode());
     }
