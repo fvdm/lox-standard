@@ -195,6 +195,8 @@ Y.Lox.ItemListView = Y.Base.create('itemListView', Y.View, [], {
 
         node.dropdown.addTarget(this);
 
+        node.dropdown.data = model;
+
         node.dropdown._positionContainer(e.pageX, e.pageY);
         node.dropdown.open();
     }

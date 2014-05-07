@@ -160,7 +160,7 @@ var FileBrowserView = Y.Base.create('fileBrowserView', Y.View, [], {
     @protected
     **/
     _handleCreateLink: function (e) {
-        var item = e.data || this.itemView.get('selection');
+        var item = e.item.dropdown.data || this.itemView.get('selection');
 
         if (item) {
             Y.config.win.open(YUI.Env.routing.link_create + item.get('path'), '_blank');
@@ -173,7 +173,7 @@ var FileBrowserView = Y.Base.create('fileBrowserView', Y.View, [], {
     @protected
     **/
     _handleDownload: function (e) {
-        var item = e.data || this.itemView.get('selection');
+        var item = e.item.dropdown.data || this.itemView.get('selection');
 
         if (item) {
             Y.config.win.location = YUI.Env.routing.item + item.get('path') + '?download=1';
@@ -186,7 +186,7 @@ var FileBrowserView = Y.Base.create('fileBrowserView', Y.View, [], {
     @protected
     **/
     _handleDelete: function (e) {
-        var item    = e.data || this.itemView.get('selection'),
+        var item    = e.item.dropdown.data || this.itemView.get('selection'),
             strings = this.get('strings');
 
         if (item) {
@@ -221,7 +221,7 @@ var FileBrowserView = Y.Base.create('fileBrowserView', Y.View, [], {
     @protected
     **/
     _handleRename: function (e) {
-        var item    = e.data || this.itemView.get('selection'),
+        var item    = e.item.dropdown.data || this.itemView.get('selection'),
             dialog  = new Y.Rednose.Dialog(),
             strings = this.get('strings'),
             self    = this;
@@ -264,7 +264,7 @@ var FileBrowserView = Y.Base.create('fileBrowserView', Y.View, [], {
     },
 
     _prepEvent: function (e) {
-        e.data || (e.data = this.itemView.get('selection'));
+        e.data = e.item.dropdown.data || this.itemView.get('selection');
     }
 },{
     ATTRS: {

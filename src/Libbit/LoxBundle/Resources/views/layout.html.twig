@@ -23,6 +23,7 @@
         YUI.GlobalConfig = {
             groups: {
                 lox: {
+                    filter: 'raw',
                     base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/js/',
                     modules: {
                         "lox-app": {
