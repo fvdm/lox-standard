@@ -63,6 +63,19 @@ class WebController extends Controller
     }
 
     /**
+     * @Route("/settings", name="libbit_lox_settings")
+     * @Method({"GET"})
+     */
+    public function settingsAction()
+    {
+        $user = $this->getUser();
+
+        return $this->render('LibbitLoxBundle:Web:settings.html.twig', array(
+            'user' => $user,
+        ));
+    }
+
+    /**
      * @Route("/register_app", name="libbit_lox_register_app")
      * @Route("/register_app.json", name="libbit_lox_register_app_lbox", requirements={"_scheme" = "lbox"})
      * @Method({"GET"})

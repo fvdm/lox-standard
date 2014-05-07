@@ -4,60 +4,61 @@
 {% block content %}
 
     <div class="row">
-      <div class="span2 libbit-lox-sidebar">
-          {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
-    </div>
+        <div class="span2 libbit-lox-sidebar">
+            {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+        </div>
 
-    <div class="span10 libbit-lox-content">
-        <section id="links">
-            <div class="page-header">
-                <h1>{% trans %}header_links{% endtrans %}</h1>
-            </div>
-            <div>
-                <table class="table">
-                    <thead>
+        <div class="span10 libbit-lox-content">
+            <section id="links">
+                <div class="page-header">
+                    <h1>{% trans %}header_links{% endtrans %}</h1>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
                         <tr>
                             <th class="span5">{% trans %}th_name{% endtrans %}</th>
                             <th class="span3>">{% trans %}th_date{% endtrans %}</th>
                             <th class="span1>"></th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    {% if links %}
-                        {% for link in links %}
+                        </thead>
+                        <tbody>
+                        {% if links %}
+                            {% for link in links %}
+                                <tr>
+                                    <td class="span5"><div><a href="{{ path('libbit_lox_links_path', { path: link.uri }) }}" target="_blank">{{ link.item.title }}</a></div></td>
+                                    <td class="span3">{{ link.createdAt|date }}</td>
+                                    <td class="span1"><button rel="tooltip" data-record-id="{{ link.publicId }}" class="close" title="{% trans %}tooltip_remove_link{% endtrans %}">&times;</button></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
                             <tr>
-                                <td class="span5"><div><a href="{{ path('libbit_lox_links_path', { path: link.uri }) }}" target="_blank">{{ link.item.title }}</a></div></td>
-                                <td class="span3">{{ link.createdAt|date }}</td>
-                                <td class="span1"><button rel="tooltip" data-record-id="{{ link.publicId }}" class="close" title="{% trans %}tooltip_remove_link{% endtrans %}">&times;</button></td>
+                                <td colspan="3"><h4>{% trans %}td_no_links_yet{% endtrans %}</h4></td>
                             </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="3"><h4>{% trans %}td_no_links_yet{% endtrans %}</h4></td>
-                        </tr>
-                    {% endif %}
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </div>
     <script>
-    YUI().use('lox-page', 'io', 'rednose-tooltip', 'rednose-dialog', 'rednose-notifier', function (Y) {
-        new Y.Lox.Page().render();
+        YUI().use('lox-page', 'io', 'rednose-tooltip', 'rednose-dialog', 'rednose-notifier', function (Y) {
+            new Y.Lox.Page().render();
 
-        var TEXT_TITLE_DELETED = '{% trans %}notification_title_deleted{% endtrans %}',
-            TEXT_LINK_DELETED  = '{% trans %}notification_body_deleted{% endtrans %}',
+            var TEXT_TITLE_DELETED = '{% trans %}notification_title_deleted{% endtrans %}',
+                    TEXT_LINK_DELETED  = '{% trans %}notification_body_deleted{% endtrans %}',
 
-            TEXT_DELETE_TITLE = '{% trans %}confirmation_delete_link_title{% endtrans %}',
-            TEXT_DELETE       = '{% trans %}confirmation_delete_link_btn{% endtrans %}',
-            TEXT_DELETE_BODY  = '{% trans %}confirmation_delete_link_body{% endtrans %}';
+                    TEXT_DELETE_TITLE = '{% trans %}confirmation_delete_link_title{% endtrans %}',
+                    TEXT_DELETE       = '{% trans %}confirmation_delete_link_btn{% endtrans %}',
+                    TEXT_DELETE_BODY  = '{% trans %}confirmation_delete_link_body{% endtrans %}';
 
-        new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
+            new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
 
-        Y.all('.close').on('click', function (e) {
-            var id    = e.target.getAttribute('data-record-id'),
-                tr    = e.target.ancestor('tr'),
-                title = tr.one('a').get('innerHTML');
+            Y.all('.close').on('click', function (e) {
+                var id    = e.target.getAttribute('data-record-id'),
+                        tr    = e.target.ancestor('tr'),
+                        title = tr.one('a').get('innerHTML');
 
                 if (id && tr) {
                     Y.Rednose.Dialog.confirm({
