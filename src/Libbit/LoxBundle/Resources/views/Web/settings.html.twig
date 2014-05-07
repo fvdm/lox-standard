@@ -1,0 +1,20 @@
+{% extends 'LibbitLoxBundle::layout.html.twig' %}
+{% import 'LibbitLoxBundle::sidenav.html.twig' as sidenav %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span2 libbit-lox-sidebar">
+            {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+        </div>
+
+        <div class="span10 libbit-lox-content">
+            <section id="settings">
+                <div class="page-header">
+                    <h1>{% trans %}header_settings{% endtrans %}</h1>
+                </div>
+                <p>{{ user.bestname }}</p>
+            </section>
+        </div>
+    </div>
+{% endblock %}

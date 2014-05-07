@@ -170,41 +170,42 @@ Y.Lox.ItemListView = Y.Base.create('itemListView', Y.View, [], {
 
         var node     = e.currentTarget,
             clientId = node.getAttribute('data-yui3-record'),
-            model    = this.get('modelList').getByClientId(clientId),
-            x        = e.pageX,
-            y        = e.pageY,
-            content;
+            model    = this.get('modelList').getByClientId(clientId);
 
-        if (model.get('isDir')) {
-            if (model.get('isShare')) {
-                content = Y.Lox.Item.Menu.share;
-            } else if (model.get('isShared')) {
-                content = Y.Lox.Item.Menu.shared;
-            } else {
-                content = Y.Lox.Item.Menu.folder;
-            }
-        } else {
-            content = Y.Lox.Item.Menu.file;
-        }
-
-        if (node.contextMenu) {
+        if (node.dropdown) {
             return;
         }
 
-        node.plug(Y.Rednose.ContextMenu, {
-            content     : content,
-            data        : model,
-            bubbleTarget: this
+        if (model.get('isDir')) {
+            if (model.get('isShare')) {
+                items = Y.Lox.Item.Menu.share;
+            } else if (model.get('isShared')) {
+                items = Y.Lox.Item.Menu.shared;
+            } else {
+                items = Y.Lox.Item.Menu.folder;
+            }
+        } else {
+            items = Y.Lox.Item.Menu.file;
+        }
+
+        node.plug(Y.Rednose.Plugin.Dropdown, {
+            showOnContext: true,
+            items        : items
         });
 
-        node.contextMenu.open(x, y);
+        node.dropdown.addTarget(this);
+
+        node.dropdown.data = model;
+
+        node.dropdown._positionContainer(e.pageX, e.pageY);
+        node.dropdown.open();
     }
 });
 
 }, '@VERSION@', {
     "requires": [
-        "rednose-contextmenu",
         "rednose-datatable-select",
+        "rednose-dropdown-plugin",
         "rednose-formatter",
         "view"
     ]

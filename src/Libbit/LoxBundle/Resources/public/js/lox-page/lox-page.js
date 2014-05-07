@@ -81,7 +81,7 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
             showCaret: false,
 
             items: [
-                { title: this.get('strings.user_settings'), url: YUI.Env.routing.change_password },
+                { title: this.get('strings.user_settings'), url: YUI.Env.routing.settings },
                 { type: 'divider' },
                 { title: this.get('strings.user_sign_out'), url: YUI.Env.routing.logout }
             ]
