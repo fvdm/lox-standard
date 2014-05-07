@@ -22,11 +22,9 @@
                 <hr/>
                 <h3><small>{% trans %}header_language{% endtrans %}</small></h3>
                 <p>English <a id="change-language-button" href="#">{% trans %}button_change{% endtrans %}</a></p>
+                <hr/>
                 <h3><small>{% trans %}header_email_notifications{% endtrans %}</small></h3>
-                <label class="checkbox">
-                    <input type="checkbox"> {% trans %}email_notifications_invites{% endtrans %}
-                </label>
-                <label class="checkbox">
+                <label id="email_add_update" class="checkbox">
                     <input type="checkbox"> {% trans %}email_notifications_add_update{% endtrans %}
                 </label>
             </section>
@@ -35,62 +33,100 @@
 
     <script>
         YUI().use('lox-page', 'rednose-dialog', function (Y) {
+            var TXT_CHANGE_PASSWORD_TITLE  = 'Change your password',
+                TXT_CHANGE_PASSWORD_BUTTON = 'Change password',
+                TXT_LABEL_CURRENT_PASSWORD = 'Current password',
+                TXT_LABEL_NEW_PASSWORD     = 'New password',
+                TXT_LABEL_VERIFICATION     = 'Verification';
+
+            var TXT_CHANGE_LANGUAGE_TITLE  = 'Choose a language',
+                TXT_CHANGE_LANGUAGE_BUTTON = 'Change language';
+
             new Y.Lox.Page().render();
 
             var changePasswordButton = Y.one('#change-password-button'),
-                changeLanguageButton = Y.one('#change-language-button');
+                changeLanguageButton = Y.one('#change-language-button'),
+                emailAddUpdateButton = Y.one('#email_add_update');
 
             changePasswordButton.on('click', function (e) {
                 e.target.blur();
 
-                console.log('Change password');
+                var html =
+                    '<fieldset>' +
+                        '<div class="control-group">' +
+                            '<label class="control-label" for="current">{current}</label>' +
+                            '<div class="controls">' +
+                                '<input class="input-block-level" id="current" type="password" autofocus/>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="control-group">' +
+                            '<label class="control-label" for="password">{password}</label>' +
+                            '<div class="controls">' +
+                                '<input class="input-block-level" id="password" type="password"/>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="control-group">' +
+                            '<label class="control-label" for="verification">{verification}</label>' +
+                            '<div class="controls">' +
+                                '<input class="input-block-level" id="verification" type="password"/>' +
+                            '</div>' +
+                        '</div>' +
+                    '</fieldset>';
+
+                var dialog = Y.Rednose.Dialog.prompt({
+                    title: TXT_CHANGE_PASSWORD_TITLE,
+                    confirm: TXT_CHANGE_PASSWORD_BUTTON,
+
+                    html: Y.Lang.sub(html, {
+                        current     : TXT_LABEL_CURRENT_PASSWORD,
+                        password    : TXT_LABEL_NEW_PASSWORD,
+                        verification: TXT_LABEL_VERIFICATION
+                    })
+                }, function (node) {
+                    var current      = node.one('#current').get('value'),
+                        password     = node.one('#password').get('value'),
+                        verification = node.one('#verification').get('value');
+
+                    console.log(current);
+                    console.log(password);
+                    console.log(verification);
+
+                    return true;
+                });
             });
 
             changeLanguageButton.on('click', function (e) {
                 e.preventDefault();
 
-                console.log('Change language');
+                var html =
+                    '<fieldset style="margin-left: 1px">' +
+                        '<label class="radio">' +
+                            '<input type="radio" name="language" value="en" checked>' +
+                                'English' +
+                        '</label>' +
+                        '<label class="radio">' +
+                            '<input type="radio" name="language" value="nl">' +
+                                'Nederlands' +
+                        '</label>' +
+                    '</fieldset>';
+
+                var dialog = Y.Rednose.Dialog.prompt({
+                    title  : TXT_CHANGE_LANGUAGE_TITLE,
+                    confirm: TXT_CHANGE_LANGUAGE_BUTTON,
+                    html   : html
+                }, function (node) {
+                    var language = node.one('[name=language]:checked').get('value');
+
+                    console.log(language);
+
+                    return true;
+                });
             });
 
-            var html =
-                '<fieldset>' +
-                    '<div class="control-group">' +
-                        '<label class="control-label" for="current">{current}</label>' +
-                        '<div class="controls">' +
-                            '<input class="input-block-level" id="current" type="password" autofocus/>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="control-group">' +
-                        '<label class="control-label" for="password">{password}</label>' +
-                        '<div class="controls">' +
-                            '<input class="input-block-level" id="password" type="password"/>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="control-group">' +
-                        '<label class="control-label" for="verification">{verification}</label>' +
-                        '<div class="controls">' +
-                            '<input class="input-block-level" id="verification" type="password"/>' +
-                        '</div>' +
-                    '</div>' +
-                '</fieldset>';
+            emailAddUpdateButton.on('change', function (e) {
+                var value = e.target.get('checked');
 
-            var dialog = Y.Rednose.Dialog.prompt({
-                title: 'Change your password',
-                confirm: 'Change password',
-
-                html: Y.Lang.sub(html, {
-                    current     : 'Current password',
-                    password    : 'New password',
-                    verification: 'Verification'
-                })
-            }, function (node) {
-                var current      = node.one('#current').get('value'),
-                    password     = node.one('#password').get('value'),
-                    verification = node.one('#verification').get('value');
-
-                console.log(current);
-                console.log(password);
-                console.log(verification);
+                console.log(value);
             });
         });
     </script>
