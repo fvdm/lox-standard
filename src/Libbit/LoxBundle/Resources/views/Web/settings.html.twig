@@ -13,7 +13,23 @@
                 <div class="page-header">
                     <h1>{% trans %}header_settings{% endtrans %}</h1>
                 </div>
+                <h3><small>header_account</small></h3>
                 <p>{{ user.bestname }}</p>
+                <p>{{ user.email }}</p>
+                <hr/>
+                <h3><small>header_security</small></h3>
+                <p><button class="btn btn-link" style="border: 0; padding: 0;">Change password</button></p>
+                <hr/>
+                <h3><small>header_language</small></h3>
+                <p>English <a href="#">button_change</a></p>
+                {#<p><button class="btn btn-link" style="border: 0; padding: 0;">Change password</button></p>#}
+                <h3><small>header_email_notifications</small></h3>
+                <label class="checkbox">
+                    <input type="checkbox"> email_notifications_invites
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox"> email_notifications_add_update
+                </label>
             </section>
         </div>
     </div>

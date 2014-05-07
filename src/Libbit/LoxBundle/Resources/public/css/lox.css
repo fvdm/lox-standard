@@ -20,7 +20,7 @@ table td div {
 }
 
 /* Fix height for form inputs */
-input {
+input[type="text"] {
     height: 30px !important;
 }
 
