@@ -5,6 +5,6 @@ YUI.add('lang/lox-app-file-upload-view_en', function (Y) {
         cancel: "Close",
         upload_files: "Upload files...",
         upload_body: "Upload files to LocalBox.",
-        upload_sub_body: "You can upload more then one file at a time."
+        upload_sub_body: "You can upload more than one file at a time."
     });
 });
