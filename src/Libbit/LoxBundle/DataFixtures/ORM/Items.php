@@ -218,11 +218,13 @@ class Items extends AbstractFixture implements OrderedFixtureInterface, Containe
     {
         $file = new \SplFileInfo($path);
 
+        $tmpDir = sys_get_temp_dir();
+        
         // MacOSX version of sys_get_temp_dir() returns trailingslash
-        if (sys_get_temp_dir()[strlen(sys_get_temp_dir()) - 1] === '/') {
-            $dest = sys_get_temp_dir() . $file->getBaseName();
+        if ($tmpDir[strlen(sys_get_temp_dir()) - 1] === '/') {
+            $dest = $tmpDir . $file->getBaseName();
         } else {
-            $dest = sys_get_temp_dir() . '/' . $file->getBaseName();
+            $dest = $tmpDir . '/' . $file->getBaseName();
         }
 
         copy($path, $dest);
