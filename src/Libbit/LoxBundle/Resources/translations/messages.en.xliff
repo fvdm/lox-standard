@@ -138,6 +138,42 @@
                 <source>side_nav_links</source>
                 <target>Links</target>
             </trans-unit>
+            <trans-unit id="header_settings">
+                <source>header_settings</source>
+                <target>Personal settings</target>
+            </trans-unit>
+            <trans-unit id="button_change_password">
+                <source>button_change_password</source>
+                <target>Change password</target>
+            </trans-unit>
+            <trans-unit id="button_change">
+                <source>button_change</source>
+                <target>Change</target>
+            </trans-unit>
+            <trans-unit id="header_account">
+                <source>header_account</source>
+                <target>Account</target>
+            </trans-unit>
+            <trans-unit id="header_security">
+                <source>header_security</source>
+                <target>Security</target>
+            </trans-unit>
+            <trans-unit id="header_language">
+                <source>header_language</source>
+                <target>Language</target>
+            </trans-unit>
+            <trans-unit id="header_email_notifications">
+                <source>header_email_notifications</source>
+                <target>Email notifications</target>
+            </trans-unit>
+            <trans-unit id="email_notifications_invites">
+                <source>email_notifications_invites</source>
+                <target>When recieving a new invite</target>
+            </trans-unit>
+            <trans-unit id="email_notifications_add_update">
+                <source>email_notifications_add_update</source>
+                <target>When a shared file is added or updated</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
