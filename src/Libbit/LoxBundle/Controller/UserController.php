@@ -9,11 +9,56 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Rednose\FrameworkBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
 use Libbit\LoxBundle\Entity\KeyPair;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use FOS\RestBundle\Util\Codes;
+use Rednose\FrameworkBundle\Entity\UserManager;
 
 class UserController extends Controller
 {
+    // -- Web Methods ---------------------------------------------------------
+
+    /**
+     * @Route("/user/change-password", name="libbit_lox_user_change_password")
+     * @Method({"POST"})
+     */
+    public function changePasswordAction()
+    {
+        $request = $this->getRequest();
+
+        $data = json_decode($request->getContent(), true);
+
+        $response = new JsonResponse();
+
+        if ($data === null || !array_key_exists('current_password', $data) || !array_key_exists('current_password', $data)) {
+            $response->setStatusCode(Codes::HTTP_BAD_REQUEST);
+
+            return $response;
+        }
+
+        $current  = $data['current_password'];
+        $password = $data['new_password'];
+
+        $user = $this->getUser();
+
+        /** @var EncoderFactoryInterface $encoderFactory */
+        $encoderFactory = $this->get('security.encoder_factory');
+
+        $encoder = $encoderFactory->getEncoder($user);
+
+        if (!$encoder->isPasswordValid($user->getPassword(), $current, $user->getSalt())) {
+            $response->setStatusCode(Codes::HTTP_FORBIDDEN);
+
+            return $response;
+        }
+
+        $userManager = $this->get('rednose_framework.user_manager');
+        $user->setPlainPassword($password);
+        $userManager->updateUser($user);
+
+        return $response;
+    }
+
     // -- API Methods ----------------------------------------------------------
 
     /**

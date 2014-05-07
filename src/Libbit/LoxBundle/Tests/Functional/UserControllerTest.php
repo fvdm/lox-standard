@@ -6,6 +6,39 @@ use Rednose\FrameworkBundle\Entity\Group;
 
 class UserControllerTest extends WebTestCase
 {
+    public function testChangePasswordBadRequest()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-password');
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangePasswordWrongPassword()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-password', array(), array(), array(), json_encode(array(
+            'current_password'  => 'wrongpasswd1',
+            'new_password'      => 'testpasswd2'
+        )));
+
+        $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangePassword()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-password', array(), array(), array(), json_encode(array(
+            'current_password'  => 'testpasswd1',
+            'new_password'      => 'testpasswd2'
+        )));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
     /**
      * User name should always be returned, keys are optional.
      */
