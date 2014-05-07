@@ -4,7 +4,7 @@ namespace Libbit\LoxBundle\Tests\Functional;
 
 use Libbit\LoxBundle\Entity\Item;
 
-class KeyTest extends WebTestCase
+class KeyControllerTest extends WebTestCase
 {
     /**
      * Super secret text
@@ -183,10 +183,5 @@ class KeyTest extends WebTestCase
     protected function getPrivateKey()
     {
         return file_get_contents(__DIR__.'/Fixtures/private.pem');
-    }
-
-    protected function getRoute($name, $variables)
-    {
-        return $this->client->getContainer()->get('router')->generate($name, $variables, false);
     }
 }
