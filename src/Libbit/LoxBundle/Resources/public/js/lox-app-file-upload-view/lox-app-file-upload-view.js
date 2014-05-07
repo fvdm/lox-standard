@@ -427,4 +427,4 @@ var FileUploadView = Y.Base.create('fileUploadView', Y.View, [ Y.Rednose.View.Na
 Y.namespace('Lox.App').FileUploadView = FileUploadView;
 
 
-}, '@VERSION@', {"requires": ["rednose-formatter", "uploader", "view"], "lang": ["en"]});
+}, '@VERSION@', {"requires": ["rednose-formatter", "uploader", "view"], "lang": ["en", "nl"]});

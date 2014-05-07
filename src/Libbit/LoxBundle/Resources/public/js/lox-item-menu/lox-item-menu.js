@@ -41,6 +41,7 @@ Y.namespace('Lox.Item').Menu = {
 
 }, '@VERSION@', {
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });

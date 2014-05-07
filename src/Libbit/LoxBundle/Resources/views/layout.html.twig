@@ -21,13 +21,14 @@
         {{ rednose_yui_config() }}
 
         YUI.GlobalConfig = {
+            lang: '{{ app.request.locale }}',
             groups: {
                 lox: {
                     filter: 'raw',
                     base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/js/',
                     modules: {
                         "lox-app": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": [
                                 "lox-app-file-browser-view",
                                 "lox-app-folder-tree",
@@ -52,7 +53,7 @@
                         },
 
                         "lox-app-file-browser-view": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": [
                                 "lox-item-view",
                                 "lox-item-list-view",
@@ -63,7 +64,7 @@
                         },
 
                         "lox-item-view": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": [
                                 "gallery-affix",
                                 "lox-app-item-model",
@@ -88,26 +89,26 @@
                         },
 
                         "lox-item-menu": {
-                            "lang": ["en"]
+                            "lang": ["en", "nl"]
                         },
 
                         "lox-app-file-detail-view": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": ["rednose-view-nav", "view"]
                         },
 
                         "lox-app-file-upload-view": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": ["rednose-formatter", "uploader", "view"]
                         },
 
                         "lox-app-file-movecopy-view": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": ["lox-app-folder-tree", "rednose-treeview", "rednose-view-nav", "view"]
                         },
 
                         "lox-app-folder-share-view": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": [
                                 "autocomplete",
                                 "autocomplete-filters",
@@ -121,7 +122,7 @@
                         },
 
                         "lox-page": {
-                            "lang": ["en"],
+                            "lang": ["en", "nl"],
                             "requires": [
                                 "node",
                                 "base",

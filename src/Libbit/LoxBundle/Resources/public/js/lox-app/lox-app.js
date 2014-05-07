@@ -357,6 +357,7 @@ Y.namespace('Lox.App').App = App;
         "rednose-tooltip"
     ],
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });

@@ -294,6 +294,7 @@ Y.namespace('Lox.App').FileBrowserView = FileBrowserView;
         "view"
     ],
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });

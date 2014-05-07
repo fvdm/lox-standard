@@ -293,7 +293,8 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
         "view"
     ],
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });
 

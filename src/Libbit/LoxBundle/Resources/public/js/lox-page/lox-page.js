@@ -203,6 +203,7 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
         "view"
     ],
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });
