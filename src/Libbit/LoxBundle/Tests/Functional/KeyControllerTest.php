@@ -36,8 +36,6 @@ class KeyTest extends WebTestCase
 
     protected function setUp()
     {
-        $this->client = self::createClient();
-
         parent::setUp();
 
         if (!function_exists('openssl_public_encrypt')) {
@@ -65,42 +63,13 @@ class KeyTest extends WebTestCase
         // Create InitVector
         $size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CBC);
         $this->iv = mcrypt_create_iv($size, MCRYPT_RAND);
-
-        // Create user
-        if ($this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user') === null) {
-            $userUtil = $this->client->getContainer()->get('fos_user.util.user_manipulator');
-            $user = $userUtil->create('user', 'userpasswd', 'user@rednose.nl', true, false);
-            $user->setRealname('Demo user');
-            $this->em->persist($user);
-        }
-
-        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user');
-
-        // Create directory (Item)
-        if ($this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => 'encrypted-dir')) === null) {
-            $root = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByOwner($user);
-
-            $dir = new Item;
-            $dir->setTitle('encrypted-dir');
-            $dir->setIsDir(true);
-            $dir->setOwner($user);
-            $dir->setParent($root);
-
-            $this->em->persist($dir);
-            $this->em->flush();
-        }
-
-        $this->client = self::createClient(array(), array(
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW'   => 'userpasswd'
-        ));
     }
 
     public function testSetRSAEncyptedKeyForUser()
     {
         $rsaPublicKey = $this->getPublicKey();
 
-        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user');
+        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('test1');
         $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => 'encrypted-dir'));
 
         $key = '';
@@ -133,7 +102,7 @@ class KeyTest extends WebTestCase
 
         $rsaPrivateKey = $this->getPrivateKey();
 
-        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user');
+        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('test1');
         $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => 'encrypted-dir'));
 
         $this->client->request(
@@ -159,14 +128,14 @@ class KeyTest extends WebTestCase
      */
     public function testRevokeKeyForUser()
     {
-        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user');
+        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('test1');
         $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => 'encrypted-dir'));
 
         $this->client->request(
             'POST',
             $this->getRoute('libbit_lox_api_revoke_key_path', array('path' => '/' . $item->getTitle())),
             array(), array(), array(), json_encode(array(
-                'username' => 'user'
+                'username' => 'test1'
             ))
         );
 

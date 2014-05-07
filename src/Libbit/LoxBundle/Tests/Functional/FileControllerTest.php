@@ -12,54 +12,16 @@ class FileControllerTest extends WebTestCase
      */
     protected $client;
 
-    protected $token;
-
     public function setUp()
     {
-        $this->client = self::createClient();
-
         parent::setUp();
 
-        if ($this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user') === null) {
-            $userUtil = $this->client->getContainer()->get('fos_user.util.user_manipulator');
-            $user = $userUtil->create('user', 'userpasswd', 'user@rednose.nl', true, false);
-            $user->setRealname('Demo user');
-            $this->em->persist($user);
-        }
-
-        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user');
-
-        if ($this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => 'existing-title')) === null) {
-            $root = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByOwner($user);
-
-            $dir = new Item;
-            $dir->setTitle('existing-title');
-            $dir->setIsDir(true);
-            $dir->setOwner($user);
-            $dir->setParent($root);
-
-            $this->em->persist($dir);
-            $this->em->flush();
-        }
-
         // Log in as user
-        $this->doLogin('user', 'userpasswd');
-        $this->token = $this->client->getContainer()->get('form.csrf_provider')->generateCsrfToken('web');
+        $this->doLogin('test1', 'testpasswd1');
 
         copy(__DIR__.'/Fixtures/test.txt', sys_get_temp_dir().'/test-item.txt');
         copy(__DIR__.'/Fixtures/test.pdf', sys_get_temp_dir().'/test-item.pdf');
-        copy(__DIR__.'/Fixtures/test.txt', sys_get_temp_dir().'/existing-title');
-    }
-
-    public function doLogin($name, $password)
-    {
-        $crawler = $this->client->request('GET', '/login');
-        $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $name,
-            '_password'  => $password,
-        ));
-        $this->client->submit($form);
-        $this->assertTrue($this->client->getResponse()->isRedirect());
+        copy(__DIR__.'/Fixtures/test.txt', sys_get_temp_dir().'/existing-dir');
     }
 
     public function testGetFile404Code()
@@ -110,8 +72,8 @@ class FileControllerTest extends WebTestCase
     public function testUploadFileOverwriteDirectory403Code()
     {
         $file = new UploadedFile(
-            sys_get_temp_dir().'/existing-title',
-            'existing-title',
+            sys_get_temp_dir().'/existing-dir',
+            'existing-dir',
             'text/plain',
             strlen($this->getTestFileContent3())
         );

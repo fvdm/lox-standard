@@ -7,44 +7,6 @@ use Rednose\FrameworkBundle\Entity\Group;
 class UserControllerTest extends WebTestCase
 {
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
-     */
-    protected $client;
-
-    public function setUp()
-    {
-        $this->client = self::createClient();
-
-        parent::setUp();
-
-        $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('test');
-        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test group');
-
-        if ($user === null) {
-            $userUtil = $this->client->getContainer()->get('fos_user.util.user_manipulator');
-            $user = $userUtil->create('test', 'testpasswd', 'test@libbit.eu', true, false);
-            $user->setRealname('Test user');
-            $this->em->persist($user);
-        }
-
-        if ($group === null) {
-            $group = new Group();
-            $group->setName('Test group');
-
-            $user->addGroup($group);
-
-            $this->em->persist($group);
-        }
-
-        $this->em->flush();
-
-        $this->client = self::createClient(array(), array(
-            'PHP_AUTH_USER' => 'test',
-            'PHP_AUTH_PW'   => 'testpasswd',
-        ));
-    }
-
-    /**
      * User name should always be returned, keys are optional.
      */
     public function testGetUserInfo()
@@ -55,7 +17,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals('Test user', $data['name']);
+        $this->assertEquals('Test user 1', $data['name']);
     }
 
     /**
@@ -121,13 +83,13 @@ class UserControllerTest extends WebTestCase
 
     public function testGetIdentitiesGroup()
     {
-        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Test group');
+        $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Primary group');
 
         $this->client->request('GET', '/lox_api/identities/group/group_' . $group->getId());
 
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
-        $this->assertEquals('test', $data[0]['username']);
+        $this->assertEquals('test1', $data[0]['username']);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
@@ -141,11 +103,11 @@ class UserControllerTest extends WebTestCase
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
         foreach ($data as $identity) {
-            if ($identity['title'] === 'Test user') {
+            if ($identity['title'] === 'Test user 1') {
                 $user = true;
             }
 
-            if ($identity['title'] === 'Test group') {
+            if ($identity['title'] === 'Primary group') {
                 $group = true;
             }
         }
@@ -160,16 +122,17 @@ class UserControllerTest extends WebTestCase
         $user = false;
         $group = false;
 
-        $this->client->request('GET', '/lox_api/identities/test');
+        // Test use[r] | Prima[r]y g[r]oup
+        $this->client->request('GET', '/lox_api/identities/r');
 
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
         foreach ($data as $identity) {
-            if ($identity['title'] === 'Test user') {
+            if ($identity['title'] === 'Test user 1') {
                 $user = true;
             }
 
-            if ($identity['title'] === 'Test group') {
+            if ($identity['title'] === 'Primary group') {
                 $group = true;
             }
         }

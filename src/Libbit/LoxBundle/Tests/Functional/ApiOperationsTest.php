@@ -11,54 +11,6 @@ class ApiOperationsTest extends WebTestCase
      */
     protected $client;
 
-    public function setUp()
-    {
-        $this->client = self::createClient();
-
-        parent::setUp();
-
-        if ($this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('user') === null) {
-            $userUtil = $this->client->getContainer()->get('fos_user.util.user_manipulator');
-            $user = $userUtil->create('user', 'userpasswd', 'user@rednose.nl', true, false);
-            $user->setRealname('Demo user');
-            $this->em->persist($user);
-
-            $this->em->flush();
-
-            $root = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByOwner($user);
-
-            $dir = new Item;
-            $dir->setTitle('test-dir');
-            $dir->setIsDir(true);
-            $dir->setOwner($user);
-            $dir->setParent($root);
-
-            $this->em->persist($dir);
-
-            $dir = new Item;
-            $dir->setTitle('test-meta-dir');
-            $dir->setIsDir(true);
-            $dir->setOwner($user);
-            $dir->setParent($root);
-
-            $this->em->persist($dir);
-
-            $file = new Item;
-            $file->setTitle('test-meta.txt');
-            $file->setIsDir(false);
-            $file->setOwner($user);
-            $file->setParent($root);
-
-            $this->em->persist($file);
-
-            $this->em->flush();
-        }
-
-        $this->client = self::createClient(array(), array(
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW'   => 'userpasswd',
-        ));
-    }
 
     public function testPostFile201Code()
     {
