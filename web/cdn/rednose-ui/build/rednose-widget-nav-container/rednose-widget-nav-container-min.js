@@ -1,1 +1,0 @@
-YUI.add("rednose-widget-nav-container",function(e,t){var n;n=e.Base.create("nav",e.Widget,[e.WidgetStdMod,e.WidgetButtons]),e.namespace("Rednose").NavContainer=n},"1.4.0",{requires:["widget","widget-buttons","widget-stdmod"]});
