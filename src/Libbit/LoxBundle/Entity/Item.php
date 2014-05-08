@@ -100,6 +100,13 @@ class Item
     protected $share;
 
     /**
+     * @ORM\OneToOne(targetEntity="Libbit\LoxBundle\Entity\Link", mappedBy="item")
+     *
+     * @Serializer\Groups({"details"})
+     */
+    protected $link;
+
+    /**
      * @ORM\OneToMany(targetEntity="Libbit\LoxBundle\Entity\ItemKey", mappedBy="item", cascade={"persist", "remove"})
      */
     protected $keys;
@@ -260,6 +267,11 @@ class Item
 	public function getParent()
 	{
 		return $this->parent;
+	}
+
+	public function getLink()
+	{
+		return $this->link;
 	}
 
 	public function setParent($parent)

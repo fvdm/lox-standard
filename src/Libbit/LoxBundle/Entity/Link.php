@@ -19,6 +19,8 @@ class Link
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"list", "details"})
      */
     protected $id;
 
@@ -34,11 +36,15 @@ class Link
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Serializer\Groups({"details"})
      */
     protected $publicId;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Groups({"details"})
      */
     protected $createdAt;
 
