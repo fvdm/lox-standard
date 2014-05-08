@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e490e7f7ca93294450187f2b639dcd9f",
+    "hash": "763ae6a4e3b4c1493053e377e45ef34c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -44,7 +44,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -63,9 +63,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -158,12 +158,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2"
+                "reference": "97475b2761f22cd9817c135283ad1079543a4586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/b99c5c46c87126201899afe88ec490a25eedd6a2",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/97475b2761f22cd9817c135283ad1079543a4586",
+                "reference": "97475b2761f22cd9817c135283ad1079543a4586",
                 "shasum": ""
             },
             "require": {
@@ -218,7 +218,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2014-02-03 23:07:43"
+            "time": "2014-05-07 01:20:20"
         },
         {
             "name": "doctrine/common",
@@ -645,7 +645,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -664,7 +664,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -841,7 +841,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -1242,12 +1242,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Incenteev/ParameterHandler.git",
-                "reference": "f6b98615a403a0f684eb15581ed9f6e93709169d"
+                "reference": "15b15d8246d501df277dd6e40f5fd3f6e2084c42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/f6b98615a403a0f684eb15581ed9f6e93709169d",
-                "reference": "f6b98615a403a0f684eb15581ed9f6e93709169d",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/15b15d8246d501df277dd6e40f5fd3f6e2084c42",
+                "reference": "15b15d8246d501df277dd6e40f5fd3f6e2084c42",
                 "shasum": ""
             },
             "require": {
@@ -1285,7 +1285,7 @@
             "keywords": [
                 "parameters management"
             ],
-            "time": "2014-03-11 08:44:13"
+            "time": "2014-05-02 13:55:31"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1946,12 +1946,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "7d9bcdc29b49c3fc671a9c22885176f0ffe034c5"
+                "reference": "de645e813ddca4a1243db48bce5eaee8adb346a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/7d9bcdc29b49c3fc671a9c22885176f0ffe034c5",
-                "reference": "7d9bcdc29b49c3fc671a9c22885176f0ffe034c5",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/de645e813ddca4a1243db48bce5eaee8adb346a2",
+                "reference": "de645e813ddca4a1243db48bce5eaee8adb346a2",
                 "shasum": ""
             },
             "require": {
@@ -2002,7 +2002,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2014-04-08 20:25:33"
+            "time": "2014-05-01 19:50:28"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -2378,12 +2378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8"
+                "reference": "de9a19c7bf352d41cc99ed86c3c0ef17e87394b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8",
-                "reference": "6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/de9a19c7bf352d41cc99ed86c3c0ef17e87394b6",
+                "reference": "de9a19c7bf352d41cc99ed86c3c0ef17e87394b6",
                 "shasum": ""
             },
             "require": {
@@ -2421,7 +2421,7 @@
             "keywords": [
                 "markdown"
             ],
-            "time": "2013-11-29 21:49:31"
+            "time": "2014-05-05 02:43:50"
         },
         {
             "name": "monolog/monolog",
@@ -2429,12 +2429,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "65026b610f8c19e61d7242f600530677b0466aac"
+                "reference": "467e30a9c9fa22395608cc515cd45a60ecc84c4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/65026b610f8c19e61d7242f600530677b0466aac",
-                "reference": "65026b610f8c19e61d7242f600530677b0466aac",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/467e30a9c9fa22395608cc515cd45a60ecc84c4e",
+                "reference": "467e30a9c9fa22395608cc515cd45a60ecc84c4e",
                 "shasum": ""
             },
             "require": {
@@ -2489,7 +2489,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-04-24 13:29:03"
+            "time": "2014-05-01 15:55:56"
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -2744,8 +2744,14 @@
             "target-dir": "Rednose/ApiDocBundle",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.rednose.nl:rednose/rednoseapidocbundle.git",
-                "reference": "5069ca4c07543317c95de23901378c4f726dabff"
+                "url": "https://github.com/rednose-public/RednoseApiDocBundle.git",
+                "reference": "bb1c35b917a9b68059311ee5f61b4f781992a3e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/RednoseApiDocBundle/zipball/bb1c35b917a9b68059311ee5f61b4f781992a3e4",
+                "reference": "bb1c35b917a9b68059311ee5f61b4f781992a3e4",
+                "shasum": ""
             },
             "require": {
                 "nelmio/api-doc-bundle": "~2.4"
@@ -2756,9 +2762,9 @@
                     "Rednose\\ApiDocBundle": ""
                 }
             },
-            "notification-url": "http://packagist.rednose.nl/downloads/%package%",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "proprietary"
+                "MIT"
             ],
             "authors": [
                 {
@@ -2775,7 +2781,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2014-04-28 11:48:07"
+            "time": "2014-05-08 11:24:39"
         },
         {
             "name": "rednose/cdn-bundle",
@@ -2783,8 +2789,14 @@
             "target-dir": "Rednose/CdnBundle",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.rednose.nl:rednose/rednosecdnbundle.git",
-                "reference": "7bf65697009a42a4b8fd568fe8f34c77364cd5fe"
+                "url": "https://github.com/rednose-public/RednoseCdnBundle.git",
+                "reference": "5cfc3f8e8d807e5db568c1cb4627648b0cacc00b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/RednoseCdnBundle/zipball/5cfc3f8e8d807e5db568c1cb4627648b0cacc00b",
+                "reference": "5cfc3f8e8d807e5db568c1cb4627648b0cacc00b",
+                "shasum": ""
             },
             "require": {
                 "oyatel/minify": "dev-master",
@@ -2797,9 +2809,9 @@
                     "Rednose\\CdnBundle": ""
                 }
             },
-            "notification-url": "http://packagist.rednose.nl/downloads/%package%",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "proprietary"
+                "MIT"
             ],
             "authors": [
                 {
@@ -2818,7 +2830,7 @@
             "keywords": [
                 "cdn"
             ],
-            "time": "2014-01-09 17:47:15"
+            "time": "2014-05-08 11:30:03"
         },
         {
             "name": "rednose/framework-bundle",
@@ -2826,8 +2838,14 @@
             "target-dir": "Rednose/FrameworkBundle",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.rednose.nl:rednose/rednoseframeworkbundle.git",
-                "reference": "e99a41f09f665ce1e10fd4b8b184838c88256a9a"
+                "url": "https://github.com/rednose-public/RednoseFrameworkBundle.git",
+                "reference": "940c52feaa5121c14ac9f9d51411e0a29001599d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/940c52feaa5121c14ac9f9d51411e0a29001599d",
+                "reference": "940c52feaa5121c14ac9f9d51411e0a29001599d",
+                "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "1.2.*",
@@ -2866,9 +2884,9 @@
                     "Rednose\\FrameworkBundle": ""
                 }
             },
-            "notification-url": "http://packagist.rednose.nl/downloads/%package%",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "proprietary"
+                "MIT"
             ],
             "authors": [
                 {
@@ -2887,7 +2905,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-04-18 13:26:59"
+            "time": "2014-05-08 11:45:41"
         },
         {
             "name": "rednose/kerberos-bundle",
@@ -2895,8 +2913,14 @@
             "target-dir": "Rednose/KerberosBundle",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.rednose.nl:rednose/rednosekerberosbundle.git",
-                "reference": "b18317f267f64692b9dd4880e3c32802f239cf89"
+                "url": "https://github.com/rednose-public/RednoseKerberosBundle.git",
+                "reference": "34ca80717dc1a0b71236683e7423d44cdf667927"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/RednoseKerberosBundle/zipball/34ca80717dc1a0b71236683e7423d44cdf667927",
+                "reference": "34ca80717dc1a0b71236683e7423d44cdf667927",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
@@ -2910,9 +2934,9 @@
                     "Rednose\\KerberosBundle": ""
                 }
             },
-            "notification-url": "http://packagist.rednose.nl/downloads/%package%",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "proprietary"
+                "MIT"
             ],
             "authors": [
                 {
@@ -2931,7 +2955,7 @@
             "keywords": [
                 "kerberos"
             ],
-            "time": "2014-01-08 17:52:49"
+            "time": "2014-05-08 11:14:57"
         },
         {
             "name": "rednose/yui-bundle",
@@ -2939,8 +2963,14 @@
             "target-dir": "Rednose/YuiBundle",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.rednose.nl:rednose/rednoseyuibundle.git",
-                "reference": "dca10d00683a3f49f1e1773abd881aa3ba258004"
+                "url": "https://github.com/rednose-public/RednoseYuiBundle.git",
+                "reference": "6b182e8e2d2a6ed1d59b6ae647cf0060c7711ac9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/6b182e8e2d2a6ed1d59b6ae647cf0060c7711ac9",
+                "reference": "6b182e8e2d2a6ed1d59b6ae647cf0060c7711ac9",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
@@ -2953,9 +2983,9 @@
                     "Rednose\\YuiBundle": ""
                 }
             },
-            "notification-url": "http://packagist.rednose.nl/downloads/%package%",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "proprietary"
+                "MIT"
             ],
             "authors": [
                 {
@@ -2974,7 +3004,7 @@
             "keywords": [
                 "yui"
             ],
-            "time": "2014-04-18 16:20:49"
+            "time": "2014-05-08 11:50:20"
         },
         {
             "name": "richsage/rms-push-notifications-bundle",
@@ -3131,12 +3161,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "27178469408e4b966a14232dac6923749039c55d"
+                "reference": "8b7a33aa3d22388443b6de0b0cf184122e9f60d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/27178469408e4b966a14232dac6923749039c55d",
-                "reference": "27178469408e4b966a14232dac6923749039c55d",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/8b7a33aa3d22388443b6de0b0cf184122e9f60d2",
+                "reference": "8b7a33aa3d22388443b6de0b0cf184122e9f60d2",
                 "shasum": ""
             },
             "require": {
@@ -3172,7 +3202,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2014-04-25 11:27:48"
+            "time": "2014-04-28 14:01:06"
         },
         {
             "name": "sonata-project/admin-bundle",
@@ -3180,12 +3210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "0527005a864afc7c5e8057fd390b0ca30f576b5e"
+                "reference": "d89d9dc1447f2e0eaac14e89558a4738385c4099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/0527005a864afc7c5e8057fd390b0ca30f576b5e",
-                "reference": "0527005a864afc7c5e8057fd390b0ca30f576b5e",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/d89d9dc1447f2e0eaac14e89558a4738385c4099",
+                "reference": "d89d9dc1447f2e0eaac14e89558a4738385c4099",
                 "shasum": ""
             },
             "require": {
@@ -3251,7 +3281,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2014-04-24 17:41:00"
+            "time": "2014-05-07 08:41:34"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -3259,12 +3289,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "25abd44cb777da84960a41361a011b02a77d3946"
+                "reference": "30ccaa691e695aafc254da197ac545f719a1d132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/25abd44cb777da84960a41361a011b02a77d3946",
-                "reference": "25abd44cb777da84960a41361a011b02a77d3946",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/30ccaa691e695aafc254da197ac545f719a1d132",
+                "reference": "30ccaa691e695aafc254da197ac545f719a1d132",
                 "shasum": ""
             },
             "require": {
@@ -3315,7 +3345,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2014-04-25 16:15:20"
+            "time": "2014-04-30 12:24:22"
         },
         {
             "name": "sonata-project/cache",
@@ -3383,12 +3413,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCoreBundle.git",
-                "reference": "86ae107d623118f393a149d800135d8942a5a9f1"
+                "reference": "664631de527373a3b1ee74772e83484679fb65a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/86ae107d623118f393a149d800135d8942a5a9f1",
-                "reference": "86ae107d623118f393a149d800135d8942a5a9f1",
+                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/664631de527373a3b1ee74772e83484679fb65a0",
+                "reference": "664631de527373a3b1ee74772e83484679fb65a0",
                 "shasum": ""
             },
             "require": {
@@ -3437,7 +3467,7 @@
             "keywords": [
                 "sonata"
             ],
-            "time": "2014-04-14 17:04:46"
+            "time": "2014-04-30 12:21:30"
         },
         {
             "name": "sonata-project/doctrine-extensions",
@@ -3809,19 +3839,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "19a15a44b21d13f6c19beefc8e4b6c849558ec50"
+                "reference": "46d55baab96f943061de6712b38011db354eed78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/19a15a44b21d13f6c19beefc8e4b6c849558ec50",
-                "reference": "19a15a44b21d13f6c19beefc8e4b6c849558ec50",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/46d55baab96f943061de6712b38011db354eed78",
+                "reference": "46d55baab96f943061de6712b38011db354eed78",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9@dev"
+                "mockery/mockery": "~0.9.1"
             },
             "type": "library",
             "extra": {
@@ -3855,7 +3885,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-04-22 07:28:24"
+            "time": "2014-05-08 08:35:11"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -4035,12 +4065,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "e98defd402f72e8b54a029ba4d3ac4cb51dc3577"
+                "reference": "85840a287403e53268e212f892607e01cc61b6da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/e98defd402f72e8b54a029ba4d3ac4cb51dc3577",
-                "reference": "e98defd402f72e8b54a029ba4d3ac4cb51dc3577",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/85840a287403e53268e212f892607e01cc61b6da",
+                "reference": "85840a287403e53268e212f892607e01cc61b6da",
                 "shasum": ""
             },
             "require": {
@@ -4053,6 +4083,9 @@
                 "symfony/dependency-injection": "~2.1",
                 "symfony/http-kernel": "~2.1",
                 "symfony/yaml": "~2.1"
+            },
+            "suggest": {
+                "psr/log": "Allows logging"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -4083,7 +4116,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2014-04-05 17:15:52"
+            "time": "2014-04-29 13:05:02"
         },
         {
             "name": "symfony/symfony",
@@ -4091,12 +4124,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "37a4876d8be27c9c441e8502b9731bc210991411"
+                "reference": "903acf9acb59d7911165406d9a771fe5aa38cad1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/37a4876d8be27c9c441e8502b9731bc210991411",
-                "reference": "37a4876d8be27c9c441e8502b9731bc210991411",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/903acf9acb59d7911165406d9a771fe5aa38cad1",
+                "reference": "903acf9acb59d7911165406d9a771fe5aa38cad1",
                 "shasum": ""
             },
             "require": {
@@ -4193,7 +4226,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-04-28 10:01:28"
+            "time": "2014-05-05 19:19:05"
         },
         {
             "name": "twig/extensions",
@@ -4250,12 +4283,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "28256f5eda6174c8f9ffd32ec7313da12cb07805"
+                "reference": "052eb5d1ed1b5b7755525e4e7af26faea1619747"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/28256f5eda6174c8f9ffd32ec7313da12cb07805",
-                "reference": "28256f5eda6174c8f9ffd32ec7313da12cb07805",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/052eb5d1ed1b5b7755525e4e7af26faea1619747",
+                "reference": "052eb5d1ed1b5b7755525e4e7af26faea1619747",
                 "shasum": ""
             },
             "require": {
@@ -4299,7 +4332,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-04-23 20:31:20"
+            "time": "2014-05-05 08:48:03"
         },
         {
             "name": "vich/uploader-bundle",
@@ -4372,12 +4405,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/videlalvaro/php-amqplib.git",
-                "reference": "1ca6d49bec6b8d2a011e94726c63d6bfad04856b"
+                "reference": "696b982e55eff8b375ae636742eab42994885874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/1ca6d49bec6b8d2a011e94726c63d6bfad04856b",
-                "reference": "1ca6d49bec6b8d2a011e94726c63d6bfad04856b",
+                "url": "https://api.github.com/repos/videlalvaro/php-amqplib/zipball/696b982e55eff8b375ae636742eab42994885874",
+                "reference": "696b982e55eff8b375ae636742eab42994885874",
                 "shasum": ""
             },
             "require": {
@@ -4412,7 +4445,7 @@
                 "queue",
                 "rabbitmq"
             ],
-            "time": "2014-04-07 19:33:22"
+            "time": "2014-05-06 09:35:44"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
