@@ -2,6 +2,7 @@
 
 namespace Libbit\LoxBundle\Controller;
 
+use Rednose\FrameworkBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -26,18 +27,16 @@ class UserController extends Controller
     {
         $request = $this->getRequest();
 
-        $data = json_decode($request->getContent(), true);
+        $current  = $request->request->get('current_password');
+        $password = $request->request->get('new_password');
 
-        $response = new JsonResponse();
+        $response = new Response();
 
-        if ($data === null || !array_key_exists('current_password', $data) || !array_key_exists('current_password', $data)) {
+        if (!$current || !$password) {
             $response->setStatusCode(Codes::HTTP_BAD_REQUEST);
 
             return $response;
         }
-
-        $current  = $data['current_password'];
-        $password = $data['new_password'];
 
         $user = $this->getUser();
 
@@ -52,9 +51,45 @@ class UserController extends Controller
             return $response;
         }
 
+        /** @var UserManager $userManager */
         $userManager = $this->get('rednose_framework.user_manager');
+
         $user->setPlainPassword($password);
         $userManager->updateUser($user);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/user/change-locale", name="libbit_lox_user_change_locale")
+     * @Method({"POST"})
+     */
+    public function changeLocaleAction()
+    {
+        $locale  = $this->getRequest()->request->get('locale');
+        $context = $this->getRequest()->request->get('context');
+
+        $response = new Response();
+
+        if (!$locale) {
+            $response->setStatusCode(Codes::HTTP_BAD_REQUEST);
+
+            return $response;
+        }
+
+        $user = $this->getUser();
+
+        if ($user instanceof UserInterface) {
+            /** @var UserManager $userManager */
+            $userManager = $this->get('rednose_framework.user_manager');
+
+            $user->setLocale($locale);
+            $userManager->updateUser($user);
+        }
+
+        if ($context) {
+            return $this->redirect($context);
+        }
 
         return $response;
     }

@@ -2,8 +2,6 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Rednose\FrameworkBundle\Entity\Group;
-
 class UserControllerTest extends WebTestCase
 {
     public function testChangePasswordBadRequest()
@@ -19,10 +17,10 @@ class UserControllerTest extends WebTestCase
     {
         $this->doLogin('test1', 'testpasswd1');
 
-        $this->client->request('POST', '/user/change-password', array(), array(), array(), json_encode(array(
+        $this->client->request('POST', '/user/change-password', array(
             'current_password'  => 'wrongpasswd1',
             'new_password'      => 'testpasswd2'
-        )));
+        ));
 
         $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
@@ -31,12 +29,44 @@ class UserControllerTest extends WebTestCase
     {
         $this->doLogin('test1', 'testpasswd1');
 
-        $this->client->request('POST', '/user/change-password', array(), array(), array(), json_encode(array(
+        $this->client->request('POST', '/user/change-password', array(
             'current_password'  => 'testpasswd1',
             'new_password'      => 'testpasswd2'
-        )));
+        ));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangeLocaleBadRequest()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-locale');
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangeLocale()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-locale', array(
+            'locale' => 'nl'
+        ));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangeLocaleRedirect()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-locale', array(
+            'locale'  => 'nl',
+            'context' => 'http://lox-standard.dev/settings/'
+        ));
+
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
     }
 
     /**
