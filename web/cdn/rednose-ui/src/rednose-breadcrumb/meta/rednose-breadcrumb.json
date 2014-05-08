@@ -1,8 +1,0 @@
-{
-    "rednose-breadcrumb" : {
-        "requires": [
-        	"base",
-        	"view"
-        ]
-    }
-}

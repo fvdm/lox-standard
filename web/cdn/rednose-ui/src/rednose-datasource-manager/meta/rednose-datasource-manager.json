@@ -1,8 +1,0 @@
-{
-    "rednose-datasource-manager" : {
-        "requires": [
-            "rednose-app",
-            "rednose-dataprovider"
-        ]
-    }
-}
