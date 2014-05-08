@@ -21,7 +21,7 @@
                 <p><button id="change-password-button" class="btn btn-link" style="border: 0; padding: 0;">{% trans %}button_change_password{% endtrans %}</button></p>
                 <hr/>
                 <h3><small>{% trans %}header_language{% endtrans %}</small></h3>
-                <p>English <a id="change-language-button" href="#">{% trans %}button_change{% endtrans %}</a></p>
+                <p>{% if app.request.locale == 'nl' %}Nederlands{% else %}English{% endif %} <a id="change-language-button" href="#">{% trans %}button_change{% endtrans %}</a></p>
                 <hr/>
                 <h3><small>{% trans %}header_email_notifications{% endtrans %}</small></h3>
                 <label id="email_add_update" class="checkbox">
@@ -37,7 +37,8 @@
                 TXT_CHANGE_PASSWORD_BUTTON = 'Change password',
                 TXT_LABEL_CURRENT_PASSWORD = 'Current password',
                 TXT_LABEL_NEW_PASSWORD     = 'New password',
-                TXT_LABEL_VERIFICATION     = 'Verification';
+                TXT_LABEL_VERIFICATION     = 'Verification',
+                TXT_PASSWORDS_DO_NOT_MATCH = 'Passwords do not match';
 
             var TXT_CHANGE_LANGUAGE_TITLE  = 'Choose a language',
                 TXT_CHANGE_LANGUAGE_BUTTON = 'Change language';
@@ -62,7 +63,7 @@
                         '<div class="control-group">' +
                             '<label class="control-label" for="password">{password}</label>' +
                             '<div class="controls">' +
-                                '<input class="input-block-level" id="password" type="password"/>' +
+                                '<input class="input-block-level" data-path="password" id="password" type="password"/>' +
                             '</div>' +
                         '</div>' +
                         '<div class="control-group">' +
@@ -87,9 +88,23 @@
                         password     = node.one('#password').get('value'),
                         verification = node.one('#verification').get('value');
 
-                    console.log(current);
-                    console.log(password);
-                    console.log(verification);
+                    if (current === '' || password === '' || verification === '') {
+                        return false;
+                    }
+
+                    if (password !== verification) {
+                        dialog.set('error', {path: 'password', message: TXT_PASSWORDS_DO_NOT_MATCH});
+
+                        return false
+                    }
+
+                    Y.io(YUI.Env.routing.change_password, {
+                        method: 'POST',
+                        data: {
+                            'current_password': current,
+                            'new_password': password
+                        }
+                    });
 
                     return true;
                 });
@@ -117,9 +132,17 @@
                 }, function (node) {
                     var language = node.one('[name=language]:checked').get('value');
 
-                    console.log(language);
-
-                    return true;
+                    Y.io(YUI.Env.routing.change_locale, {
+                        method: 'POST',
+                        data: {
+                            'locale': language
+                        },
+                        on: {
+                            success: function (tx, r) {
+                                location.reload(true);
+                            }
+                        }
+                    });
                 });
             });
 
