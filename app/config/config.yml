@@ -161,8 +161,14 @@ rednose_framework:
     oauth: true
 
 rednose_yui:
-    groups:
-        - { name: rednose-ui, root: cdn/rednose-ui }
+      packages:
+          - { name: yui3, dir: vendor/rednose/rednose-ui-bundle/Rednose/RednoseUiBundle/Resources/yui/yui3 }
+          - { name: yui3-gallery, dir: vendor/rednose/rednose-ui-bundle/Rednose/RednoseUiBundle/Resources/yui/yui3-gallery }
+          - { name: rednose-ui, dir: vendor/rednose/rednose-ui }
+          - { name: lox, dir: src/Libbit/LoxBundle/Resources/yui }
+
+      groups:
+        - { name: rednose-ui }
 
 rms_push_notifications:
     ios:

@@ -27,7 +27,7 @@ NelmioApiDocBundle:
 
 RednoseComboHandlerBundle:
     resource: '@RednoseComboHandlerBundle/Resources/config/routing/rednose_combo_handler.xml'
-    prefix: /cdn
+    prefix: /yui
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
