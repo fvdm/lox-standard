@@ -57,18 +57,6 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testChangeLocaleRedirect()
-    {
-        $this->doLogin('test1', 'testpasswd1');
-
-        $this->client->request('POST', '/user/change-locale', array(
-            'locale'  => 'nl',
-            'context' => 'http://lox-standard.dev/settings/'
-        ));
-
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-    }
-
     /**
      * User name should always be returned, keys are optional.
      */

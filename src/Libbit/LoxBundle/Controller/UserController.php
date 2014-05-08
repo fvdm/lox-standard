@@ -61,13 +61,12 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/change-locale", name="libbit_lox_user_change_locale")
+     * @Route("/user/change-locale", name="libbit_lox_user_change_locale", )
      * @Method({"POST"})
      */
     public function changeLocaleAction()
     {
-        $locale  = $this->getRequest()->request->get('locale');
-        $context = $this->getRequest()->request->get('context');
+        $locale = $this->getRequest()->request->get('locale');
 
         $response = new Response();
 
@@ -85,10 +84,6 @@ class UserController extends Controller
 
             $user->setLocale($locale);
             $userManager->updateUser($user);
-        }
-
-        if ($context) {
-            return $this->redirect($context);
         }
 
         return $response;

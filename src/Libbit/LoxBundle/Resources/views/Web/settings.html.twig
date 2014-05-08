@@ -21,7 +21,7 @@
                 <p><button id="change-password-button" class="btn btn-link" style="border: 0; padding: 0;">{% trans %}button_change_password{% endtrans %}</button></p>
                 <hr/>
                 <h3><small>{% trans %}header_language{% endtrans %}</small></h3>
-                <p>English <a id="change-language-button" href="#">{% trans %}button_change{% endtrans %}</a></p>
+                <p>{% if app.request.locale == 'nl' %}Nederlands{% else %}English{% endif %} <a id="change-language-button" href="#">{% trans %}button_change{% endtrans %}</a></p>
                 <hr/>
                 <h3><small>{% trans %}header_email_notifications{% endtrans %}</small></h3>
                 <label id="email_add_update" class="checkbox">
@@ -117,9 +117,17 @@
                 }, function (node) {
                     var language = node.one('[name=language]:checked').get('value');
 
-                    console.log(language);
-
-                    return true;
+                    Y.io(YUI.Env.routing.change_locale, {
+                        method: 'POST',
+                        data: {
+                            'locale': language
+                        },
+                        on: {
+                            success: function (tx, r) {
+                                location.reload(true);
+                            }
+                        }
+                    });
                 });
             });
 
