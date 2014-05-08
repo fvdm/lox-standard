@@ -16,7 +16,8 @@
         "videlalvaro/php-amqplib": "dev-master",
         "vich/uploader-bundle": "dev-master",
         "incenteev/composer-parameter-handler": "~2.0",
-        "knplabs/knp-gaufrette-bundle" : "dev-master"
+        "knplabs/knp-gaufrette-bundle": "dev-master",
+        "rednose/rednose-ui": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
