@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2aae0528d1a8db97a2b42172538ec53a",
+    "hash": "c831feb865471b0bc8e0600d0202b43a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2790,12 +2790,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseComboHandlerBundle.git",
-                "reference": "a59ecca704264f32631505e4cdf4f566207db6d5"
+                "reference": "13477b818f30712db6baec74e82bc92f6629c066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseComboHandlerBundle/zipball/a59ecca704264f32631505e4cdf4f566207db6d5",
-                "reference": "a59ecca704264f32631505e4cdf4f566207db6d5",
+                "url": "https://api.github.com/repos/rednose-public/RednoseComboHandlerBundle/zipball/13477b818f30712db6baec74e82bc92f6629c066",
+                "reference": "13477b818f30712db6baec74e82bc92f6629c066",
                 "shasum": ""
             },
             "require": {
@@ -2831,7 +2831,7 @@
                 "combohandler",
                 "yui"
             ],
-            "time": "2014-05-08 18:22:09"
+            "time": "2014-05-08 19:00:54"
         },
         {
             "name": "rednose/framework-bundle",
@@ -2997,6 +2997,50 @@
                 "web"
             ],
             "time": "2014-05-08 16:54:55"
+        },
+        {
+            "name": "rednose/rednose-ui-bundle",
+            "version": "dev-master",
+            "target-dir": "Rednose/RednoseUiBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rednose-public/RednoseRednoseUiBundle.git",
+                "reference": "e318119574dbfa7cbe2969558f41b98ed17cf0db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/RednoseRednoseUiBundle/zipball/e318119574dbfa7cbe2969558f41b98ed17cf0db",
+                "reference": "e318119574dbfa7cbe2969558f41b98ed17cf0db",
+                "shasum": ""
+            },
+            "require": {
+                "rednose/rednose-ui": "dev-master",
+                "rednose/yui-bundle": "dev-master"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Rednose\\RednoseUiBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Bontje",
+                    "email": "marc@rednose.nl",
+                    "homepage": "http://www.rednose.nl"
+                }
+            ],
+            "description": "Use RedNoseUI in your Symfony application",
+            "homepage": "http://www.rednose.nl",
+            "keywords": [
+                "rednose-ui",
+                "yui"
+            ],
+            "time": "2014-05-08 19:20:11"
         },
         {
             "name": "rednose/yui-bundle",
@@ -4647,13 +4691,12 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "rednose/framework-bundle": 20,
-        "rednose/yui-bundle": 20,
         "rednose/kerberos-bundle": 20,
         "sonata-project/notification-bundle": 20,
         "videlalvaro/php-amqplib": 20,
         "vich/uploader-bundle": 20,
         "knplabs/knp-gaufrette-bundle": 20,
-        "rednose/rednose-ui": 20
+        "rednose/rednose-ui-bundle": 20
     },
     "platform": {
         "php": ">=5.3.2"
