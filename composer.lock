@@ -2784,18 +2784,18 @@
             "time": "2014-05-08 11:24:39"
         },
         {
-            "name": "rednose/cdn-bundle",
+            "name": "rednose/combo-handler-bundle",
             "version": "dev-master",
-            "target-dir": "Rednose/CdnBundle",
+            "target-dir": "Rednose/ComboHandlerBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rednose-public/RednoseCdnBundle.git",
-                "reference": "5cfc3f8e8d807e5db568c1cb4627648b0cacc00b"
+                "url": "https://github.com/rednose-public/RednoseComboHandlerBundle.git",
+                "reference": "a59ecca704264f32631505e4cdf4f566207db6d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseCdnBundle/zipball/5cfc3f8e8d807e5db568c1cb4627648b0cacc00b",
-                "reference": "5cfc3f8e8d807e5db568c1cb4627648b0cacc00b",
+                "url": "https://api.github.com/repos/rednose-public/RednoseComboHandlerBundle/zipball/a59ecca704264f32631505e4cdf4f566207db6d5",
+                "reference": "a59ecca704264f32631505e4cdf4f566207db6d5",
                 "shasum": ""
             },
             "require": {
@@ -2806,7 +2806,7 @@
             "type": "symfony-bundle",
             "autoload": {
                 "psr-0": {
-                    "Rednose\\CdnBundle": ""
+                    "Rednose\\ComboHandlerBundle": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2825,12 +2825,13 @@
                     "homepage": "http://www.rednose.nl"
                 }
             ],
-            "description": "Symfony RednoseCdnBundle",
+            "description": "Symfony RednoseComboHandlerBundle",
             "homepage": "http://www.rednose.nl",
             "keywords": [
-                "cdn"
+                "combohandler",
+                "yui"
             ],
-            "time": "2014-05-08 11:30:03"
+            "time": "2014-05-08 18:22:09"
         },
         {
             "name": "rednose/framework-bundle",
@@ -3004,17 +3005,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseYuiBundle.git",
-                "reference": "949d690ef1c60c71b0ae61926a889124358f3272"
+                "reference": "b68db942b43b92d13c7f8aa22f86e928bc53f5df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/949d690ef1c60c71b0ae61926a889124358f3272",
-                "reference": "949d690ef1c60c71b0ae61926a889124358f3272",
+                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/b68db942b43b92d13c7f8aa22f86e928bc53f5df",
+                "reference": "b68db942b43b92d13c7f8aa22f86e928bc53f5df",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "rednose/cdn-bundle": "dev-master",
+                "rednose/combo-handler-bundle": "dev-master",
                 "symfony/symfony": "~2.1"
             },
             "type": "symfony-bundle",
@@ -3044,7 +3045,7 @@
             "keywords": [
                 "yui"
             ],
-            "time": "2014-05-08 12:49:53"
+            "time": "2014-05-08 18:07:23"
         },
         {
             "name": "richsage/rms-push-notifications-bundle",
