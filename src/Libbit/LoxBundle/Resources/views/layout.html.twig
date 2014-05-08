@@ -34,6 +34,7 @@
                                 "lox-app-folder-tree",
                                 "lox-app-item-model",
                                 "lox-app-share-model",
+                                "lox-app-link-model",
                                 "model-list",
                                 "rednose-app",
                                 "rednose-tooltip"
@@ -46,6 +47,10 @@
 
                         "lox-app-share-model": {
                             "requires": ["io", "json", "lox-app-item-model", "model", "model-list", "rednose-model-spinner"]
+                        },
+
+                        "lox-app-link-model": {
+                            "requires": ["model", "rednose-model-spinner"]
                         },
 
                         "lox-app-folder-tree": {
@@ -118,6 +123,14 @@
                                 "rednose-panel",
                                 "rednose-view-nav",
                                 "view"
+                            ]
+                        },
+
+                        "lox-app-file-link-view": {
+                            "lang": ["en", "nl"],
+                            "requires": [
+                                "view",
+                                "rednose-view-nav"
                             ]
                         },
 

@@ -57,6 +57,15 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
             width   : '640px',
             height  : '400px',
 			modal   : true
+		},
+
+	    fileLinkView: {
+			type    : 'Lox.App.FileLinkView',
+			lazyload: 'lox-app-file-link-view',
+			parent  : 'itemView',
+            width   : '640px',
+            height  : '250px',
+			modal   : true
 		}
 	},
 
@@ -79,6 +88,7 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 			'*:showItemDetail': this._showDetailItem,
 			'*:upload'        : this._handleUpload,
 
+			'dropdown:select#link' : this._handleLinkFile,
 			'dropdown:select#leave': this._handleLeaveShare,
 			'dropdown:select#share': this._handleShareFolder,
 			'dropdown:select#move' : this._handleMoveCopy,
@@ -152,6 +162,21 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 					})
 				});
 			}
+		});
+	},
+
+	_handleLinkFile: function (e) {
+		var model = e.data,
+			self  = this;
+
+		model.load(function () {
+		    var link = model.get('link');
+
+		    if (link === null) {
+	            link = new Y.Lox.LinkModel();
+    		}
+
+		    self.showView('fileLinkView', { model: link });
 		});
 	},
 
@@ -351,6 +376,7 @@ Y.namespace('Lox.App').App = App;
         "lox-app-file-browser-view",
         "lox-app-folder-tree",
         "lox-app-item-model",
+        "lox-app-link-model",
         "lox-app-share-model",
         "model-list",
         "rednose-app",

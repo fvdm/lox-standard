@@ -140,6 +140,14 @@ var ItemModel = Y.Base.create('itemModel', Y.Model, [ Y.Rednose.Model.Spinner ],
 		},
 
 		/**
+		@attribute link
+		@type Lox.App.LinkModel
+		**/
+		link: {
+			value: null
+		},
+
+		/**
 		@attribute mimeType
 		@type String
 		**/
