@@ -2784,18 +2784,18 @@
             "time": "2014-05-08 11:24:39"
         },
         {
-            "name": "rednose/cdn-bundle",
+            "name": "rednose/combo-handler-bundle",
             "version": "dev-master",
-            "target-dir": "Rednose/CdnBundle",
+            "target-dir": "Rednose/ComboHandlerBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rednose-public/RednoseCdnBundle.git",
-                "reference": "5cfc3f8e8d807e5db568c1cb4627648b0cacc00b"
+                "url": "https://github.com/rednose-public/RednoseComboHandlerBundle.git",
+                "reference": "13477b818f30712db6baec74e82bc92f6629c066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseCdnBundle/zipball/5cfc3f8e8d807e5db568c1cb4627648b0cacc00b",
-                "reference": "5cfc3f8e8d807e5db568c1cb4627648b0cacc00b",
+                "url": "https://api.github.com/repos/rednose-public/RednoseComboHandlerBundle/zipball/13477b818f30712db6baec74e82bc92f6629c066",
+                "reference": "13477b818f30712db6baec74e82bc92f6629c066",
                 "shasum": ""
             },
             "require": {
@@ -2806,7 +2806,7 @@
             "type": "symfony-bundle",
             "autoload": {
                 "psr-0": {
-                    "Rednose\\CdnBundle": ""
+                    "Rednose\\ComboHandlerBundle": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2825,12 +2825,13 @@
                     "homepage": "http://www.rednose.nl"
                 }
             ],
-            "description": "Symfony RednoseCdnBundle",
+            "description": "Symfony RednoseComboHandlerBundle",
             "homepage": "http://www.rednose.nl",
             "keywords": [
-                "cdn"
+                "combohandler",
+                "yui"
             ],
-            "time": "2014-05-08 11:30:03"
+            "time": "2014-05-08 19:00:54"
         },
         {
             "name": "rednose/framework-bundle",
@@ -2839,12 +2840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseFrameworkBundle.git",
-                "reference": "940c52feaa5121c14ac9f9d51411e0a29001599d"
+                "reference": "ddaa6804e04aa2567564eab3315723e6550d1ba2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/940c52feaa5121c14ac9f9d51411e0a29001599d",
-                "reference": "940c52feaa5121c14ac9f9d51411e0a29001599d",
+                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/ddaa6804e04aa2567564eab3315723e6550d1ba2",
+                "reference": "ddaa6804e04aa2567564eab3315723e6550d1ba2",
                 "shasum": ""
             },
             "require": {
@@ -2905,7 +2906,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-08 11:45:41"
+            "time": "2014-05-08 15:33:29"
         },
         {
             "name": "rednose/kerberos-bundle",
@@ -2964,17 +2965,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseYuiBundle.git",
-                "reference": "6b182e8e2d2a6ed1d59b6ae647cf0060c7711ac9"
+                "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/6b182e8e2d2a6ed1d59b6ae647cf0060c7711ac9",
-                "reference": "6b182e8e2d2a6ed1d59b6ae647cf0060c7711ac9",
+                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/2d572f92344ba442c5adfc7d41d7f789f7448e82",
+                "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "rednose/cdn-bundle": "dev-master",
+                "rednose/combo-handler-bundle": "dev-master",
                 "symfony/symfony": "~2.1"
             },
             "type": "symfony-bundle",
@@ -3004,7 +3005,7 @@
             "keywords": [
                 "yui"
             ],
-            "time": "2014-05-08 11:50:20"
+            "time": "2014-05-08 20:39:08"
         },
         {
             "name": "richsage/rms-push-notifications-bundle",
@@ -4124,12 +4125,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "903acf9acb59d7911165406d9a771fe5aa38cad1"
+                "reference": "d51c9b3bda8083b9e61e38648fb11857a43b0007"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/903acf9acb59d7911165406d9a771fe5aa38cad1",
-                "reference": "903acf9acb59d7911165406d9a771fe5aa38cad1",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/d51c9b3bda8083b9e61e38648fb11857a43b0007",
+                "reference": "d51c9b3bda8083b9e61e38648fb11857a43b0007",
                 "shasum": ""
             },
             "require": {
@@ -4226,7 +4227,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-05 19:19:05"
+            "time": "2014-05-08 16:38:49"
         },
         {
             "name": "twig/extensions",
