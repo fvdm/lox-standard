@@ -162,6 +162,10 @@
                 <source>label_change_verification</source>
                 <target>Confirm new password</target>
             </trans-unit>
+            <trans-unit id="error_password_do_not_match">
+                <source>error_password_do_not_match</source>
+                <target>Passwords do not match</target>
+            </trans-unit>
             <trans-unit id="button_change">
                 <source>button_change</source>
                 <target>Change</target>
