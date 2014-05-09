@@ -645,7 +645,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -664,7 +664,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -2840,12 +2840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseFrameworkBundle.git",
-                "reference": "ddaa6804e04aa2567564eab3315723e6550d1ba2"
+                "reference": "88acbb40f3066680be1a1f9adca5578e1e208b03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/ddaa6804e04aa2567564eab3315723e6550d1ba2",
-                "reference": "ddaa6804e04aa2567564eab3315723e6550d1ba2",
+                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/88acbb40f3066680be1a1f9adca5578e1e208b03",
+                "reference": "88acbb40f3066680be1a1f9adca5578e1e208b03",
                 "shasum": ""
             },
             "require": {
@@ -2906,7 +2906,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-08 15:33:29"
+            "time": "2014-05-09 10:04:21"
         },
         {
             "name": "rednose/kerberos-bundle",
@@ -2964,12 +2964,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/rednose-ui.git",
-                "reference": "2536f8693d122cc15e548bc0361ec2c1cd633eb3"
+                "reference": "673146bb07412e966db9b67640fbb231d289d438"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/2536f8693d122cc15e548bc0361ec2c1cd633eb3",
-                "reference": "2536f8693d122cc15e548bc0361ec2c1cd633eb3",
+                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/673146bb07412e966db9b67640fbb231d289d438",
+                "reference": "673146bb07412e966db9b67640fbb231d289d438",
                 "shasum": ""
             },
             "type": "library",
@@ -2996,7 +2996,7 @@
                 "framework",
                 "web"
             ],
-            "time": "2014-05-08 16:54:55"
+            "time": "2014-05-09 14:23:01"
         },
         {
             "name": "rednose/rednose-ui-bundle",
@@ -3049,21 +3049,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseYuiBundle.git",
-<<<<<<< HEAD
-                "reference": "b68db942b43b92d13c7f8aa22f86e928bc53f5df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/b68db942b43b92d13c7f8aa22f86e928bc53f5df",
-                "reference": "b68db942b43b92d13c7f8aa22f86e928bc53f5df",
-=======
                 "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/2d572f92344ba442c5adfc7d41d7f789f7448e82",
                 "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82",
->>>>>>> rednose_development
                 "shasum": ""
             },
             "require": {
@@ -3098,11 +3089,7 @@
             "keywords": [
                 "yui"
             ],
-<<<<<<< HEAD
-            "time": "2014-05-08 18:07:23"
-=======
             "time": "2014-05-08 20:39:08"
->>>>>>> rednose_development
         },
         {
             "name": "richsage/rms-push-notifications-bundle",

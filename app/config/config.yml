@@ -146,14 +146,20 @@ rednose_framework:
     oauth: true
 
 rednose_yui:
-      packages:
-          - { name: yui3, dir: vendor/rednose/rednose-ui-bundle/Rednose/RednoseUiBundle/Resources/yui/yui3 }
-          - { name: yui3-gallery, dir: vendor/rednose/rednose-ui-bundle/Rednose/RednoseUiBundle/Resources/yui/yui3-gallery }
-          - { name: rednose-ui, dir: vendor/rednose/rednose-ui }
-          - { name: lox, dir: src/Libbit/LoxBundle/Resources/yui }
+#    assets:
+#        yui3:       : '@RednoseUiBundle/Resources/yui/yui3'
+#        yui3-gallery: '@RednoseUiBundle/Resources/yui/yui3-gallery'
+#        rednose-ui  : '%kernel.root_dir%/../vendor/rednose/rednose-ui'
+#        lox         : '@LibbitLoxBundle/Resources/yui'
 
-      groups:
-        - { name: rednose-ui }
+    packages:
+        - { name: yui3, dir: vendor/rednose/rednose-ui-bundle/Rednose/RednoseUiBundle/Resources/yui/yui3 }
+        - { name: yui3-gallery, dir: vendor/rednose/rednose-ui-bundle/Rednose/RednoseUiBundle/Resources/yui/yui3-gallery }
+        - { name: rednose-ui, dir: vendor/rednose/rednose-ui }
+        - { name: lox, dir: src/Libbit/LoxBundle/Resources/yui }
+
+    groups:
+      - { name: rednose-ui }
 
 rms_push_notifications:
     ios:
