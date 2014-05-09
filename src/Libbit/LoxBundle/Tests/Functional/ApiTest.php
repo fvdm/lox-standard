@@ -2,8 +2,6 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Libbit\LoxBundle\Entity\Item;
-
 class ApiTest extends WebTestCase
 {
     public function testGetMetaReturnsFile()

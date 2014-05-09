@@ -4,7 +4,7 @@ namespace Libbit\LoxBundle\Tests\Functional;
 
 class InvitationControllerTest extends WebTestCase
 {
-    public function testInventations()
+    public function testInvitations()
     {
         $user = $this->em->getRepository('Rednose\FrameworkBundle\Entity\User')->findOneByUsername('test1');
         $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByTitle('shared-dir-user2');
@@ -23,7 +23,7 @@ class InvitationControllerTest extends WebTestCase
         return $invite['id'];
     }
 
-    public function testInventationAcceptNotFound()
+    public function testInvitationAcceptNotFound()
     {
         $this->client->request('POST', $this->getRoute('libbit_lox_api_invitation_accept', array('id' => 0)));
 
@@ -31,9 +31,9 @@ class InvitationControllerTest extends WebTestCase
     }
 
     /**
-     * @depends testInventations
+     * @depends testInvitations
      */
-    public function testInventationAccept($inviteId)
+    public function testInvitationAccept($inviteId)
     {
         $this->client->request('POST', $this->getRoute('libbit_lox_api_invitation_accept', array('id' => $inviteId)));
 
@@ -43,9 +43,9 @@ class InvitationControllerTest extends WebTestCase
     }
 
     /**
-     * @depends testInventationAccept
+     * @depends testInvitationAccept
      */
-    public function testInventationRevoke($inviteId)
+    public function testInvitationRevoke($inviteId)
     {
         $this->client->request('POST', $this->getRoute('libbit_lox_api_invitation_revoke', array('id' => $inviteId)));
 

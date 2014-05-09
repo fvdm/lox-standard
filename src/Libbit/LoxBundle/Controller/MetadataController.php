@@ -152,6 +152,9 @@ class MetadataController extends Controller
         $context->setGroups($groups);
         $view->setSerializationContext($context);
 
+//        var_dump($item->getId());
+//        exit;
+//
         $view->setData($item);
         $view->setFormat('json');
 

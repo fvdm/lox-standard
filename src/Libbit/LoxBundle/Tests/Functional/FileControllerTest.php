@@ -3,7 +3,6 @@
 namespace Libbit\LoxBundle\Tests\Functional;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Libbit\LoxBundle\Entity\Item;
 
 class FileControllerTest extends WebTestCase
 {

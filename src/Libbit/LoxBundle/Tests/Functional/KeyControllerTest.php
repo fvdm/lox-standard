@@ -2,8 +2,6 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Libbit\LoxBundle\Entity\Item;
-
 class KeyControllerTest extends WebTestCase
 {
     /**
