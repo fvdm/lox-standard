@@ -13,6 +13,7 @@
         <parameter key="libbit_lox.listener.push_notification.class">Libbit\LoxBundle\EventListener\PushNotificationListener</parameter>
         <parameter key="libbit_lox.listener.item_serialize.class">Libbit\LoxBundle\EventListener\ItemSerializeListener</parameter>
         <parameter key="libbit_lox.listener.share_serialize.class">Libbit\LoxBundle\EventListener\ShareSerializeListener</parameter>
+        <parameter key="libbit_lox.listener.doctrine_listener.class">Libbit\LoxBundle\EventListener\DoctrineListener</parameter>
     </parameters>
 
     <services>
@@ -46,6 +47,10 @@
 
         <service id="libbit_lox.listener.mail_notification" class="%libbit_lox.listener.mail_notification.class%">
             <argument type="service" id="mailer" />
+            <argument type="service" id="translator" />
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="libbit_lox.item_manager" />
             <tag name="kernel.event_subscriber" />
         </service>
 
@@ -63,6 +68,12 @@
             <argument type="service" id="rednose_framework.datetime_formatter"/>
             <tag name="jms_serializer.event_subscriber" event="serializer.post_serialize" method="onPostSerialize" priority="-64" />
             <tag name="jms_serializer.event_subscriber" event="serializer.pre_serialize" method="onPreSerialize" priority="-64" />
+        </service>
+
+        <!-- Doctrine event listener -->
+        <service id="libbit_lox.listener.doctrine_listener" class="%libbit_lox.listener.doctrine_listener.class%">
+            <argument type="service" id="event_dispatcher" />
+            <tag name="doctrine.event_listener" event="postPersist" />
         </service>
     </services>
 </container>

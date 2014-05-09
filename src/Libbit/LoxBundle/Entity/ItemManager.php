@@ -73,6 +73,24 @@ class ItemManager
     }
 
     /**
+     * @param Item $item
+     *
+     * @return bool
+     */
+    public function isOrIsInsideSharedFolder(Item $item)
+    {
+        if ($item->isShared() || $item->isShare()) {
+            return true;
+        }
+
+        if ($item->getParent() === null) {
+            return false;
+        }
+
+        return $this->isOrIsInsideSharedFolder($item->getParent());
+    }
+
+    /**
      * Adds or replaces a ItemKey for the supplied Item
      *
      * @param Item $item
