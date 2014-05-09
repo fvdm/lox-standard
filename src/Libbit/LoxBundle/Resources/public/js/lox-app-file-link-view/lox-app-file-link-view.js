@@ -47,7 +47,7 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
             '</form>',
 
         datePicker:
-            '<div id="timepicker" class="input-append" style="margin-bottom: 5px;">' +
+            '<div id="datepicker" class="input-append" style="margin-bottom: 5px;">' +
                 '<input data-format="yyyy-MM-dd" type="text"></input>' +
                 '<span class="add-on">' +
                     '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>' +
@@ -193,8 +193,22 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
     },
 
     _handleLinkConfirm: function (e) {
-        var self  = this,
-            model = this.get('model');
+        var self        = this,
+            expireCheck = this.get('container').one('input#link_expire');
+            model       = this.get('model');
+
+        if (expireCheck.get('checked')) {
+            var expireDateTime = new Date(),
+                expireDate = this.get('container').one('div#datepicker').datepicker.get('date'),
+                expireTime = this.get('container').one('div#timepicker').timepicker.get('date');
+
+            expireDateTime.setTime(expireTime.getTime());
+            expireDateTime.setUTCDate(expireDate.getUTCDate());
+            expireDateTime.setUTCFullYear(expireDate.getUTCFullYear());
+            expireDateTime.setUTCMonth(expireDate.getUTCMonth());
+
+            model.set('expires', expireDateTime);
+        }
 
         model.save(function() {
             self._initInterface();
