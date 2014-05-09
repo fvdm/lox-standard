@@ -264,7 +264,10 @@ class Item
 		$this->title = $title;
 	}
 
-	public function getParent()
+    /**
+     * @return Item
+     */
+    public function getParent()
 	{
 		return $this->parent;
 	}
@@ -301,31 +304,49 @@ class Item
 		return $this->children;
 	}
 
-	public function hasChildren()
+    /**
+     * @return bool
+     */
+    public function hasChildren()
 	{
 		return $this->children !== null && $this->children->isEmpty() === false;
 	}
 
-	public function getShareOf()
+    /**
+     * @return Item
+     */
+    public function getShareOf()
 	{
 		return $this->shareOf;
 	}
 
+    /**
+     * @param Item $shareOf
+     */
 	public function setShareOf($shareOf)
 	{
 		$this->shareOf = $shareOf;
 	}
 
-	public function hasShareOf()
+    /**
+     * @return bool
+     */
+    public function hasShareOf()
 	{
 		return $this->shareOf !== null;
 	}
 
+    /**
+     * @return Item[]
+     */
 	public function getShares()
 	{
 		return $this->shares;
 	}
 
+    /**
+     * @return bool
+     */
 	public function hasShares()
 	{
 		return $this->shares->isEmpty() === false;
@@ -434,11 +455,17 @@ class Item
         );
     }
 
+    /**
+     * @return bool
+     */
     public function isShare()
     {
         return $this->hasShareOf();
     }
 
+    /**
+     * @return bool
+     */
     public function isShared()
     {
         return $this->share !== null;
