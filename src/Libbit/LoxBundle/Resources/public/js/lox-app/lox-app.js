@@ -195,7 +195,7 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 
 	_handleMoveCopy: function (e) {
 		var model     = e.data,
-			type      = (e.type === 'contextMenu:move' || e.type === 'navbar:move') ? 'move' : 'copy',
+			type      = e.type === 'dropdown:select#move' ? 'move' : 'copy',
 			modelTree = new Y.Lox.App.FolderTree(),
 			self      = this;
 
