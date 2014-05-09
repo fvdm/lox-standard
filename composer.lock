@@ -2964,12 +2964,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/rednose-ui.git",
-                "reference": "673146bb07412e966db9b67640fbb231d289d438"
+                "reference": "31eed3c843724ed167e19445c9ada809fe110a81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/673146bb07412e966db9b67640fbb231d289d438",
-                "reference": "673146bb07412e966db9b67640fbb231d289d438",
+                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/31eed3c843724ed167e19445c9ada809fe110a81",
+                "reference": "31eed3c843724ed167e19445c9ada809fe110a81",
                 "shasum": ""
             },
             "type": "library",
@@ -2996,7 +2996,7 @@
                 "framework",
                 "web"
             ],
-            "time": "2014-05-09 14:23:01"
+            "time": "2014-05-09 15:18:00"
         },
         {
             "name": "rednose/rednose-ui-bundle",
@@ -4209,12 +4209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "d51c9b3bda8083b9e61e38648fb11857a43b0007"
+                "reference": "894b4a09b55625dafc90a31acf83cf40f04f0a09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/d51c9b3bda8083b9e61e38648fb11857a43b0007",
-                "reference": "d51c9b3bda8083b9e61e38648fb11857a43b0007",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/894b4a09b55625dafc90a31acf83cf40f04f0a09",
+                "reference": "894b4a09b55625dafc90a31acf83cf40f04f0a09",
                 "shasum": ""
             },
             "require": {
@@ -4311,7 +4311,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-08 16:38:49"
+            "time": "2014-05-09 15:26:55"
         },
         {
             "name": "twig/extensions",
