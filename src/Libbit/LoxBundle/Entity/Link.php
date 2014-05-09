@@ -54,6 +54,15 @@ class Link
      */
     protected $item;
 
+    // -- Serializer Properties ------------------------------------------------
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\Accessor(getter="getUri")
+     * @Serializer\Groups({"details"})
+     */
+	protected $uri;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();

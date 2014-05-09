@@ -12,6 +12,8 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializationContext;
 
 class LinkController extends Controller
 {
@@ -95,12 +97,13 @@ class LinkController extends Controller
      * Returns a public URL to a given file.
      * <p><strong>Example JSON response</strong></p>
      * <pre>{
-     *     "url": "https://localbox.rednose.nl/public/524abf3319b4b/test%20%281%29.pdf",
+     *     "public_id": "524abf3319b4b",
+     *     "uri": "https://localbox.rednose.nl/public/524abf3319b4b/test%20%281%29.pdf"
      * }</pre>
      *
      * @param string $path The full path to the file.
      *
-     * @Post("/links/{path}", name="libbit_lox_api_post_link", defaults={"path" = ""}, requirements={"path" = ".+"})
+     * @Post("/lox_api/links/{path}", name="libbit_lox_api_post_link", defaults={"path" = ""}, requirements={"path" = ".+"})
      *
      * @ApiDoc(
      *     section="Files and folders",
@@ -113,19 +116,19 @@ class LinkController extends Controller
      */
     public function postLinkAction($path)
     {
-        return $this->handleCreateLink($path, true);
+        return $this->handleCreateLink($path);
     }
 
     // -- Protected Methods ----------------------------------------------------
 
-    protected function handleCreateLink($path, $api = false)
+    protected function handleCreateLink($path)
     {
-        $im     = $this->get('libbit_lox.item_manager');
-        $lm     = $this->get('libbit_lox.link_manager');
-        $user   = $this->get('security.context')->getToken()->getUser();
-        $router = $this->get('router');
-
-        $response = $api === true ? new JsonResponse : new Response;
+        $im       = $this->get('libbit_lox.item_manager');
+        $lm       = $this->get('libbit_lox.link_manager');
+        $user     = $this->get('security.context')->getToken()->getUser();
+        $router   = $this->get('router');
+        $handler  = $this->get('fos_rest.view_handler');
+        $response = new JsonResponse;
 
         // Check if item exists at the given path.
         $item = $im->findItemByPath($user, $path);
@@ -144,19 +147,21 @@ class LinkController extends Controller
             $link = $lm->createLink($item, $user);
         }
 
-        $url = $this->generateUrl('libbit_lox_links_path', array(
-            'path' => $link->getPublicId().'/'.$link->getItem()->getTitle(),
-        ), true);
+        $response->setStatusCode(201);
 
-        if ($api === true) {
-            $response->setStatusCode(201);
-            $response->setContent(json_encode(array(
-                'url' =>$url,
-            )));
+        $context = SerializationContext::create();
+        $context->setGroups(array('details'));
 
-            return $response;
-        }
+        $view = View::create();
+        $view->setSerializationContext($context);
 
-        return $this->redirect($url);
+        $view->setData($link);
+        $view->setFormat('json');
+
+        $response->setContent(
+            $handler->handle($view)->getContent()
+        );
+
+        return $response;
     }
 }

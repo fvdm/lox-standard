@@ -44,6 +44,7 @@ var ItemModel = Y.Base.create('itemModel', Y.Model, [ Y.Rednose.Model.Spinner ],
             isDir        : o.is_dir,
             modifiedAt   : o.modifiedAt,
             dateFormatted: o.date_formatted,
+            link         : o.link,
             path         : o.path,
             mimeType     : o.mime_type,
             size         : o.size,
@@ -88,6 +89,14 @@ var ItemModel = Y.Base.create('itemModel', Y.Model, [ Y.Rednose.Model.Spinner ],
                 }
             });
         }
+    },
+
+    _setLink: function(value) {
+        if (Y.instanceOf(value, Y.Lox.LinkModel) === false) {
+            value = new Y.Lox.LinkModel(value);
+        }
+
+        return value;
     }
 }, {
 	ATTRS: {
@@ -144,7 +153,8 @@ var ItemModel = Y.Base.create('itemModel', Y.Model, [ Y.Rednose.Model.Spinner ],
 		@type Lox.App.LinkModel
 		**/
 		link: {
-			value: null
+			value: null,
+			setter: '_setLink'
 		},
 
 		/**
