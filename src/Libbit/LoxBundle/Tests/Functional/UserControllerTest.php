@@ -37,6 +37,18 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
+    public function testChangePassword2()
+    {
+        $this->doLogin('test1', 'testpasswd2');
+
+        $this->client->request('POST', '/user/change-password', array(
+            'current_password'  => 'testpasswd2',
+            'new_password'      => 'testpasswd1'
+        ));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
     public function testChangeLocaleBadRequest()
     {
         $this->doLogin('test1', 'testpasswd1');

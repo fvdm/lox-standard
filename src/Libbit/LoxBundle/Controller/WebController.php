@@ -68,10 +68,16 @@ class WebController extends Controller
      */
     public function settingsAction()
     {
-        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $user  = $this->getUser();
+        $prefs = $em->getRepository('Libbit\LoxBundle\Entity\UserPreferences')->findOneBy(array('user' => $user));
+
+        $email = $prefs && $prefs->getEmail();
 
         return $this->render('LibbitLoxBundle:Web:settings.html.twig', array(
-            'user' => $user,
+            'user'  => $user,
+            'email' => $email
         ));
     }
 

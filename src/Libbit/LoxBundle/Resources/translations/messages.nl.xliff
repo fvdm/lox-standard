@@ -142,9 +142,29 @@
                 <source>header_settings</source>
                 <target>Persoonlijke instellingen</target>
             </trans-unit>
+            <trans-unit id="title_change_password">
+                <source>title_change_password</source>
+                <target>Uw wachtwoord wijzigen</target>
+            </trans-unit>
+            <trans-unit id="label_current_password">
+                <source>label_current_password</source>
+                <target>Huidige wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="label_new_password">
+                <source>label_new_password</source>
+                <target>Nieuw wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="label_change_verification">
+                <source>label_change_verification</source>
+                <target>Bevestig wachtwoord</target>
+            </trans-unit>
             <trans-unit id="button_change_password">
                 <source>button_change_password</source>
                 <target>Wachtwoord wijzigen</target>
+            </trans-unit>
+            <trans-unit id="error_password_do_not_match">
+                <source>error_password_do_not_match</source>
+                <target>Wachtwoorden komen niet overeen</target>
             </trans-unit>
             <trans-unit id="button_change">
                 <source>button_change</source>
@@ -162,18 +182,50 @@
                 <source>header_language</source>
                 <target>Taal</target>
             </trans-unit>
+            <trans-unit id="title_language">
+                <source>title_language</source>
+                <target>Taal wijzigen</target>
+            </trans-unit>
+            <trans-unit id="button_language">
+                <source>button_language</source>
+                <target>Toepassen</target>
+            </trans-unit>
             <trans-unit id="header_email_notifications">
                 <source>header_email_notifications</source>
                 <target>E-mail notificaties</target>
             </trans-unit>
             <trans-unit id="email_notifications_invites">
                 <source>email_notifications_invites</source>
-                <target>Bij het ​​ontvangen van een nieuwe uitnodigen</target>
+                <target>Bij het ​​ontvangen van een nieuwe uitnodiging</target>
             </trans-unit>
             <trans-unit id="email_notifications_add_update">
                 <source>email_notifications_add_update</source>
                 <target>Wanneer een gedeeld bestand wordt toegevoegd of geactualiseerd</target>
             </trans-unit>
+            <trans-unit id="notification_accept_invite">
+                <source>You joined the folder %item%</source>
+                <target>De map %item% is nu met je gedeeld.</target>
+            </trans-unit>
+            <trans-unit id="notification_create_link">
+                <source>You created a link to the file %item%</source>
+                <target>Een link naar het bestand %item% is aangemaakt.</target>
+            </trans-unit>
+            <trans-unit id="notification_receive_invite">
+                <source>%user% invited you to the folder %item%</source>
+                <target>%user% wil de map %item% met je delen.</target>
+            </trans-unit>
+            <trans-unit id="notification_send_invite">
+                <source>You invited %user% to join the folder %item%</source>
+                <target>Je hebt %user% uitgenodigd voor de map %item%.</target>
+            </trans-unit>
+            <!--<trans-unit id="mail_notification_subject">-->
+                <!--<source>File %item% has been changed in one of your shared folders</source>-->
+                <!--<target></target>-->
+            <!--</trans-unit>-->
+            <!--<trans-unit id="mail_notification_body">-->
+                <!--<source>%actor% has changed the file "%item%", in the following folder: %path%.</source>-->
+                <!--<target></target>-->
+            <!--</trans-unit>-->
         </body>
     </file>
 </xliff>

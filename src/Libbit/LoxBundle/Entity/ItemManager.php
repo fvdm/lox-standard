@@ -6,17 +6,36 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\SecurityContext;
 use Rednose\FrameworkBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 
 class ItemManager
 {
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
-    protected $repository;
-
-    protected $keyRepository;
-
+    /**
+     * @var SecurityContext
+     */
     protected $securityContext;
 
+    /**
+     * @var EntityRepository
+     */
+    protected $repository;
+
+    /**
+     * @var EntityRepository
+     */
+    protected $keyRepository;
+
+    /**
+     * Constructor.
+     *
+     * @param EntityManager   $em
+     * @param SecurityContext $securityContext
+     */
     public function __construct(EntityManager $em, SecurityContext $securityContext)
     {
         $this->em              = $em;
@@ -25,6 +44,15 @@ class ItemManager
         $this->securityContext = $securityContext;
     }
 
+    /**
+     * Creates a required root item for a given user.
+     *
+     * @param User $user
+     *
+     * @return Item
+     *
+     * @throws \RuntimeException
+     */
     public function createRootItem(User $user)
     {
         if ($this->getRootItem($user) !== null) {
@@ -40,6 +68,14 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Creates a new item.
+     *
+     * @param User $user
+     * @param Item $parent
+     *
+     * @return Item
+     */
     public function createItem(User $user, $parent = null)
     {
         $item = new Item;
@@ -54,6 +90,14 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Creates a new file item.
+     *
+     * @param User $user
+     * @param Item $parent
+     *
+     * @return Item
+     */
     public function createFileItem(User $user, $parent = null)
     {
         $item = $this->createItem($user, $parent);
@@ -63,6 +107,14 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Creates a folder item.
+     *
+     * @param User $user
+     * @param Item $parent
+     *
+     * @return Item
+     */
     public function createFolderItem(User $user, $parent = null)
     {
         $item = $this->createItem($user, $parent);
@@ -70,6 +122,24 @@ class ItemManager
         $item->setIsDir(true);
 
         return $item;
+    }
+
+    /**
+     * @param Item $item
+     *
+     * @return bool
+     */
+    public function isOrIsInsideSharedFolder(Item $item)
+    {
+        if ($item->isShared() || $item->isShare()) {
+            return true;
+        }
+
+        if ($item->getParent() === null) {
+            return false;
+        }
+
+        return $this->isOrIsInsideSharedFolder($item->getParent());
     }
 
     /**
@@ -150,7 +220,13 @@ class ItemManager
         return true;
     }
 
-    public function saveItem($item, $silent = false)
+    /**
+     * Persists an item to the backend.
+     *
+     * @param Item $item
+     * @param bool $silent
+     */
+    public function saveItem(Item $item, $silent = false)
     {
         $this->em->persist($item);
 
@@ -159,6 +235,12 @@ class ItemManager
         }
     }
 
+    /**
+     * Removes an item from the backend.
+     *
+     * @param Item $item
+     * @param bool $silent
+     */
     public function removeItem($item, $silent = false)
     {
         $this->em->remove($item);
@@ -168,7 +250,16 @@ class ItemManager
         }
     }
 
-    public function moveItem($item, $parent, $title = null)
+    /**
+     * Moves an item to another parent.
+     *
+     * @param Item   $item
+     * @param Item   $parent
+     * @param string $title
+     *
+     * @return Item
+     */
+    public function moveItem(Item $item, Item $parent, $title = null)
     {
         // If the item is a share, move to the share instead.
         if ($parent->hasShareOf() === true) {
@@ -186,7 +277,18 @@ class ItemManager
         return $item;
     }
 
-    public function copyItem($item, $parent, $title = null)
+    /**
+     * Copies an item to another parent.
+     *
+     * @param Item   $item
+     * @param Item   $parent
+     * @param string $title
+     *
+     * @return Item
+     *
+     * @throws \RuntimeException
+     */
+    public function copyItem(Item $item, Item $parent, $title = null)
     {
         // If the item is a share, move the share instead.
         if ($parent->hasShareOf() === true) {
@@ -211,6 +313,16 @@ class ItemManager
         return $copy;
     }
 
+    /**
+     * Create a share item for a given folder item.
+     *
+     * @param Item $item
+     * @param User $user
+     *
+     * @return Item
+     *
+     * @throws \RuntimeException
+     */
     public function createFolderShare(Item $item, User $user)
     {
         // Confirm that the item is a folder.
@@ -235,6 +347,12 @@ class ItemManager
         return $share;
     }
 
+    /**
+     * Removes a share item.
+     *
+     * @param Item $share
+     * @param User $user
+     */
     public function removeFolderShare(Item $share, User $user)
     {
         $item = $this->repository->findOneBy(array(
@@ -246,6 +364,13 @@ class ItemManager
         $this->em->flush();
     }
 
+    /**
+     * Returns all joined folders for a given user.
+     *
+     * @param User $user
+     *
+     * @return Item[]
+     */
     public function findJoinsByUser(User $user)
     {
         $qb = $this->em->createQueryBuilder();
@@ -261,6 +386,15 @@ class ItemManager
             ->getResult();
     }
 
+    /**
+     * Generates a (virtual) path to a given item for a given user.
+     *
+     * @param User $user
+     * @param Item $item
+     * @param bool $trim
+     *
+     * @return string
+     */
     public function getPathForUser(User $user, Item $item, $trim = false)
     {
         $node = $this->getShareFromFolder($user, $item);
@@ -302,6 +436,14 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Returns the item within a (virtual) path for a given user.
+     *
+     * @param User   $user
+     * @param string $path
+     *
+     * @return Item
+     */
     public function findItemByPath(User $user, $path)
     {
         $parts = preg_split('@/@', $path, null, PREG_SPLIT_NO_EMPTY);
@@ -319,6 +461,13 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Returns the root item for a given user.
+     *
+     * @param User $user
+     *
+     * @return Item
+     */
     public function getRootItem(User $user)
     {
         $item = $this->em->createQueryBuilder()
@@ -334,7 +483,14 @@ class ItemManager
         return $item;
     }
 
-    public function getHash($item)
+    /**
+     * Creates a unique has for a given folder state.
+     *
+     * @param Item $item
+     *
+     * @return string
+     */
+    public function getHash(Item $item)
     {
         $hash = md5(serialize($item->getModifiedAt()));
 
@@ -348,10 +504,10 @@ class ItemManager
     /**
      * Returns a child with a given name.
      *
-     * If this is a share, it will return the shared item instance and never the source share.
+     * If the item is a share, it will return the source share.
      *
      * @param string $name
-     * @param Item $parent
+     * @param Item   $parent
      *
      * @return Item
      */
@@ -371,10 +527,17 @@ class ItemManager
             return null;
         }
 
-        return $item;
+        return $item->hasShareOf() ? $item->getShareOf() : $item;
     }
 
-    protected function createCopy($item)
+    /**
+     * Returns a copy of a given item.
+     *
+     * @param Item $item
+     *
+     * @return Item
+     */
+    protected function createCopy(Item $item)
     {
         $copy = clone $item;
 

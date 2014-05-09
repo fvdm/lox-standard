@@ -49,10 +49,19 @@ class Link
     protected $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Libbit\LoxBundle\Entity\Item", inversedBy="links")
+     * @ORM\OneToOne(targetEntity="Libbit\LoxBundle\Entity\Item", inversedBy="link")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $item;
+
+    // -- Serializer Properties ------------------------------------------------
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\Accessor(getter="getUri")
+     * @Serializer\Groups({"details"})
+     */
+	protected $uri;
 
     public function __construct()
     {
@@ -102,6 +111,11 @@ class Link
 
     public function getUri()
     {
-        return $this->publicId.'/'.$this->item->getTitle();
+        return $this->publicId . '/' . $this->item->getTitle();
+    }
+
+    public function __toString()
+    {
+        return $this->getUri();
     }
 }

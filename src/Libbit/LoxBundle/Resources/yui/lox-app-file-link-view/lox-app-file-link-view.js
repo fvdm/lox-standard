@@ -23,17 +23,13 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
 
     templates: {
         main:
+            '<div>&nbsp;</div>' +
             '<form class="form-horizontal">' +
                 '<fieldset>' +
                     '<div class="control-group">' +
                         '<label for="public_url" class="control-label">{public_url}</label>' +
                         '<div class="controls">' +
-                            '<input type="password" id="public_url" disabled="disabled" class="input-block-level">' +
-                        '</div>'+
-                    '</div>' +
-                    '<div class="control-group">' +
-                        '<div class="controls">' +
-                            '<button class="btn" disabled="disabled"><i class="icon-book"></i>&nbsp;{copy_clipboard}</button>' +
+                            '<textarea type="text" id="public_url" onkeydown="return false;" class="input-block-level"></textarea>' +
                         '</div>'+
                     '</div>' +
                     '<div class="control-group">' +
@@ -93,6 +89,7 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
 
 	// -- Lifecycle Methods ----------------------------------------------------
 
+
 	/**
 	@method initializer
 	@protected
@@ -107,10 +104,13 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
             public_url        : strings.public_url,
             link_expires      : strings.link_expires,
             link_expires_date : strings.link_expires_date,
-            copy_clipboard    : strings.copy_clipboard
         }));
 
 	    container.one('input#link_expire').on(['change', 'keyup'], this._handeExpireChecked, this);
+
+	    this.on({
+	        'fileLinkView:buttonConfirm': this._handleLinkConfirm
+        }, this);
 	},
 
 	/**
@@ -133,17 +133,34 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
 	        strings = strings = this.get('strings');
 
         this.getButton('cancel').set('text', strings.button_cancel);
-        this.getButton('confirm').set('text', strings.button_confirm);
+        this.getButton('confirm').set('text', strings.button_create);
         this.getButton('remove').set('text', strings.button_remove);
 
-        if (model.isNew() === false) {
-            this.getButton('remove').show();
-        }
-	},
+        this._initInterface();
+    },
 
     // -- Protected Event Handlers ----------------------------------------------
 
-    _handeExpireChecked: function(e) {
+    _initInterface: function (e) {
+        var model    = this.get('model'),
+            strings  = this.get('strings'),
+            urlInput = this.get('container').one('textarea#public_url');
+
+        if (model.get('public_id') === null) {
+            urlInput.set('value', strings.no_url);
+        } else {
+            urlInput.set(
+                'value',
+                YUI.Env.routing.link_path + '/' +
+                model.get('uri')
+            );
+
+            this.getButton('confirm').set('text', strings.button_confirm);
+            this.getButton('remove').show();
+        }
+    },
+
+    _handeExpireChecked: function (e) {
         var checkbox  = e.currentTarget,
             container = checkbox.get('parentNode'),
 
@@ -153,8 +170,8 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
                 .get('parentNode').one('.controls');
 
         if (checkbox.get('checked')) {
-            var datePicker    = Y.Node.create(this.templates.datePicker),
-                timePicker    = Y.Node.create(this.templates.timePicker);
+            var datePicker = Y.Node.create(this.templates.datePicker),
+                timePicker = Y.Node.create(this.templates.timePicker);
 
             if (dateContainer.all('*').size() === 0) {
                 dateContainer.append(datePicker);
@@ -169,6 +186,15 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
         } else {
             dateContainer.get('parentNode').hide();
         }
+    },
+
+    _handleLinkConfirm: function (e) {
+        var self  = this,
+            model = this.get('model');
+
+        model.save(function() {
+            self._initInterface();
+        });
     }
 
 },{

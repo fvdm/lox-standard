@@ -3049,12 +3049,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseYuiBundle.git",
+<<<<<<< HEAD
                 "reference": "b68db942b43b92d13c7f8aa22f86e928bc53f5df"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/b68db942b43b92d13c7f8aa22f86e928bc53f5df",
                 "reference": "b68db942b43b92d13c7f8aa22f86e928bc53f5df",
+=======
+                "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/2d572f92344ba442c5adfc7d41d7f789f7448e82",
+                "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82",
+>>>>>>> rednose_development
                 "shasum": ""
             },
             "require": {
@@ -3089,7 +3098,11 @@
             "keywords": [
                 "yui"
             ],
+<<<<<<< HEAD
             "time": "2014-05-08 18:07:23"
+=======
+            "time": "2014-05-08 20:39:08"
+>>>>>>> rednose_development
         },
         {
             "name": "richsage/rms-push-notifications-bundle",

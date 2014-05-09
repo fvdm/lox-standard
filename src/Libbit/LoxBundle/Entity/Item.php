@@ -128,7 +128,7 @@ class Item
 	protected $path;
 
     /**
-     * Wether this folder is shared with others.
+     * Whether this folder is shared with others.
      *
      * @Serializer\Type("boolean")
      * @Serializer\Accessor(getter="isShared")
@@ -219,22 +219,34 @@ class Item
         $this->revisions = new ArrayCollection;
 	}
 
-	public function getId()
+    /**
+     * @return integer
+     */
+    public function getId()
 	{
 		return $this->id;
 	}
 
-	public function getIsDir()
+    /**
+     * @return bool
+     */
+    public function getIsDir()
 	{
 		return $this->isDir;
 	}
 
-	public function setOwner($owner)
+    /**
+     * @param User $owner
+     */
+    public function setOwner($owner)
 	{
 		$this->owner = $owner;
 	}
 
-	public function getOwner()
+    /**
+     * @return User
+     */
+    public function getOwner()
 	{
 		return $this->owner;
 	}
@@ -264,7 +276,10 @@ class Item
 		$this->title = $title;
 	}
 
-	public function getParent()
+    /**
+     * @return Item
+     */
+    public function getParent()
 	{
 		return $this->parent;
 	}
@@ -301,31 +316,49 @@ class Item
 		return $this->children;
 	}
 
-	public function hasChildren()
+    /**
+     * @return bool
+     */
+    public function hasChildren()
 	{
 		return $this->children !== null && $this->children->isEmpty() === false;
 	}
 
-	public function getShareOf()
+    /**
+     * @return Item
+     */
+    public function getShareOf()
 	{
 		return $this->shareOf;
 	}
 
+    /**
+     * @param Item $shareOf
+     */
 	public function setShareOf($shareOf)
 	{
 		$this->shareOf = $shareOf;
 	}
 
-	public function hasShareOf()
+    /**
+     * @return bool
+     */
+    public function hasShareOf()
 	{
 		return $this->shareOf !== null;
 	}
 
+    /**
+     * @return Item[]
+     */
 	public function getShares()
 	{
 		return $this->shares;
 	}
 
+    /**
+     * @return bool
+     */
 	public function hasShares()
 	{
 		return $this->shares->isEmpty() === false;
@@ -383,6 +416,29 @@ class Item
         return null;
     }
 
+    /**
+     * Returns a share pointer of this share for a given user.
+     *
+     * @param User $user
+     *
+     * @return Item
+     */
+    public function getShareForUser(User $user)
+    {
+        // Return null if this item is a share pointer itself, or if it isn't shared at all
+        if ($this->isShare() || !$this->isShared()) {
+            return null;
+        }
+
+        foreach ($this->getShares() as $pointer) {
+            if ($pointer->getOwner()->isEqualTo($user)) {
+                return $pointer;
+            }
+        }
+
+        return null;
+    }
+
     // -- Lifecycle Callback Methods -------------------------------------------
 
     /**
@@ -434,11 +490,17 @@ class Item
         );
     }
 
+    /**
+     * @return bool
+     */
     public function isShare()
     {
         return $this->hasShareOf();
     }
 
+    /**
+     * @return bool
+     */
     public function isShared()
     {
         return $this->share !== null;

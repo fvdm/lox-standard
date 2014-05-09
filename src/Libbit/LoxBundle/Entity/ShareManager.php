@@ -201,11 +201,33 @@ class ShareManager
         return $this->em->getRepository('Libbit\LoxBundle\Entity\Invitation')->findOneById($id);
     }
 
+    /**
+     * Returns an invitation for a given source share and a given user.
+     *
+     * @param User $user
+     * @param Item $item
+     *
+     * @return Invitation
+     *
+     * @throws \InvalidArgumentException
+     */
     public function findInvitationByItem(User $user, Item $item)
     {
+        // Item should be a source share and not a pointer.
+        if ($item->hasShareOf()) {
+            throw new \InvalidArgumentException();
+        }
+
+        $pointer = $item->getShareForUser($user);
+
+        if (!$pointer) {
+            throw new \InvalidArgumentException();
+        }
+
+        // Get the invite by specifying the item: This is the shared folder pointer and not the folder itself.
         return $this->em->getRepository('Libbit\LoxBundle\Entity\Invitation')->findOneBy(array(
             'receiver' => $user,
-            'item'     => $item,
+            'item'     => $pointer,
         ));
     }
 

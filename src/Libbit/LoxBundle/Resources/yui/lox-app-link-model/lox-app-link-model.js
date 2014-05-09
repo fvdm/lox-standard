@@ -26,9 +26,46 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
 	@protected
 	**/
     sync: function (action, options, callback) {
+        if (action === 'create') {
+            Y.io(YUI.Env.routing.link_create + '/' + this.get('path'), {
+                method: 'GET',
+                on : {
+                    success : function (tx, r) {
+                        callback(null, r.responseText && Y.JSON.parse(r.responseText));
+                    },
+                    failure : function (tx, r) {
+                        callback(r.responseText && Y.JSON.parse(r.responseText));
+                    }
+                }
+            });
+        }
     }
+
 }, {
 	ATTRS: {
+		/**
+		@attribute public_id
+		@type String
+		**/
+		public_id: {
+			value: null
+		},
+
+		/**
+		@attribute path
+		@type String
+		**/
+		path: {
+			value: null
+		},
+
+		/**
+		@attribute uri
+		@type String
+		**/
+		uri: {
+			value: null
+		},
 
 	}
 });
