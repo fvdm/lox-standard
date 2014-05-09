@@ -202,6 +202,22 @@
                 <source>email_notifications_add_update</source>
                 <target>When a shared file is added or updated</target>
             </trans-unit>
+            <trans-unit id="notification_accept_invite">
+                <source>You joined the folder %item%</source>
+                <target>You joined the folder %item%.</target>
+            </trans-unit>
+            <trans-unit id="notification_create_link">
+                <source>You created a link to the file %item%</source>
+                <target>You created a link to the file %item%.</target>
+            </trans-unit>
+            <trans-unit id="notification_receive_invite">
+                <source>%user% invited you to the folder %item%</source>
+                <target>%user% invited you to the folder %item%.</target>
+            </trans-unit>
+            <trans-unit id="notification_send_invite">
+                <source>You invited %user% to join the folder %item%</source>
+                <target>You invited %user% to join the folder %item%.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -71,7 +71,7 @@ swiftmailer:
     encryption: ssl
     auth_mode: login
     spool:     { type: memory }
-    sender_address: "%mailer_sender%"
+    sender_address: localbox@libbit.eu
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
@@ -93,22 +93,6 @@ sonata_block:
         sonata.block.service.text:
         sonata.block.service.action:
         sonata.block.service.rss:
-
-#sonata_notification:
-#    backend: sonata.notification.backend.doctrine
-#
-#    queues:
-#        - { queue: catchall, default: true }
-#
-#    backends:
-#       rabbitmq:
-#           exchange:     amq.direct
-#           connection:
-#               host:     localhost
-#               user:     guest
-#               pass:     guest
-#               port:     5672
-#               vhost:    /
 
 fos_rest:
     param_fetcher_listener: true
