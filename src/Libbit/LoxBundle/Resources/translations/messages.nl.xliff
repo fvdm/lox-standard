@@ -168,7 +168,7 @@
             </trans-unit>
             <trans-unit id="email_notifications_invites">
                 <source>email_notifications_invites</source>
-                <target>Bij het ​​ontvangen van een nieuwe uitnodigen</target>
+                <target>Bij het ​​ontvangen van een nieuwe uitnodiging</target>
             </trans-unit>
             <trans-unit id="email_notifications_add_update">
                 <source>email_notifications_add_update</source>
@@ -176,19 +176,19 @@
             </trans-unit>
             <trans-unit id="notification_accept_invite">
                 <source>You joined the folder %item%</source>
-                <target></target>
+                <target>De map %item% is nu met je gedeeld.</target>
             </trans-unit>
             <trans-unit id="notification_create_link">
                 <source>You created a link to the file %item%</source>
-                <target></target>
+                <target>Een link naar het bestand %item% is aangemaakt.</target>
             </trans-unit>
             <trans-unit id="notification_receive_invite">
                 <source>%user% invited you to the folder %item%</source>
-                <target></target>
+                <target>%user% wil de map %item% met je delen.</target>
             </trans-unit>
             <trans-unit id="notification_send_invite">
                 <source>You invited %user% to join the folder %item%</source>
-                <target></target>
+                <target>Je hebt %user% uitgenodigd voor de map %item%.</target>
             </trans-unit>
         </body>
     </file>
