@@ -146,6 +146,22 @@
                 <source>button_change_password</source>
                 <target>Change password</target>
             </trans-unit>
+            <trans-unit id="title_change_password">
+                <source>title_change_password</source>
+                <target>Change your current password</target>
+            </trans-unit>
+            <trans-unit id="label_current_password">
+                <source>label_current_password</source>
+                <target>Curent password</target>
+            </trans-unit>
+            <trans-unit id="label_new_password">
+                <source>label_new_password</source>
+                <target>New password</target>
+            </trans-unit>
+            <trans-unit id="label_change_verification">
+                <source>label_change_verification</source>
+                <target>Confirm new password</target>
+            </trans-unit>
             <trans-unit id="button_change">
                 <source>button_change</source>
                 <target>Change</target>
@@ -161,6 +177,14 @@
             <trans-unit id="header_language">
                 <source>header_language</source>
                 <target>Language</target>
+            </trans-unit>
+            <trans-unit id="title_language">
+                <source>title_language</source>
+                <target>Change language</target>
+            </trans-unit>
+            <trans-unit id="button_language">
+                <source>button_language</source>
+                <target>Apply</target>
             </trans-unit>
             <trans-unit id="header_email_notifications">
                 <source>header_email_notifications</source>

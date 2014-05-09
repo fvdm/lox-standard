@@ -33,15 +33,15 @@
 
     <script>
         YUI().use('lox-page', 'rednose-dialog', function (Y) {
-            var TXT_CHANGE_PASSWORD_TITLE  = 'Change your password',
-                TXT_CHANGE_PASSWORD_BUTTON = 'Change password',
-                TXT_LABEL_CURRENT_PASSWORD = 'Current password',
-                TXT_LABEL_NEW_PASSWORD     = 'New password',
-                TXT_LABEL_VERIFICATION     = 'Verification',
-                TXT_PASSWORDS_DO_NOT_MATCH = 'Passwords do not match';
+            var TXT_CHANGE_PASSWORD_TITLE  = '{% trans %}title_change_password{% endtrans %}',
+                TXT_CHANGE_PASSWORD_BUTTON = '{% trans %}button_change_password{% endtrans %}',
+                TXT_LABEL_CURRENT_PASSWORD = '{% trans %}label_current_password{% endtrans %}',
+                TXT_LABEL_NEW_PASSWORD     = '{% trans %}label_new_password{% endtrans %}',
+                TXT_LABEL_VERIFICATION     = '{% trans %}label_change_verification{% endtrans %}',
+                TXT_PASSWORDS_DO_NOT_MATCH = '{% trans %}error_password_do_not_match{% endtrans %}';
 
-            var TXT_CHANGE_LANGUAGE_TITLE  = 'Choose a language',
-                TXT_CHANGE_LANGUAGE_BUTTON = 'Change language';
+            var TXT_CHANGE_LANGUAGE_TITLE  = '{% trans %}title_language{% endtrans %}',
+                TXT_CHANGE_LANGUAGE_BUTTON = '{% trans %}button_language{% endtrans %}';
 
             new Y.Lox.Page().render();
 

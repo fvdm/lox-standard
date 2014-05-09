@@ -142,6 +142,22 @@
                 <source>header_settings</source>
                 <target>Persoonlijke instellingen</target>
             </trans-unit>
+            <trans-unit id="title_change_password">
+                <source>title_change_password</source>
+                <target>Uw wachtwoord wijzigen</target>
+            </trans-unit>
+            <trans-unit id="label_current_password">
+                <source>label_current_password</source>
+                <target>Huidige wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="label_new_password">
+                <source>label_new_password</source>
+                <target>Nieuw wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="label_change_verification">
+                <source>label_change_verification</source>
+                <target>Bevestig wachtwoord</target>
+            </trans-unit>
             <trans-unit id="button_change_password">
                 <source>button_change_password</source>
                 <target>Wachtwoord wijzigen</target>
@@ -161,6 +177,14 @@
             <trans-unit id="header_language">
                 <source>header_language</source>
                 <target>Taal</target>
+            </trans-unit>
+            <trans-unit id="title_language">
+                <source>title_language</source>
+                <target>Taal wijzigen</target>
+            </trans-unit>
+            <trans-unit id="button_language">
+                <source>button_language</source>
+                <target>Toepassen</target>
             </trans-unit>
             <trans-unit id="header_email_notifications">
                 <source>header_email_notifications</source>
