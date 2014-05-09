@@ -39,8 +39,13 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
                 }
             });
         }
-    }
+    },
 
+    _setDate: function (value) {
+        var date = new Date(value);
+
+        return date;
+    }
 }, {
 	ATTRS: {
 		/**
@@ -67,6 +72,14 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
 			value: null
 		},
 
+		/**
+		@attribute public_id
+		@type DateTime
+		**/
+		expires: {
+			value: null,
+			setter: '_setDate'
+		},
 	}
 });
 

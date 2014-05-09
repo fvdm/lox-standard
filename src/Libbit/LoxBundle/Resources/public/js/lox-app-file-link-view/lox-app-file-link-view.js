@@ -171,7 +171,8 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
 
         if (checkbox.get('checked')) {
             var datePicker = Y.Node.create(this.templates.datePicker),
-                timePicker = Y.Node.create(this.templates.timePicker);
+                timePicker = Y.Node.create(this.templates.timePicker),
+                expireDate = this.get('model').get('expires');
 
             if (dateContainer.all('*').size() === 0) {
                 dateContainer.append(datePicker);
@@ -180,6 +181,9 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
 
                 datePicker.plug(Y.Rednose.Plugin.Datepicker);
                 timePicker.plug(Y.Rednose.Plugin.Timepicker);
+
+                datePicker.datepicker.set('date', expireDate);
+                timePicker.timepicker.set('date', expireDate);
             }
 
             dateContainer.get('parentNode').show();

@@ -49,6 +49,13 @@ class Link
     protected $createdAt;
 
     /**
+     * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Groups({"details"})
+     */
+    protected $expires;
+
+    /**
      * @ORM\OneToOne(targetEntity="Libbit\LoxBundle\Entity\Item", inversedBy="link")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="CASCADE")
      */

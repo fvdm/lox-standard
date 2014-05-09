@@ -1,6 +1,6 @@
 YUI.add('lang/lox-app-file-browser-view_nl', function (Y) {
 
-    Y.Intl.add('lox-app-file-browser-view', 'nl' , {
+    Y.Intl.add('lox-app-file-browser-view', 'nl', {
         welcome_title: "Welkom bij LocalBox",
         welcome_body: "Met LocalBox kun je veilig en eenvoudig bestanden bewaren, waar en wanneer je maar wilt.",
         welcome_subtitle_upload: "Uploaden",
@@ -18,4 +18,5 @@ YUI.add('lang/lox-app-file-browser-view_nl', function (Y) {
         title_renamed: "Hernoemd",
         item_renamed: "Bestand of map succesvol hernoemd."
     });
+
 });
