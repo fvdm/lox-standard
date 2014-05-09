@@ -25,14 +25,14 @@
                 <hr/>
                 <h3><small>{% trans %}header_email_notifications{% endtrans %}</small></h3>
                 <label id="email_add_update" class="checkbox">
-                    <input type="checkbox"> {% trans %}email_notifications_add_update{% endtrans %}
+                    <input type="checkbox" {% if email %}checked{% endif %}> {% trans %}email_notifications_add_update{% endtrans %}
                 </label>
             </section>
         </div>
     </div>
 
     <script>
-        YUI().use('lox-page', 'rednose-dialog', function (Y) {
+        YUI().use('lox-page', 'rednose-dialog', 'rednose-app', function (Y) {
             var TXT_CHANGE_PASSWORD_TITLE  = 'Change your password',
                 TXT_CHANGE_PASSWORD_BUTTON = 'Change password',
                 TXT_LABEL_CURRENT_PASSWORD = 'Current password',
@@ -149,7 +149,22 @@
             emailAddUpdateButton.on('change', function (e) {
                 var value = e.target.get('checked');
 
-                console.log(value);
+                Y.Rednose.App.showSpinner();
+
+                Y.io(YUI.Env.routing.change_preferences, {
+                    method: 'POST',
+                    data: {
+                        'email': value
+                    },
+                    on: {
+                        success: function (tx, r) {
+                            Y.Rednose.App.hideSpinner();
+                        },
+                        failure: function (tx, r) {
+                            Y.Rednose.App.hideSpinner();
+                        }
+                    }
+                });
             });
         });
     </script>

@@ -2,6 +2,7 @@
 
 namespace Libbit\LoxBundle\Controller;
 
+use Libbit\LoxBundle\Entity\UserPreferences;
 use Rednose\FrameworkBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -84,6 +85,42 @@ class UserController extends Controller
 
             $user->setLocale($locale);
             $userManager->updateUser($user);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @Route("/user/change-preferences", name="libbit_lox_user_change_preferences", )
+     * @Method({"POST"})
+     */
+    public function changePreferencesAction()
+    {
+        $email = $this->getRequest()->request->get('email');
+
+        $response = new Response();
+
+        if ($email === null) {
+            $response->setStatusCode(Codes::HTTP_BAD_REQUEST);
+
+            return $response;
+        }
+
+        $user = $this->getUser();
+
+        if ($user instanceof UserInterface) {
+            $em = $this->getDoctrine()->getManager();
+
+            $prefs = $em->getRepository('Libbit\LoxBundle\Entity\UserPreferences')->findOneBy(array('user' => $user));
+
+            if ($prefs === null) {
+                $prefs = new UserPreferences($user);
+            }
+
+            $prefs->setEmail($email === 'true');
+
+            $em->persist($prefs);
+            $em->flush();
         }
 
         return $response;

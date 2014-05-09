@@ -128,7 +128,7 @@ class Item
 	protected $path;
 
     /**
-     * Wether this folder is shared with others.
+     * Whether this folder is shared with others.
      *
      * @Serializer\Type("boolean")
      * @Serializer\Accessor(getter="isShared")
