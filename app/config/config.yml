@@ -135,10 +135,7 @@ rednose_yui:
 
 rednose_combo_handler:
     roots:
-        yui3:         "bundles/rednoserednoseui/js/yui3/build"
-        yui3-gallery: "bundles/rednoserednoseui/js/yui3-gallery/build"
-        rednose-ui:   "yui/rednose-ui/build"
-        lox:          "bundles/libbitlox/js"
+        combo: "bundles/rednoseyui"
 
 rms_push_notifications:
     ios:
