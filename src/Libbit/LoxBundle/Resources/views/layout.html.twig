@@ -2,197 +2,192 @@
 <head>
     <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/libbitlox/icons/favicon.png') }}" />
 
-    <link href="{{ asset('yui/rednose-ui/build/rednose-bootstrap/rednose-bootstrap-min.css') }}"rel="stylesheet" />
-    <link href="{{ asset('yui/rednose-ui/build/rednose-ui/rednose-ui-min.css') }}"rel="stylesheet" />
+    <link href="{{ asset('yui/rednose-ui/rednose-bootstrap/rednose-bootstrap-min.css') }}"rel="stylesheet" />
+    <link href="{{ asset('yui/rednose-ui/rednose-ui/rednose-ui-min.css') }}"rel="stylesheet" />
 
     <link href="{{ asset('bundles/libbitlox/css/lox.css') }}" rel="stylesheet" />
     <link href="{{ asset('bundles/libbitlox/css/icons.css') }}" rel="stylesheet" />
 
-    <script type="text/javascript" src="{{ asset('yui/yui3/build/yui/yui-min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rednoseyui/3.9.0/yui/yui-min.js') }}"></script>
 
     {# Include the module loaders #}
-    {#<script type="text/javascript" src="{{ asset('yui/rednose-ui/build/rednose-loader/rednose-loader-min.js') }}"></script>#}
+    <script type="text/javascript" src="{{ asset('yui/rednose-ui/rednose-loader/rednose-loader-min.js') }}"></script>
 
     <script>
         {% set baseUrl = app.request.baseUrl|replace({'/app_dev.php': ''}) %}
 
-        YUI({
-            combine: true,
-            base: '{{ baseUrl }}/yui/yui3/build/',
-            comboBase: '{{ baseUrl }}/yui/combo?',
-            root: 'yui3/build/'
-        }).use('node', function (Y) {
-            console.log(Y);
-        });
-        {#&#123;&#35; Register the loaders as part of the YUI core &#35;&#125;#}
-        {#YUI.Env.core.push('rednose-loader');#}
+        {# Register the loaders as part of the YUI core #}
+        YUI.Env.core.push('rednose-loader');
 
-        {#&#123;&#35; Include the YUI config object with path and URL mappings &#35;&#125;#}
-        {#{{ rednose_yui_config() }}#}
+        {# Include the YUI config object with path and URL mappings #}
+        {{ rednose_yui_config() }}
 
-        {#YUI.GlobalConfig = {#}
-            {#lang: '{{ app.request.locale }}',#}
-            {#groups: {#}
-                {#lox: {#}
-                    {#filter: 'raw',#}
-                    {#base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/yui/lox/',#}
-                    {#modules: {#}
-                        {#"lox-app": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": [#}
-                                {#"lox-app-file-browser-view",#}
-                                {#"lox-app-folder-tree",#}
-                                {#"lox-app-item-model",#}
-                                {#"lox-app-share-model",#}
-                                {#"lox-app-link-model",#}
-                                {#"model-list",#}
-                                {#"rednose-app",#}
-                                {#"rednose-tooltip"#}
-                            {#]#}
-                        {#},#}
+        YUI.GlobalConfig = {
+            lang: '{{ app.request.locale }}',
+            groups: {
+                lox: {
+                    combine: {% if app.debug %}false{% else %}true{% endif %},
+                    filter: 'raw',
+                    base: '{{ asset('bundles/libbitlox/js') }}/',
+                    comboBase: '{{ path('rednose_combo_handler_combo', { root: 'lox' }) }}?',
+                    root: '',
+                    modules: {
+                        "lox-app": {
+                            "lang": ["en", "nl"],
+                            "requires": [
+                                "lox-app-file-browser-view",
+                                "lox-app-folder-tree",
+                                "lox-app-item-model",
+                                "lox-app-share-model",
+                                "lox-app-link-model",
+                                "model-list",
+                                "rednose-app",
+                                "rednose-tooltip"
+                            ]
+                        },
 
-                        {#"lox-app-item-model": {#}
-                            {#"requires": ["model", "rednose-model-spinner"]#}
-                        {#},#}
+                        "lox-app-item-model": {
+                            "requires": ["model", "rednose-model-spinner"]
+                        },
 
-                        {#"lox-app-share-model": {#}
-                            {#"requires": ["io", "json", "lox-app-item-model", "model", "model-list", "rednose-model-spinner"]#}
-                        {#},#}
+                        "lox-app-share-model": {
+                            "requires": ["io", "json", "lox-app-item-model", "model", "model-list", "rednose-model-spinner"]
+                        },
 
-                        {#"lox-app-link-model": {#}
-                            {#"requires": ["model", "rednose-model-spinner"]#}
-                        {#},#}
+                        "lox-app-link-model": {
+                            "requires": ["model", "rednose-model-spinner"]
+                        },
 
-                        {#"lox-app-folder-tree": {#}
-                            {#"requires": ["rednose-model-tree", "rednose-model-spinner"]#}
-                        {#},#}
+                        "lox-app-folder-tree": {
+                            "requires": ["rednose-model-tree", "rednose-model-spinner"]
+                        },
 
-                        {#"lox-app-file-browser-view": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": [#}
-                                {#"lox-item-view",#}
-                                {#"lox-item-list-view",#}
-                                {#"rednose-dialog",#}
-                                {#"rednose-notifier",#}
-                                {#"view"#}
-                            {#]#}
-                        {#},#}
+                        "lox-app-file-browser-view": {
+                            "lang": ["en", "nl"],
+                            "requires": [
+                                "lox-item-view",
+                                "lox-item-list-view",
+                                "rednose-dialog",
+                                "rednose-notifier",
+                                "view"
+                            ]
+                        },
 
-                        {#"lox-item-view": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": [#}
-                                {#"gallery-affix",#}
-                                {#"lox-app-item-model",#}
-                                {#"lox-item-menu",#}
-                                {#"rednose-app",#}
-                                {#"rednose-breadcrumb",#}
-                                {#"rednose-dialog",#}
-                                {#"rednose-dropdown-plugin",#}
-                                {#"rednose-notifier",#}
-                                {#"view"#}
-                            {#]#}
-                        {#},#}
+                        "lox-item-view": {
+                            "lang": ["en", "nl"],
+                            "requires": [
+                                "gallery-affix",
+                                "lox-app-item-model",
+                                "lox-item-menu",
+                                "rednose-app",
+                                "rednose-breadcrumb",
+                                "rednose-dialog",
+                                "rednose-dropdown-plugin",
+                                "rednose-notifier",
+                                "view"
+                            ]
+                        },
 
-                        {#"lox-item-list-view": {#}
-                            {#"requires": [#}
-                                {#"lox-item-menu",#}
-                                {#"rednose-datatable-select",#}
-                                {#"rednose-dropdown-plugin",#}
-                                {#"rednose-formatter",#}
-                                {#"view"#}
-                            {#]#}
-                        {#},#}
+                        "lox-item-list-view": {
+                            "requires": [
+                                "lox-item-menu",
+                                "rednose-datatable-select",
+                                "rednose-dropdown-plugin",
+                                "rednose-formatter",
+                                "view"
+                            ]
+                        },
 
-                        {#"lox-item-menu": {#}
-                            {#"lang": ["en", "nl"]#}
-                        {#},#}
+                        "lox-item-menu": {
+                            "lang": ["en", "nl"]
+                        },
 
-                        {#"lox-app-file-detail-view": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": ["rednose-view-nav", "view"]#}
-                        {#},#}
+                        "lox-app-file-detail-view": {
+                            "lang": ["en", "nl"],
+                            "requires": ["rednose-view-nav", "view"]
+                        },
 
-                        {#"lox-app-file-upload-view": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": ["rednose-formatter", "uploader", "view"]#}
-                        {#},#}
+                        "lox-app-file-upload-view": {
+                            "lang": ["en", "nl"],
+                            "requires": ["rednose-formatter", "uploader", "view"]
+                        },
 
-                        {#"lox-app-file-movecopy-view": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": ["lox-app-folder-tree", "rednose-treeview", "rednose-view-nav", "view"]#}
-                        {#},#}
+                        "lox-app-file-movecopy-view": {
+                            "lang": ["en", "nl"],
+                            "requires": ["lox-app-folder-tree", "rednose-treeview", "rednose-view-nav", "view"]
+                        },
 
-                        {#"lox-app-folder-share-view": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": [#}
-                                {#"autocomplete",#}
-                                {#"autocomplete-filters",#}
-                                {#"autocomplete-highlighters",#}
-                                {#"lox-app-share-model",#}
-                                {#"rednose-datatable",#}
-                                {#"rednose-panel",#}
-                                {#"rednose-view-nav",#}
-                                {#"view"#}
-                            {#]#}
-                        {#},#}
+                        "lox-app-folder-share-view": {
+                            "lang": ["en", "nl"],
+                            "requires": [
+                                "autocomplete",
+                                "autocomplete-filters",
+                                "autocomplete-highlighters",
+                                "lox-app-share-model",
+                                "rednose-datatable",
+                                "rednose-panel",
+                                "rednose-view-nav",
+                                "view"
+                            ]
+                        },
 
-                        {#"lox-app-file-link-view": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": [#}
-                                {#"view",#}
-                                {#"rednose-view-nav",#}
-                                {#"rednose-datetimepicker"#}
-                            {#]#}
-                        {#},#}
+                        "lox-app-file-link-view": {
+                            "lang": ["en", "nl"],
+                            "requires": [
+                                "view",
+                                "rednose-view-nav",
+                                "rednose-datetimepicker"
+                            ]
+                        },
 
-                        {#"lox-page": {#}
-                            {#"lang": ["en", "nl"],#}
-                            {#"requires": [#}
-                                {#"node",#}
-                                {#"base",#}
-                                {#"gallery-affix",#}
-                                {#"io",#}
-                                {#"json",#}
-                                {#"rednose-dropdown-plugin",#}
-                                {#"view"#}
-                            {#]#}
-                        {#}#}
-                    {#}#}
-                {#}#}
-            {#}#}
-        {#};#}
+                        "lox-page": {
+                            "lang": ["en", "nl"],
+                            "requires": [
+                                "node",
+                                "base",
+                                "gallery-affix",
+                                "io",
+                                "json",
+                                "rednose-dropdown-plugin",
+                                "view"
+                            ]
+                        }
+                    }
+                }
+            }
+        };
 
-        {#&#123;&#35; Pass environment variables to the YUI core &#35;&#125;#}
-        {#YUI.Env.routing = {#}
-            {#logout                  : '{{ path('_rednose_framework_security_logout') }}',#}
-            {#settings                : '{{ path('libbit_lox_settings') }}',#}
-            {#home                    : '{{ path('libbit_lox_home') }}',#}
-            {#item                    : '{{ path('libbit_lox_item') }}',#}
-            {#upload                  : '{{ path('libbit_lox_item_upload') }}',#}
-            {#metadata                : '{{ path('libbit_lox_get_meta_path') }}',#}
-            {#tree                    : '{{ path('libbit_lox_get_tree') }}',#}
-            {#operations_copy         : '{{ path('libbit_lox_post_operations_copy') }}',#}
-            {#operations_create_folder: '{{ path('libbit_lox_post_operations_create_folder') }}',#}
-            {#operations_delete       : '{{ path('libbit_lox_post_operations_delete') }}',#}
-            {#operations_move         : '{{ path('libbit_lox_post_operations_move') }}',#}
-            {#link_create             : '{{ path('libbit_lox_links_create') }}',#}
-            {#link_remove             : '{{ path('libbit_lox_links_remove') }}',#}
-            {#link_path               : '{{ url('libbit_lox_links_path') }}',#}
-            {#notifications           : '{{ path('libbit_lox_get_notifications') }}',#}
-            {#notifications_unread    : '{{ path('libbit_lox_get_notifications_unread') }}',#}
-            {#notifications_mark_read : '{{ path('libbit_lox_post_notifications_mark_read') }}',#}
-            {#shares_identities       : '{{ path('libbit_lox_identities') }}',#}
-            {#shares_base             : '{{ path('libbit_lox_shares_get') }}',#}
-            {#change_password         : '{{ path('libbit_lox_user_change_password') }}',#}
-            {#change_locale           : '{{ path('libbit_lox_user_change_locale') }}',#}
-            {#change_preferences      : '{{ path('libbit_lox_user_change_preferences') }}'#}
-        {#};#}
+        {# Pass environment variables to the YUI core #}
+        YUI.Env.routing = {
+            logout                  : '{{ path('_rednose_framework_security_logout') }}',
+            settings                : '{{ path('libbit_lox_settings') }}',
+            home                    : '{{ path('libbit_lox_home') }}',
+            item                    : '{{ path('libbit_lox_item') }}',
+            upload                  : '{{ path('libbit_lox_item_upload') }}',
+            metadata                : '{{ path('libbit_lox_get_meta_path') }}',
+            tree                    : '{{ path('libbit_lox_get_tree') }}',
+            operations_copy         : '{{ path('libbit_lox_post_operations_copy') }}',
+            operations_create_folder: '{{ path('libbit_lox_post_operations_create_folder') }}',
+            operations_delete       : '{{ path('libbit_lox_post_operations_delete') }}',
+            operations_move         : '{{ path('libbit_lox_post_operations_move') }}',
+            link_create             : '{{ path('libbit_lox_links_create') }}',
+            link_remove             : '{{ path('libbit_lox_links_remove') }}',
+            link_path               : '{{ url('libbit_lox_links_path') }}',
+            notifications           : '{{ path('libbit_lox_get_notifications') }}',
+            notifications_unread    : '{{ path('libbit_lox_get_notifications_unread') }}',
+            notifications_mark_read : '{{ path('libbit_lox_post_notifications_mark_read') }}',
+            shares_identities       : '{{ path('libbit_lox_identities') }}',
+            shares_base             : '{{ path('libbit_lox_shares_get') }}',
+            change_password         : '{{ path('libbit_lox_user_change_password') }}',
+            change_locale           : '{{ path('libbit_lox_user_change_locale') }}',
+            change_preferences      : '{{ path('libbit_lox_user_change_preferences') }}'
+        };
 
-        {#YUI.Env.user = {#}
-            {#name: '{{ app.user.bestname }}'#}
-        {#};#}
+        YUI.Env.user = {
+            name: '{{ app.user.bestname }}'
+        };
 
-        {#YUI.Env.token = '{{ csrf_provider.generateCsrfToken('web') }}';#}
+        YUI.Env.token = '{{ csrf_provider.generateCsrfToken('web') }}';
     </script>
 </head>
 
