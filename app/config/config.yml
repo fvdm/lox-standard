@@ -123,19 +123,22 @@ vich_uploader:
 rednose_framework:
     oauth: true
 
-rednose_yui:
-#    assets:
-#        rednose-ui  : '%kernel.root_dir%/../vendor/rednose/rednose-ui'
-
-    packages:
-        - { name: rednose-ui, dir: vendor/rednose/rednose-ui }
-
-    groups:
-      - { name: rednose-ui }
-
 rednose_combo_handler:
     roots:
-        combo: "bundles/rednoseyui"
+        yui:        "bundles/rednoseyui"
+        rednose-ui: "yui/rednose-ui"
+        lox:        "bundles/libbitlox/js"
+
+rednose_yui:
+    version   : 3.9.0
+    gallery   : 2014.04.02-20-01
+    combo_root: yui
+
+    assets:
+        rednose-ui: '%kernel.root_dir%/../vendor/rednose/rednose-ui/build'
+
+    combo_groups:
+        - "rednose-ui"
 
 rms_push_notifications:
     ios:
