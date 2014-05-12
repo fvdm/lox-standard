@@ -54,13 +54,13 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
-        <service id="libbit_lox.listener.push_notification" class="%libbit_lox.listener.push_notification.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="security.context"/>
-            <argument type="service" id="sonata.notification.backend"/>
-            <argument type="service" id="translator"/>
-            <tag name="kernel.event_subscriber" />
-        </service>
+        <!--<service id="libbit_lox.listener.push_notification" class="%libbit_lox.listener.push_notification.class%">-->
+            <!--<argument type="service" id="doctrine.orm.entity_manager" />-->
+            <!--<argument type="service" id="security.context"/>-->
+            <!--<argument type="service" id="sonata.notification.backend"/>-->
+            <!--<argument type="service" id="translator"/>-->
+            <!--<tag name="kernel.event_subscriber" />-->
+        <!--</service>-->
 
         <service id="libbit_lox.listener.item_serialize" class="%libbit_lox.listener.item_serialize.class%">
             <argument type="service" id="libbit_lox.item_manager" />

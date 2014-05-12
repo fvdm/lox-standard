@@ -26,7 +26,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new FOS\RestBundle\FOSRestBundle(),
 
-            new Sonata\NotificationBundle\SonataNotificationBundle(),
+//            new Sonata\NotificationBundle\SonataNotificationBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
 
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
