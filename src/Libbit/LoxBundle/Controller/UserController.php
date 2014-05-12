@@ -129,6 +129,11 @@ class UserController extends Controller
     // -- API Methods ----------------------------------------------------------
 
     /**
+     * @param string $username Optional username, returns info about the given user.
+     *     If no name is specified, info about the current user will be returned.
+     *
+     * @return JsonResponse
+     *
      * Returns info about the user.
      * <p><strong>Example JSON response</strong></p>
      * <pre>{
@@ -137,7 +142,7 @@ class UserController extends Controller
      *     "private_key": "iBEgIJGRSiUCYR...GMgEOjEFg"
      * }</pre>
      *
-     * @Route("/lox_api/user", name="libbit_lox_api_get_user")
+     * @Route("/lox_api/user/{username}", name="libbit_lox_api_get_user", defaults={"username"=null})
      * @Method({"GET"})
      *
      * @ApiDoc(
@@ -148,9 +153,13 @@ class UserController extends Controller
      *     }
      * )
      */
-    public function getUserAction()
+    public function getUserAction($username = null)
     {
-        $user = $this->getUser();
+        if ($username) {
+            $user = $this->get('rednose_framework.user_manager')->loadUserByUsername($username);
+        } else {
+            $user = $this->getUser();
+        }
 
         if (!$user instanceof User) {
             throw new \RuntimeException();
@@ -166,8 +175,10 @@ class UserController extends Controller
             $data['public_key'] = $keyPair->getPublicKey();
         }
 
-        if ($keyPair->getPrivateKey()) {
-            $data['private_key'] = $keyPair->getPrivateKey();
+        if (!$username) {
+            if ($keyPair->getPrivateKey()) {
+                $data['private_key'] = $keyPair->getPrivateKey();
+            }
         }
 
         return new JsonResponse($data);
