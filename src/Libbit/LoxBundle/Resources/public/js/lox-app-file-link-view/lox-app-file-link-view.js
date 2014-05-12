@@ -323,7 +323,9 @@ Y.namespace('Lox.App').FileLinkView = FileLinkView;
         "view",
         "rednose-view-nav",
         "rednose-datetimepicker",
-        "rednose-notifier"
+        "rednose-notifier",
+        "rednose-dialog",
+        "lox-app-item-model"
     ],
     "lang": [
         "en",
