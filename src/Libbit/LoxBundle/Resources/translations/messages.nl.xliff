@@ -26,26 +26,6 @@
                 <source>tooltip_remove_link</source>
                 <target>Link verwijderen</target>
             </trans-unit>
-            <trans-unit id="notification_title_deleted">
-                <source>notification_title_deleted</source>
-                <target>Verwijderd</target>
-            </trans-unit>
-            <trans-unit id="notification_body_deleted">
-                <source>notification_body_deleted</source>
-                <target>Link succesvol verwijderd.</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_title">
-                <source>confirmation_delete_link_title</source>
-                <target>Link naar het bestand "{title}" verwijderen?</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_btn">
-                <source>confirmation_delete_link_btn</source>
-                <target>Verwijderen</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_body">
-                <source>confirmation_delete_link_body</source>
-                <target>Weet je zeker dat je de link wilt verwijderen?</target>
-            </trans-unit>
             <trans-unit id="header_sharing">
                 <source>header_sharing</source>
                 <target>Delen</target>

@@ -121,7 +121,8 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
 	    container.one('input#link_expire').on(['change', 'keyup'], this._handeExpireChecked, this);
 
 	    this.on({
-	        'fileLinkView:buttonConfirm': this._handleLinkConfirm
+	        'fileLinkView:buttonConfirm': this._handleLinkConfirm,
+	        'fileLinkView:buttonRemove': this._handleLinkRemove
         }, this);
 	},
 
@@ -158,8 +159,9 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
             container = this.get('container'),
             strings   = this.get('strings'),
 
-            urlInput  = container.one('textarea#public_url'),
-            openLink  = container.one('button#open_link');
+            urlInput   = container.one('textarea#public_url'),
+            openLink   = container.one('button#open_link'),
+            linkExpire = container.one('input#link_expire');
 
         if (model.get('public_id') === null) {
             urlInput.set('value', strings.no_url);
@@ -171,6 +173,13 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
             );
 
             openLink.removeAttribute('disabled');
+
+            if (model.get('expires')) {
+                linkExpire.set('checked', true);
+            } else {
+                linkExpire.set('checked', false);
+            }
+            this._handeExpireChecked({ currentTarget: linkExpire });
 
             this.getButton('confirm').set('text', strings.button_confirm);
             this.getButton('remove').show();
@@ -193,12 +202,13 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
 
             if (dateContainer.all('*').size() === 0) {
                 dateContainer.append(datePicker);
-
                 dateContainer.append(timePicker);
 
                 datePicker.plug(Y.Rednose.Plugin.Datepicker);
                 timePicker.plug(Y.Rednose.Plugin.Timepicker);
+            }
 
+            if (expireDate && datePicker.datepicker) {
                 datePicker.datepicker.set('date', expireDate);
                 timePicker.timepicker.set('date', expireDate);
             }
@@ -219,12 +229,16 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
                 expireDate = this.get('container').one('div#datepicker').datepicker.get('date'),
                 expireTime = this.get('container').one('div#timepicker').timepicker.get('date');
 
-            expireDateTime.setTime(expireTime.getTime());
+            expireDateTime.setUTCMinutes(expireDate.getUTCMinutes());
+            expireDateTime.setUTCHours(expireDate.getUTCHours());
+            expireDateTime.setUTCSeconds(expireDate.getUTCSeconds());
             expireDateTime.setUTCDate(expireDate.getUTCDate());
             expireDateTime.setUTCFullYear(expireDate.getUTCFullYear());
             expireDateTime.setUTCMonth(expireDate.getUTCMonth());
 
             model.set('expires', expireDateTime);
+        } else {
+            model.set('expires', null);
         }
 
         model.save(function() {
@@ -232,12 +246,43 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
         });
     },
 
-    _handleOpenClicked: function() {
+    _handleLinkRemove: function (e) {
+        var self    = this;
+            model   = this.get('model');
+            dialog  = new Y.Rednose.Dialog();
+            strings = this.get('strings'),
+            title   = model.get('path');
+
+        title = title.substring(title.lastIndexOf('/') + 1);
+
+        dialog.confirm({
+            title  : Y.Lang.sub(strings.confirmation_delete_link_title, { title: title }),
+            text   : strings.confirmation_delete_link_body,
+            confirm: strings.confirmation_delete_link_btn,
+            type   : 'warning'
+        }, function () {
+            model.destroy({ remove: true }, function() {
+                dialog.destroy();
+
+                self.fire('buttonClose');
+
+                Y.Rednose.Notifier.notify({
+                    title: strings.notification_title_deleted,
+                    text : strings.notification_body_deleted,
+                    type : 'success'
+                });
+            });
+        });
+    },
+
+    _handleOpenClicked: function(e) {
         var model = this.get('model'),
             route = YUI.Env.routing.link_path + '/' +
                     model.get('uri')
 
         window.open(route, '_blank');
+
+        e.preventDefault();
     }
 
 },{

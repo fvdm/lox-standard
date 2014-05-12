@@ -2,6 +2,7 @@
 
 namespace Libbit\LoxBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -24,7 +25,7 @@ class LinkManager
         $this->repository = $em->getRepository('Libbit\LoxBundle\Entity\Link');
     }
 
-    public function createLink(Item $item, User $user)
+    public function createLink(Item $item, User $user, DateTime $expires = null)
     {
         if ($item instanceof Item === false) {
             throw new \InvalidArgumentException('No item provided.');
@@ -42,6 +43,7 @@ class LinkManager
 
         $link->setItem($item);
         $link->setOwner($user);
+        $link->setExpires($expires);
 
         $this->em->persist($link);
         $this->em->flush();
@@ -50,6 +52,22 @@ class LinkManager
         $this->dispatcher->dispatch(Events::LINK_CREATED, $event);
 
         return $link;
+    }
+
+    public function updateLink($id, User $user, DateTime $expires = null)
+    {
+        if ($link = $this->repository->findOneById($id)) {
+            $link->setExpires($expires);
+
+            if ($link->getOwner()->getId() === $user->getId()) {
+                $this->em->persist($link);
+                $this->em->flush();
+            }
+
+            return $link;
+        }
+
+        return false;
     }
 
     public function removeLink(Link $link)

@@ -26,9 +26,20 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
 	@protected
 	**/
     sync: function (action, options, callback) {
-        if (action === 'create') {
-            Y.io(YUI.Env.routing.link_create + '/' + this.get('path'), {
-                method: 'GET',
+        if (action === 'create' || action === 'update' || action === 'delete') {
+            var route = '';
+
+            if (action === 'create') {
+                route = YUI.Env.routing.link_create + '/' + this.get('path');
+            } else if (action === 'delete') {
+                route = YUI.Env.routing.link_remove + '/' + this.get('public_id');
+            } else {
+                route = YUI.Env.routing.link_update + '/' + this.get('id');
+            }
+
+            Y.io(route, {
+                method: 'POST',
+                data: Y.JSON.stringify(this.getPersistentAttrs()),
                 on : {
                     success : function (tx, r) {
                         callback(null, r.responseText && Y.JSON.parse(r.responseText));
@@ -41,8 +52,27 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
         }
     },
 
+    /**
+     * @returns {Object}
+     */
+    getPersistentAttrs: function () {
+        var attrs = this.getAttrs([
+            'expires'
+        ]);
+
+        attrs['token'] = YUI.Env.token;
+
+        return attrs;
+    },
+
     _setDate: function (value) {
-        var date = new Date(value);
+        var date;
+
+        if (!value) {
+            return null;
+        }
+
+        date = new Date(value);
 
         return date;
     }

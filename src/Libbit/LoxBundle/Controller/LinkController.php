@@ -2,6 +2,7 @@
 
 namespace Libbit\LoxBundle\Controller;
 
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
+use Libbit\LoxBundle\Entity\Link;
 
 class LinkController extends Controller
 {
@@ -51,11 +53,37 @@ class LinkController extends Controller
 
     /**
      * @Route("/links/create/{path}", name="libbit_lox_links_create", defaults={"path": null}, requirements={"path" = ".+"})
-     * @Method({"GET"})
+     * @Method({"POST"})
      */
     public function createAction($path)
     {
         return $this->handleCreateLink($path);
+    }
+
+    /**
+     * @Route("/links/update/{id}", defaults={"id": null}, name="libbit_lox_links_update")
+     * @Method({"POST"})
+     */
+    public function updateAction($id)
+    {
+        $request = $this->get('request');
+        $lm      = $this->get('libbit_lox.link_manager');
+        $user    = $this->get('security.context')->getToken()->getUser();
+        $date    = null;
+        $data    = $request->getContent();
+        $data    = json_decode($data);
+
+        if (isset($data->expires) && $data->expires) {
+            $date = new DateTime($data->expires);
+        }
+
+        if ($link = $lm->updateLink($id, $user, $date)) {
+            $response = new Response('', 200);
+
+            return $this->getView($link, $response);
+        }
+
+        return new Response('Error', 500);
     }
 
     /**
@@ -65,10 +93,12 @@ class LinkController extends Controller
     public function removeAction($id)
     {
         $request  = $this->get('request');
-        $token    = $request->request->get('token');
         $user     = $this->get('security.context')->getToken()->getUser();
         $lm       = $this->get('libbit_lox.link_manager');
         $response = new Response();
+
+        $token    = json_decode($request->getContent());
+        $token    = $token->token;
 
         if ($this->get('form.csrf_provider')->isCsrfTokenValid('web', $token) === false) {
             $response = new Response();
@@ -127,8 +157,15 @@ class LinkController extends Controller
         $lm       = $this->get('libbit_lox.link_manager');
         $user     = $this->get('security.context')->getToken()->getUser();
         $router   = $this->get('router');
-        $handler  = $this->get('fos_rest.view_handler');
         $response = new JsonResponse;
+
+        $date     = null;
+        $data     = $this->get('request')->getContent();
+        $data     = json_decode($data);
+
+        if (isset($data->expires) && $data->expires) {
+            $date = new DateTime($data->expires);
+        }
 
         // Check if item exists at the given path.
         $item = $im->findItemByPath($user, $path);
@@ -144,10 +181,17 @@ class LinkController extends Controller
 
         // Create the link.
         if ($link === null) {
-            $link = $lm->createLink($item, $user);
+            $link = $lm->createLink($item, $user, $date);
         }
 
         $response->setStatusCode(201);
+
+        return $this->getView($link, $response);
+    }
+
+    protected function getView(Link $link, Response $response)
+    {
+        $handler  = $this->get('fos_rest.view_handler');
 
         $context = SerializationContext::create();
         $context->setGroups(array('details'));

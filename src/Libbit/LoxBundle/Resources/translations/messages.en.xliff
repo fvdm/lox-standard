@@ -26,26 +26,6 @@
                 <source>tooltip_remove_link</source>
                 <target>Remove link</target>
             </trans-unit>
-            <trans-unit id="notification_title_deleted">
-                <source>notification_title_deleted</source>
-                <target>Deleted</target>
-            </trans-unit>
-            <trans-unit id="notification_body_deleted">
-                <source>notification_body_deleted</source>
-                <target>Link successfully deleted.</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_title">
-                <source>confirmation_delete_link_title</source>
-                <target>Delete link to file "{title}"?</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_btn">
-                <source>confirmation_delete_link_btn</source>
-                <target>Delete</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_body">
-                <source>confirmation_delete_link_body</source>
-                <target>The link will be removed. Are you sure you want to delete it?</target>
-            </trans-unit>
             <trans-unit id="header_sharing">
                 <source>header_sharing</source>
                 <target>Sharing</target>

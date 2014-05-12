@@ -174,6 +174,8 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 
 		    if (!link) {
 	            link = new Y.Lox.LinkModel({ path: model.get('path') });
+    		} else {
+    		    link.set('path', model.get('path'));
     		}
 
 		    self.showView('fileLinkView', { model: link });

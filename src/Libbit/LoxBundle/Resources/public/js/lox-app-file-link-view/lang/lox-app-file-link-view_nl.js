@@ -10,7 +10,14 @@ YUI.add('lang/lox-app-file-link-view_nl', function (Y) {
         link_expires_date: "Vervaldatum",
         public_url: "Publieke url",
         no_url: "Dit bestand heeft nog geen publieke url, klik op 'Aanmaken' om een link te creëren",
-        open_link: "Link openen"
+        open_link: "Link openen",
+
+        confirmation_delete_link_title: "Link naar het bestand \"{title}\" verwijderen?",
+        confirmation_delete_link_btn: "Verwijderen",
+        confirmation_delete_link_body: "Weet je zeker dat je de link wilt verwijderen?",
+
+        notification_title_deleted: "Verwijderd",
+        notification_body_deleted: "Link succesvol verwijderd."
     });
 
 });

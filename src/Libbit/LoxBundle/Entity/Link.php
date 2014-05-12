@@ -49,7 +49,7 @@ class Link
     protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      *
      * @Serializer\Groups({"details"})
      */
@@ -100,6 +100,17 @@ class Link
     {
         return $this->publicId;
     }
+
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+
+    public function setExpires(\DateTime $expires = null)
+    {
+        $this->expires = $expires;
+    }
+
 
     public function setPublicId($publicId)
     {
