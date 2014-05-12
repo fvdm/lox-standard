@@ -33,6 +33,11 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
                         '</div>'+
                     '</div>' +
                     '<div class="control-group">' +
+                        '<div class="controls">' +
+                            '<button class="btn" id="open_link" disabled="disabled"><i class="icon-circle-arrow-up"></i>&nbsp;{open_link}</button>' +
+                        '</div>'+
+                    '</div>' +
+                    '<div class="control-group">' +
                         '<label for="link_expire" class="control-label">{link_expires}</label>' +
                         '<div class="controls">' +
                             '<input type="checkbox" id="link_expire">' +
@@ -87,6 +92,12 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
         }
     },
 
+    events: {
+        'button#open_link': {
+            click: '_handleOpenClicked'
+        }
+    },
+
 	// -- Lifecycle Methods ----------------------------------------------------
 
 
@@ -104,6 +115,7 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
             public_url        : strings.public_url,
             link_expires      : strings.link_expires,
             link_expires_date : strings.link_expires_date,
+            open_link         : strings.open_link
         }));
 
 	    container.one('input#link_expire').on(['change', 'keyup'], this._handeExpireChecked, this);
@@ -142,9 +154,12 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
     // -- Protected Event Handlers ----------------------------------------------
 
     _initInterface: function (e) {
-        var model    = this.get('model'),
-            strings  = this.get('strings'),
-            urlInput = this.get('container').one('textarea#public_url');
+        var model     = this.get('model'),
+            container = this.get('container'),
+            strings   = this.get('strings'),
+
+            urlInput  = container.one('textarea#public_url'),
+            openLink  = container.one('button#open_link');
 
         if (model.get('public_id') === null) {
             urlInput.set('value', strings.no_url);
@@ -154,6 +169,8 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
                 YUI.Env.routing.link_path + '/' +
                 model.get('uri')
             );
+
+            openLink.removeAttribute('disabled');
 
             this.getButton('confirm').set('text', strings.button_confirm);
             this.getButton('remove').show();
@@ -213,6 +230,14 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
         model.save(function() {
             self._initInterface();
         });
+    },
+
+    _handleOpenClicked: function() {
+        var model = this.get('model'),
+            route = YUI.Env.routing.link_path + '/' +
+                    model.get('uri')
+
+        window.open(route, '_blank');
     }
 
 },{

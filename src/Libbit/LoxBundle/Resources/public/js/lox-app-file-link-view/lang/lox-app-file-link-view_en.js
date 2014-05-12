@@ -9,7 +9,8 @@ YUI.add('lang/lox-app-file-link-view_en', function (Y) {
         link_expires: "Link expires",
         link_expires_date: "Expire date",
         public_url: "Public url",
-        no_url: "This file has no public url yet, click on 'Create' to create a link"
+        no_url: "This file has no public url yet, click on 'Create' to create a link",
+        open_link: "Open link"
     });
 
 });
