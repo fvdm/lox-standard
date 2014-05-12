@@ -32,13 +32,14 @@ class Migrations extends AbstractFixture implements OrderedFixtureInterface, Con
             // There is no migrations table yet.
             $connection->exec(
                 'CREATE TABLE IF NOT EXISTS `migration_versions` (' .
-                '`version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,' .
+                '`version` varchar(255) NOT NULL,' .
                 'PRIMARY KEY (`version`)' .
-                ') ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;'
+                ');'
             );
         }
 
         $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("20140331134636")');
+        $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("20140512142339")');
     }
 
     public function getOrder()

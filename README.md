@@ -10,13 +10,29 @@ LocalBox is built on top of the [Symfony](http://symfony.com) framework and the 
 * MySQL needs to be installed
 * *Optional: For ItemKey support php5-mcrypt and php5-openssl*
 
+## Downloading project dependencies
+
+1. Clone the repository, open the console and navigate to the directory.
+
+2. Install composer, if you don't have it yet.
+
+        curl -sS https://getcomposer.org/installer | php
+        
+3. The `app/cache` directory should be  writable for the composer post-install scripts to execute. The easiest way to do so is:
+
+        [sudo] chmod 777 app/cache
+
+4. Download dependencies. Enter default values (press enter) for the `parameters.yml` if prompted. 
+
+        php composer.phar install
+        
+## Initializing Symfony
+
 To check the system configuration, run the check.php script from the command line, in the application's root directory:
 
     php app/check.php
 
 If you get any warnings or recommendations, fix them before moving on.
-
-## Initializing Symfony
 
 Basic Symfony console commands that need to be executed from the application's root directory.
 
@@ -75,25 +91,6 @@ API documentation can be found on the following URL:
 1.  To run the test suite you'll need PHPUnit:
 
         phpunit -c app/
-
-## Distribution
-
-### Building a release package
-
-1. Download the repository as a `zip` file from GitHub and unpack the archive. Open the console and navigate to the unpacked directory.
-
-2. Install composer
-
-        curl -sS https://getcomposer.org/installer | php
-        
-3. The `app/cache` directory should be  writable for the composer post-install scripts to execute. The easiest way to do so is:
-
-        [sudo] chmod 777 app/cache
-
-4. Download dependencies. Enter default values (press enter) for the `parameters.yml` if prompted. 
-
-        php composer.phar install
-        
 
 ## About
 

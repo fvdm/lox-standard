@@ -44,7 +44,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -63,7 +63,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -841,7 +841,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -2840,12 +2840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseFrameworkBundle.git",
-                "reference": "91ebfe00ca643d1fc209b33682d228f33397aeba"
+                "reference": "91f7984d5f99535efce98eef2fdb6bcd254602ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/91ebfe00ca643d1fc209b33682d228f33397aeba",
-                "reference": "91ebfe00ca643d1fc209b33682d228f33397aeba",
+                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/91f7984d5f99535efce98eef2fdb6bcd254602ef",
+                "reference": "91f7984d5f99535efce98eef2fdb6bcd254602ef",
                 "shasum": ""
             },
             "require": {
@@ -2906,7 +2906,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-09 16:54:18"
+            "time": "2014-05-12 10:23:22"
         },
         {
             "name": "rednose/kerberos-bundle",
@@ -2964,12 +2964,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/rednose-ui.git",
-                "reference": "018f6d9a95beda492a5d9549f8ffbf57bd707fcc"
+                "reference": "c1f77770980a171209124937f0d5fdceafefbed3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/018f6d9a95beda492a5d9549f8ffbf57bd707fcc",
-                "reference": "018f6d9a95beda492a5d9549f8ffbf57bd707fcc",
+                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/c1f77770980a171209124937f0d5fdceafefbed3",
+                "reference": "c1f77770980a171209124937f0d5fdceafefbed3",
                 "shasum": ""
             },
             "type": "library",
@@ -2996,7 +2996,7 @@
                 "framework",
                 "web"
             ],
-            "time": "2014-05-10 11:30:16"
+            "time": "2014-05-12 11:40:18"
         },
         {
             "name": "rednose/yui-bundle",
@@ -3251,12 +3251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "d89d9dc1447f2e0eaac14e89558a4738385c4099"
+                "reference": "717b6704e66cc3633b575467878e8b62d8f4480d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/d89d9dc1447f2e0eaac14e89558a4738385c4099",
-                "reference": "d89d9dc1447f2e0eaac14e89558a4738385c4099",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/717b6704e66cc3633b575467878e8b62d8f4480d",
+                "reference": "717b6704e66cc3633b575467878e8b62d8f4480d",
                 "shasum": ""
             },
             "require": {
@@ -3322,7 +3322,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2014-05-07 08:41:34"
+            "time": "2014-05-12 10:08:08"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -3330,12 +3330,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "30ccaa691e695aafc254da197ac545f719a1d132"
+                "reference": "60e1eb14c33afe8e114a788c1ca6acb7928ea784"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/30ccaa691e695aafc254da197ac545f719a1d132",
-                "reference": "30ccaa691e695aafc254da197ac545f719a1d132",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/60e1eb14c33afe8e114a788c1ca6acb7928ea784",
+                "reference": "60e1eb14c33afe8e114a788c1ca6acb7928ea784",
                 "shasum": ""
             },
             "require": {
@@ -3386,7 +3386,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2014-04-30 12:24:22"
+            "time": "2014-05-12 10:21:43"
         },
         {
             "name": "sonata-project/cache",
