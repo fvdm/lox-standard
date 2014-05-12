@@ -14,8 +14,6 @@
     <script type="text/javascript" src="{{ asset('yui/rednose-ui/rednose-loader/rednose-loader-min.js') }}"></script>
 
     <script>
-        {% set baseUrl = app.request.baseUrl|replace({'/app_dev.php': ''}) %}
-
         {# Register the loaders as part of the YUI core #}
         YUI.Env.core.push('rednose-loader');
 

@@ -218,14 +218,14 @@
                 <source>You invited %user% to join the folder %item%</source>
                 <target>Je hebt %user% uitgenodigd voor de map %item%.</target>
             </trans-unit>
-            <!--<trans-unit id="mail_notification_subject">-->
-                <!--<source>File %item% has been changed in one of your shared folders</source>-->
-                <!--<target></target>-->
-            <!--</trans-unit>-->
-            <!--<trans-unit id="mail_notification_body">-->
-                <!--<source>%actor% has changed the file "%item%", in the following folder: %path%.</source>-->
-                <!--<target></target>-->
-            <!--</trans-unit>-->
+            <trans-unit id="mail_notification_subject">
+                <source>mail_notification_subject</source>
+                <target>Het bestand "%item%" is gewijzigd in één van je gedeelde mappen</target>
+            </trans-unit>
+            <trans-unit id="mail_notification_body">
+                <source>mail_notification_body</source>
+                <target>%actor% heeft het bestand "%item%" gewijzigd, in de volgende map: %path%.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
