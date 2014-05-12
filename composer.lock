@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c3a2a91f60c3f9098a582c387ca766d8",
+    "hash": "c7316590aa9055484c651d4f0c5e737d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3005,12 +3005,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseYuiBundle.git",
-                "reference": "ea5713f53fe1398d95febdba00b82ce968857107"
+                "reference": "099761d59c59391449737f286b171000e50c181e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/ea5713f53fe1398d95febdba00b82ce968857107",
-                "reference": "ea5713f53fe1398d95febdba00b82ce968857107",
+                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/099761d59c59391449737f286b171000e50c181e",
+                "reference": "099761d59c59391449737f286b171000e50c181e",
                 "shasum": ""
             },
             "require": {
@@ -3045,7 +3045,7 @@
             "keywords": [
                 "yui"
             ],
-            "time": "2014-05-11 10:56:11"
+            "time": "2014-05-12 09:05:19"
         },
         {
             "name": "richsage/rms-push-notifications-bundle",
@@ -3394,12 +3394,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/cache.git",
-                "reference": "97584e8d7f1409a3c5dedcda8148696beee434f3"
+                "reference": "7c91e7fd1ca5be4273b09388650709bff31d8966"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/cache/zipball/97584e8d7f1409a3c5dedcda8148696beee434f3",
-                "reference": "97584e8d7f1409a3c5dedcda8148696beee434f3",
+                "url": "https://api.github.com/repos/sonata-project/cache/zipball/7c91e7fd1ca5be4273b09388650709bff31d8966",
+                "reference": "7c91e7fd1ca5be4273b09388650709bff31d8966",
                 "shasum": ""
             },
             "require-dev": {
@@ -3446,7 +3446,7 @@
                 "mongodb",
                 "redis"
             ],
-            "time": "2014-03-19 11:43:17"
+            "time": "2014-05-12 08:55:48"
         },
         {
             "name": "sonata-project/core-bundle",
