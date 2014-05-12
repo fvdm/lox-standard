@@ -24,9 +24,7 @@ Basic Symfony console commands that need to be executed from the application's r
 
 Execute the following commands after setting up a **new** LocalBox installation:
 
-1. Copy the `parameters.yml` file and set the required values:
-
-        cp app/config/parameters.yml.dist app/config/parameters.yml
+1. Edit the `app/config/parameters.yml` file and set the required values for your specific environment.
 
 2. Run the post installation script:
 
@@ -37,6 +35,8 @@ The installation script uses 777 permissions on the writable dirs for platform p
 ### Initializing an updated installation
 
 Execute the following commands after updating an **existing** LocalBox installation:
+
+1. Edit the `app/config/parameters.yml` file and set the required values for your specific environment.
 
 1. Run the post update script:
 
@@ -75,6 +75,25 @@ API documentation can be found on the following URL:
 1.  To run the test suite you'll need PHPUnit:
 
         phpunit -c app/
+
+## Distribution
+
+### Building a release package
+
+1. Download the repository as a `zip` file from GitHub and unpack the archive. Open the console and navigate to the unpacked directory.
+
+2. Install composer
+
+        curl -sS https://getcomposer.org/installer | php
+        
+3. The `app/cache` directory should be  writable for the composer post-install scripts to execute. The easiest way to do so is:
+
+        [sudo] chmod 777 app/cache
+
+4. Download dependencies. Enter default values (press enter) for the `parameters.yml` if prompted. 
+
+        php composer.phar install
+        
 
 ## About
 
