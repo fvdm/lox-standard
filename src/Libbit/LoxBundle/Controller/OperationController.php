@@ -336,7 +336,7 @@ class OperationController extends Controller
     {
         $im       = $this->get('libbit_lox.item_manager');
         $request  = $this->get('request');
-        $user     = $this->get('security.context')->getToken()->getUser();
+        $user     = $this->getUser();
         $response = new JsonResponse();
 
         $fromPath = $request->request->get('from_path', null);
@@ -360,7 +360,12 @@ class OperationController extends Controller
             return $response;
         }
 
+        /** @var Item $fromItem */
         $fromItem = $im->findItemByPath($user, $fromPath);
+
+        if ($fromItem->getOwner()->isEqualTo($user) === false) {
+            $fromItem = $fromItem->getShareForUser($user);
+        }
 
         $parts    = explode('/', $toPath);
         $toTitle  = array_pop($parts);
@@ -478,8 +483,6 @@ class OperationController extends Controller
         }
 
         $parentPath = $im->getPathForUser($user, $parent);
-
-        $base = $parentPath === '/' ? '' : $parentPath;
 
         $im = $this->get('libbit_lox.item_manager');
 

@@ -261,7 +261,7 @@ class ItemManager
      */
     public function moveItem(Item $item, Item $parent, $title = null)
     {
-        // If the item is a share, move to the share instead.
+        // If the item is inside a share, move to the share instead.
         if ($parent->hasShareOf() === true) {
             $parent = $parent->getShareOf();
         }
