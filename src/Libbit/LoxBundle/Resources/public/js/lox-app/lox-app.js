@@ -64,7 +64,7 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 			lazyload: 'lox-app-file-link-view',
 			parent  : 'itemView',
             width   : '550px',
-            height  : '350px',
+            height  : '400px',
 			modal   : true
 		}
 	},

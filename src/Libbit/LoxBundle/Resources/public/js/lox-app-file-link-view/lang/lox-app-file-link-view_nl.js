@@ -9,7 +9,8 @@ YUI.add('lang/lox-app-file-link-view_nl', function (Y) {
         link_expires: "Link verloopt",
         link_expires_date: "Vervaldatum",
         public_url: "Publieke url",
-        no_url: "Dit bestand heeft nog geen publieke url, klik op 'Aanmaken' om een link te creëren"
+        no_url: "Dit bestand heeft nog geen publieke url, klik op 'Aanmaken' om een link te creëren",
+        open_link: "Link openen"
     });
 
 });
