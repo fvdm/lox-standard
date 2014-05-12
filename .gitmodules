@@ -1,6 +1,0 @@
-[submodule "web/cdn/yui3"]
-	path = web/cdn/yui3
-	url = https://github.com/rednose-public/yui3.git
-[submodule "web/cdn/yui3-gallery"]
-	path = web/cdn/yui3-gallery
-	url = https://github.com/rednose-public/yui3-gallery.git
