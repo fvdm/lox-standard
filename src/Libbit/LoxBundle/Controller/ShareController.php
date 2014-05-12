@@ -81,7 +81,7 @@ class ShareController extends Controller
             }
         }
 
-        $share = $sm->createShare($item, $groups, $users);
+        $sm->createShare($item, $groups, $users);
 
         return new Response;
     }

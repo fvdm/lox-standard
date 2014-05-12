@@ -90,7 +90,6 @@ class ShareManager
 
         // Current users
         $currentInvites = $this->em->getRepository('Libbit\LoxBundle\Entity\Invitation')->findByShare($share);
-        $currentUsers = array();
 
         foreach ($currentInvites as $invite) {
             $user = $invite->getReceiver();

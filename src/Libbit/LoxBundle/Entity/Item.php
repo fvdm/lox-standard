@@ -8,10 +8,11 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Rednose\FrameworkBundle\Entity\User;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="libbit_lox_item")
+ * @ORM\Table(name="libbit_lox_item", uniqueConstraints={@UniqueConstraint(name="item_unique", columns={"owner_id", "isDir", "parent_id", "title"})})
  * @ORM\HasLifecycleCallbacks()
  *
  * @Vich\Uploadable

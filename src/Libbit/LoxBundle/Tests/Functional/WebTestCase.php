@@ -133,13 +133,14 @@ class WebTestCase extends BaseWebTestCase
         );
 
         foreach ($items as $itemName) {
-            if ($this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => $itemName)) === null) {
+            $owner = strpos($itemName, 'shared-dir-user2') === false ? $users[0] : $users[1];
+            if ($this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $owner, 'title' => $itemName)) === null) {
                 $root = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByOwner($user);
 
-                $item = new Item;
+                $item = new Item();
                 $item->setTitle($itemName);
                 $item->setIsDir(strpos($itemName, '.') === false);
-                $item->setOwner(strpos($itemName, 'shared-dir-user2') === false ? $users[0] : $users[1]);
+                $item->setOwner($owner);
                 $item->setParent($root);
 
                 $this->em->persist($item);

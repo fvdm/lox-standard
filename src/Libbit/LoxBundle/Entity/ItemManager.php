@@ -337,7 +337,13 @@ class ItemManager
 
         $share = $this->createFolderItem($user, $this->getRootItem($user));
 
-        $share->setTitle($item->getTitle());
+        $title = $item->getTitle();
+
+        if ($this->findItemByPath($user, '/'.$title) !== null) {
+            $title = $this->incrementTitle($user, $title);
+        }
+
+        $share->setTitle($title);
 
         $share->setOwner($user);
         $share->setShareOf($item);
@@ -441,17 +447,18 @@ class ItemManager
      *
      * @param User   $user
      * @param string $path
+     * @param bool   $source
      *
      * @return Item
      */
-    public function findItemByPath(User $user, $path)
+    public function findItemByPath(User $user, $path, $source = true)
     {
         $parts = preg_split('@/@', $path, null, PREG_SPLIT_NO_EMPTY);
 
         $item = $this->getRootItem($user);
 
         foreach ($parts as $part) {
-            $item = $this->getChildNamed($part, $item);
+            $item = $this->getChildNamed($part, $item, $source);
 
             if ($item === null) {
                 return null;
@@ -502,16 +509,41 @@ class ItemManager
     }
 
     /**
+     * @param User   $user
+     * @param string $title
+     * @param Item   $parent
+     * @param int    $index
+     *
+     * @return string
+     */
+    public function incrementTitle(User $user, $title, $parent = null, $index = 1)
+    {
+        $parts = pathinfo($title);
+
+        $newTitle = $parts['filename'].' ('.$index.')';
+
+        if (isset($parts['extension'])) {
+            $newTitle .= '.'.$parts['extension'];
+        }
+
+        if ($this->findItemByPath($user, $newTitle) !== null) {
+            return $this->incrementTitle($user, $title, $parent, $index + 1);
+        }
+
+        return $newTitle;
+    }
+    /**
      * Returns a child with a given name.
      *
      * If the item is a share, it will return the source share.
      *
      * @param string $name
      * @param Item   $parent
+     * @param bool   $source
      *
      * @return Item
      */
-    protected function getChildNamed($name, Item $parent)
+    protected function getChildNamed($name, Item $parent, $source = true)
     {
         $item = $this->em->createQueryBuilder()
             ->select('i')
@@ -527,7 +559,7 @@ class ItemManager
             return null;
         }
 
-        return $item->hasShareOf() ? $item->getShareOf() : $item;
+        return $item->hasShareOf() && $source ? $item->getShareOf() : $item;
     }
 
     /**
