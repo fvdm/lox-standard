@@ -146,6 +146,15 @@ class Item
 	protected $isShare;
 
     /**
+	 * Whether this folder is encrypted (has as set of encryption keys).
+	 *
+     * @Serializer\Type("boolean")
+     * @Serializer\Accessor(getter="hasKeys")
+     * @Serializer\Groups({"list", "details", "tree"})
+     */
+	protected $isEncrypted;
+
+    /**
 	 * The contents of a given folder.
 	 *
      * @Serializer\SerializedName("children")
@@ -214,6 +223,7 @@ class Item
 	public function __construct()
 	{
         $this->isDir     = true;
+        $this->keys      = new ArrayCollection;
         $this->children  = new ArrayCollection;
         $this->shares    = new ArrayCollection;
         $this->revisions = new ArrayCollection;
@@ -379,6 +389,14 @@ class Item
     public function getKeys()
     {
         return $this->keys;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasKeys()
+    {
+        return ($this->keys->count() > 0);
     }
 
     public function addRevision(Revision $revision)

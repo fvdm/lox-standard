@@ -118,6 +118,7 @@ class KeyControllerTest extends WebTestCase
 
         openssl_private_decrypt($key, $keyDecrypted, $decrypterPointer);
 
+        $this->assertEquals(true, $item->hasKeys());
         $this->assertEquals($keyPlain, $keyDecrypted);
     }
 
@@ -137,6 +138,7 @@ class KeyControllerTest extends WebTestCase
             ))
         );
 
+        $this->assertEquals(false, $item->hasKeys());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
