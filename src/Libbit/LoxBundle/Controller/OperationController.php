@@ -179,7 +179,6 @@ class OperationController extends Controller
      */
     public function postOperationsCreateFolderAction()
     {
-        // TODO: 404
         $im       = $this->get('libbit_lox.item_manager');
         $response = new JsonResponse();
         $request  = $this->get('request');
@@ -407,9 +406,9 @@ class OperationController extends Controller
         }
 
         // If this is a share-source that belongs to a different user, move the target instead.
-        if ($fromItem->getOwner()->isEqualTo($user) === false) {
-            $fromItem = $fromItem->getShareForUser($user);
-        }
+//        if ($fromItem->getOwner()->isEqualTo($user) === false) {
+//            $fromItem = $fromItem->getShareForUser($user);
+//        }
 
         // Check for an existing file or folder at the given path and increment the title if needed.
         if ($im->findItemByPath($user, $toPath) !== null) {

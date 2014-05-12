@@ -2498,12 +2498,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "1c553e93ecc09fff64a393ddb139e25785b1ff20"
+                "reference": "493963f0c0ab9b3272064a39f0d981172b976ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/1c553e93ecc09fff64a393ddb139e25785b1ff20",
-                "reference": "1c553e93ecc09fff64a393ddb139e25785b1ff20",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/493963f0c0ab9b3272064a39f0d981172b976ad0",
+                "reference": "493963f0c0ab9b3272064a39f0d981172b976ad0",
                 "shasum": ""
             },
             "require": {
@@ -2564,7 +2564,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2014-04-23 10:13:35"
+            "time": "2014-05-12 16:01:33"
         },
         {
             "name": "oyatel/minify",
@@ -3251,12 +3251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "717b6704e66cc3633b575467878e8b62d8f4480d"
+                "reference": "0a4d281dbc2412d295bcc74cb9e5b9a9aa4b8327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/717b6704e66cc3633b575467878e8b62d8f4480d",
-                "reference": "717b6704e66cc3633b575467878e8b62d8f4480d",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/0a4d281dbc2412d295bcc74cb9e5b9a9aa4b8327",
+                "reference": "0a4d281dbc2412d295bcc74cb9e5b9a9aa4b8327",
                 "shasum": ""
             },
             "require": {
@@ -3322,7 +3322,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2014-05-12 10:08:08"
+            "time": "2014-05-12 13:53:28"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -3330,12 +3330,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "60e1eb14c33afe8e114a788c1ca6acb7928ea784"
+                "reference": "ba26592e60c59b3d3b6308c530d031f686bf8df1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/60e1eb14c33afe8e114a788c1ca6acb7928ea784",
-                "reference": "60e1eb14c33afe8e114a788c1ca6acb7928ea784",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/ba26592e60c59b3d3b6308c530d031f686bf8df1",
+                "reference": "ba26592e60c59b3d3b6308c530d031f686bf8df1",
                 "shasum": ""
             },
             "require": {
@@ -3386,7 +3386,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2014-05-12 10:21:43"
+            "time": "2014-05-12 13:57:36"
         },
         {
             "name": "sonata-project/cache",
@@ -3808,12 +3808,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataNotificationBundle.git",
-                "reference": "fb89ab9da1d542f341dccc3437637769fb068369"
+                "reference": "435f96b4d7b5fa992d8739ad216aa6cc05f0f622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataNotificationBundle/zipball/fb89ab9da1d542f341dccc3437637769fb068369",
-                "reference": "fb89ab9da1d542f341dccc3437637769fb068369",
+                "url": "https://api.github.com/repos/sonata-project/SonataNotificationBundle/zipball/435f96b4d7b5fa992d8739ad216aa6cc05f0f622",
+                "reference": "435f96b4d7b5fa992d8739ad216aa6cc05f0f622",
                 "shasum": ""
             },
             "require": {
@@ -3872,7 +3872,7 @@
                 "page",
                 "sonata"
             ],
-            "time": "2014-04-17 12:52:34"
+            "time": "2014-05-12 13:58:05"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4324,12 +4324,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "052eb5d1ed1b5b7755525e4e7af26faea1619747"
+                "reference": "cd4a3727386db46709f1c98f23622e6101f2a6eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/052eb5d1ed1b5b7755525e4e7af26faea1619747",
-                "reference": "052eb5d1ed1b5b7755525e4e7af26faea1619747",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/cd4a3727386db46709f1c98f23622e6101f2a6eb",
+                "reference": "cd4a3727386db46709f1c98f23622e6101f2a6eb",
                 "shasum": ""
             },
             "require": {
@@ -4373,7 +4373,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-05-05 08:48:03"
+            "time": "2014-05-12 14:45:36"
         },
         {
             "name": "vich/uploader-bundle",

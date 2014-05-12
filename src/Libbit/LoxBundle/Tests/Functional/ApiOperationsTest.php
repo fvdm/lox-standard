@@ -9,7 +9,6 @@ class ApiOperationsTest extends WebTestCase
      */
     protected $client;
 
-
     public function testPostFile201Code()
     {
         $this->client->request('POST', '/lox_api/files/test.txt', array(), array(), array(), $this->getTestFileContent());
