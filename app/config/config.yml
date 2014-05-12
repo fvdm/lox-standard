@@ -131,7 +131,7 @@ rednose_combo_handler:
 
 rednose_yui:
     version   : 3.9.0
-    gallery   : 2014.04.02-20-01
+    gallery   : legacy
     combo_root: yui
 
     assets:
