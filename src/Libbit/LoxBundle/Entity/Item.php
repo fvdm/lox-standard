@@ -146,13 +146,14 @@ class Item
 	protected $isShare;
 
     /**
-	 * Whether this folder is encrypted (has as set of encryption keys).
+	 * Whether this folder and its children are encrypted (has as set
+	 * of encryption keys).
 	 *
      * @Serializer\Type("boolean")
      * @Serializer\Accessor(getter="hasKeys")
      * @Serializer\Groups({"list", "details", "tree"})
      */
-	protected $isEncrypted;
+	protected $hasKeys;
 
     /**
 	 * The contents of a given folder.
