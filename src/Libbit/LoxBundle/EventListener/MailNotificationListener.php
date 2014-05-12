@@ -107,16 +107,13 @@ class MailNotificationListener implements EventSubscriberInterface
 
     protected function sendMail(User $user, User $actor, Item $item)
     {
-        $subjectTemplate = 'File %item% has been changed in one of your shared folders';
-        $bodyTemplate    = '%actor% has changed the file "%item%", in the following folder: %path%.';
-
         $path = $this->itemManager->getPathForUser($user, $item->getParent(), true);
 
-        $subject = $this->translator->trans($subjectTemplate, array(
+        $subject = $this->translator->trans('mail_notification_subject', array(
             '%item%' => $item->getTitle(),
         ));
 
-        $body = $this->translator->trans($bodyTemplate, array(
+        $body = $this->translator->trans('mail_notification_body', array(
             '%actor%' => $actor->getBestname(),
             '%item%'  => $item->getTitle(),
             '%path%'  => $this->router->generate('libbit_lox_home_path', array('path' => $path), true),

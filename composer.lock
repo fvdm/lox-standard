@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "763ae6a4e3b4c1493053e377e45ef34c",
+    "hash": "c7316590aa9055484c651d4f0c5e737d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -645,7 +645,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -664,7 +664,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -2790,12 +2790,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseComboHandlerBundle.git",
-                "reference": "13477b818f30712db6baec74e82bc92f6629c066"
+                "reference": "e0883534f6a9c7d1796c851917ef681b0d581d99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseComboHandlerBundle/zipball/13477b818f30712db6baec74e82bc92f6629c066",
-                "reference": "13477b818f30712db6baec74e82bc92f6629c066",
+                "url": "https://api.github.com/repos/rednose-public/RednoseComboHandlerBundle/zipball/e0883534f6a9c7d1796c851917ef681b0d581d99",
+                "reference": "e0883534f6a9c7d1796c851917ef681b0d581d99",
                 "shasum": ""
             },
             "require": {
@@ -2831,7 +2831,7 @@
                 "combohandler",
                 "yui"
             ],
-            "time": "2014-05-08 19:00:54"
+            "time": "2014-05-11 10:46:09"
         },
         {
             "name": "rednose/framework-bundle",
@@ -2840,12 +2840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseFrameworkBundle.git",
-                "reference": "ddaa6804e04aa2567564eab3315723e6550d1ba2"
+                "reference": "91ebfe00ca643d1fc209b33682d228f33397aeba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/ddaa6804e04aa2567564eab3315723e6550d1ba2",
-                "reference": "ddaa6804e04aa2567564eab3315723e6550d1ba2",
+                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/91ebfe00ca643d1fc209b33682d228f33397aeba",
+                "reference": "91ebfe00ca643d1fc209b33682d228f33397aeba",
                 "shasum": ""
             },
             "require": {
@@ -2876,7 +2876,7 @@
                 "symfony/assetic-bundle": "2.3.*",
                 "symfony/monolog-bundle": "2.3.*",
                 "symfony/swiftmailer-bundle": "2.3.*",
-                "symfony/symfony": "2.3.*@stable",
+                "symfony/symfony": "2.3.13",
                 "twig/extensions": "1.0.*"
             },
             "type": "symfony-bundle",
@@ -2906,7 +2906,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-08 15:33:29"
+            "time": "2014-05-09 16:54:18"
         },
         {
             "name": "rednose/kerberos-bundle",
@@ -2915,19 +2915,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseKerberosBundle.git",
-                "reference": "34ca80717dc1a0b71236683e7423d44cdf667927"
+                "reference": "bd9c7f3a60da3dabbab566cf8754d1a7e642194c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseKerberosBundle/zipball/34ca80717dc1a0b71236683e7423d44cdf667927",
-                "reference": "34ca80717dc1a0b71236683e7423d44cdf667927",
+                "url": "https://api.github.com/repos/rednose-public/RednoseKerberosBundle/zipball/bd9c7f3a60da3dabbab566cf8754d1a7e642194c",
+                "reference": "bd9c7f3a60da3dabbab566cf8754d1a7e642194c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "symfony/framework-bundle": "2.3.*",
-                "symfony/security-bundle": "2.3.*",
-                "symfony/symfony": "2.3.*"
+                "symfony/framework-bundle": "~2.3",
+                "symfony/security-bundle": "~2.3",
+                "symfony/symfony": "~2.3"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2956,7 +2956,47 @@
             "keywords": [
                 "kerberos"
             ],
-            "time": "2014-05-08 11:14:57"
+            "time": "2014-05-10 07:29:51"
+        },
+        {
+            "name": "rednose/rednose-ui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rednose-public/rednose-ui.git",
+                "reference": "018f6d9a95beda492a5d9549f8ffbf57bd707fcc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/018f6d9a95beda492a5d9549f8ffbf57bd707fcc",
+                "reference": "018f6d9a95beda492a5d9549f8ffbf57bd707fcc",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Bontje",
+                    "email": "marc@rednose.nl",
+                    "homepage": "http://www.rednose.nl"
+                },
+                {
+                    "name": "Sven Hagemann",
+                    "email": "sven@rednose.nl",
+                    "homepage": "http://www.rednose.nl"
+                }
+            ],
+            "description": "RedNoseUI JavaScript framework.",
+            "homepage": "http://www.rednose.nl",
+            "keywords": [
+                "JS",
+                "framework",
+                "web"
+            ],
+            "time": "2014-05-10 11:30:16"
         },
         {
             "name": "rednose/yui-bundle",
@@ -2965,12 +3005,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseYuiBundle.git",
-                "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82"
+                "reference": "099761d59c59391449737f286b171000e50c181e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/2d572f92344ba442c5adfc7d41d7f789f7448e82",
-                "reference": "2d572f92344ba442c5adfc7d41d7f789f7448e82",
+                "url": "https://api.github.com/repos/rednose-public/RednoseYuiBundle/zipball/099761d59c59391449737f286b171000e50c181e",
+                "reference": "099761d59c59391449737f286b171000e50c181e",
                 "shasum": ""
             },
             "require": {
@@ -3005,7 +3045,7 @@
             "keywords": [
                 "yui"
             ],
-            "time": "2014-05-08 20:39:08"
+            "time": "2014-05-12 09:05:19"
         },
         {
             "name": "richsage/rms-push-notifications-bundle",
@@ -3354,12 +3394,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/cache.git",
-                "reference": "97584e8d7f1409a3c5dedcda8148696beee434f3"
+                "reference": "7c91e7fd1ca5be4273b09388650709bff31d8966"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/cache/zipball/97584e8d7f1409a3c5dedcda8148696beee434f3",
-                "reference": "97584e8d7f1409a3c5dedcda8148696beee434f3",
+                "url": "https://api.github.com/repos/sonata-project/cache/zipball/7c91e7fd1ca5be4273b09388650709bff31d8966",
+                "reference": "7c91e7fd1ca5be4273b09388650709bff31d8966",
                 "shasum": ""
             },
             "require-dev": {
@@ -3406,7 +3446,7 @@
                 "mongodb",
                 "redis"
             ],
-            "time": "2014-03-19 11:43:17"
+            "time": "2014-05-12 08:55:48"
         },
         {
             "name": "sonata-project/core-bundle",
@@ -4121,16 +4161,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "2.3.x-dev",
+            "version": "v2.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "d51c9b3bda8083b9e61e38648fb11857a43b0007"
+                "reference": "9c4b11915d7409a9cecd155d954f2ade273f3359"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/d51c9b3bda8083b9e61e38648fb11857a43b0007",
-                "reference": "d51c9b3bda8083b9e61e38648fb11857a43b0007",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/9c4b11915d7409a9cecd155d954f2ade273f3359",
+                "reference": "9c4b11915d7409a9cecd155d954f2ade273f3359",
                 "shasum": ""
             },
             "require": {
@@ -4227,7 +4267,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-08 16:38:49"
+            "time": "2014-04-27 08:34:33"
         },
         {
             "name": "twig/extensions",
@@ -4607,12 +4647,13 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "rednose/framework-bundle": 20,
-        "rednose/yui-bundle": 20,
         "rednose/kerberos-bundle": 20,
         "sonata-project/notification-bundle": 20,
         "videlalvaro/php-amqplib": 20,
         "vich/uploader-bundle": 20,
-        "knplabs/knp-gaufrette-bundle": 20
+        "knplabs/knp-gaufrette-bundle": 20,
+        "rednose/yui-bundle": 20,
+        "rednose/rednose-ui": 20
     },
     "platform": {
         "php": ">=5.3.2"

@@ -2,16 +2,16 @@
 <head>
     <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/libbitlox/icons/favicon.png') }}" />
 
-    <link href="{{ asset('cdn/rednose-ui/build/rednose-bootstrap/rednose-bootstrap-min.css') }}"rel="stylesheet" />
-    <link href="{{ asset('cdn/rednose-ui/build/rednose-ui/rednose-ui-min.css') }}"rel="stylesheet" />
+    <link href="{{ asset('yui/rednose-ui/rednose-bootstrap/rednose-bootstrap-min.css') }}"rel="stylesheet" />
+    <link href="{{ asset('yui/rednose-ui/rednose-ui/rednose-ui-min.css') }}"rel="stylesheet" />
 
     <link href="{{ asset('bundles/libbitlox/css/lox.css') }}" rel="stylesheet" />
     <link href="{{ asset('bundles/libbitlox/css/icons.css') }}" rel="stylesheet" />
 
-    <script type="text/javascript" src="{{ asset('cdn/yui3/build/yui/yui-min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rednoseyui/3.9.0/yui/yui-min.js') }}"></script>
 
     {# Include the module loaders #}
-    <script type="text/javascript" src="{{ asset('cdn/rednose-ui/build/rednose-loader/rednose-loader-min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('yui/rednose-ui/rednose-loader/rednose-loader-min.js') }}"></script>
 
     <script>
         {# Register the loaders as part of the YUI core #}
@@ -24,8 +24,11 @@
             lang: '{{ app.request.locale }}',
             groups: {
                 lox: {
+                    combine: {% if app.debug %}false{% else %}true{% endif %},
                     filter: 'raw',
-                    base: '{{ app.request.baseUrl|replace({'/app_dev.php': ''}) }}/bundles/libbitlox/js/',
+                    base: '{{ asset('bundles/libbitlox/js') }}/',
+                    comboBase: '{{ path('rednose_combo_handler_combo', { root: 'lox' }) }}?',
+                    root: '',
                     modules: {
                         "lox-app": {
                             "lang": ["en", "nl"],

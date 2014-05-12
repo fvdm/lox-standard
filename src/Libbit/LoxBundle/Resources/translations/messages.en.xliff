@@ -198,6 +198,14 @@
                 <source>You invited %user% to join the folder %item%</source>
                 <target>You invited %user% to join the folder %item%.</target>
             </trans-unit>
+            <trans-unit id="mail_notification_subject">
+                <source>mail_notification_subject</source>
+                <target>File "%item%" has been changed in one of your shared folders</target>
+            </trans-unit>
+            <trans-unit id="mail_notification_body">
+                <source>mail_notification_body</source>
+                <target>%actor% has changed the file "%item%", in the following folder: %path%.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
