@@ -29,12 +29,17 @@ class LinkController extends Controller
     {
         $lm = $this->get('libbit_lox.link_manager');
 
-        $link = $lm->getLinkByPath($path);
+        $link = $lm->getLinkByPath($path, true);
 
         $response = new Response();
 
         if ($link === null) {
             $response->setStatusCode(404);
+
+            return $response;
+        } elseif ($link === false) {
+            $response->setStatusCode(410);
+            $response->setContent('Link has expired');
 
             return $response;
         }
@@ -49,6 +54,19 @@ class LinkController extends Controller
         ));
 
         return $response;
+    }
+
+    /**
+     * @Route("/links/read/{id}", name="libbit_lox_links_read", defaults={"id": null})
+     * @Method({"GET"})
+     */
+    public function readAction($id)
+    {
+        $lm       = $this->get('libbit_lox.link_manager');
+        $response = new JsonResponse;
+        $link     = $lm->getLinkByPublicId($id);
+
+        return $this->getView($link, $response);
     }
 
     /**

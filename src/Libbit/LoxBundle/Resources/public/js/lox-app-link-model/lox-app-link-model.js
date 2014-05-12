@@ -26,11 +26,13 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
 	@protected
 	**/
     sync: function (action, options, callback) {
-        if (action === 'create' || action === 'update' || action === 'delete') {
+        if (action === 'create' || action === 'update' || action === 'delete' || (action === 'read' && this.get('public_id'))) {
             var route = '';
 
             if (action === 'create') {
                 route = YUI.Env.routing.link_create + '/' + this.get('path');
+            } else if (action === 'read') {
+                route = YUI.Env.routing.link_read + '/' + this.get('public_id');
             } else if (action === 'delete') {
                 route = YUI.Env.routing.link_remove + '/' + this.get('public_id');
             } else {
@@ -38,8 +40,8 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
             }
 
             Y.io(route, {
-                method: 'POST',
-                data: Y.JSON.stringify(this.getPersistentAttrs()),
+                method: (action === 'read') ? 'GET' : 'POST',
+                data: (action === 'read') ? null : Y.JSON.stringify(this.getPersistentAttrs()),
                 on : {
                     success : function (tx, r) {
                         callback(null, r.responseText && Y.JSON.parse(r.responseText));
@@ -72,9 +74,13 @@ var LinkModel = Y.Base.create('linkModel', Y.Model, [ Y.Rednose.Model.Spinner ],
             return null;
         }
 
-        date = new Date(value);
+        if (Y.instanceOf(value, Date)) {
+            return value;
+        }
 
-        return date;
+        s = value.split(/\D/);
+
+        return new Date(Date.UTC(+s[0], --s[1], +s[2], +s[3], +s[4], +s[5], 0));
     }
 }, {
 	ATTRS: {

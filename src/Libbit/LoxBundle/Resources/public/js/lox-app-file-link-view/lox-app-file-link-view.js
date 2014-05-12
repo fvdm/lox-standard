@@ -208,7 +208,7 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
                 timePicker.plug(Y.Rednose.Plugin.Timepicker);
             }
 
-            if (expireDate && datePicker.datepicker) {
+            if (Y.instanceOf(expireDate, Date) && datePicker.datepicker) {
                 datePicker.datepicker.set('date', expireDate);
                 timePicker.timepicker.set('date', expireDate);
             }
@@ -225,16 +225,22 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
             model       = this.get('model');
 
         if (expireCheck.get('checked')) {
-            var expireDateTime = new Date(),
-                expireDate = this.get('container').one('div#datepicker').datepicker.get('date'),
-                expireTime = this.get('container').one('div#timepicker').timepicker.get('date');
+            var datePicker = this.get('container').one('div#datepicker').datepicker,
+                timePicker = this.get('container').one('div#timepicker').timepicker,
+                expireDateTime = new Date(),
+                expireDate = datePicker.get('date'),
+                expireTime = timePicker.get('date');
 
-            expireDateTime.setUTCMinutes(expireDate.getUTCMinutes());
-            expireDateTime.setUTCHours(expireDate.getUTCHours());
-            expireDateTime.setUTCSeconds(expireDate.getUTCSeconds());
+            expireDateTime.setUTCMinutes(expireTime.getUTCMinutes());
+            expireDateTime.setUTCHours(expireTime.getUTCHours());
+            expireDateTime.setUTCSeconds(expireTime.getUTCSeconds());
             expireDateTime.setUTCDate(expireDate.getUTCDate());
             expireDateTime.setUTCFullYear(expireDate.getUTCFullYear());
             expireDateTime.setUTCMonth(expireDate.getUTCMonth());
+
+            // XXX: Workaround
+            datePicker.set('date', expireDate);
+            timePicker.set('date', expireTime);
 
             model.set('expires', expireDateTime);
         } else {
@@ -251,7 +257,7 @@ var FileLinkView = Y.Base.create('fileLinkView', Y.View, [ Y.Rednose.View.Nav ],
             model   = this.get('model');
             dialog  = new Y.Rednose.Dialog();
             strings = this.get('strings'),
-            title   = model.get('path');
+            title   = model.get('uri');
 
         title = title.substring(title.lastIndexOf('/') + 1);
 
@@ -316,7 +322,8 @@ Y.namespace('Lox.App').FileLinkView = FileLinkView;
     "requires": [
         "view",
         "rednose-view-nav",
-        "rednose-datetimepicker"
+        "rednose-datetimepicker",
+        "rednose-notifier"
     ],
     "lang": [
         "en",

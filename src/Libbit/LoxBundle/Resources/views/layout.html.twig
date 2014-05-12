@@ -53,7 +53,7 @@
                         },
 
                         "lox-app-link-model": {
-                            "requires": ["model", "rednose-model-spinner"]
+                            "requires": ["model", "rednose-model-spinner","rednose-notifier"]
                         },
 
                         "lox-app-folder-tree": {
@@ -168,6 +168,7 @@
             operations_create_folder: '{{ path('libbit_lox_post_operations_create_folder') }}',
             operations_delete       : '{{ path('libbit_lox_post_operations_delete') }}',
             operations_move         : '{{ path('libbit_lox_post_operations_move') }}',
+            link_read               : '{{ path('libbit_lox_links_read') }}',
             link_create             : '{{ path('libbit_lox_links_create') }}',
             link_update             : '{{ path('libbit_lox_links_update') }}',
             link_remove             : '{{ path('libbit_lox_links_remove') }}',

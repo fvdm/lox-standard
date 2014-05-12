@@ -76,7 +76,7 @@ class LinkManager
         $this->em->flush();
     }
 
-    public function getLinkByPath($path)
+    public function getLinkByPath($path, $checkExpired = false)
     {
         if (false === $pos = strpos($path, '/')) {
             return null;
@@ -89,6 +89,10 @@ class LinkManager
 
         if ($link === null || $link->getItem()->getTitle() !== $title) {
             return null;
+        }
+
+        if ($checkExpired && $link->getExpires() !== null && $link->getExpires()->getTimestamp() < (new \DateTime)->getTimestamp()) {
+            return false;
         }
 
         return $link;

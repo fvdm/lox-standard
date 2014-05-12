@@ -88,6 +88,8 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 			'*:showItemDetail': this._showDetailItem,
 			'*:upload'        : this._handleUpload,
 
+            '*:link' : this._handleLinkFile,
+
 			'dropdown:select#link' : this._handleLinkFile,
 			'dropdown:select#leave': this._handleLeaveShare,
 			'dropdown:select#share': this._handleShareFolder,
@@ -170,7 +172,13 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 			self  = this;
 
 		model.load(function () {
-		    var link = model.get('link');
+		    var link;
+
+		    if (Y.instanceOf(model, Y.Lox.LinkModel)) {
+		        link = model;
+		    } else {
+                link = model.get('link');
+		    }
 
 		    if (!link) {
 	            link = new Y.Lox.LinkModel({ path: model.get('path') });

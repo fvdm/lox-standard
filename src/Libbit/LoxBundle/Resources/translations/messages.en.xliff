@@ -18,13 +18,17 @@
                 <source>th_sender</source>
                 <target>Sender</target>
             </trans-unit>
+            <trans-unit id="th_expires">
+                <source>th_expires</source>
+                <target>Expires</target>
+            </trans-unit>
             <trans-unit id="td_no_links_yet">
                 <source>td_no_links_yet</source>
                 <target>You haven't created any public links yet</target>
             </trans-unit>
-            <trans-unit id="tooltip_remove_link">
-                <source>tooltip_remove_link</source>
-                <target>Remove link</target>
+            <trans-unit id="tooltip_link_edit">
+                <source>tooltip_link_edit</source>
+                <target>Link properties</target>
             </trans-unit>
             <trans-unit id="header_sharing">
                 <source>header_sharing</source>
