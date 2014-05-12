@@ -130,8 +130,8 @@ rednose_combo_handler:
         lox:        "bundles/libbitlox/js"
 
 rednose_yui:
-    version   : 3.9.0
-    gallery   : legacy
+    version:    3.9.0
+    gallery:    legacy
     combo_root: yui
 
     assets:

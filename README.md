@@ -1,4 +1,4 @@
-# LiBBiT LocalBox
+# LocalBox
 
 LocalBox is built on top of the [Symfony](http://symfony.com) framework and the [YUI](http://yuilibrary.com) library.
 

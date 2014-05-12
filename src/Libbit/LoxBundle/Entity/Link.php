@@ -3,7 +3,6 @@
 namespace Libbit\LoxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Rednose\FrameworkBundle\Entity\User;
@@ -70,68 +69,106 @@ class Link
      */
 	protected $uri;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->publicId  = uniqid();
     }
 
+    /**
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @param User $owner
+     */
     public function setOwner(User $owner)
     {
         $this->owner = $owner;
     }
 
+    /**
+     * @return User
+     */
     public function getOwner()
     {
         return $this->owner;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @return string
+     */
     public function getPublicId()
     {
         return $this->publicId;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getExpires()
     {
         return $this->expires;
     }
 
+    /**
+     * @param \DateTime $expires
+     */
     public function setExpires(\DateTime $expires = null)
     {
         $this->expires = $expires;
     }
 
-
+    /**
+     * @param string $publicId
+     */
     public function setPublicId($publicId)
     {
         $this->publicId = $publicId;
     }
 
+    /**
+     * @return Item
+     */
     public function getItem()
     {
         return $this->item;
     }
 
+    /**
+     * @param Item $item
+     */
     public function setItem(Item $item)
     {
         $this->item = $item;
     }
 
+    /**
+     * @return string
+     */
     public function getUri()
     {
         return $this->publicId . '/' . $this->item->getTitle();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getUri();
