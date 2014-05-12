@@ -65,6 +65,23 @@ class ShareControllerTest extends WebTestCase
         return $settings;
     }
 
+    public function testCreateShareForNonExistentPath404()
+    {
+        $this->client->request('GET', '/lox_api/identities/test2');
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->client->request('POST', '/lox_api/share_create/non-existent-dir', array(), array(), array(), json_encode(array(
+            'identities' => array(
+                array(
+                    'id' => $data[0]['id'],
+                    'type' => 'user'
+                )
+            )
+        )));
+
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+    }
+
     /**
      * @depends testUpdateShare
      */
@@ -191,4 +208,3 @@ class ShareControllerTest extends WebTestCase
         return file_get_contents(__DIR__.'/Fixtures/test.txt');
     }
 }
-

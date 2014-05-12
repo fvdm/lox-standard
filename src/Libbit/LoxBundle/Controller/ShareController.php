@@ -66,6 +66,10 @@ class ShareController extends Controller
         $item  = $this->get('libbit_lox.item_manager')->findItemByPath($user, $path);
         $data  = json_decode($this->get('request')->getContent(), true);
 
+        if (!$item) {
+            throw $this->createNotFoundException();
+        }
+
         $groups = array();
         $users  = array();
 

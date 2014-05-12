@@ -445,9 +445,9 @@ class ItemManager
     /**
      * Returns the item within a (virtual) path for a given user.
      *
-     * @param User   $user
-     * @param string $path
-     * @param bool   $source
+     * @param User   $user   The user for the virtual path
+     * @param string $path   The actual path
+     * @param bool   $source If a share target is found, return the source.
      *
      * @return Item
      */
@@ -537,9 +537,9 @@ class ItemManager
      *
      * If the item is a share, it will return the source share.
      *
-     * @param string $name
-     * @param Item   $parent
-     * @param bool   $source
+     * @param string $name   Name of the child to look for
+     * @param Item   $parent Parent Item
+     * @param bool   $source If a share target is found, return the source.
      *
      * @return Item
      */
