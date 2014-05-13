@@ -26,7 +26,7 @@
                 <source>td_no_links_yet</source>
                 <target>Je hebt nog geen links aangemaakt.</target>
             </trans-unit>
-            <trans-unit id="tooltip_link_edit">
+            <trans-unit id="tooltip_link_properties">
                 <source>tooltip_link_properties</source>
                 <target>Link bewerken</target>
             </trans-unit>

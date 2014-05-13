@@ -26,8 +26,8 @@
                 <source>td_no_links_yet</source>
                 <target>You haven't created any public links yet</target>
             </trans-unit>
-            <trans-unit id="tooltip_link_edit">
-                <source>tooltip_link_edit</source>
+            <trans-unit id="tooltip_link_properties">
+                <source>tooltip_link_properties</source>
                 <target>Link properties</target>
             </trans-unit>
             <trans-unit id="header_sharing">
