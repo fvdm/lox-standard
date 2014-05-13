@@ -7,6 +7,7 @@ echo "Before continuing with the installation of LocalBox, note that you are"
 echo "executing the installation script for 'apt' based systems. This script"
 echo "has been tested on:"
 echo "* Ubuntu 12.04 LTS"
+echo "* Ubuntu 14.04 LTS"
 echo "* Debian Wheezy 7.0"
 read -p "Do you want to continue with the installation ( yes | no ) " answerInstall
 
@@ -171,7 +172,7 @@ read -p "Please specify path to the localbox installation. eg. /opt/lox-standard
 
 rm -rf /etc/apache2/sites-enabled/*
 
-var1="12.04"
+var1="14.04"
 var2=`lsb_release -r | awk '{print $2}'`
 
 if [ "$var2" == "$var1" ]; then
@@ -181,6 +182,7 @@ VHOST=$(cat <<EOF
   ServerName localhost
   <Directory "$answerPath/web">
     AllowOverride All
+    Require all granted
   </Directory>
 </VirtualHost>
 EOF
@@ -192,7 +194,6 @@ VHOST=$(cat <<EOF
   ServerName localhost
   <Directory "$answerPath/web">
     AllowOverride All
-    Require all granted
   </Directory>
 </VirtualHost>
 EOF
