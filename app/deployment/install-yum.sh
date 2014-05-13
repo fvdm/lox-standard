@@ -60,7 +60,7 @@ options[${#options[*]}]="I don't want to install Apache, I'm using a different w
 
 select opt in "${options[@]}"; do
   case ${opt} in
-  ${options[0]}) yum install -q -y httpd; apacheOnSystem=true; break; ;;
+  ${options[0]}) yum install -q -y httpd; apacheOnSystem=true; apacheCleanInstall=true; break; ;;
   ${options[1]}) apacheOnSystem=true; break; ;;
   ${options[2]}) apacheOnSystem=false; break; ;;
   esac;
@@ -161,6 +161,26 @@ rm -rf app/logs/*
 # information.
 app/deployment/post-install.sh
 
+# *** Apache: install vhost **
+# When the user makes a clean install, we will provide him/her with a simple
+# vhost setup
+if [[ $apacheCleanInstall ]]; then
+clear
+echo "[LocalBox Notice] vhost setup"
+read -p "Please specify path to the localbox installation. eg. /opt/lox-standard  or /var/www/lox-standard: " answerPath
+
+VHOST=$(cat <<EOF
+<VirtualHost *:80>
+  DocumentRoot "$answerPath/web"
+  ServerName localhost
+  <Directory "$answerPath/web">
+    AllowOverride All
+  </Directory>
+</VirtualHost>
+EOF
+)
+echo "${VHOST}" >> /etc/httpd/conf/httpd.conf
+fi
 
 # Restart Apache
 if [[ $apacheOnSystem ]]; then
