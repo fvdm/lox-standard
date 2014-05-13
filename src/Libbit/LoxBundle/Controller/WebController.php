@@ -61,4 +61,43 @@ class WebController extends Controller
             'links' => $links,
         ));
     }
+
+    /**
+     * @Route("/settings", name="libbit_lox_settings")
+     * @Method({"GET"})
+     */
+    public function settingsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user  = $this->getUser();
+        $prefs = $em->getRepository('Libbit\LoxBundle\Entity\UserPreferences')->findOneBy(array('user' => $user));
+
+        $email = $prefs && $prefs->getEmail();
+
+        return $this->render('LibbitLoxBundle:Web:settings.html.twig', array(
+            'user'  => $user,
+            'email' => $email
+        ));
+    }
+
+    /**
+     * @Route("/register_app", name="libbit_lox_register_app")
+     * @Route("/register_app.json", name="libbit_lox_register_app_lbox", requirements={"_scheme" = "lbox"})
+     * @Method({"GET"})
+     */
+    public function registerAppAction()
+    {
+        $clientManager = $this->get('fos_oauth_server.client_manager.default');
+        $clients = $clientManager->findClientsBy(array());
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $this->render(
+            'LibbitLoxBundle:Web:register_app.json.twig',
+            array('clients' => $clients),
+            $response
+        );
+    }
 }

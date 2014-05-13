@@ -4,20 +4,55 @@ namespace Libbit\LoxBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\SecurityContext;
 use Rednose\FrameworkBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 
 class ItemManager
 {
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
+    /**
+     * @var SecurityContext
+     */
+    protected $securityContext;
+
+    /**
+     * @var EntityRepository
+     */
     protected $repository;
 
-    public function __construct(EntityManager $em)
+    /**
+     * @var EntityRepository
+     */
+    protected $keyRepository;
+
+    /**
+     * Constructor.
+     *
+     * @param EntityManager   $em
+     * @param SecurityContext $securityContext
+     */
+    public function __construct(EntityManager $em, SecurityContext $securityContext)
     {
-        $this->em         = $em;
-        $this->repository = $em->getRepository('Libbit\LoxBundle\Entity\Item');
+        $this->em              = $em;
+        $this->repository      = $em->getRepository('Libbit\LoxBundle\Entity\Item');
+        $this->keyRepository   = $em->getRepository('Libbit\LoxBundle\Entity\ItemKey');
+        $this->securityContext = $securityContext;
     }
 
+    /**
+     * Creates a required root item for a given user.
+     *
+     * @param User $user
+     *
+     * @return Item
+     *
+     * @throws \RuntimeException
+     */
     public function createRootItem(User $user)
     {
         if ($this->getRootItem($user) !== null) {
@@ -33,6 +68,14 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Creates a new item.
+     *
+     * @param User $user
+     * @param Item $parent
+     *
+     * @return Item
+     */
     public function createItem(User $user, $parent = null)
     {
         $item = new Item;
@@ -47,6 +90,14 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Creates a new file item.
+     *
+     * @param User $user
+     * @param Item $parent
+     *
+     * @return Item
+     */
     public function createFileItem(User $user, $parent = null)
     {
         $item = $this->createItem($user, $parent);
@@ -56,6 +107,14 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Creates a folder item.
+     *
+     * @param User $user
+     * @param Item $parent
+     *
+     * @return Item
+     */
     public function createFolderItem(User $user, $parent = null)
     {
         $item = $this->createItem($user, $parent);
@@ -65,7 +124,110 @@ class ItemManager
         return $item;
     }
 
-    public function saveItem($item, $silent = false)
+    /**
+     * @param Item $item
+     *
+     * @return bool
+     */
+    public function isOrIsInsideSharedFolder(Item $item)
+    {
+        if ($item->isShared() || $item->isShare()) {
+            return true;
+        }
+
+        if ($item->getParent() === null) {
+            return false;
+        }
+
+        return $this->isOrIsInsideSharedFolder($item->getParent());
+    }
+
+    /**
+     * Adds or replaces a ItemKey for the supplied Item
+     *
+     * @param Item $item
+     * @param User $user
+     * @param string $key   The base64 encoded key
+     * @param string $iv    The base64 encoded iv
+     *
+     * @return boolean
+     */
+    public function addItemKey(Item $item, User $user, $key, $iv)
+    {
+        $owner = $this->securityContext->getToken()->getUser();
+
+        $itemKey = new ItemKey;
+        $itemKey->setKey($key);
+        $itemKey->setIv($iv);
+        $itemKey->setUser($user);
+        $itemKey->setOwner($owner);
+        $itemKey->setItem($item);
+
+        if ($item->getOwner()->getId() !== $owner->getId()) {
+            return false;
+        }
+
+        // If there is a existing item key remove it
+        if ($existingItemKey = $this->keyRepository->findOneBy(array('owner' => $owner, 'item' => $item))) {
+            $this->em->remove($existingItemKey);
+        }
+
+        $this->em->persist($itemKey);
+        $this->em->flush();
+
+        return true;
+    }
+
+    /**
+     * Gets the key and iv for an item
+     *
+     * @param Item $item
+     * @param User $user
+     *
+     * @return mixed ItemKey or false on failure
+     */
+    public function getItemKey(Item $item, User $user)
+    {
+        if ($key = $this->keyRepository->findOneBy(array('owner' => $user, 'item' => $item))) {
+            return $key;
+        }
+
+        return false;
+    }
+
+    /**
+     * Revokes an ItemKey
+     *
+     * @param Item $item
+     * @param User $user
+     *
+     * @return mixed ItemKey or false on failure
+     */
+    public function revokeItemKey(Item $item, User $user)
+    {
+        $owner = $this->securityContext->getToken()->getUser();
+
+        if ($key = $this->keyRepository->findOneBy(array('owner' => $user, 'item' => $item))) {
+            if ($key->getOwner()->getId() !== $owner->getId()) {
+                return false;
+            }
+
+            $this->em->remove($key);
+            $this->em->flush();
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Persists an item to the backend.
+     *
+     * @param Item $item
+     * @param bool $silent
+     */
+    public function saveItem(Item $item, $silent = false)
     {
         $this->em->persist($item);
 
@@ -74,6 +236,12 @@ class ItemManager
         }
     }
 
+    /**
+     * Removes an item from the backend.
+     *
+     * @param Item $item
+     * @param bool $silent
+     */
     public function removeItem($item, $silent = false)
     {
         $this->em->remove($item);
@@ -83,9 +251,18 @@ class ItemManager
         }
     }
 
-    public function moveItem($item, $parent, $title = null)
+    /**
+     * Moves an item to another parent.
+     *
+     * @param Item   $item
+     * @param Item   $parent
+     * @param string $title
+     *
+     * @return Item
+     */
+    public function moveItem(Item $item, Item $parent, $title = null)
     {
-        // If the item is a share, move to the share instead.
+        // If the item is inside a share, move to the share instead.
         if ($parent->hasShareOf() === true) {
             $parent = $parent->getShareOf();
         }
@@ -101,7 +278,18 @@ class ItemManager
         return $item;
     }
 
-    public function copyItem($item, $parent, $title = null)
+    /**
+     * Copies an item to another parent.
+     *
+     * @param Item   $item
+     * @param Item   $parent
+     * @param string $title
+     *
+     * @return Item
+     *
+     * @throws \RuntimeException
+     */
+    public function copyItem(Item $item, Item $parent, $title = null)
     {
         // If the item is a share, move the share instead.
         if ($parent->hasShareOf() === true) {
@@ -126,6 +314,16 @@ class ItemManager
         return $copy;
     }
 
+    /**
+     * Create a share item for a given folder item.
+     *
+     * @param Item $item
+     * @param User $user
+     *
+     * @return Item
+     *
+     * @throws \RuntimeException
+     */
     public function createFolderShare(Item $item, User $user)
     {
         // Confirm that the item is a folder.
@@ -140,7 +338,13 @@ class ItemManager
 
         $share = $this->createFolderItem($user, $this->getRootItem($user));
 
-        $share->setTitle($item->getTitle());
+        $title = $item->getTitle();
+
+        if ($this->findItemByPath($user, '/'.$title) !== null) {
+            $title = $this->incrementTitle($user, $title);
+        }
+
+        $share->setTitle($title);
 
         $share->setOwner($user);
         $share->setShareOf($item);
@@ -150,6 +354,12 @@ class ItemManager
         return $share;
     }
 
+    /**
+     * Removes a share item.
+     *
+     * @param Item $share
+     * @param User $user
+     */
     public function removeFolderShare(Item $share, User $user)
     {
         $item = $this->repository->findOneBy(array(
@@ -161,6 +371,13 @@ class ItemManager
         $this->em->flush();
     }
 
+    /**
+     * Returns all joined folders for a given user.
+     *
+     * @param User $user
+     *
+     * @return Item[]
+     */
     public function findJoinsByUser(User $user)
     {
         $qb = $this->em->createQueryBuilder();
@@ -176,6 +393,15 @@ class ItemManager
             ->getResult();
     }
 
+    /**
+     * Generates a (virtual) path to a given item for a given user.
+     *
+     * @param User $user
+     * @param Item $item
+     * @param bool $trim
+     *
+     * @return string
+     */
     public function getPathForUser(User $user, Item $item, $trim = false)
     {
         $node = $this->getShareFromFolder($user, $item);
@@ -217,14 +443,23 @@ class ItemManager
         return $item;
     }
 
-    public function findItemByPath(User $user, $path)
+    /**
+     * Returns the item within a (virtual) path for a given user.
+     *
+     * @param User   $user   The user for the virtual path
+     * @param string $path   The actual path
+     * @param bool   $source If a share target is found, return the source.
+     *
+     * @return Item
+     */
+    public function findItemByPath(User $user, $path, $source = true)
     {
         $parts = preg_split('@/@', $path, null, PREG_SPLIT_NO_EMPTY);
 
         $item = $this->getRootItem($user);
 
         foreach ($parts as $part) {
-            $item = $this->getChildNamed($part, $item);
+            $item = $this->getChildNamed($part, $item, $source);
 
             if ($item === null) {
                 return null;
@@ -234,6 +469,13 @@ class ItemManager
         return $item;
     }
 
+    /**
+     * Returns the root item for a given user.
+     *
+     * @param User $user
+     *
+     * @return Item
+     */
     public function getRootItem(User $user)
     {
         $item = $this->em->createQueryBuilder()
@@ -249,7 +491,14 @@ class ItemManager
         return $item;
     }
 
-    public function getHash($item)
+    /**
+     * Creates a unique has for a given folder state.
+     *
+     * @param Item $item
+     *
+     * @return string
+     */
+    public function getHash(Item $item)
     {
         $hash = md5(serialize($item->getModifiedAt()));
 
@@ -261,16 +510,41 @@ class ItemManager
     }
 
     /**
+     * @param User   $user
+     * @param string $title
+     * @param Item   $parent
+     * @param int    $index
+     *
+     * @return string
+     */
+    public function incrementTitle(User $user, $title, $parent = null, $index = 1)
+    {
+        $parts = pathinfo($title);
+
+        $newTitle = $parts['filename'].' ('.$index.')';
+
+        if (isset($parts['extension'])) {
+            $newTitle .= '.'.$parts['extension'];
+        }
+
+        if ($this->findItemByPath($user, $newTitle) !== null) {
+            return $this->incrementTitle($user, $title, $parent, $index + 1);
+        }
+
+        return $newTitle;
+    }
+    /**
      * Returns a child with a given name.
      *
-     * If this is a share, it will return the shared item instance and never the source share.
+     * If the item is a share, it will return the source share.
      *
-     * @param string $name
-     * @param Item $parent
+     * @param string $name   Name of the child to look for
+     * @param Item   $parent Parent Item
+     * @param bool   $source If a share target is found, return the source.
      *
      * @return Item
      */
-    protected function getChildNamed($name, Item $parent)
+    protected function getChildNamed($name, Item $parent, $source = true)
     {
         $item = $this->em->createQueryBuilder()
             ->select('i')
@@ -286,10 +560,17 @@ class ItemManager
             return null;
         }
 
-        return $item;
+        return $item->hasShareOf() && $source ? $item->getShareOf() : $item;
     }
 
-    protected function createCopy($item)
+    /**
+     * Returns a copy of a given item.
+     *
+     * @param Item $item
+     *
+     * @return Item
+     */
+    protected function createCopy(Item $item)
     {
         $copy = clone $item;
 

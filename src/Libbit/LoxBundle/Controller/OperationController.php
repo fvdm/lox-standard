@@ -141,7 +141,7 @@ class OperationController extends Controller
 
         // Check for an existing file or folder at the given path.
         if ($im->findItemByPath($user, $toPath) !== null) {
-            $toTitle = $this->incrementTitle($user, $toTitle, $toParent);
+            $toTitle = $im->incrementTitle($user, $toTitle, $toParent);
         }
 
         $copy = $im->copyItem($fromItem, $toParent, $toTitle);
@@ -179,7 +179,6 @@ class OperationController extends Controller
      */
     public function postOperationsCreateFolderAction()
     {
-        // TODO: 404
         $im       = $this->get('libbit_lox.item_manager');
         $response = new JsonResponse();
         $request  = $this->get('request');
@@ -336,7 +335,7 @@ class OperationController extends Controller
     {
         $im       = $this->get('libbit_lox.item_manager');
         $request  = $this->get('request');
-        $user     = $this->get('security.context')->getToken()->getUser();
+        $user     = $this->getUser();
         $response = new JsonResponse();
 
         $fromPath = $request->request->get('from_path', null);
@@ -360,6 +359,7 @@ class OperationController extends Controller
             return $response;
         }
 
+        /** @var Item $fromItem */
         $fromItem = $im->findItemByPath($user, $fromPath);
 
         $parts    = explode('/', $toPath);
@@ -405,9 +405,14 @@ class OperationController extends Controller
             return $response;
         }
 
+        // If this is a share-source that belongs to a different user, move the target instead.
+        if ($fromItem->getOwner()->isEqualTo($user) === false) {
+            $fromItem = $fromItem->getShareForUser($user);
+        }
+
         // Check for an existing file or folder at the given path and increment the title if needed.
         if ($im->findItemByPath($user, $toPath) !== null) {
-            $toTitle = $this->incrementTitle($user, $toTitle, $toParent);
+            $toTitle = $im->incrementTitle($user, $toTitle, $toParent);
         }
 
         $moved = $im->moveItem($fromItem, $toParent, $toTitle);
@@ -463,30 +468,4 @@ class OperationController extends Controller
         return $needle === '' || strpos($haystack, $needle) === 0;
     }
 
-    // TODO: Move to event handler or domain manager
-    private function incrementTitle($user, $title, $parent, $index = 1)
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $im   = $this->get('libbit_lox.item_manager');
-
-        $parts = pathinfo($title);
-
-        $newTitle = $parts['filename'].' ('.$index.')';
-
-        if (isset($parts['extension'])) {
-            $newTitle .= '.'.$parts['extension'];
-        }
-
-        $parentPath = $im->getPathForUser($user, $parent);
-
-        $base = $parentPath === '/' ? '' : $parentPath;
-
-        $im = $this->get('libbit_lox.item_manager');
-
-        if ($im->findItemByPath($user, $newTitle) !== null) {
-            return $this->incrementTitle($user, $title, $parent, $index + 1);
-        }
-
-        return $newTitle;
-    }
 }

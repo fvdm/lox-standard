@@ -4,85 +4,94 @@
 {% block content %}
 
     <div class="row">
-      <div class="span2 libbit-lox-sidebar">
-          {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
-    </div>
+        <div class="span2 libbit-lox-sidebar">
+            {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+        </div>
 
-    <div class="span10 libbit-lox-content">
-        <section id="links">
-            <div class="page-header">
-                <h1>Links</h1>
-            </div>
-            <div>
-                <table class="table">
-                    <thead>
+        <div class="span10 libbit-lox-content">
+            <section id="links">
+                <div class="page-header">
+                    <h1>{% trans %}header_links{% endtrans %}</h1>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <th class="span5">Name</th>
-                            <th class="span3>">Date</th>
+                            <th class="span4">{% trans %}th_name{% endtrans %}</th>
+                            <th class="span2>">{% trans %}th_date{% endtrans %}</th>
+                            <th class="span2>">{% trans %}th_expires{% endtrans %}</th>
                             <th class="span1>"></th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    {% if links %}
-                        {% for link in links %}
+                        </thead>
+                        <tbody>
+                        {% if links %}
+                            {% for link in links %}
+
+                                {% set expiredClass = '' %}
+
+                                {% if link.expires %}
+                                    {% if link.expires|date('U') < "now"|date('U') %}
+                                        {% set expiredClass = 'warning' %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <tr class="{{ expiredClass }}">
+                                    <td class="span4"><div><a href="{{ path('libbit_lox_links_path', { path: link.uri }) }}" target="_blank">{{ link.item.title }}</a></div></td>
+                                    <td class="span2">{{ link.createdAt|date }}</td>
+                                    {% if link.expires %}
+                                        <td class="span2">{{ link.expires|date }}</td>
+                                    {% else %}
+                                        <td class="span2">&nbsp;</td>
+                                    {% endif %}
+                                    <td class="span1">
+                                        <button rel="tooltip" data-record-id="{{ link.publicId }}" class="edit close" title="{% trans %}tooltip_link_properties{% endtrans %}">
+                                            <i class="icon-pencil"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
                             <tr>
-                                <td class="span5"><div><a href="{{ path('libbit_lox_links_path', { path: link.uri }) }}" target="_blank">{{ link.item.title }}</a></div></td>
-                                <td class="span3">{{ link.createdAt|date }}</td>
-                                <td class="span1"><button rel="tooltip" data-record-id="{{ link.publicId }}" class="close" title="Remove link">&times;</button></td>
+                                <td colspan="3"><h4>{% trans %}td_no_links_yet{% endtrans %}</h4></td>
                             </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="3"><h4>You haven't created any public links yet</h4></td>
-                        </tr>
-                    {% endif %}
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </div>
     <script>
-    YUI().use('lox-page', 'io', 'rednose-tooltip', 'rednose-dialog', 'rednose-notifier', function (Y) {
-        new Y.Lox.Page().render();
+        YUI().use('lox-page', 'lox-app-file-link-view', 'rednose-panel', 'rednose-tooltip', function (Y) {
+            new Y.Lox.Page().render();
 
-        var TEXT_TITLE_DELETED = 'Deleted',
-            TEXT_LINK_DELETED  = 'Link successfully deleted.',
+            // Tooltip delegate.
+	        new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
 
-            TEXT_DELETE_TITLE = 'Delete link to file \'{title}\'?',
-            TEXT_DELETE       = 'Delete',
-            TEXT_DELETE_BODY  = 'The link will be removed. Are you sure you want to delete it?';
+            Y.all('button.edit').each(function () {
+                this.on('click', function () {
+                    var publicId = this.getAttribute('data-record-id'),
+                        model    = new Y.Lox.LinkModel({ public_id: publicId });
 
-        new Y.Rednose.Tooltip({ selector : '*[rel=tooltip]' });
-
-        Y.all('.close').on('click', function (e) {
-            var id    = e.target.getAttribute('data-record-id'),
-                tr    = e.target.ancestor('tr'),
-                title = tr.one('a').get('innerHTML');
-
-                if (id && tr) {
-                    Y.Rednose.Dialog.confirm({
-                        title  : Y.Lang.sub(TEXT_DELETE_TITLE, { title: title }),
-                        text   : TEXT_DELETE_BODY,
-                        confirm: TEXT_DELETE,
-                        type   : 'warning'
-                    }, function () {
-                        Y.io(YUI.Env.routing.link_remove + '/' + id, {
-                            method: 'POST',
-                            data: { 'token': YUI.Env.token },
-                            on : {
-                                success : function (tx, r) {
-                                    tr.remove(true);
-
-                                    Y.Rednose.Notifier.notify({
-                                        title: TEXT_TITLE_DELETED,
-                                        text : TEXT_LINK_DELETED,
-                                        type : 'success'
-                                    });
-                                }
-                            }
+                    model.load(function () {
+                        var view = new Y.Lox.App.FileLinkView({
+                            model: model
                         });
+
+                        var panel = new Y.Rednose.Panel({
+                            srcNode: view.get('container'),
+                            width  : '550px',
+                        });
+
+                        view.render();
+                        view.get('container').one('.yui3-widget-bd').setStyle('height', '290px');
+                        view.on(['buttonClose', 'buttonCancel'], function () {
+                            panel.destroy()
+                        });
+
+                        panel.render();
                     });
-                }
+                });
             });
         });
     </script>

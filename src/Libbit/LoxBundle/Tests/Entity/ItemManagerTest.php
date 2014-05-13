@@ -10,6 +10,8 @@ class ItemManagerTest extends \PHPUnit_Framework_TestCase
 {
     protected $em;
 
+    protected $securityContext;
+
     public function setUp()
     {
         if (!class_exists('Doctrine\\ORM\\EntityManager')) {
@@ -20,6 +22,9 @@ class ItemManagerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->securityContext = $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContext')
             ->disableOriginalConstructor()
             ->getMock();
         $this->class = 'Libbit\LoxBundle\Entity\Item';
@@ -188,7 +193,7 @@ class ItemManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function getItemManager()
     {
-        return $this->getMock('Libbit\LoxBundle\Entity\ItemManager', array('getRootItem', 'saveItem'), array($this->em));
+        return $this->getMock('Libbit\LoxBundle\Entity\ItemManager', array('getRootItem', 'saveItem'), array($this->em, $this->securityContext));
     }
 
     protected function getUser()

@@ -20,21 +20,32 @@ table td div {
 }
 
 /* Fix height for form inputs */
-input {
+input[type="text"], input[type="password"] {
     height: 30px !important;
 }
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 10;
+    left: 0;
+    right: 0;
+    color: gray;
+    text-align: right;
+}
+
 
 /* Helper class */
 .full-width {
 	width: 100%;
 }
 
-#notifications-dropdown .dropdown-menu {
+.notifications-container .dropdown-menu {
 	overflow-y: auto;
 	max-height: 400px;
 }
 
-#notifications-dropdown .dropdown-menu a div {
+.notifications-container .dropdown-menu a div {
 	width: 300px;
 	word-wrap: break-word !important;
 	white-space: normal !important;
@@ -93,6 +104,12 @@ section {
 
 .libbit-lox-header table {
 	margin-bottom: 1px;
+}
+
+/* lox brand correction */
+.navbar .lox-brand {
+	padding: 0px;
+	padding-top: 7px;
 }
 
 /* SideNav badge correction */

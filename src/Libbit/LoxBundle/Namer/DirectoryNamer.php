@@ -3,6 +3,7 @@
 namespace Libbit\LoxBundle\Namer;
 
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
+use Vich\UploaderBundle\Mapping\PropertyMapping;
 
 /**
  * Namer class.
@@ -12,28 +13,29 @@ class DirectoryNamer implements DirectoryNamerInterface
     /**
      * Creates a directory name for the file being uploaded.
      *
-     * @param object $obj The object the upload is attached to.
-     * @param string $field The name of the uploadable field to generate a name for.
-     * @param string $uploadDir The upload directory set in config
+     * @param object          $object  The object the upload is attached to.
+     * @param Propertymapping $mapping The mapping to use to manipulate the given object.
+     *
+     * @note The $object parameter can be null.
      *
      * @return string The directory name.
      */
-    public function directoryName($obj, $field, $uploadDir)
+    public function directoryName($object, PropertyMapping $mapping)
     {
-        if ($obj->getFilePath() === false) {
+        if ($object->getFilePath() === false) {
             $dir = $this->getDirectory();
 
-            $obj->setFilePath($dir . "/" . rand(0, 9));
+            $object->setFilePath($dir . "/" . rand(0, 9));
         }
 
-        return $uploadDir . "/" . $obj->getFilePath();
+        return $mapping->getUploadDestination() . "/" . $object->getFilePath();
     }
 
     /**
-     * Get a pseusdo random directory name based on internal logic
-     * The maxumum amount of the combinations is 30.000 to avoid inodes overloads.
+     * Get a pseudo random directory name based on internal logic
+     * The maximum amount of the combinations is 30.000 to avoid inodes overloads.
      *
-     * @return string A pseusdo random directory
+     * @return string A pseudo random directory
      */
     private function getDirectory()
     {

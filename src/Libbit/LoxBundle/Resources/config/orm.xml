@@ -8,11 +8,13 @@
         <parameter key="libbit_lox.item_manager.class">Libbit\LoxBundle\Entity\ItemManager</parameter>
         <parameter key="libbit_lox.link_manager.class">Libbit\LoxBundle\Entity\LinkManager</parameter>
         <parameter key="libbit_lox.share_manager.class">Libbit\LoxBundle\Entity\ShareManager</parameter>
+        <parameter key="libbit_lox.identity_manager.class">Libbit\LoxBundle\Entity\IdentityManager</parameter>
     </parameters>
 
     <services>
         <service id="libbit_lox.item_manager" class="%libbit_lox.item_manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.context" />
         </service>
 
         <service id="libbit_lox.link_manager" class="%libbit_lox.link_manager.class%">
@@ -23,6 +25,11 @@
         <service id="libbit_lox.share_manager" class="%libbit_lox.share_manager.class%">
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="libbit_lox.identity_manager" class="%libbit_lox.identity_manager.class%" scope="request">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="request" />
         </service>
     </services>
 </container>

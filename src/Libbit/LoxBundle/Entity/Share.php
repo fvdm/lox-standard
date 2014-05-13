@@ -16,6 +16,8 @@ use Rednose\FrameworkBundle\Entity\Group;
 class Share
 {
     /**
+     * Internal share id
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,6 +27,8 @@ class Share
     protected $id;
 
     /**
+     * The item (folder) that is shared
+     *
      * @ORM\OneToOne(targetEntity="Libbit\LoxBundle\Entity\Item")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="CASCADE")
      *
@@ -66,6 +70,9 @@ class Share
     protected $groups;
 
     /**
+     * The identities that this item is shared with.
+     * Either individual users, or entire groups.
+     *
      * @Serializer\Type("array")
      * @Serializer\Accessor(getter="getIdentities")
      * @Serializer\Groups({"details"})

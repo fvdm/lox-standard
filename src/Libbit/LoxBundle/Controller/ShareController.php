@@ -8,11 +8,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
+use Libbit\LoxBundle\Entity\ItemManager;
+use Libbit\LoxBundle\Entity\ShareManager;
 
 class ShareController extends Controller
 {
+    // -- Web Methods ----------------------------------------------------------
+
     /**
      * @Route("/shares/{path}", name="libbit_lox_shares_get", requirements={"path" = ".+"}, defaults={"path" = ""})
      * @Method({"GET"})
@@ -54,12 +59,16 @@ class ShareController extends Controller
      */
     public function newShareAction($path)
     {
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->get('doctrine')->getManager();
         $sm = $this->get('libbit_lox.share_manager');
 
         $user  = $this->get('security.context')->getToken()->getUser();
         $item  = $this->get('libbit_lox.item_manager')->findItemByPath($user, $path);
         $data  = json_decode($this->get('request')->getContent(), true);
+
+        if (!$item) {
+            throw $this->createNotFoundException();
+        }
 
         $groups = array();
         $users  = array();
@@ -76,7 +85,7 @@ class ShareController extends Controller
             }
         }
 
-        $share = $sm->createShare($item, $groups, $users);
+        $sm->createShare($item, $groups, $users);
 
         return new Response;
     }
@@ -88,7 +97,7 @@ class ShareController extends Controller
     public function editShareAction($id)
     {
         // TODO: Use Share manager so we create invites
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->get('doctrine')->getManager();
         $sm = $this->get('libbit_lox.share_manager');
 
         $share = $em->getRepository('Libbit\LoxBundle\Entity\Share')->findOneById($id);
@@ -138,12 +147,20 @@ class ShareController extends Controller
      */
     public function leaveShareAction($path)
     {
+        /** @var ItemManager $im */
         $im = $this->get('libbit_lox.item_manager');
+
+        /** @var ShareManager $sm */
         $sm = $this->get('libbit_lox.share_manager');
 
-        $user   = $this->get('security.context')->getToken()->getUser();
-        $item   = $im->findItemByPath($user, $path);
+        $user = $this->getUser();
+        $item = $im->findItemByPath($user, $path);
+
         $invite = $sm->findInvitationByItem($user, $item);
+
+        if ($invite === null) {
+            throw $this->createNotFoundException();
+        }
 
         $sm->revokeInvitation($invite);
 
@@ -151,80 +168,133 @@ class ShareController extends Controller
     }
 
     /**
-     * @Route("/identities", name="libbit_lox_identities")
+     * @Route("/share/identities", name="libbit_lox_identities")
      * @Method({"GET"})
      */
     public function getIdentitiesAction()
     {
-        $request = $this->get('request');
+        $callback = $this->get('request')->query->get('callback');
 
-        $query    = $request->query->get('q');
-        $callback = $request->query->get('callback');
+        $identManager = $this->get('libbit_lox.identity_manager');
 
-        $groups = $this->getGroups($query);
-        $users  = $this->getUsers($query);
-
-        $serializedGroups = array();
-        $serializedUsers  = array();
-
-        foreach ($groups as $group) {
-            $serializedGroups[] = array(
-                'id'    => 'group_'.$group->getId(),
-                'title' => $group->getName(),
-                'type'  => 'group',
-            );
-        }
-
-        foreach ($users as $user) {
-            $serializedUsers[] = array(
-                'id'    => 'user_'.$user->getId(),
-                'title' => $user->getBestName(),
-                'type'  => 'user',
-            );
-        }
-
-        $data = json_encode(array_merge($serializedGroups, $serializedUsers));
+        $data = $identManager->getIdentities();
+        $data = json_encode($data);
 
         return new Response($callback ? $callback.'('.$data.');' : $data, 200, array(
             'Content-Type' => 'application/json'
         ));
     }
 
-    protected function getGroups($query = '')
+    // -- API Methods ----------------------------------------------------------
+
+    /**
+     * Get share settings for an Item
+     *
+     * <p><strong>Example JSON response</strong></p>
+     * <pre>{
+     *    "id": 11,
+     *    "item": {
+     *        "is_dir"     : true,
+     *        "title"      : "Folder 5",
+     *        "modified_at": "2014-04-30T18:28:42+0200",
+     *        "is_shared"  : true,
+     *        "is_share"   : false,
+     *        "path"       : "\/Folder 5",
+     *        "icon"       : "folder-shared"
+     *    },
+     *    "identities": [
+     *        {
+     *            "id"   : "group_57",
+     *            "title": "Administrator",
+     *            "type" : "group"
+     *        }, {
+     *            "id"   : "user_39",
+     *            "title": "Demo user",
+     *            "type" : "user"
+     *        }
+     *    ]
+     *}</pre>
+     *
+     * @Route("/lox_api/shares/{path}", name="libbit_lox_api_shares_get", requirements={"path" = ".+"}, defaults={"path" = ""})
+     * @Method({"GET"})
+     *
+     * @ApiDoc(
+     *     section="Share",
+     *     output={ "class"="Libbit\LoxBundle\Entity\Share",
+     *         "groups"={"details"}
+     *     },
+     *
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
+     * )
+     */
+    public function getApiShareAction($path)
     {
-        $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
-
-        $qb->select('g');
-        $qb->from('RednoseFrameworkBundle:Group', 'g');
-
-        if ($query !== null) {
-            $qb->add('where', $qb->expr()->like('g.name', ':name'));
-            $qb->setParameter('name', '%'.$query.'%');
-        }
-
-        $qb->orderBy('g.name', 'ASC');
-
-        return $qb->getQuery()->execute();
+        return $this->getShareAction($path);
     }
 
-    protected function getUsers($query = '')
+    /**
+     * Create new share settings for an Item
+     *
+     * <p><strong>Example JSON request</strong></p>
+     * <pre>{
+     *    "identities":[
+     *        {
+     *            "id":"group_57",
+     *            "type":"group"
+     *        }, {
+     *            "id":"user_39",
+     *            "type":"user"
+     *        }
+     *    ]
+     *}</pre>
+     *
+     * @Route("/lox_api/share_create/{path}", name="libbit_lox_api_shares_new", requirements={"path" = ".+"}, defaults={"path" = ""})
+     * @Method({"POST"})
+     *
+     * @ApiDoc(
+     *     section="Share",
+     *
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
+     * )
+     */
+    public function newApiShareAction($path)
     {
-        $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
+        return $this->newShareAction($path);
+    }
 
-        $qb->select('u');
-        $qb->from('RednoseFrameworkBundle:User', 'u');
-
-        if ($query !== null) {
-            $qb->add('where', $qb->expr()->orX(
-                $qb->expr()->like('u.username', ':name'),
-                $qb->expr()->like('u.realname', ':name')
-            ));
-
-            $qb->setParameter('name', '%'.$query.'%');
-        }
-
-        $qb->orderBy('u.realname, u.username', 'ASC');
-
-        return $qb->getQuery()->execute();
+    /**
+     * Update share settings for an Item
+     *
+     * <p><strong>Example JSON request</strong></p>
+     * <pre>{
+     *    "identities":[
+     *        {
+     *            "id":"group_57",
+     *            "type":"group"
+     *        }, {
+     *            "id":"user_39",
+     *            "type":"user"
+     *        }
+     *    ]
+     *}</pre>
+     *
+     * @Route("/lox_api/shares/{id}/edit", name="libbit_lox_api_shares_edit")
+     * @Method({"POST"})
+     *
+     * @ApiDoc(
+     *     section="Share",
+     *
+     *     statusCodes={
+     *         200="Returned when successful."
+     *     }
+     * )
+     */
+    public function editApiShareAction($id)
+    {
+        return $this->editShareAction($id);
     }
 }

@@ -2,21 +2,37 @@
 
 namespace Libbit\LoxBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Rednose\FrameworkBundle\Entity\User;
 use Libbit\LoxBundle\Events;
 use Libbit\LoxBundle\Event\LinkEvent;
+use Doctrine\ORM\EntityRepository;
 
 class LinkManager
 {
+    /**
+     * @var EventDispatcherInterface
+     */
     protected $dispatcher;
 
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
+    /**
+     * @var EntityRepository
+     */
     protected $repository;
 
+    /**
+     * Constructor.
+     *
+     * @param EventDispatcherInterface $dispatcher
+     * @param EntityManager            $em
+     */
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em)
     {
         $this->dispatcher = $dispatcher;
@@ -24,7 +40,16 @@ class LinkManager
         $this->repository = $em->getRepository('Libbit\LoxBundle\Entity\Link');
     }
 
-    public function createLink(Item $item, User $user)
+    /**
+     * @param Item     $item
+     * @param User     $user
+     * @param DateTime $expires
+     *
+     * @return Link
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function createLink(Item $item, User $user, DateTime $expires = null)
     {
         if ($item instanceof Item === false) {
             throw new \InvalidArgumentException('No item provided.');
@@ -42,6 +67,7 @@ class LinkManager
 
         $link->setItem($item);
         $link->setOwner($user);
+        $link->setExpires($expires);
 
         $this->em->persist($link);
         $this->em->flush();
@@ -52,13 +78,45 @@ class LinkManager
         return $link;
     }
 
+    /**
+     * @param integer  $id
+     * @param User     $user
+     * @param DateTime $expires
+     *
+     * @return Link
+     */
+    public function updateLink($id, User $user, DateTime $expires = null)
+    {
+        if ($link = $this->repository->findOneById($id)) {
+            $link->setExpires($expires);
+
+            if ($link->getOwner()->getId() === $user->getId()) {
+                $this->em->persist($link);
+                $this->em->flush();
+            }
+
+            return $link;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param Link $link
+     */
     public function removeLink(Link $link)
     {
         $this->em->remove($link);
         $this->em->flush();
     }
 
-    public function getLinkByPath($path)
+    /**
+     * @param string $path
+     * @param bool   $checkExpired
+     *
+     * @return Link
+     */
+    public function getLinkByPath($path, $checkExpired = false)
     {
         if (false === $pos = strpos($path, '/')) {
             return null;
@@ -73,9 +131,20 @@ class LinkManager
             return null;
         }
 
+        $now = new \DateTime();
+
+        if ($checkExpired && $link->getExpires() !== null && $link->getExpires()->getTimestamp() < $now->getTimestamp()) {
+            return null;
+        }
+
         return $link;
     }
 
+    /**
+     * @param integer $id
+     *
+     * @return Link
+     */
     public function getLinkByPublicId($id)
     {
         return $this->repository->findOneBy(array(
@@ -83,6 +152,12 @@ class LinkManager
         ));
     }
 
+    /**
+     * @param User $user
+     * @param Item $item
+     *
+     * @return Link
+     */
     public function findLinkByUser(User $user, Item $item)
     {
         return $this->repository->findOneBy(array(
@@ -91,6 +166,11 @@ class LinkManager
         ));
     }
 
+    /**
+     * @param User $user
+     *
+     * @return Link[]
+     */
     public function findAllByUser(User $user)
     {
         $links = $this->em->createQueryBuilder()

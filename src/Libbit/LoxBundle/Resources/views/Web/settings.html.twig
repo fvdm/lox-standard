@@ -1,0 +1,172 @@
+{% extends 'LibbitLoxBundle::layout.html.twig' %}
+{% import 'LibbitLoxBundle::sidenav.html.twig' as sidenav %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span2 libbit-lox-sidebar">
+            {{ sidenav.nav(share_manager.getPendingCountForUser(app.user)) }}
+        </div>
+
+        <div class="span10 libbit-lox-content">
+            <section id="settings">
+                <div class="page-header">
+                    <h1>{% trans %}header_settings{% endtrans %}</h1>
+                </div>
+                <h3><small>{% trans %}header_account{% endtrans %}</small></h3>
+                <p>{{ user.bestname }}</p>
+                <p>{{ user.email }}</p>
+                <hr/>
+                <h3><small>{% trans %}header_security{% endtrans %}</small></h3>
+                <p><button id="change-password-button" class="btn btn-link" style="border: 0; padding: 0;">{% trans %}button_change_password{% endtrans %}</button></p>
+                <hr/>
+                <h3><small>{% trans %}header_language{% endtrans %}</small></h3>
+                <p>{% if app.request.locale == 'nl' %}Nederlands{% else %}English{% endif %} <a id="change-language-button" href="#">{% trans %}button_change{% endtrans %}</a></p>
+                <hr/>
+                <h3><small>{% trans %}header_email_notifications{% endtrans %}</small></h3>
+                <label id="email_add_update" class="checkbox">
+                    <input type="checkbox" {% if email %}checked{% endif %}> {% trans %}email_notifications_add_update{% endtrans %}
+                </label>
+            </section>
+        </div>
+    </div>
+
+    <script>
+
+        YUI().use('lox-page', 'rednose-dialog', 'rednose-app', function (Y) {
+            var TXT_CHANGE_PASSWORD_TITLE  = '{% trans %}title_change_password{% endtrans %}',
+                TXT_CHANGE_PASSWORD_BUTTON = '{% trans %}button_change_password{% endtrans %}',
+                TXT_LABEL_CURRENT_PASSWORD = '{% trans %}label_current_password{% endtrans %}',
+                TXT_LABEL_NEW_PASSWORD     = '{% trans %}label_new_password{% endtrans %}',
+                TXT_LABEL_VERIFICATION     = '{% trans %}label_change_verification{% endtrans %}',
+                TXT_PASSWORDS_DO_NOT_MATCH = '{% trans %}error_password_do_not_match{% endtrans %}';
+
+            var TXT_CHANGE_LANGUAGE_TITLE  = '{% trans %}title_language{% endtrans %}',
+                TXT_CHANGE_LANGUAGE_BUTTON = '{% trans %}button_language{% endtrans %}';
+
+            new Y.Lox.Page().render();
+
+            var changePasswordButton = Y.one('#change-password-button'),
+                changeLanguageButton = Y.one('#change-language-button'),
+                emailAddUpdateButton = Y.one('#email_add_update');
+
+            changePasswordButton.on('click', function (e) {
+                e.target.blur();
+
+                var html =
+                    '<fieldset>' +
+                        '<div class="control-group">' +
+                            '<label class="control-label" for="current">{current}</label>' +
+                            '<div class="controls">' +
+                                '<input class="input-block-level" id="current" type="password" autofocus/>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="control-group">' +
+                            '<label class="control-label" for="password">{password}</label>' +
+                            '<div class="controls">' +
+                                '<input class="input-block-level" data-path="password" id="password" type="password"/>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="control-group">' +
+                            '<label class="control-label" for="verification">{verification}</label>' +
+                            '<div class="controls">' +
+                                '<input class="input-block-level" id="verification" type="password"/>' +
+                            '</div>' +
+                        '</div>' +
+                    '</fieldset>';
+
+                var dialog = Y.Rednose.Dialog.prompt({
+                    title: TXT_CHANGE_PASSWORD_TITLE,
+                    confirm: TXT_CHANGE_PASSWORD_BUTTON,
+
+                    html: Y.Lang.sub(html, {
+                        current     : TXT_LABEL_CURRENT_PASSWORD,
+                        password    : TXT_LABEL_NEW_PASSWORD,
+                        verification: TXT_LABEL_VERIFICATION
+                    })
+                }, function (node) {
+                    var current      = node.one('#current').get('value'),
+                        password     = node.one('#password').get('value'),
+                        verification = node.one('#verification').get('value');
+
+                    if (current === '' || password === '' || verification === '') {
+                        return false;
+                    }
+
+                    if (password !== verification) {
+                        dialog.set('error', {path: 'password', message: TXT_PASSWORDS_DO_NOT_MATCH});
+
+                        return false
+                    }
+
+                    Y.io(YUI.Env.routing.change_password, {
+                        method: 'POST',
+                        data: {
+                            'current_password': current,
+                            'new_password': password
+                        }
+                    });
+
+                    return true;
+                });
+            });
+
+            changeLanguageButton.on('click', function (e) {
+                e.preventDefault();
+
+                var html =
+                    '<fieldset style="margin-left: 1px">' +
+                        '<label class="radio">' +
+                            '<input type="radio" name="language" value="en" checked>' +
+                                'English' +
+                        '</label>' +
+                        '<label class="radio">' +
+                            '<input type="radio" name="language" value="nl">' +
+                                'Nederlands' +
+                        '</label>' +
+                    '</fieldset>';
+
+                var dialog = Y.Rednose.Dialog.prompt({
+                    title  : TXT_CHANGE_LANGUAGE_TITLE,
+                    confirm: TXT_CHANGE_LANGUAGE_BUTTON,
+                    html   : html
+                }, function (node) {
+                    var language = node.one('[name=language]:checked').get('value');
+
+                    Y.io(YUI.Env.routing.change_locale, {
+                        method: 'POST',
+                        data: {
+                            'locale': language
+                        },
+                        on: {
+                            success: function (tx, r) {
+                                location.reload(true);
+                            }
+                        }
+                    });
+                });
+            });
+
+            emailAddUpdateButton.on('change', function (e) {
+                var value = e.target.get('checked');
+
+                Y.Rednose.App.showSpinner();
+
+                Y.io(YUI.Env.routing.change_preferences, {
+                    method: 'POST',
+                    data: {
+                        'email': value
+                    },
+                    on: {
+                        success: function (tx, r) {
+                            Y.Rednose.App.hideSpinner();
+                        },
+                        failure: function (tx, r) {
+                            Y.Rednose.App.hideSpinner();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -138,4 +138,14 @@ class Revision
     {
         $this->filePath = $path;
     }
+
+    public function setFileName($name)
+    {
+        $this->fileName = $name;
+    }
+
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
 }

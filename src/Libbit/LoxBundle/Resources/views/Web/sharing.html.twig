@@ -11,21 +11,21 @@
   <div class="span10 libbit-lox-content">
     <section id="sharing">
         <div class="page-header">
-            <h1>Sharing</h1>
+            <h1>{% trans %}header_sharing{% endtrans %}</h1>
         </div>
         <div id="sharing-tabs" class="hide">
             <ul>
-                <li><a href="#">Invites</a></li>
-                <li><a href="#">My shared folders</a></li>
+                <li><a href="#">{% trans %}tab_invites{% endtrans %}</a></li>
+                <li><a href="#">{% trans %}tab_shared_folders{% endtrans %}</a></li>
             </ul>
             <div>
                 <div>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="span4">Name</th>
-                                <th class="span2">Sender</th>
-                                <th class="span3">Date</th>
+                                <th class="span4">{% trans %}th_name{% endtrans %}</th>
+                                <th class="span2">{% trans %}th_sender{% endtrans %}</th>
+                                <th class="span3">{% trans %}th_date{% endtrans %}</th>
                                 <th class="span1"></th>
                             </tr>
                         </thead>
@@ -47,16 +47,16 @@
                                     <td class="span3">{{ invite.createdAt|date }}</td>
                                     <td class="span1">
                                         {% if invite.state == constant('Libbit\\LoxBundle\\Entity\\Invitation::STATE_ACCEPTED') %}
-                                            <a class="pull-right" rel="tooltip" title="{% trans %}Leave folder{% endtrans %}" href="{{ path('libbit_lox_invitation_revoke', { id: invite.id }) }}">
-                                                {% trans %}Leave{% endtrans %}
+                                            <a class="pull-right" rel="tooltip" title="{% trans %}tooltip_leave_folder{% endtrans %}" href="{{ path('libbit_lox_invitation_revoke', { id: invite.id }) }}">
+                                                {% trans %}btn_leave_folder{% endtrans %}
                                             </a>
                                         {% elseif invite.state == constant('Libbit\\LoxBundle\\Entity\\Invitation::STATE_PENDING') %}
-                                            <a class="pull-right" rel="tooltip" title="{% trans %}Join folder{% endtrans %}" href="{{ path('libbit_lox_invitation_accept', { id: invite.id }) }}">
-                                                {% trans %}Join{% endtrans %}
+                                            <a class="pull-right" rel="tooltip" title="{% trans %}tooltip_join_folder{% endtrans %}" href="{{ path('libbit_lox_invitation_accept', { id: invite.id }) }}">
+                                                {% trans %}btn_join_folder{% endtrans %}
                                             </a>
                                         {% else %}
-                                            <a class="pull-right" rel="tooltip" title="{% trans %}Rejoin folder{% endtrans %}" href="{{ path('libbit_lox_invitation_accept', { id: invite.id }) }}">
-                                                {% trans %}Rejoin{% endtrans %}
+                                            <a class="pull-right" rel="tooltip" title="{% trans %}tooltip_rejoin_folder{% endtrans %}" href="{{ path('libbit_lox_invitation_accept', { id: invite.id }) }}">
+                                                {% trans %}btn_rejoin_folder{% endtrans %}
                                             </a>
                                         {% endif %}
                                     </td>
@@ -64,7 +64,7 @@
                             {% endfor %}
                             {% else %}
                                 <tr>
-                                    <td colspan="4"><h4>You don't have any invitations at this moment</h4></td>
+                                    <td colspan="4"><h4>{% trans %}td_no_invites_yet{% endtrans %}</h4></td>
                                 </tr>
                             {% endif %}
                         </tbody>
@@ -74,8 +74,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="span6">Name</th>
-                                <th class="span3">Date</th>
+                                <th class="span6">{% trans %}th_name{% endtrans %}</th>
+                                <th class="span3">{% trans %}th_date{% endtrans %}</th>
                                 <th class="span1"></th>
                             </tr>
                         </thead>
@@ -90,16 +90,16 @@
                                     <td class="span3">{{ share.createdAt|date }}</td>
                                     <td class="span1">
                                         {% set path = item_manager.getPathForUser(app.user, share.item) %}
-                                        <a class="share-settings pull-right" rel="tooltip" title="{% trans %}Shared folder settings{% endtrans %}" href="#" data-path="{{ path }}">{% trans %}Settings{% endtrans %}</a>
+                                        <a class="share-settings pull-right" rel="tooltip" title="{% trans %}tooltip_shared_folder_settings{% endtrans %}" href="#" data-path="{{ path }}">{% trans %}btn_shared_folder_settings{% endtrans %}</a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             <tr class="no-shares hide">
-                                <td colspan="3"><h4>Currently none of your folders are shared with other users</h4></td>
+                                <td colspan="3"><h4>{% trans %}td_no_shared_folders{% endtrans %}</h4></td>
                             </tr>
                         {% else %}
                             <tr class="no-shares">
-                                <td colspan="3"><h4>Currently none of your folders are shared with other users</h4></td>
+                                <td colspan="3"><h4>{% trans %}td_no_shared_folders{% endtrans %}</h4></td>
                             </tr>
                         {% endif %}
                         </tbody>
@@ -112,6 +112,13 @@
 </div>
 <script>
     YUI().use('lox-page', 'tabview', 'lox-app-folder-share-view', 'rednose-panel', 'rednose-dialog', 'rednose-notifier', 'rednose-tooltip', function (Y) {
+
+        var TEXT_UNSHARE        = '{% trans %}confirmation_btn_unshare{% endtrans %}',
+            TEXT_UNSHARE_TITLE  = '{% trans %}confirmation_title_unshare{% endtrans %}',
+            TEXT_UNSHARE_BODY   = '{% trans %}confirmation_body_unshare{% endtrans %}',
+            TEXT_TITLE_UNSHARED = '{% trans %}notification_title_share_removed{% endtrans %}',
+            TEXT_ITEM_UNSHARED  = '{% trans %}notification_body_share_removed{% endtrans %}';
+
         // -- Init Page Module -----------------------------------------------------
 
         new Y.Lox.Page().render();
@@ -147,7 +154,6 @@
                 a     = e.currentTarget,
                 path  = a.getAttribute('data-path');
 
-            // FIXME: Duplicates code from lox-app-base.
             share.load({ path: path }, function () {
                 view = new Y.Lox.App.FolderShareView({
                     model: share
@@ -165,24 +171,15 @@
                 });
 
                 view.on('*:buttonConfirm', function (e) {
-                    // FIXME: Duplicates code from lox-app-base.
                     var model = e.data.model,
                         self  = this;
 
-                    // TODO: Show spinner.
                     model.save(function () {
                         panel.destroy();
                     });
                 });
 
                 view.on('*:buttonRemove', function (e) {
-                    // FIXME: Duplicates code from lox-app-base.
-                    var TEXT_UNSHARE        = 'Unshare',
-                        TEXT_UNSHARE_TITLE  = 'Unshare folder \'{item}\'?',
-                        TEXT_UNSHARE_BODY   = 'The folder will no longer be shared and will be visible to only you. Are you sure you want to stop sharing?',
-                        TEXT_TITLE_UNSHARED = 'Share removed',
-                        TEXT_ITEM_UNSHARED  = 'The folder is no longer shared';
-
                     var model = e.data.model,
                         self  = this;
 

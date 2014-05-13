@@ -68,7 +68,7 @@ class MetadataController extends Controller
     // -- API Methods ----------------------------------------------------------
 
     /**
-     * Returns metadata fot the item at <code>&lt;path&gt;</code>.
+     * Returns metadata for the item at <code>&lt;path&gt;</code>.
      * <p><strong>Example JSON response</strong></p>
      * <pre>{
      *     "title": "Home",
@@ -76,6 +76,7 @@ class MetadataController extends Controller
      *     "modified_at": "2013-10-04T11:00:21+0200",
      *     "is_dir": true,
      *     "is_share": false,
+     *     "has_keys": false,
      *     "children": [
      *         {
      *             "title": "test.txt",
@@ -84,6 +85,7 @@ class MetadataController extends Controller
      *             "modified_at": "2013-10-04T14:17:57+0200",
      *             "is_dir": false,
      *             "is_share": false,
+     *             "has_keys": false,
      *             "revision": 3
      *         }
      *     ],

@@ -26,7 +26,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new FOS\RestBundle\FOSRestBundle(),
 
-            new Sonata\NotificationBundle\SonataNotificationBundle(),
+//            new Sonata\NotificationBundle\SonataNotificationBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
 
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
@@ -34,9 +34,9 @@ class AppKernel extends Kernel
             new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
 
             new Sonata\AdminBundle\SonataAdminBundle(),
-            new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
@@ -45,7 +45,7 @@ class AppKernel extends Kernel
             new Rednose\ApiDocBundle\RednoseApiDocBundle(),
 
             new Rednose\FrameworkBundle\RednoseFrameworkBundle(),
-            new Rednose\CdnBundle\RednoseCdnBundle(),
+            new Rednose\ComboHandlerBundle\RednoseComboHandlerBundle(),
             new Rednose\YuiBundle\RednoseYuiBundle(),
             new Rednose\KerberosBundle\RednoseKerberosBundle(),
 
