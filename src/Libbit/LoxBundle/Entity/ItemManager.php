@@ -159,6 +159,7 @@ class ItemManager
         $itemKey = new ItemKey;
         $itemKey->setKey($key);
         $itemKey->setIv($iv);
+        $itemKey->setUser($user);
         $itemKey->setOwner($owner);
         $itemKey->setItem($item);
 

@@ -50,7 +50,7 @@ class ItemKey
      *
      * @var string
      *
-     * @ORM\Column(type="string", name="key", nullable=false)
+     * @ORM\Column(type="string", name="`key`", nullable=false)
      */
     protected $key;
 
