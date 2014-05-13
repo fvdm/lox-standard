@@ -169,6 +169,8 @@ clear
 echo "[LocalBox Notice] vhost setup"
 read -p "Please specify path to the localbox installation. eg. /opt/lox-standard  or /var/www/lox-standard: " answerPath
 
+rm -rf /etc/apache2/sites-enabled/*
+
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
   DocumentRoot "$answerPath/web"
@@ -179,7 +181,8 @@ VHOST=$(cat <<EOF
 </VirtualHost>
 EOF
 )
-echo "${VHOST}" > /etc/apache2/sites-enabled/000-default
+echo "${VHOST}" > /etc/apache2/sites-available/localbox.conf
+ln -s /etc/apache2/sites-available/localbox.conf /etc/apache2/sites-enabled/localbox.conf
 fi
 
 # Restart Apache
