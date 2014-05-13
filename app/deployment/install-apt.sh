@@ -162,7 +162,7 @@ rm -rf app/logs/*
 app/deployment/post-install.sh
 
 # *** Apache: install vhost ***
-# When the user makes a clean install, wnoe will provide him/her with a simple
+# When the user makes a clean install, we will provide him/her with a simple
 # vhost setup
 if [[ $apacheCleanInstall ]]; then
 clear
@@ -171,6 +171,10 @@ read -p "Please specify path to the localbox installation. eg. /opt/lox-standard
 
 rm -rf /etc/apache2/sites-enabled/*
 
+var1="12.04"
+var2=`lsb_release -r | awk '{print $2}'`
+
+if [ "$var2" == "$var1" ]; then
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
   DocumentRoot "$answerPath/web"
@@ -181,6 +185,20 @@ VHOST=$(cat <<EOF
 </VirtualHost>
 EOF
 )
+else
+VHOST=$(cat <<EOF
+<VirtualHost *:80>
+  DocumentRoot "$answerPath/web"
+  ServerName localhost
+  <Directory "$answerPath/web">
+    AllowOverride All
+    Require all granted
+  </Directory>
+</VirtualHost>
+EOF
+)
+fi
+
 echo "${VHOST}" > /etc/apache2/sites-available/localbox.conf
 ln -s /etc/apache2/sites-available/localbox.conf /etc/apache2/sites-enabled/localbox.conf
 fi
