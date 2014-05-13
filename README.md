@@ -59,6 +59,7 @@ Execute the following commands after updating an **existing** LocalBox installat
         [sudo] app/deployment/post-update.sh
 
 The update script uses 777 permissions on the writable dirs for platform portability. For more restrictive permissions, use something like ACL, depending on your platform. Write permissions are required for both the console user and the apache user.
+
 The update script might not work properly when using an older proof-of-concept version of LocalBox, especially if there are duplicate entries in the Items-table of your database. Should you encounter problems while running the update script on an old proof-of-concept version of LocalBox, we recommend that you do a full clean install instead. 
 
 ## Default User Accounts
