@@ -2,9 +2,7 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Libbit\LoxBundle\Entity\Item;
-
-class KeyTest extends WebTestCase
+class KeyControllerTest extends WebTestCase
 {
     /**
      * Super secret text
@@ -120,6 +118,7 @@ class KeyTest extends WebTestCase
 
         openssl_private_decrypt($key, $keyDecrypted, $decrypterPointer);
 
+        $this->assertEquals(true, $item->hasKeys());
         $this->assertEquals($keyPlain, $keyDecrypted);
     }
 
@@ -139,6 +138,7 @@ class KeyTest extends WebTestCase
             ))
         );
 
+        $this->assertEquals(false, $item->hasKeys());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
@@ -183,10 +183,5 @@ class KeyTest extends WebTestCase
     protected function getPrivateKey()
     {
         return file_get_contents(__DIR__.'/Fixtures/private.pem');
-    }
-
-    protected function getRoute($name, $variables)
-    {
-        return $this->client->getContainer()->get('router')->generate($name, $variables, false);
     }
 }

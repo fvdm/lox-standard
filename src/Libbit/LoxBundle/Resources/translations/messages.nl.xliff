@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="nl" datatype="plaintext" original="" >
+        <body>
+            <trans-unit id="header_links">
+                <source>header_links</source>
+                <target>Links</target>
+            </trans-unit>
+            <trans-unit id="th_name">
+                <source>th_name</source>
+                <target>Naam</target>
+            </trans-unit>
+            <trans-unit id="th_date">
+                <source>th_date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="th_sender">
+                <source>th_sender</source>
+                <target>Sender</target>
+            </trans-unit>
+            <trans-unit id="th_expires">
+                <source>th_expires</source>
+                <target>Verloopt</target>
+            </trans-unit>
+            <trans-unit id="td_no_links_yet">
+                <source>td_no_links_yet</source>
+                <target>Je hebt nog geen links aangemaakt.</target>
+            </trans-unit>
+            <trans-unit id="tooltip_link_edit">
+                <source>tooltip_link_properties</source>
+                <target>Link bewerken</target>
+            </trans-unit>
+            <trans-unit id="header_sharing">
+                <source>header_sharing</source>
+                <target>Delen</target>
+            </trans-unit>
+            <trans-unit id="tab_invites">
+                <source>tab_invites</source>
+                <target>Uitnodigingen</target>
+            </trans-unit>
+            <trans-unit id="tab_shared_folders">
+                <source>tab_shared_folders</source>
+                <target>Mijn gedeelde mappen</target>
+            </trans-unit>
+            <trans-unit id="btn_leave_folder">
+                <source>btn_leave_folder</source>
+                <target>Verlaten</target>
+            </trans-unit>
+            <trans-unit id="tooltip_leave_folder">
+                <source>tooltip_leave_folder</source>
+                <target>Map verlaten</target>
+            </trans-unit>
+            <trans-unit id="btn_join_folder">
+                <source>btn_join_folder</source>
+                <target>Lid worden</target>
+            </trans-unit>
+            <trans-unit id="tooltip_join_folder">
+                <source>tooltip_join_folder</source>
+                <target>Lid worden van map</target>
+            </trans-unit>
+            <trans-unit id="btn_rejoin_folder">
+                <source>btn_rejoin_folder</source>
+                <target>Opnieuw lid worden</target>
+            </trans-unit>
+            <trans-unit id="tooltip_rejoin_folder">
+                <source>tooltip_rejoin_folder</source>
+                <target>Opnieuw lid worden van map</target>
+            </trans-unit>
+            <trans-unit id="td_no_invites_yet">
+                <source>td_no_invites_yet</source>
+                <target>Je hebt momenteel geen uitnodigingen.</target>
+            </trans-unit>
+            <trans-unit id="btn_shared_folder_settings">
+                <source>btn_shared_folder_settings</source>
+                <target>Instellingen</target>
+            </trans-unit>
+            <trans-unit id="tooltip_shared_folder_settings">
+                <source>tooltip_shared_folder_settings</source>
+                <target>Instellingen voor gedeelde map</target>
+            </trans-unit>
+            <trans-unit id="td_no_shared_folders">
+                <source>td_no_shared_folders</source>
+                <target>Je deelt momenteel geen mappen met andere gebruikers.</target>
+            </trans-unit>
+            <trans-unit id="confirmation_btn_unshare">
+                <source>confirmation_btn_unshare</source>
+                <target>Niet meer delen</target>
+            </trans-unit>
+            <trans-unit id="confirmation_title_unshare">
+                <source>confirmation_title_unshare</source>
+                <target>Map \"{item}\" niet meer delen?</target>
+            </trans-unit>
+            <trans-unit id="confirmation_body_unshare">
+                <source>confirmation_body_unshare</source>
+                <target>De map zal niet langer worden gedeeld en zal alleen zichtbaar zijn voor jezelf. Weet je zeker dat je de map niet meer wilt delen?</target>
+            </trans-unit>
+            <trans-unit id="notification_title_share_removed">
+                <source>notification_title_share_removed</source>
+                <target>Map niet meer gedeeld</target>
+            </trans-unit>
+            <trans-unit id="notification_body_share_removed">
+                <source>notification_body_share_removed</source>
+                <target>De map wordt niet meer gedeeld.</target>
+            </trans-unit>
+            <trans-unit id="menu_register_app">
+                <source>menu_register_app</source>
+                <target>App registreren</target>
+            </trans-unit>
+            <trans-unit id="menu_notifications">
+                <source>menu_notifications</source>
+                <target>Gebeurtenissen</target>
+            </trans-unit>
+            <trans-unit id="side_nav_home">
+                <source>side_nav_home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="side_nav_sharing">
+                <source>side_nav_sharing</source>
+                <target>Delen</target>
+            </trans-unit>
+            <trans-unit id="side_nav_links">
+                <source>side_nav_links</source>
+                <target>Links</target>
+            </trans-unit>
+            <trans-unit id="header_settings">
+                <source>header_settings</source>
+                <target>Persoonlijke instellingen</target>
+            </trans-unit>
+            <trans-unit id="title_change_password">
+                <source>title_change_password</source>
+                <target>Uw wachtwoord wijzigen</target>
+            </trans-unit>
+            <trans-unit id="label_current_password">
+                <source>label_current_password</source>
+                <target>Huidige wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="label_new_password">
+                <source>label_new_password</source>
+                <target>Nieuw wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="label_change_verification">
+                <source>label_change_verification</source>
+                <target>Bevestig wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="button_change_password">
+                <source>button_change_password</source>
+                <target>Wachtwoord wijzigen</target>
+            </trans-unit>
+            <trans-unit id="error_password_do_not_match">
+                <source>error_password_do_not_match</source>
+                <target>Wachtwoorden komen niet overeen</target>
+            </trans-unit>
+            <trans-unit id="button_change">
+                <source>button_change</source>
+                <target>Aanpassen</target>
+            </trans-unit>
+            <trans-unit id="header_account">
+                <source>header_account</source>
+                <target>Account</target>
+            </trans-unit>
+            <trans-unit id="header_security">
+                <source>header_security</source>
+                <target>Veiligheid</target>
+            </trans-unit>
+            <trans-unit id="header_language">
+                <source>header_language</source>
+                <target>Taal</target>
+            </trans-unit>
+            <trans-unit id="title_language">
+                <source>title_language</source>
+                <target>Taal wijzigen</target>
+            </trans-unit>
+            <trans-unit id="button_language">
+                <source>button_language</source>
+                <target>Toepassen</target>
+            </trans-unit>
+            <trans-unit id="header_email_notifications">
+                <source>header_email_notifications</source>
+                <target>E-mail notificaties</target>
+            </trans-unit>
+            <trans-unit id="email_notifications_invites">
+                <source>email_notifications_invites</source>
+                <target>Bij het ​​ontvangen van een nieuwe uitnodiging</target>
+            </trans-unit>
+            <trans-unit id="email_notifications_add_update">
+                <source>email_notifications_add_update</source>
+                <target>Wanneer een gedeeld bestand wordt toegevoegd of geactualiseerd</target>
+            </trans-unit>
+            <trans-unit id="notification_accept_invite">
+                <source>You joined the folder %item%</source>
+                <target>De map %item% is nu met je gedeeld.</target>
+            </trans-unit>
+            <trans-unit id="notification_create_link">
+                <source>You created a link to the file %item%</source>
+                <target>Een link naar het bestand %item% is aangemaakt.</target>
+            </trans-unit>
+            <trans-unit id="notification_receive_invite">
+                <source>%user% invited you to the folder %item%</source>
+                <target>%user% wil de map %item% met je delen.</target>
+            </trans-unit>
+            <trans-unit id="notification_send_invite">
+                <source>You invited %user% to join the folder %item%</source>
+                <target>Je hebt %user% uitgenodigd voor de map %item%.</target>
+            </trans-unit>
+            <trans-unit id="mail_notification_subject">
+                <source>mail_notification_subject</source>
+                <target>Het bestand "%item%" is gewijzigd in één van je gedeelde mappen</target>
+            </trans-unit>
+            <trans-unit id="mail_notification_body">
+                <source>mail_notification_body</source>
+                <target>%actor% heeft het bestand "%item%" gewijzigd, in de volgende map: %path%.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

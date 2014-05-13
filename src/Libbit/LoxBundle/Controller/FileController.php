@@ -4,12 +4,10 @@ namespace Libbit\LoxBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Libbit\LoxBundle\Entity\Item;
 use Libbit\LoxBundle\Entity\Revision;
 use Libbit\LoxBundle\Entity\ItemManager;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use FOS\RestBundle\Request\ParamFetcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
@@ -17,9 +15,6 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Rednose\FrameworkBundle\HttpFoundation\DownloadResponse;
-use FOS\RestBundle\View\View;
-use JMS\Serializer\SerializationContext;
 use FOS\RestBundle\Util\Codes;
 
 class FileController extends Controller
@@ -33,10 +28,11 @@ class FileController extends Controller
     public function getAction($path)
     {
     	$request  = $this->get('request');
-        $token    = $request->query->get('token');
     	$download = $request->query->get('download');
- 	   	$im       = $this->get('libbit_lox.item_manager');
         $user     = $this->get('security.context')->getToken()->getUser();
+
+        /** @var ItemManager $im */
+        $im = $this->get('libbit_lox.item_manager');
 
     	$item = $im->findItemByPath($user, $path);
 

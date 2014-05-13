@@ -11,6 +11,8 @@ use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
+use Libbit\LoxBundle\Entity\ItemManager;
+use Libbit\LoxBundle\Entity\ShareManager;
 
 class ShareController extends Controller
 {
@@ -64,6 +66,10 @@ class ShareController extends Controller
         $item  = $this->get('libbit_lox.item_manager')->findItemByPath($user, $path);
         $data  = json_decode($this->get('request')->getContent(), true);
 
+        if (!$item) {
+            throw $this->createNotFoundException();
+        }
+
         $groups = array();
         $users  = array();
 
@@ -79,7 +85,7 @@ class ShareController extends Controller
             }
         }
 
-        $share = $sm->createShare($item, $groups, $users);
+        $sm->createShare($item, $groups, $users);
 
         return new Response;
     }
@@ -141,12 +147,20 @@ class ShareController extends Controller
      */
     public function leaveShareAction($path)
     {
+        /** @var ItemManager $im */
         $im = $this->get('libbit_lox.item_manager');
+
+        /** @var ShareManager $sm */
         $sm = $this->get('libbit_lox.share_manager');
 
-        $user   = $this->get('security.context')->getToken()->getUser();
-        $item   = $im->findItemByPath($user, $path);
+        $user = $this->getUser();
+        $item = $im->findItemByPath($user, $path);
+
         $invite = $sm->findInvitationByItem($user, $item);
+
+        if ($invite === null) {
+            throw $this->createNotFoundException();
+        }
 
         $sm->revokeInvitation($invite);
 

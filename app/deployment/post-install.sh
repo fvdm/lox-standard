@@ -28,8 +28,8 @@ app/console doctrine:fixtures:load -n
 # Install assets.
 app/console --env=prod assets:install --symlink web
 
-# Dump Assetic assets.
-app/console --env=prod assetic:dump
+# Install YUI assets.
+app/console --env=prod rednose:yui:install
 
 # Warm the cache.
 app/console --env=prod cache:warm

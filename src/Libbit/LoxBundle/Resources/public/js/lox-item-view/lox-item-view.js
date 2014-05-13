@@ -215,7 +215,7 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
                 method: 'POST',
                 data: { 'path': path + '/' + value },
                 on : {
-                    success : function (tx, r) {
+                    success: function (tx, r) {
                         var data = Y.JSON.parse(r.responseText),
                             item = new Y.Lox.ItemModel();
 
@@ -231,7 +231,7 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
 							type : 'success'
 						});
                     },
-                    failure : function (tx, r) {
+                    failure: function (tx, r) {
                         var err = r.responseText && Y.JSON.parse(r.responseText);
 
                         if (err.error) {
@@ -293,7 +293,8 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
         "view"
     ],
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });
 

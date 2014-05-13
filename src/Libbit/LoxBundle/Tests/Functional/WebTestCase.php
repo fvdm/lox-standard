@@ -84,6 +84,7 @@ class WebTestCase extends BaseWebTestCase
     protected function fixtureSetup()
     {
         // Create a group
+        $users = array();
         $group = $this->em->getRepository('Rednose\FrameworkBundle\Entity\Group')->findOneByName('Primary group');
 
         if ($group === null) {
@@ -112,6 +113,7 @@ class WebTestCase extends BaseWebTestCase
                 }
             }
 
+            $users[] = $user;
             $this->em->persist($user);
         }
 
@@ -125,18 +127,20 @@ class WebTestCase extends BaseWebTestCase
             'test-meta-dir',
             'test-meta.txt',
             'shared-dir',
+            'shared-dir-user2',
             'encrypted-dir',
             'existing-dir'
         );
 
         foreach ($items as $itemName) {
-            if ($this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $user, 'title' => $itemName)) === null) {
+            $owner = strpos($itemName, 'shared-dir-user2') === false ? $users[0] : $users[1];
+            if ($this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneBy(array('owner' => $owner, 'title' => $itemName)) === null) {
                 $root = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByOwner($user);
 
-                $item = new Item;
+                $item = new Item();
                 $item->setTitle($itemName);
                 $item->setIsDir(strpos($itemName, '.') === false);
-                $item->setOwner($user);
+                $item->setOwner($owner);
                 $item->setParent($root);
 
                 $this->em->persist($item);
@@ -146,12 +150,14 @@ class WebTestCase extends BaseWebTestCase
         $this->em->flush();
 
         // Create an OAuth token
-        $clientManager = $this->client->getContainer()->get('fos_oauth_server.client_manager.default');
-        $client = $clientManager->createClient();
-        $client->setName('Test Token');
+        if ($this->em->getRepository('Rednose\FrameworkBundle\Entity\Client')->findOneByName('Test token') === null) {
+            $clientManager = $this->client->getContainer()->get('fos_oauth_server.client_manager.default');
+            $client = $clientManager->createClient();
+            $client->setName('Test token');
 
-        $this->em->persist($client);
-        $this->em->flush();
+            $this->em->persist($client);
+            $this->em->flush();
+        }
 
         $this->client = self::createClient(array(), array(
             'PHP_AUTH_USER' => 'test1',
@@ -159,7 +165,7 @@ class WebTestCase extends BaseWebTestCase
         ));
     }
 
-    protected function getRoute($name, $variables)
+    protected function getRoute($name, $variables = array())
     {
         return $this->client->getContainer()->get('router')->generate($name, $variables, false);
     }

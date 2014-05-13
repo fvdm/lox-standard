@@ -27,4 +27,10 @@ final class Events
      * The listener receives a Libbit\LoxBundle\Event\LinkEvent instance.
      */
      const LINK_CREATED = 'libbit_lox.link.created';
- }
+
+    /**
+     * This event occurs after a new revision has been persisted to the backend.
+     * The listener receives a Libbit\LoxBundle\Event\RevisionEvent instance.
+     */
+    const REVISION_POST_PERSIST = 'libbit_lox.revision.post_persist';
+}

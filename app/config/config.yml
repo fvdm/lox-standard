@@ -2,7 +2,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-
 framework:
     translator:      { fallback: 'nl' }
     secret:          %secret%
@@ -13,7 +12,6 @@ framework:
     default_locale:  %locale%
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     session:         ~
-
 
 # Twig Configuration
 twig:
@@ -30,7 +28,6 @@ twig:
 
         app_backcolor: "0x1B1B1B"
         app_fontcolor: "0x999999"
-
 
 # Assetic Configuration
 assetic:
@@ -53,31 +50,25 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
-
-        # default_entity_manager: default
-        # entity_managers:
-        #     default:
-        #         connection: default
-        #         mappings:
-        #             SonataNotificationBundle: ~
+        auto_mapping:                true
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    encryption: ssl
-    auth_mode: login
-    spool:     { type: memory }
+    transport:      "%mailer_transport%"
+    host:           "%mailer_host%"
+    username:       "%mailer_user%"
+    password:       "%mailer_password%"
+    encryption:     ssl
+    auth_mode:      login
+    spool:          { type: memory }
+    sender_address: localbox@libbit.eu
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Rednose\FrameworkBundle\Entity\User
     group:
-        group_class: Rednose\FrameworkBundle\Entity\Group
+        group_class:   Rednose\FrameworkBundle\Entity\Group
         group_manager: fos_user.group_manager.default
 
 sonata_admin:
@@ -87,27 +78,7 @@ sonata_block:
     default_contexts: [cms]
     blocks:
         sonata.admin.block.admin_list:
-            contexts:   [admin]
-
-        sonata.block.service.text:
-        sonata.block.service.action:
-        sonata.block.service.rss:
-
-#sonata_notification:
-#    backend: sonata.notification.backend.doctrine
-#
-#    queues:
-#        - { queue: catchall, default: true }
-#
-#    backends:
-#       rabbitmq:
-#           exchange:     amq.direct
-#           connection:
-#               host:     localhost
-#               user:     guest
-#               pass:     guest
-#               port:     5672
-#               vhost:    /
+            contexts: [admin]
 
 fos_rest:
     param_fetcher_listener: true
@@ -121,16 +92,8 @@ nelmio_api_doc:
     sandbox:
         enabled: false
 
-fos_user:
-    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name: main
-    user_class: Rednose\FrameworkBundle\Entity\User
-    group:
-        group_class: Rednose\FrameworkBundle\Entity\Group
-        group_manager: fos_user.group_manager.default
-
 fos_oauth_server:
-    db_driver:  orm
+    db_driver:           orm
     client_class:        Rednose\FrameworkBundle\Entity\Client
     access_token_class:  Rednose\FrameworkBundle\Entity\AccessToken
     refresh_token_class: Rednose\FrameworkBundle\Entity\RefreshToken
@@ -140,9 +103,9 @@ fos_oauth_server:
         user_provider: rednose_framework.user_manager
 
         options:
-            access_token_lifetime: 3600
+            access_token_lifetime:  3600
             refresh_token_lifetime: 1209600
-            auth_code_lifetime: 30
+            auth_code_lifetime:     30
 
 knp_time: ~
 
@@ -151,21 +114,34 @@ vich_uploader:
 
     mappings:
         file:
-            delete_on_update: false # Don't delete on update, it breaks cloning
+            delete_on_update:   false # Don't delete on update, it breaks cloning
             upload_destination: %kernel.root_dir%/../data
-            namer: vich_uploader.namer_uniqid
-            directory_namer: directory_namer.dir_path
-            inject_on_load: true
+            namer:              vich_uploader.namer_uniqid
+            directory_namer:    directory_namer.dir_path
+            inject_on_load:     true
 
 rednose_framework:
     oauth: true
 
+rednose_combo_handler:
+    roots:
+        yui:        "bundles/rednoseyui"
+        rednose-ui: "yui/rednose-ui"
+        lox:        "bundles/libbitlox/js"
+
 rednose_yui:
-    groups:
-        - { name: rednose-ui, root: cdn/rednose-ui }
+    version:    3.9.0
+    gallery:    2014.04.02-20-01
+    combo_root: yui
+
+    assets:
+        rednose-ui: '%kernel.root_dir%/../vendor/rednose/rednose-ui/build'
+
+    combo_groups:
+        - "rednose-ui"
 
 rms_push_notifications:
     ios:
-        sandbox: true
-        pem: "%kernel.root_dir%/Resources/apns/apns_certificate_dev.pem"
+        sandbox:    true
+        pem:        "%kernel.root_dir%/Resources/apns/apns_certificate_dev.pem"
         passphrase: j7n9AiTLvCnMHd

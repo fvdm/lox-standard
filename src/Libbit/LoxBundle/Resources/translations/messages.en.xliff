@@ -18,33 +18,17 @@
                 <source>th_sender</source>
                 <target>Sender</target>
             </trans-unit>
+            <trans-unit id="th_expires">
+                <source>th_expires</source>
+                <target>Expires</target>
+            </trans-unit>
             <trans-unit id="td_no_links_yet">
                 <source>td_no_links_yet</source>
                 <target>You haven't created any public links yet</target>
             </trans-unit>
-            <trans-unit id="tooltip_remove_link">
-                <source>tooltip_remove_link</source>
-                <target>Remove link</target>
-            </trans-unit>
-            <trans-unit id="notification_title_deleted">
-                <source>notification_title_deleted</source>
-                <target>Deleted</target>
-            </trans-unit>
-            <trans-unit id="notification_body_deleted">
-                <source>notification_body_deleted</source>
-                <target>Link successfully deleted.</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_title">
-                <source>confirmation_delete_link_title</source>
-                <target>Delete link to file "{title}"?</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_btn">
-                <source>confirmation_delete_link_btn</source>
-                <target>Delete</target>
-            </trans-unit>
-            <trans-unit id="confirmation_delete_link_body">
-                <source>confirmation_delete_link_body</source>
-                <target>The link will be removed. Are you sure you want to delete it?</target>
+            <trans-unit id="tooltip_link_edit">
+                <source>tooltip_link_edit</source>
+                <target>Link properties</target>
             </trans-unit>
             <trans-unit id="header_sharing">
                 <source>header_sharing</source>
@@ -137,6 +121,94 @@
             <trans-unit id="side_nav_links">
                 <source>side_nav_links</source>
                 <target>Links</target>
+            </trans-unit>
+            <trans-unit id="header_settings">
+                <source>header_settings</source>
+                <target>Personal settings</target>
+            </trans-unit>
+            <trans-unit id="button_change_password">
+                <source>button_change_password</source>
+                <target>Change password</target>
+            </trans-unit>
+            <trans-unit id="title_change_password">
+                <source>title_change_password</source>
+                <target>Change your current password</target>
+            </trans-unit>
+            <trans-unit id="label_current_password">
+                <source>label_current_password</source>
+                <target>Curent password</target>
+            </trans-unit>
+            <trans-unit id="label_new_password">
+                <source>label_new_password</source>
+                <target>New password</target>
+            </trans-unit>
+            <trans-unit id="label_change_verification">
+                <source>label_change_verification</source>
+                <target>Confirm new password</target>
+            </trans-unit>
+            <trans-unit id="error_password_do_not_match">
+                <source>error_password_do_not_match</source>
+                <target>Passwords do not match</target>
+            </trans-unit>
+            <trans-unit id="button_change">
+                <source>button_change</source>
+                <target>Change</target>
+            </trans-unit>
+            <trans-unit id="header_account">
+                <source>header_account</source>
+                <target>Account</target>
+            </trans-unit>
+            <trans-unit id="header_security">
+                <source>header_security</source>
+                <target>Security</target>
+            </trans-unit>
+            <trans-unit id="header_language">
+                <source>header_language</source>
+                <target>Language</target>
+            </trans-unit>
+            <trans-unit id="title_language">
+                <source>title_language</source>
+                <target>Change language</target>
+            </trans-unit>
+            <trans-unit id="button_language">
+                <source>button_language</source>
+                <target>Apply</target>
+            </trans-unit>
+            <trans-unit id="header_email_notifications">
+                <source>header_email_notifications</source>
+                <target>Email notifications</target>
+            </trans-unit>
+            <trans-unit id="email_notifications_invites">
+                <source>email_notifications_invites</source>
+                <target>When recieving a new invite</target>
+            </trans-unit>
+            <trans-unit id="email_notifications_add_update">
+                <source>email_notifications_add_update</source>
+                <target>When a shared file is added or updated</target>
+            </trans-unit>
+            <trans-unit id="notification_accept_invite">
+                <source>You joined the folder %item%</source>
+                <target>You joined the folder %item%.</target>
+            </trans-unit>
+            <trans-unit id="notification_create_link">
+                <source>You created a link to the file %item%</source>
+                <target>You created a link to the file %item%.</target>
+            </trans-unit>
+            <trans-unit id="notification_receive_invite">
+                <source>%user% invited you to the folder %item%</source>
+                <target>%user% invited you to the folder %item%.</target>
+            </trans-unit>
+            <trans-unit id="notification_send_invite">
+                <source>You invited %user% to join the folder %item%</source>
+                <target>You invited %user% to join the folder %item%.</target>
+            </trans-unit>
+            <trans-unit id="mail_notification_subject">
+                <source>mail_notification_subject</source>
+                <target>File "%item%" has been changed in one of your shared folders</target>
+            </trans-unit>
+            <trans-unit id="mail_notification_body">
+                <source>mail_notification_body</source>
+                <target>%actor% has changed the file "%item%", in the following folder: %path%.</target>
             </trans-unit>
         </body>
     </file>

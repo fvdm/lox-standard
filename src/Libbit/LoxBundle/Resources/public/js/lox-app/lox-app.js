@@ -57,6 +57,15 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
             width   : '640px',
             height  : '400px',
 			modal   : true
+		},
+
+	    fileLinkView: {
+			type    : 'Lox.App.FileLinkView',
+			lazyload: 'lox-app-file-link-view',
+			parent  : 'itemView',
+            width   : '550px',
+            height  : '400px',
+			modal   : true
 		}
 	},
 
@@ -79,6 +88,9 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 			'*:showItemDetail': this._showDetailItem,
 			'*:upload'        : this._handleUpload,
 
+            '*:link' : this._handleLinkFile,
+
+			'dropdown:select#link' : this._handleLinkFile,
 			'dropdown:select#leave': this._handleLeaveShare,
 			'dropdown:select#share': this._handleShareFolder,
 			'dropdown:select#move' : this._handleMoveCopy,
@@ -155,6 +167,29 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 		});
 	},
 
+	_handleLinkFile: function (e) {
+		var model = e.data,
+			self  = this;
+
+		model.load(function () {
+		    var link;
+
+		    if (Y.instanceOf(model, Y.Lox.LinkModel)) {
+		        link = model;
+		    } else {
+                link = model.get('link');
+		    }
+
+		    if (!link) {
+	            link = new Y.Lox.LinkModel({ path: model.get('path') });
+    		} else {
+    		    link.set('path', model.get('path'));
+    		}
+
+		    self.showView('fileLinkView', { model: link });
+		});
+	},
+
 	_handleLeaveShare: function (e) {
 		var model = e.data;
 
@@ -170,7 +205,7 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 
 	_handleMoveCopy: function (e) {
 		var model     = e.data,
-			type      = (e.type === 'contextMenu:move' || e.type === 'navbar:move') ? 'move' : 'copy',
+			type      = e.type === 'dropdown:select#move' ? 'move' : 'copy',
 			modelTree = new Y.Lox.App.FolderTree(),
 			self      = this;
 
@@ -351,12 +386,14 @@ Y.namespace('Lox.App').App = App;
         "lox-app-file-browser-view",
         "lox-app-folder-tree",
         "lox-app-item-model",
+        "lox-app-link-model",
         "lox-app-share-model",
         "model-list",
         "rednose-app",
         "rednose-tooltip"
     ],
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });

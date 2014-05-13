@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Initializes a new installation. This script should be executed after updating an installation.
+# Initializes an existing installation. This script should be executed after updating an installation.
 
 # This script uses 777 permissions on the writable dirs for platform portability.
 # For more restrictive permissions, use something like ACL, depending on your platform. Write permissions are
@@ -21,8 +21,8 @@ app/console --env=prod doctrine:migrations:migrate -n
 # Install assets.
 app/console --env=prod assets:install --symlink web
 
-# Dump Assetic assets.
-app/console --env=prod assetic:dump
+# Install YUI assets.
+app/console --env=prod rednose:yui:install
 
 # Clear the current cache and warmup a new version.
 app/console --env=prod cache:clear

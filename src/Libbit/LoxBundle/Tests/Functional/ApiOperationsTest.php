@@ -2,15 +2,12 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Libbit\LoxBundle\Entity\Item;
-
 class ApiOperationsTest extends WebTestCase
 {
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
      */
     protected $client;
-
 
     public function testPostFile201Code()
     {

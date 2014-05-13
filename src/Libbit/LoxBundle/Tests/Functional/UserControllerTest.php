@@ -2,10 +2,73 @@
 
 namespace Libbit\LoxBundle\Tests\Functional;
 
-use Rednose\FrameworkBundle\Entity\Group;
-
 class UserControllerTest extends WebTestCase
 {
+    public function testChangePasswordBadRequest()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-password');
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangePasswordWrongPassword()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-password', array(
+            'current_password'  => 'wrongpasswd1',
+            'new_password'      => 'testpasswd2'
+        ));
+
+        $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangePassword()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-password', array(
+            'current_password'  => 'testpasswd1',
+            'new_password'      => 'testpasswd2'
+        ));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangePassword2()
+    {
+        $this->doLogin('test1', 'testpasswd2');
+
+        $this->client->request('POST', '/user/change-password', array(
+            'current_password'  => 'testpasswd2',
+            'new_password'      => 'testpasswd1'
+        ));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangeLocaleBadRequest()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-locale');
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testChangeLocale()
+    {
+        $this->doLogin('test1', 'testpasswd1');
+
+        $this->client->request('POST', '/user/change-locale', array(
+            'locale' => 'nl'
+        ));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
     /**
      * User name should always be returned, keys are optional.
      */
@@ -49,6 +112,8 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
+     * Info about the current user should include the private key.
+     *
      * @depends testPostUserKeyPair
      */
     public function testGetUserKeyPair()
@@ -64,6 +129,25 @@ class UserControllerTest extends WebTestCase
 
         $this->assertEquals($publicKey, $data['public_key']);
         $this->assertEquals($privateKey, $data['private_key']);
+    }
+
+    /**
+     * Info about another current user should NOT include the private key.
+     *
+     * @depends testPostUserKeyPair
+     */
+    public function testGetOtherUserInfo()
+    {
+        $publicKey = $this->getPublicKey();
+
+        $this->client->request('GET', '/lox_api/user/test1');
+
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $this->assertEquals($publicKey, $data['public_key']);
+        $this->assertFalse(isset($data['private_key']));
     }
 
     public function testPostEmptyUserKeyPair()

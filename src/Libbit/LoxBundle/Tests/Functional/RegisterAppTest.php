@@ -24,6 +24,6 @@ class RegisterAppTest extends WebTestCase
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals('test1', $data['User']);
-        $this->assertEquals('Test Token', $data['APIKeys'][0]['Name']);
+        $this->assertEquals('Test token', $data['APIKeys'][0]['Name']);
     }
 }

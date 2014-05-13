@@ -268,6 +268,7 @@ Y.namespace('Lox.App').FolderShareView = FolderShareView;
         "view"
     ],
     "lang": [
-        "en"
+        "en",
+        "nl"
     ]
 });

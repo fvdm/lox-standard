@@ -2,6 +2,7 @@
 
 namespace Libbit\LoxBundle\Controller;
 
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,6 +13,9 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializationContext;
+use Libbit\LoxBundle\Entity\Link;
 
 class LinkController extends Controller
 {
@@ -25,12 +29,17 @@ class LinkController extends Controller
     {
         $lm = $this->get('libbit_lox.link_manager');
 
-        $link = $lm->getLinkByPath($path);
+        $link = $lm->getLinkByPath($path, true);
 
         $response = new Response();
 
         if ($link === null) {
             $response->setStatusCode(404);
+
+            return $response;
+        } elseif ($link === false) {
+            $response->setStatusCode(410);
+            $response->setContent('Link has expired');
 
             return $response;
         }
@@ -48,12 +57,51 @@ class LinkController extends Controller
     }
 
     /**
-     * @Route("/links/create/{path}", name="libbit_lox_links_create", defaults={"path": null}, requirements={"path" = ".+"})
+     * @Route("/links/read/{id}", name="libbit_lox_links_read", defaults={"id": null})
      * @Method({"GET"})
+     */
+    public function readAction($id)
+    {
+        $lm       = $this->get('libbit_lox.link_manager');
+        $response = new JsonResponse;
+        $link     = $lm->getLinkByPublicId($id);
+
+        return $this->getView($link, $response);
+    }
+
+    /**
+     * @Route("/links/create/{path}", name="libbit_lox_links_create", defaults={"path": null}, requirements={"path" = ".+"})
+     * @Method({"POST"})
      */
     public function createAction($path)
     {
         return $this->handleCreateLink($path);
+    }
+
+    /**
+     * @Route("/links/update/{id}", defaults={"id": null}, name="libbit_lox_links_update")
+     * @Method({"POST"})
+     */
+    public function updateAction($id)
+    {
+        $request = $this->get('request');
+        $lm      = $this->get('libbit_lox.link_manager');
+        $user    = $this->get('security.context')->getToken()->getUser();
+        $date    = null;
+        $data    = $request->getContent();
+        $data    = json_decode($data);
+
+        if (isset($data->expires) && $data->expires) {
+            $date = new DateTime($data->expires);
+        }
+
+        if ($link = $lm->updateLink($id, $user, $date)) {
+            $response = new Response('', 200);
+
+            return $this->getView($link, $response);
+        }
+
+        return new Response('Error', 500);
     }
 
     /**
@@ -63,10 +111,12 @@ class LinkController extends Controller
     public function removeAction($id)
     {
         $request  = $this->get('request');
-        $token    = $request->request->get('token');
         $user     = $this->get('security.context')->getToken()->getUser();
         $lm       = $this->get('libbit_lox.link_manager');
         $response = new Response();
+
+        $token    = json_decode($request->getContent());
+        $token    = $token->token;
 
         if ($this->get('form.csrf_provider')->isCsrfTokenValid('web', $token) === false) {
             $response = new Response();
@@ -95,12 +145,13 @@ class LinkController extends Controller
      * Returns a public URL to a given file.
      * <p><strong>Example JSON response</strong></p>
      * <pre>{
-     *     "url": "https://localbox.rednose.nl/public/524abf3319b4b/test%20%281%29.pdf",
+     *     "public_id": "524abf3319b4b",
+     *     "uri": "https://localbox.rednose.nl/public/524abf3319b4b/test%20%281%29.pdf"
      * }</pre>
      *
      * @param string $path The full path to the file.
      *
-     * @Post("/links/{path}", name="libbit_lox_api_post_link", defaults={"path" = ""}, requirements={"path" = ".+"})
+     * @Post("/lox_api/links/{path}", name="libbit_lox_api_post_link", defaults={"path" = ""}, requirements={"path" = ".+"})
      *
      * @ApiDoc(
      *     section="Files and folders",
@@ -113,19 +164,26 @@ class LinkController extends Controller
      */
     public function postLinkAction($path)
     {
-        return $this->handleCreateLink($path, true);
+        return $this->handleCreateLink($path);
     }
 
     // -- Protected Methods ----------------------------------------------------
 
-    protected function handleCreateLink($path, $api = false)
+    protected function handleCreateLink($path)
     {
-        $im     = $this->get('libbit_lox.item_manager');
-        $lm     = $this->get('libbit_lox.link_manager');
-        $user   = $this->get('security.context')->getToken()->getUser();
-        $router = $this->get('router');
+        $im       = $this->get('libbit_lox.item_manager');
+        $lm       = $this->get('libbit_lox.link_manager');
+        $user     = $this->get('security.context')->getToken()->getUser();
+        $router   = $this->get('router');
+        $response = new JsonResponse;
 
-        $response = $api === true ? new JsonResponse : new Response;
+        $date     = null;
+        $data     = $this->get('request')->getContent();
+        $data     = json_decode($data);
+
+        if (isset($data->expires) && $data->expires) {
+            $date = new DateTime($data->expires);
+        }
 
         // Check if item exists at the given path.
         $item = $im->findItemByPath($user, $path);
@@ -141,22 +199,31 @@ class LinkController extends Controller
 
         // Create the link.
         if ($link === null) {
-            $link = $lm->createLink($item, $user);
+            $link = $lm->createLink($item, $user, $date);
         }
 
-        $url = $this->generateUrl('libbit_lox_links_path', array(
-            'path' => $link->getPublicId().'/'.$link->getItem()->getTitle(),
-        ), true);
+        $response->setStatusCode(201);
 
-        if ($api === true) {
-            $response->setStatusCode(201);
-            $response->setContent(json_encode(array(
-                'url' =>$url,
-            )));
+        return $this->getView($link, $response);
+    }
 
-            return $response;
-        }
+    protected function getView(Link $link, Response $response)
+    {
+        $handler  = $this->get('fos_rest.view_handler');
 
-        return $this->redirect($url);
+        $context = SerializationContext::create();
+        $context->setGroups(array('details'));
+
+        $view = View::create();
+        $view->setSerializationContext($context);
+
+        $view->setData($link);
+        $view->setFormat('json');
+
+        $response->setContent(
+            $handler->handle($view)->getContent()
+        );
+
+        return $response;
     }
 }
