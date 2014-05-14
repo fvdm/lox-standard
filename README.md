@@ -6,6 +6,8 @@ LocalBox is built on top of the [Symfony](http://symfony.com) framework and the 
 
 The installer script was tested on Ubuntu (12.04/14.04), Debian (Wheezy 7) and CentOS (6.5).
 
+You can find the installer scripts in the app/deployment folder.
+
 ### Before installing
 
 * Make sure you have sudo rights on the machine
@@ -43,14 +45,14 @@ During the installation you will be prompted to install MySQL, Apache and PHP. Y
 
 * If Apache was not installed before you ran the install script, the script will have configured Apache for you. This means that you can now type your machine's hostname or ip-address in a browser, and you will see the LocalBox login page. You can log in for the first time using the default admin credentials (see the section "Default User Accounts" in this document).
 
-* If Apache was already installed before you ran the install script, you should now configure Apache. Make sure that the following directory is accessible to Apache and the right permissions are set: 
+* If Apache was already installed before you ran the install script, you should now configure Apache. Make sure that the following directory is accessible to Apache and the right permissions are set:
 
        */lox-standard/web*
 
 * If you're running a webserver other than Apache2 make sure that mod-rewrite is enabled, and make sure that the webserver user and command line user have the right permission on the following folders:
 
-       */lox-standard/cache*
-       */lox-standard/logs*
+       */lox-standard/app/cache*
+       */lox-standard/app/logs*
        */lox-standard/data*
 
 ## Installing Localbox manually
@@ -70,15 +72,15 @@ During the installation you will be prompted to install MySQL, Apache and PHP. Y
 2. Install composer, if you don't have it yet.
 
         curl -sS https://getcomposer.org/installer | php
-        
+
 3. The `app/cache` directory should be  writable for the composer post-install scripts to execute. The easiest way to do so is:
 
         [sudo] chmod 777 app/cache
 
-4. Download dependencies. Enter default values (press enter) for the `parameters.yml` if prompted. 
+4. Download dependencies. Enter default values (press enter) for the `parameters.yml` if prompted.
 
         php composer.phar install
-        
+
 ### Initializing Symfony
 
 To check the system configuration, run the check.php script from the command line, in the application's root directory:
@@ -113,7 +115,7 @@ Execute the following commands after updating an **existing** LocalBox installat
 
 The update script uses 777 permissions on the writable dirs for platform portability. For more restrictive permissions, use something like ACL, depending on your platform. Write permissions are required for both the console user and the apache user.
 
-**Caution**: The update script might not work properly when using an older proof-of-concept version of LocalBox, especially if there are duplicate entries in the Items-table of your database. Should you encounter problems while running the update script on an old proof-of-concept version of LocalBox, we recommend that you do a full clean install instead. 
+**Caution**: The update script might not work properly when using an older proof-of-concept version of LocalBox, especially if there are duplicate entries in the Items-table of your database. Should you encounter problems while running the update script on an old proof-of-concept version of LocalBox, we recommend that you do a full clean install instead.
 
 ## Default User Accounts
 
