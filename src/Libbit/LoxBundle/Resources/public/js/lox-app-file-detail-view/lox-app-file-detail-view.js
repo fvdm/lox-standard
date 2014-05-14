@@ -110,9 +110,11 @@ var FileDetailView = Y.Base.create('fileDetailView', Y.View, [ Y.Rednose.View.Na
 	_share: function () {
         var item = this.get('model');
 
-        if (item) {
-            Y.config.win.open(YUI.Env.routing.link_create + item.get('path'), '_blank');
-        }
+        this.fire('link', {
+            data: item
+        });
+
+        this.fire('buttonClose');
 	}
 }, {
     /**
