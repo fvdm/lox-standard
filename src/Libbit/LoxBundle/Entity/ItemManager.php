@@ -188,7 +188,7 @@ class ItemManager
      */
     public function getItemKey(Item $item, User $user)
     {
-        if ($key = $this->keyRepository->findOneBy(array('owner' => $user, 'item' => $item))) {
+        if ($key = $this->keyRepository->findOneBy(array('user' => $user, 'item' => $item))) {
             return $key;
         }
 
@@ -207,7 +207,7 @@ class ItemManager
     {
         $owner = $this->securityContext->getToken()->getUser();
 
-        if ($key = $this->keyRepository->findOneBy(array('owner' => $user, 'item' => $item))) {
+        if ($key = $this->keyRepository->findOneBy(array('user' => $user, 'item' => $item))) {
             if ($key->getOwner()->getId() !== $owner->getId()) {
                 return false;
             }

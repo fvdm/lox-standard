@@ -396,6 +396,10 @@ class Item
      */
     public function hasKeys()
     {
+        if ($this->hasShareOf()) {
+            return ($this->shareOf->getKeys()->count() > 0);
+        }
+
         return ($this->keys->count() > 0);
     }
 
