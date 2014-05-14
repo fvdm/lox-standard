@@ -2959,12 +2959,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/rednose-ui.git",
-                "reference": "2c12cbaaccb2dc8b1667f79ff3471747c2f365de"
+                "reference": "80c41a21526b8be665662e386afc27b4bb6a502b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/6a120ef0a10218beaba62b8f06ee7a8dca2b5c96",
-                "reference": "2c12cbaaccb2dc8b1667f79ff3471747c2f365de",
+                "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/80c41a21526b8be665662e386afc27b4bb6a502b",
+                "reference": "80c41a21526b8be665662e386afc27b4bb6a502b",
                 "shasum": ""
             },
             "type": "library",
@@ -2991,7 +2991,7 @@
                 "framework",
                 "web"
             ],
-            "time": "2014-05-12 21:32:15"
+            "time": "2014-05-14 10:57:15"
         },
         {
             "name": "rednose/yui-bundle",

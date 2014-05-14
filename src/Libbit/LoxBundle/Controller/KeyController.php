@@ -18,8 +18,8 @@ class KeyController extends Controller
      * Add a key and initialization vector to a path for the session user or
      * a supplied user.
      *
-     * The expected key is a RSA 256bit encrypted version of a EAS 2048 key using
-     * the public key of the supplied user.
+     * The expected key is a EAS 256bits (Rijndael) key encrypted using a RSA 2048
+     * publickey belonging to the supplied user.
      *
      * <p><strong>Example JSON request</strong></p>
      * <pre>{
