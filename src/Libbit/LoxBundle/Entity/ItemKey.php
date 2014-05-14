@@ -50,7 +50,7 @@ class ItemKey
      *
      * @var string
      *
-     * @ORM\Column(type="string", name="`key`", nullable=false)
+     * @ORM\Column(type="text", name="`key`", nullable=false)
      */
     protected $key;
 
@@ -59,7 +59,7 @@ class ItemKey
      *
      * @var string
      *
-     * @ORM\Column(type="string", name="iv", nullable=false)
+     * @ORM\Column(type="text", name="iv", nullable=false)
      */
     protected $iv;
 
