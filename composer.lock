@@ -2959,12 +2959,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/rednose-ui.git",
-                "reference": "6a120ef0a10218beaba62b8f06ee7a8dca2b5c96"
+                "reference": "2c12cbaaccb2dc8b1667f79ff3471747c2f365de"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/rednose-public/rednose-ui/zipball/6a120ef0a10218beaba62b8f06ee7a8dca2b5c96",
-                "reference": "6a120ef0a10218beaba62b8f06ee7a8dca2b5c96",
+                "reference": "2c12cbaaccb2dc8b1667f79ff3471747c2f365de",
                 "shasum": ""
             },
             "type": "library",
