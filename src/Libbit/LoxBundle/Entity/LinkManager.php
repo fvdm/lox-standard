@@ -114,7 +114,7 @@ class LinkManager
      * @param string $path
      * @param bool   $checkExpired
      *
-     * @return Link
+     * @return Link | false on expired | null on not found
      */
     public function getLinkByPath($path, $checkExpired = false)
     {
@@ -134,7 +134,7 @@ class LinkManager
         $now = new \DateTime();
 
         if ($checkExpired && $link->getExpires() !== null && $link->getExpires()->getTimestamp() < $now->getTimestamp()) {
-            return null;
+            return false;
         }
 
         return $link;
