@@ -46,17 +46,18 @@ class IdentityManager
 
         foreach ($groups as $group) {
             $serializedGroups[] = array(
-                'id'    => 'group_'.$group->getId(),
-                'title' => $group->getName(),
-                'type'  => 'group',
+                'id'       => 'group_'.$group->getId(),
+                'title'    => $group->getName(),
+                'type'     => 'group',
             );
         }
 
         foreach ($users as $user) {
             $serializedUsers[] = array(
-                'id'    => 'user_'.$user->getId(),
-                'title' => $user->getBestName(),
-                'type'  => 'user',
+                'id'       => 'user_'.$user->getId(),
+                'title'    => $user->getBestName(),
+                'username' => $user->getUsername(),
+                'type'     => 'user',
             );
         }
 
