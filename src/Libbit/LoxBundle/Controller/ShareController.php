@@ -85,7 +85,9 @@ class ShareController extends Controller
             }
         }
 
-        $sm->createShare($item, $groups, $users);
+        if ($sm->createShare($item, $groups, $users) === false) {
+            return new Response('', 403);
+        }
 
         return new Response;
     }
@@ -121,7 +123,9 @@ class ShareController extends Controller
         $share->setUsers($users);
         $share->setGroups($groups);
 
-        $sm->saveShare($share);
+        if ($sm->saveShare($share) === false) {
+            return new Response('Permission denied', 403);
+        }
 
         return new Response;
     }
@@ -136,9 +140,11 @@ class ShareController extends Controller
 
         $share = $sm->findShareBy(array('id' => $id));
 
-        $sm->removeShare($share);
+        if ($sm->removeShare($share) === false) {
+            return new Response('Permission denied', 403);
+        }
 
-        return new Response;
+        return new Response('', 200);
     }
 
     /**
@@ -235,7 +241,7 @@ class ShareController extends Controller
     }
 
     /**
-     * Create new share settings for an Item
+     * Create new share and share settings for an Item
      *
      * <p><strong>Example JSON request</strong></p>
      * <pre>{
@@ -289,12 +295,33 @@ class ShareController extends Controller
      *     section="Share",
      *
      *     statusCodes={
-     *         200="Returned when successful."
+     *         200="Returned when successful.",
+     *         403="Returned when wrong owner (access denied)."
      *     }
      * )
      */
     public function editApiShareAction($id)
     {
         return $this->editShareAction($id);
+    }
+
+    /**
+     * Remove a share and its settings
+     *
+     * @Route("/lox_api/shares/{id}/remove", name="libbit_lox_api_shares_remove")
+     * @Method({"POST"})
+     *
+     * @ApiDoc(
+     *     section="Share",
+     *
+     *     statusCodes={
+     *         200="Returned when successful.",
+     *         403="Returned when wrong owner (access denied)."
+     *     }
+     * )
+     */
+    public function removeApiShareAction($id)
+    {
+        return $this->removeShareAction($id);
     }
 }

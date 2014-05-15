@@ -13,6 +13,8 @@ class ShareControllerTest extends WebTestCase
         copy(__DIR__.'/Fixtures/test.txt', sys_get_temp_dir().'/test-item.txt');
     }
 
+    // -- Test creating / editing share ----------------------------------------
+
     public function testCreateShare()
     {
         $route = $this->getRoute('libbit_lox_api_shares_new', array('path' => '/shared-dir'));
@@ -193,6 +195,27 @@ class ShareControllerTest extends WebTestCase
 
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
+
+    // -- Test access to deleting share ----------------------------------------
+
+    /**
+     * @depends testLeaveSharedFolder
+     */
+    public function testRemoveShareApi()
+    {
+        $item = $this->em->getRepository('Libbit\LoxBundle\Entity\Item')->findOneByTitle('shared-dir');
+        $share = $item->getShare();
+
+        $route = $this->getRoute('libbit_lox_api_shares_remove', array('id' => $share->getId()));
+
+        $this->client->request(
+            'POST',
+            $route
+        );
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
 
     protected function acceptInvitations($user)
     {

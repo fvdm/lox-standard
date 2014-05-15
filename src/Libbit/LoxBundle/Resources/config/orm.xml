@@ -25,6 +25,7 @@
         <service id="libbit_lox.share_manager" class="%libbit_lox.share_manager.class%">
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.context" />
         </service>
 
         <service id="libbit_lox.identity_manager" class="%libbit_lox.identity_manager.class%" scope="request">

@@ -8,6 +8,7 @@ use Rednose\FrameworkBundle\Entity\User;
 use Libbit\LoxBundle\Events;
 use Libbit\LoxBundle\Event\InvitationEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class ShareManager
 {
@@ -17,11 +18,21 @@ class ShareManager
 
     protected $repository;
 
-    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em)
+    protected $securityContext;
+
+    /**
+     * Constructor.
+     *
+     * @param EventDispatcherInterface $dispatcher
+     * @param EntityManager            $em
+     * @param SecurityContext          $securityContext
+     */
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, SecurityContext $securityContext)
     {
-        $this->dispatcher = $dispatcher;
-        $this->em         = $em;
-        $this->repository = $em->getRepository('Libbit\LoxBundle\Entity\Share');
+        $this->dispatcher      = $dispatcher;
+        $this->em              = $em;
+        $this->repository      = $em->getRepository('Libbit\LoxBundle\Entity\Share');
+        $this->securityContext = $securityContext;
     }
 
     public function createShare(Item $item, array $groups = array(), array $users = array())
@@ -39,23 +50,38 @@ class ShareManager
         $share->setItem($item);
 
         $share->setOwner($item->getOwner());
-        $this->saveShare($share);
 
-        return $share;
+        if ($this->saveShare($share)) {
+            return $share;
+        }
+
+        return false;
     }
 
     public function saveShare(Share $share)
     {
+        // Security check
+        if ($this->securityContext->getToken()->getUser()->getId() !== $share->getOwner()->getId()) {
+            return false;
+        }
+
         // If this is an existing share, first retrieve the current users.
         $this->em->persist($share);
         $this->em->flush();
 
         // TODO: Use events (this could be asynchronous).
         $this->synchronizeInvites($share);
+
+        return true;
     }
 
     public function removeShare(Share $share)
     {
+        // Security check
+        if ($this->securityContext->getToken()->getUser()->getId() !== $share->getOwner()->getId()) {
+            return false;
+        }
+
         // XXX: Should we cascade this on database level?
 
         // Remove all pointers to the share.
@@ -69,8 +95,9 @@ class ShareManager
 
         // Remove the share itself.
         $this->em->remove($share);
-
         $this->em->flush();
+
+        return true;
     }
 
     public function synchronizeInvites(Share $share)
