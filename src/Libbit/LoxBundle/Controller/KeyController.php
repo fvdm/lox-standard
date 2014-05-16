@@ -54,13 +54,13 @@ class KeyController extends Controller
             return new Response('Missing or incomplete parameters', 500);
         }
 
+        $item = $im->findItemByPath($user, $path);
+
         if (isset($data['username'])) {
             $user = $this->get('rednose_framework.user_manager')->findUserBy(
                 array('username' => $data['username'])
             );
         }
-
-        $item = $im->findItemByPath($user, $path);
 
         if ($item && $item->getIsDir() === true) {
             if ($im->addItemKey($item, $user, $data['key'], $data['iv'])) {
