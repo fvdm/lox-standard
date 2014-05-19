@@ -67,7 +67,7 @@ During the installation you will be prompted to install MySQL, Apache and PHP. Y
 * Your php.ini needs to have the date.timezone setting
 * The PHP intl extension needs to be installed
 * MySQL needs to be installed
-* *Optional:* To enable LocalBox's encryption capabilities, your PHP should support mcrypt- and openssl-functionality. Depending on your Linux distribution, this is either included in php or it can be installed through the packages php5-mcrypt and php5-openssl
+* *Optional:* To enable LocalBox's encryption capabilities, your PHP should support mcrypt- and openssl-functionality. Depending on your Linux distribution, this is either included in php or it can be installed through the packages php5-mcrypt and php5-openssl. Ubuntu 12.04 and higher already has openssl-support in PHP.
 
 ### Downloading project dependencies
 
