@@ -16,26 +16,30 @@ You can find the installer scripts in the app/deployment folder.
 
 * If MySQL is already installed on your system, make sure you know the root password
 
+* Make sure you are in the LocalBox root-folder (default this is "lox-standard").
+
 * Make sure the install script is executable, by executing the following command:
 
 For Ubuntu (12.04/14.04) or Debian (Wheezy 7) based systems:
 
-    [sudo] chmod +x install-apt.sh
+    [sudo] chmod +x ./app/deployment/install-apt.sh
 
 For CentOs (6.5) or RHEL (6) based systems:
 
-    [sudo] chmod +x install-yum.sh
+    [sudo] chmod +x ./app/deployment/install-yum.sh
 
 ### Installing
 * When you are ready to install LocalBox, execute the following command and follow the instructions on-screen:
 
 For Ubuntu (12.04/14.04) or Debian (Wheezy 7) based systems:
 
-    [sudo] ./install-apt.sh
+    [sudo] ./app/deployment/install-apt.sh
 
 For CentOs (6.5) or RHEL (6) based systems:
 
-    [sudo] ./install-yum.sh
+    [sudo] ./app/deployment/install-yum.sh
+
+*Important:* The above command should be executed from the LocalBox root-folder (default this is "lox-standard" ).
 
 You will be prompted to deliver the MySQL password, and to add a database user for the database that LocalBox will create.
 
