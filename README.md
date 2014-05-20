@@ -59,6 +59,41 @@ During the installation you will be prompted to install MySQL, Apache and PHP. Y
        */lox-standard/app/logs*
        */lox-standard/data*
 
+## Updating LocalBox using the update script
+
+### Before updating
+
+It is really important that you make a copy of the data folder and the file /app/config/parameters.yml in your LocalBox installation. Place this copy in a safe place (for instance, your home folder). We will need this data folder and parameters.yml later on in the update process.
+
+### Removing the lox-standard folder
+
+Next, we will remove the entire lox-standard folder. Go to the folder where this folder is located (for instance /var/www or /opt) and execute the following command:
+
+    rm -rf lox-standard
+
+### Extracting the new LocalBox files
+
+Go to the folder where the .tar.gz-file of the new LocalBox version is located, and extract it to the appropriate folder (for instance /var/www or /opt).
+
+    tar -xzvf [filename].tar.gz -C /[pathname]
+
+So for instance:
+
+    tar -xzvf localbox-v2.4.1.tar.gz -C /var/www 
+
+### Copying back the data folder and parameters.yml
+
+Go to the folder where you stored a copy of both the data folder and the file parameters.yml, and copy them to your new lox-standard folder. For instance:
+
+    [sudo] cp -rf /home/admin/paramaters.yml /var/www/app/config/parameters.yml
+    [sudo] cp -rf /home/admin/data /var/www/app/config/data
+
+### Running the update script
+
+Now run the update script:
+
+    [sudo] app/deployment/post-update.sh
+
 ## Installing Localbox manually
 
 ### System Requirements
@@ -113,7 +148,7 @@ Execute the following commands after updating an **existing** LocalBox installat
 
 1. Edit the `app/config/parameters.yml` file and set the required values for your specific environment.
 
-1. Run the post update script:
+2. Run the post update script:
 
         [sudo] app/deployment/post-update.sh
 
