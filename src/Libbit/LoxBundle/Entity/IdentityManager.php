@@ -57,6 +57,7 @@ class IdentityManager
                 'id'       => 'user_'.$user->getId(),
                 'title'    => $user->getBestName(),
                 'username' => $user->getUsername(),
+                'has_keys' => (bool)$this->em->getRepository('Libbit\LoxBundle\Entity\KeyPair')->findOneByUser($user),
                 'type'     => 'user',
             );
         }
