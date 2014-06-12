@@ -26,8 +26,8 @@ twig:
         application_title: LocalBox
         application_logo: "bundles/libbitlox/logo/whitebox.png"
 
-        app_backcolor: "0x1B1B1B"
-        app_fontcolor: "0x999999"
+        app_backcolor: "#1B1B1B"
+        app_fontcolor: "#999999"
 
 # Assetic Configuration
 assetic:
