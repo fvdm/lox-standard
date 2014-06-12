@@ -40,7 +40,6 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
         this._userDropdown       = Y.one('#user-dropdown');
         this._notifyDropdown     = Y.one('#notifications-dropdown');
         this._badgeNotifications = Y.one('#badge-notifications');
-        this._registerAppMenu    = Y.one('[data-id=registerApp]').get('parentNode');
 
         this._initDropdowns();
     },
@@ -52,7 +51,6 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
         this._userDropdown       = null;
         this._notifyDropdown     = null;
         this._badgeNotifications = null;
-        this._registerAppMenu    = null;
     },
 
     // -- Public methods -------------------------------------------------------
@@ -61,8 +59,6 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
      * @chainable
      */
     render: function () {
-        this._isMobile() && this._registerAppMenu.show();
-
         this._updateNotifications();
         this._updateBadge();
 
@@ -134,7 +130,7 @@ Y.namespace('Lox').Page = Y.Base.create('page', Y.View, [], {
     },
 
     /**
-     * Renders whether this page is visited on an Android or iOS device.
+     * Determines whether this page is visited on an Android or iOS device.
      *
      * @return {Boolean}
      * @private

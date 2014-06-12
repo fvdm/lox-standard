@@ -2,7 +2,7 @@
     "BaseUrl"   : "{{ url('libbit_lox_index') }}",
     "Name"      : "{{ application_title }}",
     "User"      : "{{ app.user.username }}",
-    "LogoUrl"   : "{{ asset('')}}{{ application_logo }}",
+    "LogoUrl"   : "{{ app.request.getSchemeAndHttpHost() }}{{ asset('')}}{{ application_logo }}",
     "BackColor" : "{{ app_backcolor }}",
     "FontColor" : "{{ app_fontcolor }}",
     "APIKeys"   : [

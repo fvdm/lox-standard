@@ -83,11 +83,13 @@ class WebController extends Controller
 
     /**
      * @Route("/register_app", name="libbit_lox_register_app")
-     * @Route("/register_app.json", name="libbit_lox_register_app_lbox", requirements={"_scheme" = "lbox"})
      * @Method({"GET"})
      */
     public function registerAppAction()
     {
+        // XXX: Sending API 'secret' keys is insecure but sadly enough requested by the customer.
+        // we should consider a configuration parameter to disable this 'feature' on installations that do
+        // use proper oAuth 2.0 supporting client apps.
         $clientManager = $this->get('fos_oauth_server.client_manager.default');
         $clients = $clientManager->findClientsBy(array());
 
