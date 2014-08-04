@@ -150,6 +150,8 @@ class LinkController extends Controller
      * }</pre>
      *
      * @param string $path The full path to the file.
+     * 
+     * @RequestParam(name="expires", strict=false, description="The expiration date(ISO8601)")
      *
      * @Post("/lox_api/links/{path}", name="libbit_lox_api_post_link", defaults={"path" = ""}, requirements={"path" = ".+"})
      *
@@ -164,12 +166,18 @@ class LinkController extends Controller
      */
     public function postLinkAction($path)
     {
-        return $this->handleCreateLink($path);
+        $expires = $this->get('request')->get('expires', null);
+
+        if ($expires !== null) {
+            $expires = new DateTime($expires);
+        }
+
+        return $this->handleCreateLink($path, $expires);
     }
 
     // -- Protected Methods ----------------------------------------------------
 
-    protected function handleCreateLink($path)
+    protected function handleCreateLink($path, $date = null)
     {
         $im       = $this->get('libbit_lox.item_manager');
         $lm       = $this->get('libbit_lox.link_manager');
@@ -177,11 +185,10 @@ class LinkController extends Controller
         $router   = $this->get('router');
         $response = new JsonResponse;
 
-        $date     = null;
         $data     = $this->get('request')->getContent();
         $data     = json_decode($data);
 
-        if (isset($data->expires) && $data->expires) {
+        if ($date === null && isset($data->expires) && $data->expires) {
             $date = new DateTime($data->expires);
         }
 

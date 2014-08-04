@@ -126,6 +126,7 @@ class WebTestCase extends BaseWebTestCase
             'test-dir',
             'test-meta-dir',
             'test-meta.txt',
+            'test-link.txt',
             'shared-dir',
             'shared-dir-user2',
             'encrypted-dir',

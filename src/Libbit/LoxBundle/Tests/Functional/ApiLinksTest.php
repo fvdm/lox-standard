@@ -17,6 +17,11 @@ class ApiLinksTest extends WebTestCase
             'expires' => $date->format(\DateTime::ISO8601)
         ));
 
+        $response = json_decode($this->client->getResponse()->getContent());
+        $responseDate = new \DateTime($response->expires);
+
+        $this->assertEquals($date, $responseDate);
+
         $this->assertEquals(201, $this->client->getResponse()->getStatusCode());
     }
 }
