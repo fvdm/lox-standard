@@ -11,7 +11,9 @@ framework:
     validation:      { enable_annotations: true }
     default_locale:  %locale%
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-    session:         ~
+    session:         
+        cookie_lifetime: 86400
+        gc_maxlifetime: 900
 
 # Twig Configuration
 twig:
@@ -73,6 +75,10 @@ fos_user:
 
 sonata_admin:
     title: LocalBox Admin
+    dashboard:
+        groups:
+            oauth: ~
+            user_management: ~
 
 sonata_block:
     default_contexts: [cms]
