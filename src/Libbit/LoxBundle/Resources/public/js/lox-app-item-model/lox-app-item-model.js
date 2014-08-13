@@ -52,7 +52,8 @@ var ItemModel = Y.Base.create('itemModel', Y.Model, [ Y.Rednose.Model.Spinner ],
             parent       : o.parent,
             children     : o.children,
             isShare      : o.is_share,
-            isShared     : o.is_shared
+            isShared     : o.is_shared,
+            hasKeys      : o.has_keys
         };
     },
 
@@ -129,6 +130,14 @@ var ItemModel = Y.Base.create('itemModel', Y.Model, [ Y.Rednose.Model.Spinner ],
 		@type Boolean
 		**/
 		isShared: {
+			value: null
+		},
+
+		/**
+		@attribute hasKeys
+		@type Boolean
+		**/
+		hasKeys: {
 			value: null
 		},
 

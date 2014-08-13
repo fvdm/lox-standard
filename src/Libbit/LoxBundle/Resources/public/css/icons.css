@@ -24,6 +24,16 @@
     background-image: url("../icons/folders/16px/folder-shared.png");
 }
 
+.icon-file-16-folder-locked {
+    background-image: url("../icons/folders/16px/folder-locked.png");
+}
+
+.icon-file-128-folder-locked {
+    background-image: url("../icons/folders/64px/folder-locked.png");
+    width: 64px;
+    height: 64px;
+}
+
 /* File images */
 .icon-file-16-_blank {
     background-image: url("../icons/files/16px/_blank.png");

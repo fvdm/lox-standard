@@ -96,7 +96,13 @@ class ItemSerializeListener implements EventSubscriberInterface
     protected function getIcon($item)
     {
         if ($item->getIsDir() === true) {
-            return $item->isShare() || $item->isShared() ? 'folder-shared' : 'folder';
+            if ($item->hasKeys()) {
+                return 'folder-locked';
+            } else if ($item->isShare() || $item->isShared()) {
+                return 'folder-shared';
+            } else {
+                return 'folder';
+            }
         }
 
         $baseDir = __DIR__.'/../Resources/public/icons/files/16px';

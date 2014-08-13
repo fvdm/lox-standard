@@ -150,7 +150,7 @@ Y.Lox.ItemListView = Y.Base.create('itemListView', Y.View, [], {
             item  = items.getByClientId(e.currentTarget.ancestor('tr').getAttribute('data-yui3-record'));
 
         if (item) {
-            if (item.get('isDir') === true) {
+            if (item.get('isDir') === true && item.get('hasKeys') === false) {
                 this.fire('navigateItem', { path: item.get('path') });
             } else {
                 this.fire('showItemDetail', { model: item });
@@ -172,7 +172,7 @@ Y.Lox.ItemListView = Y.Base.create('itemListView', Y.View, [], {
             clientId = node.getAttribute('data-yui3-record'),
             model    = this.get('modelList').getByClientId(clientId);
 
-        if (node.dropdown) {
+        if (node.dropdown || model.get('hasKeys') === true) {
             return;
         }
 

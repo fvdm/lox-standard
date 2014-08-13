@@ -332,6 +332,11 @@ var App = Y.Base.create('app', Y.Rednose.App, [], {
 	},
 
     _showItemPage: function (req) {
+    	if (req.item.get('hasKeys') === true) {
+    		this.navigate(this.get('root'));
+    		return;
+    	}
+
         this.showView('itemView', {
             model    : req.item,
             modelList: req.children

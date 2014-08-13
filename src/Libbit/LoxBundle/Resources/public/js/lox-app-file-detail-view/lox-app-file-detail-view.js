@@ -82,6 +82,16 @@ var FileDetailView = Y.Base.create('fileDetailView', Y.View, [ Y.Rednose.View.Na
 			model     = this.get('model'),
 			vars      = model.getAttrs();
 
+        if (vars.hasKeys) {
+            this.toolbar.disable('download');
+            this.toolbar.disable('share');
+
+            vars.mimeType = Y.Intl.get('lox-app-file-detail-view').encrypted;
+        } else {
+            this.toolbar.enable('download');
+            this.toolbar.enable('share');
+        }
+        
 		vars.iconClass = CSS_ICON_PREFIX + vars.icon;
 
 		container.setContent(Y.Lang.sub(this.template, vars));
