@@ -147,7 +147,7 @@ Y.Lox.ItemView = Y.Base.create('itemView', Y.View, [], {
             menu: this.get('strings.menu')
         }));
 
-        anchorNode = container.one('a');
+        anchorNode = container.one('.menu.dropdown a');
 
         if (model.get('isDir')) {
             if (model.get('isShare')) {
