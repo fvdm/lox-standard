@@ -14,7 +14,7 @@ class ApiLinksTest extends WebTestCase
         $date = new \DateTime('NOW');
 
         $this->client->request('POST', '/lox_api/links/test-link.txt', array(
-            'expires' => $date->format(\DateTime::ISO8601)
+            'expires' => $date->format(\DateTime::RFC850)
         ));
 
         $response = json_decode($this->client->getResponse()->getContent());
