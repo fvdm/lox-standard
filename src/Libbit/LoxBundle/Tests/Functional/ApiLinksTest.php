@@ -13,8 +13,11 @@ class ApiLinksTest extends WebTestCase
     {
         $date = new \DateTime('NOW');
 
+        // Weird timezone for testing purposes
+        $date->setTimeZone(new \DateTimeZone("CST"));
+
         $this->client->request('POST', '/lox_api/links/test-link.txt', array(
-            'expires' => $date->format(\DateTime::RFC850)
+            'expires' => $date->format(\DateTime::ISO8601)
         ));
 
         $response = json_decode($this->client->getResponse()->getContent());

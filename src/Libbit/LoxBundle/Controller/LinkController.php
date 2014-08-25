@@ -151,7 +151,7 @@ class LinkController extends Controller
      *
      * @param string $path The full path to the file.
      * 
-     * @RequestParam(name="expires", strict=false, description="The expiration date(RFC850)")
+     * @RequestParam(name="expires", strict=false, description="The expiration date")
      *
      * @Post("/lox_api/links/{path}", name="libbit_lox_api_post_link", defaults={"path" = ""}, requirements={"path" = ".+"})
      *
@@ -170,6 +170,7 @@ class LinkController extends Controller
 
         if ($expires !== null) {
             $expires = new DateTime($expires);
+            $expires->setTimezone(new \DateTimeZone("UTC"));
         }
 
         return $this->handleCreateLink($path, $expires);
