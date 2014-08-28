@@ -93,12 +93,22 @@ class WebController extends Controller
         $clientManager = $this->get('fos_oauth_server.client_manager.default');
         $clients = $clientManager->findClientsBy(array());
 
+        $em = $this->getDoctrine()->getManager();
+
+        $settings = $em->getRepository('Libbit\LoxBundle\Entity\Settings')->findAll()[0];
+
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
 
         return $this->render(
             'LibbitLoxBundle:Web:register_app.json.twig',
-            array('clients' => $clients),
+            array(
+                'clients' => $clients,
+                'application_title' => $settings->getApplicationTitle(),
+                'application_logo' => $settings->getApplicationLogo(),
+                'app_fontcolor' => $settings->getAppFontcolor(),
+                'app_backcolor' => $settings->getAppBackcolor(),
+            ),
             $response
         );
     }

@@ -79,6 +79,7 @@ sonata_admin:
         groups:
             oauth: ~
             user_management: ~
+            localbox_management: ~
 
 sonata_block:
     default_contexts: [cms]

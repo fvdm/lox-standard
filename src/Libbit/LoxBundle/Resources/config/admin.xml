@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="libbit.lox.admin.settings.class">Libbit\LoxBundle\Admin\SettingsAdmin</parameter>
+        <parameter key="libbit.lox.admin.settings.controller">LibbitLoxBundle:Admin\SettingsAdmin</parameter>
+        <parameter key="libbit.lox.admin.settings.entity">Libbit\LoxBundle\Entity\Settings</parameter>
+    </parameters>
+
+    <services>
+        <!--Admin section-->
+         <service id="libbit.lox.admin.settings" class="%libbit.lox.admin.settings.class%">
+            <tag name="sonata.admin" manager_type="orm" group="localbox_management" label="Settings"/>
+            <argument/>
+            <argument>%libbit.lox.admin.settings.entity%</argument>
+            <argument>%libbit.lox.admin.settings.controller%</argument>
+        </service>
+    </services>
+</container>

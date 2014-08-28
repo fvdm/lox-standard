@@ -41,6 +41,7 @@ class Migrations extends AbstractFixture implements OrderedFixtureInterface, Con
         $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("20140331134636")');
         $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("20140512142339")');
         $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("20140512210404")');
+        $connection->exec('INSERT INTO `migration_versions` (`version`) VALUES ("Version20140828144301")');
     }
 
     public function getOrder()
