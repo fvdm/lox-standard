@@ -9,15 +9,15 @@
     },
     "require": {
         "php": ">=5.3.2",
-        "rednose/framework-bundle": "dev-master",
-        "rednose/kerberos-bundle": "dev-master",
+        "rednose/framework-bundle": "1.4.0",
+        "rednose/kerberos-bundle": "1.0.0",
         "sonata-project/notification-bundle": "dev-master",
         "videlalvaro/php-amqplib": "dev-master",
         "vich/uploader-bundle": "dev-master",
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/knp-gaufrette-bundle": "dev-master",
-        "rednose/yui-bundle": "dev-master",
-        "rednose/rednose-ui": "dev-master"
+        "rednose/yui-bundle": "1.0.0",
+        "rednose/rednose-ui": "1.4.2"
     },
     "scripts": {
         "post-install-cmd": [
