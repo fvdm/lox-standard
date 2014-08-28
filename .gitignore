@@ -12,5 +12,5 @@ app/config/parameters.yml
 .idea/*
 /bin/
 *.swp
-project.sublime-workspace
+lox-standard.sublime-workspace
 lox-standard
