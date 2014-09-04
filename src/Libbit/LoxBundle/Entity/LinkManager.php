@@ -63,10 +63,6 @@ class LinkManager
             throw new \InvalidArgumentException('No user provided.');
         }
 
-        if ($user !== $item->getOwner()) {
-            throw new \InvalidArgumentException('User is not item owner.');
-        }
-
         $link = new Link;
 
         $link->setItem($item);
