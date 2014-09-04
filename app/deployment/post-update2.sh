@@ -1,8 +1,8 @@
 #!/bin/sh -x
 # Initializes an existing installation. This script should be executed
 # automatically after updating an installation.
-RELDIR=$(pwd $(dirname "${1}"))
-cd "${RELDIR}/../.."
+RELDIR=$(readlink  -f $(dirname "${0}")/../..)
+cd "${RELDIR}"
 
 DBNAME=`cat app/config/parameters.yml | grep database_name: | sed "s/ *database_name: *//g"`
 SIZ=`app/console doctrine:query:sql "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '$DBNAME' and TABLE_TYPE='BASE TABLE'" | grep "'COUNT(\*)' => string '0' (length=1)"`
