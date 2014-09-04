@@ -61,9 +61,8 @@ class WebTestCase extends BaseWebTestCase
         if (null === $this->em) {
             $this->em = $this->client->getContainer()->get('doctrine')->getManager();
 
-            if (!static::$schemaSetUp) {
+            if (static::$schemaSetUp === false) {
                 $st = new SchemaTool($this->em);
-
 
                 $classes = $this->em->getMetadataFactory()->getAllMetadata();
                 $st->dropSchema($classes);

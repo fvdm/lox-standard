@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bfae46e8f4ca460d5336c8fd49aa624b",
+    "hash": "841e24ff3cf3c0ccdf60f92af4821ae6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -4353,7 +4353,7 @@
         },
         {
             "name": "vich/uploader-bundle",
-            "version": "dev-master",
+            "version": "v0.10.0",
             "target-dir": "Vich/UploaderBundle",
             "source": {
                 "type": "git",
@@ -4634,7 +4634,6 @@
     "stability-flags": {
         "sonata-project/notification-bundle": 20,
         "videlalvaro/php-amqplib": 20,
-        "vich/uploader-bundle": 20,
         "knplabs/knp-gaufrette-bundle": 20
     },
     "prefer-stable": false,

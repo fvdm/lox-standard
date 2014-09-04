@@ -150,7 +150,7 @@ class LinkController extends Controller
      * }</pre>
      *
      * @param string $path The full path to the file.
-     * 
+     *
      * @RequestParam(name="expires", strict=false, description="The expiration date")
      *
      * @Post("/lox_api/links/{path}", name="libbit_lox_api_post_link", defaults={"path" = ""}, requirements={"path" = ".+"})
@@ -208,6 +208,9 @@ class LinkController extends Controller
         // Create the link.
         if ($link === null) {
             $link = $lm->createLink($item, $user, $date);
+        } else {
+            // Update the link (expire date);
+            $lm->updateLink($link->getId(), $user, $date);
         }
 
         $response->setStatusCode(201);

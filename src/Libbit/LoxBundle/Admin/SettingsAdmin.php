@@ -45,24 +45,8 @@ class SettingsAdmin extends Admin
             ->with('General')
                 ->add('application_title')
                 ->add('app_backcolor')
-                ->add('app_fontcolor');
-
-        $formMapper
-            ->add('file', 'file', array('required' => false, 'label'       => 'Application Logo'))
-            // ... other fields can go here ...
+                ->add('app_fontcolor')
+                ->add('application_logo')
         ;
-    }
-
-    public function prePersist($product) {
-        $this->saveFile($product);
-    }
-
-    public function preUpdate($product) {
-        $this->saveFile($product);
-    }
-
-    public function saveFile($product) {
-        $basepath = $this->getRequest()->getBasePath();
-        $product->upload($basepath);
     }
 }
