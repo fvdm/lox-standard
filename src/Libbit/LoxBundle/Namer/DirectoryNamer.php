@@ -28,7 +28,7 @@ class DirectoryNamer implements DirectoryNamerInterface
             $object->setFilePath($dir . "/" . rand(0, 9));
         }
 
-        return $mapping->getUploadDestination() . "/" . $object->getFilePath();
+        return $object->getFilePath();
     }
 
     /**

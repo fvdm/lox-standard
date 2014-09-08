@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use Libbit\LoxBundle\Entity\Settings;
+
 class WebController extends Controller
 {
     /**
@@ -95,7 +97,14 @@ class WebController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $settings = $em->getRepository('Libbit\LoxBundle\Entity\Settings')->findAll()[0];
+        $settings = $em->getRepository('Libbit\LoxBundle\Entity\Settings')->findAll();
+
+        // No settings entity found, use defaults.
+        if (isset($settings[0]) === false) {
+            $settings = new Settings();
+        } else {
+            $settings = $settings[0];
+        }
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');

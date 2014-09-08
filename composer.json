@@ -13,7 +13,7 @@
         "rednose/kerberos-bundle": "1.0.0",
         "sonata-project/notification-bundle": "dev-master",
         "videlalvaro/php-amqplib": "dev-master",
-        "vich/uploader-bundle": "dev-master",
+        "vich/uploader-bundle": "v0.10.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/knp-gaufrette-bundle": "dev-master",
         "rednose/yui-bundle": "1.0.0",
