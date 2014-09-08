@@ -31,6 +31,7 @@ else
     # Warm the cache.
     app/console --env=prod cache:warm
 
+    chown -R apache .
   else
     echo Unable to connect to the database defined in the file
     echo app/config/parameters.yml. Please check your settings, check

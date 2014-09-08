@@ -14,6 +14,7 @@ then
   app/console --env=prod doctrine:migrations:migrate -n
   app/console --env=prod assets:install --symlink web
   app/console --env=prod rednose:yui:install
+  chown -R apache .
 else
   cat > /dev/stderr <<EOF
 The update script is unable to find the old database, or said database
