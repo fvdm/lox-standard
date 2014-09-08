@@ -15,7 +15,7 @@ then
   app/console --env=prod assets:install --symlink web
   app/console --env=prod rednose:yui:install
 else
-  echo <<EOF
+  cat > /dev/stderr <<EOF
 The update script is unable to find the old database, or said database
 is empty. If this is a new install, that is to be expected. If not,
 please check if the app/config/parameters.yml has the right

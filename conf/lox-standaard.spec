@@ -1,7 +1,7 @@
 Name:		localbox
 BuildArch: noarch
 Version:	1.1.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 License:	EUGPL
 URL:		http://www.libbit.eu/nl/producten-nl/localbox
 Source0:	lox-standaard.tar.gz
@@ -14,7 +14,7 @@ BuildRequires:	doxygen
 # localbox
 Requires:	localbox-server localbox-dependencies
 # centos
-Requires:   php
+Requires:   php php-mysql
 # epel
 Requires:   php-symfony
 
@@ -50,7 +50,7 @@ desktops).
 rm -rf $RPM_BUILD_ROOT
 
 %build
-#doxygen Doxyfile
+doxygen Doxyfile
 
 mv app/config/parameters.yml.dist app/config/parameters.yml
 rm Doxyfile composer.lock
@@ -60,28 +60,29 @@ find . -type f -iname .gitkeep -exec rm {} \;
 rm -rf $RPM_BUILD_ROOT
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox
 mkdir -p ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
-mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox/app/cache
-mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox/app/logs
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
+mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox/app
+mkdir -m 700 ${RPM_BUILD_ROOT}%{_datadir}/localbox/app/cache
+mkdir -m 700 ${RPM_BUILD_ROOT}%{_datadir}/localbox/app/logs
 
 mv README.md LICENSE ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 
 mv conf/localbox.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
 rm -rf conf
 
-#cp -pr doc/html ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
+cp -pr doc/html ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 rm -rf doc
 
 cp -pr * ${RPM_BUILD_ROOT}%{_datadir}/localbox
+
 
 %post
 %{_datadir}/localbox/app/deployment/post-update2.sh
 
 %files
 %files server
-%attr(0700, apache, apache)
-%{_datadir}/localbox/app/cache
-%{_datadir}/localbox/app/logs
+%attr(0700, apache, apache) %{_datadir}/localbox/app/cache
+%attr(0700, apache, apache) %{_datadir}/localbox/app/logs
 %attr(0755, root, root)
 %{_datadir}/localbox/app/console
 %{_datadir}/localbox/app/deployment/*.sh
@@ -98,7 +99,6 @@ cp -pr * ${RPM_BUILD_ROOT}%{_datadir}/localbox
 %{_datadir}/localbox/app/Resources/apns/apns_certificate_dev.pem
 %{_datadir}/localbox/app/Resources/views/base.html.twig
 %{_datadir}/localbox/composer.json
-%{_datadir}/localbox/go-pear.phar
 %{_datadir}/localbox/src/Libbit/LoxBundle/Admin/*.php
 %{_datadir}/localbox/src/Libbit/LoxBundle/Consumer/*.php
 %{_datadir}/localbox/src/Libbit/LoxBundle/Controller/*.php
@@ -151,7 +151,7 @@ cp -pr * ${RPM_BUILD_ROOT}%{_datadir}/localbox
 %{_defaultdocdir}/localbox/LICENSE
 
 %files doxygen-refman
-#%{_defaultdocdir}/localbox/html/*
+%{_defaultdocdir}/localbox/html/*
 
 %changelog
 

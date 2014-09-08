@@ -1,5 +1,5 @@
 #!/bin/sh
-RELDIR=$(pwd $(dirname "${1}"))
+RELDIR=$(readlink -f $(dirname "${0}"))
 cd "${RELDIR}/../.."
 
 if 
@@ -11,7 +11,7 @@ then
 
 else
   if 
-    test app/console doctrine:query:sql "select 1"
+    app/console doctrine:query:sql "select 1"
   then
     # Create the database.
     app/console doctrine:database:create
