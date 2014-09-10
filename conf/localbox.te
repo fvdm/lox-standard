@@ -1,0 +1,15 @@
+
+module localbox 1.0;
+
+require {
+	type httpd_t;
+	type var_t;
+	type usr_t;
+	class dir create;
+	class file { write rename getattr setattr create unlink };
+}
+
+#============= httpd_t ==============
+allow httpd_t usr_t:dir create;
+allow httpd_t usr_t:file { write rename create setattr };
+allow httpd_t var_t:file { getattr unlink };
