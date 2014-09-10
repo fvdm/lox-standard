@@ -4,7 +4,7 @@ Version:	1.1.1
 Release:	5%{?dist}
 License:	EUGPL
 URL:		http://www.libbit.eu/nl/producten-nl/localbox
-Source0:	lox-standaard.tar.gz
+Source0:	lox-standard.tar.gz
 Summary:	A secure way of sharing documents
 Group:		Applications/Publishing
 BuildRoot:  %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -44,7 +44,7 @@ te gebruiken vanaf verschillende devices (iPad, Android en Windows
 desktops). 
 
 %prep
-%setup -q -n lox-standaard
+%setup -q -n lox-standard
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -53,8 +53,12 @@ rm -rf $RPM_BUILD_ROOT
 doxygen Doxyfile
 
 mv app/config/parameters.yml.dist app/config/parameters.yml
-rm Doxyfile composer.lock
+rm -rf cache logs Doxyfile composer.lock
+ln -s /var/log/localbox/ logs
+ln -s /var/cache/localbox/ cache
 find . -type f -iname .gitkeep -exec rm {} \;
+checkmodule -M -m -o conf/localbox.mod conf/localbox.te
+semodule_package -o localbox.pp conf/localbox.mod
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -62,8 +66,9 @@ mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox
 mkdir -p ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox/app
-mkdir -m 700 ${RPM_BUILD_ROOT}%{_datadir}/localbox/app/cache
-mkdir -m 700 ${RPM_BUILD_ROOT}%{_datadir}/localbox/app/logs
+
+mkdir -p -m 700 ${RPM_BUILD_ROOT}%{_datadir}/var/cache/localbox
+mkdir -p -m 750 ${RPM_BUILD_ROOT}%{_datadir}/var/log/localbox
 
 mv README.md LICENSE ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 
@@ -73,16 +78,17 @@ rm -rf conf
 cp -pr doc/html ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 rm -rf doc
 
-cp -pr * ${RPM_BUILD_ROOT}%{_datadir}/localbox
+cp -pr app composer.json  composer.lock  data  src  web ${RPM_BUILD_ROOT}%{_datadir}/localbox
 
 
 %post
 %{_datadir}/localbox/app/deployment/post-update2.sh
+semodule -i localbox.pp
 
 %files
 %files server
-%attr(0700, apache, apache) %{_datadir}/localbox/app/cache
-%attr(0700, apache, apache) %{_datadir}/localbox/app/logs
+%attr(0700, apache, apache) %{_datadir}/var/cache/localbox
+%attr(0750, apache, apache) %{_datadir}/var/logs/localbox
 %attr(0755, root, root)
 %{_datadir}/localbox/app/console
 %{_datadir}/localbox/app/deployment/*.sh
@@ -146,12 +152,3 @@ cp -pr * ${RPM_BUILD_ROOT}%{_datadir}/localbox
 %{_datadir}/localbox/web/*.php
 %{_datadir}/localbox/web/robots.txt
 %{_datadir}/localbox/web/uploads/products/logo_title.png
-%doc
-%{_defaultdocdir}/localbox/README.md
-%{_defaultdocdir}/localbox/LICENSE
-
-%files doxygen-refman
-%{_defaultdocdir}/localbox/html/*
-
-%changelog
-
