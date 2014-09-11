@@ -58,7 +58,7 @@ ln -s /var/log/localbox/ logs
 ln -s /var/cache/localbox/ cache
 find . -type f -iname .gitkeep -exec rm {} \;
 checkmodule -M -m -o conf/localbox.mod conf/localbox.te
-semodule_package -o localbox.pp conf/localbox.mod
+semodule_package -o localbox.pp -m conf/localbox.mod
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -72,13 +72,15 @@ mkdir -p -m 750 ${RPM_BUILD_ROOT}%{_datadir}/var/log/localbox
 
 mv README.md LICENSE ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 
-mv conf/localbox.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
+cp conf/localbox.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
+cp conf/localbox.ini ${RPM_BUILD_ROOT}%{_sysconfdir}/php.d/localbox.ini
+
 rm -rf conf
 
 cp -pr doc/html ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 rm -rf doc
 
-cp -pr app composer.json  composer.lock  data  src  web ${RPM_BUILD_ROOT}%{_datadir}/localbox
+cp -pr app composer.json  data  src  web ${RPM_BUILD_ROOT}%{_datadir}/localbox
 
 
 %post
@@ -87,8 +89,9 @@ semodule -i localbox.pp
 
 %files
 %files server
-%attr(0700, apache, apache) %{_datadir}/var/cache/localbox
-%attr(0750, apache, apache) %{_datadir}/var/logs/localbox
+/etc/php.d/localbox.ini
+%attr(0700, apache, apache) /var/cache/localbox
+%attr(0750, apache, apache) /var/logs/localbox
 %attr(0755, root, root)
 %{_datadir}/localbox/app/console
 %{_datadir}/localbox/app/deployment/*.sh
