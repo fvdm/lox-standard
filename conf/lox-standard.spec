@@ -66,13 +66,18 @@ mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox
 mkdir -p ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox/app
+mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/log/localbox/
+mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/cache/localbox/
 
 mkdir -p -m 700 ${RPM_BUILD_ROOT}%{_datadir}/var/cache/localbox
 mkdir -p -m 750 ${RPM_BUILD_ROOT}%{_datadir}/var/log/localbox
 
 mv README.md LICENSE ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 
-cp conf/localbox.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
+mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/
+cp conf/localbox.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/localbox.conf
+
+mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/php.d/
 cp conf/localbox.ini ${RPM_BUILD_ROOT}%{_sysconfdir}/php.d/localbox.ini
 
 rm -rf conf
@@ -91,7 +96,7 @@ semodule -i localbox.pp
 %files server
 /etc/php.d/localbox.ini
 %attr(0700, apache, apache) /var/cache/localbox
-%attr(0750, apache, apache) /var/logs/localbox
+%attr(0750, apache, apache) /var/log/localbox
 %attr(0755, root, root)
 %{_datadir}/localbox/app/console
 %{_datadir}/localbox/app/deployment/*.sh
@@ -155,3 +160,7 @@ semodule -i localbox.pp
 %{_datadir}/localbox/web/*.php
 %{_datadir}/localbox/web/robots.txt
 %{_datadir}/localbox/web/uploads/products/logo_title.png
+%{_defaultdocdir}/localbox/LICENSE
+%{_defaultdocdir}/localbox/README.md
+%files doxygen-refman
+%{_defaultdocdir}/localbox/html/*
