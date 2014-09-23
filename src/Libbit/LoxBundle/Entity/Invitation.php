@@ -22,14 +22,14 @@ class Invitation
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
+     * @Assert\Regex("/[0-9]+/")
      * @Serializer\Groups({"details"})
      */
     protected $id;
 
     /**
      * @Serializer\Groups({"details"})
-     *
+     * @Assert\DateTime()
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;

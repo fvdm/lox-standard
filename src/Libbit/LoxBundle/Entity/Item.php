@@ -22,6 +22,7 @@ class Item
 	const ROOT = 'Home';
 
     /**
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -48,8 +49,9 @@ class Item
 	protected $isDir;
 
     /**
-	 * Title of the file or folder.
-	 *
+     * Title of the file or folder.
+     *
+     * @Assert\Regex("/[\w ]+/")
      * @ORM\Column(type="string")
      *
      * @Serializer\Groups({"list", "details", "tree"})

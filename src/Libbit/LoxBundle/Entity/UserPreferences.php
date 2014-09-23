@@ -13,6 +13,7 @@ use Rednose\FrameworkBundle\Entity\User;
 class UserPreferences
 {
     /**
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
