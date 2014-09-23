@@ -9,9 +9,14 @@ class ApiLinksTest extends WebTestCase
      */
     protected $client;
 
-    public function testGeneratePublicExpiredLinkReturnsJson()
+
+    protected function setUp()
     {
 $this->markTestSkipped("Test unreliably times out for some reason");
+}
+
+    public function testGeneratePublicExpiredLinkReturnsJson()
+    {
         $date = new \DateTime('NOW');
         $date->setTimezone(new \DateTimeZone('WST'));
 
