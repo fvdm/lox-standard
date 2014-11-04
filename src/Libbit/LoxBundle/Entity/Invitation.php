@@ -36,6 +36,7 @@ class Invitation
 
     /**
      * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
+     * @Assert\DateTime()
      * @ORM\JoinColumn(name="sender_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $sender;

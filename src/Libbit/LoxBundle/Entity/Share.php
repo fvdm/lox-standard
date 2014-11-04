@@ -21,6 +21,7 @@ class Share
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Assert\Regex("/[0-9]+/")
      *
      * @Serializer\Groups({"list", "details"})
      */
@@ -31,6 +32,7 @@ class Share
      *
      * @ORM\OneToOne(targetEntity="Libbit\LoxBundle\Entity\Item")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="CASCADE")
+     * @Assert\Regex("/[0-9]+/")
      *
      * @Serializer\Groups({"details"})
      */
@@ -39,6 +41,7 @@ class Share
     /**
      * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
      *
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\JoinColumn(
      *   name="owner_id",
      *   referencedColumnName="id",

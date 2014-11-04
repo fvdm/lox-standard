@@ -16,6 +16,7 @@ class KeyPair
      * @var integer
      *
      * @ORM\Id
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -23,7 +24,6 @@ class KeyPair
 
     /**
      * @var User
-     *
      * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -32,12 +32,14 @@ class KeyPair
     /**
      * @var string
      *
+     * @Assert\Regex("/[a-zA-Z0-9\/+]+={0-2}/")
      * @ORM\Column(type="text", name="public_key", nullable=true)
      */
     protected $publicKey;
 
     /**
      * @var string
+     * @Assert\Regex("/[a-zA-Z0-9\/+]+={0-2}/")
      *
      * @ORM\Column(type="text", name="private_key", nullable=true)
      */

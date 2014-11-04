@@ -19,6 +19,7 @@ class Notification extends BaseNotification
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -26,6 +27,7 @@ class Notification extends BaseNotification
     /**
      * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
      *
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\JoinColumn(
      *   name="owner_id",
      *   referencedColumnName="id",
@@ -35,6 +37,7 @@ class Notification extends BaseNotification
 
     /**
      * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
+     * @Assert\Regex("/[0-9]+/")
      *
      * @ORM\JoinColumn(
      *   name="user_id",
@@ -50,6 +53,7 @@ class Notification extends BaseNotification
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     protected $readAt;
 

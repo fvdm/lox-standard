@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="libbit_lox.exception.listener.class">Libbit\LoxBundle\EventListener\ExceptionListener</parameter>
+        <parameter key="libbit_lox.authentication.listener.class">Libbit\LoxBundle\EventListener\AuthenticationListener</parameter>
         <parameter key="libbit_lox.notification.consumer.logger.class">Libbit\LoxBundle\Consumer\LoggerConsumer</parameter>
         <parameter key="libbit_lox.notification.consumer.push_notification.class">Libbit\LoxBundle\Consumer\PushNotificationConsumer</parameter>
     </parameters>
@@ -14,6 +15,18 @@
         <service id="libbit_lox.exception.listener" class="%libbit_lox.exception.listener.class%">
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
             <argument type="service" id="service_container" />
+        </service>
+
+        <!--service id="libbit_lox.authentication.listener" class="%libbit_lox.authentication.listener.class%">
+            <tag name="monolog.logger" channel="security.authentication" />
+            <argument type="service" id="logger" />
+        </service-->
+
+        <service id="libbit_lox.authentication.listener" class="%libbit_lox.authentication.listener.class%">
+            <tag name="kernel.event_listener" event="security.interactive_login" method="onAuthenticationSuccess" />
+            <tag name="kernel.event_listener" event="security.authentication.failure" method="onAuthenticationFailure" />
+            <tag name="monolog.logger" channel="security.authentication" />
+            <argument type="service" id="logger" />
         </service>
 
         <service id="libbit_lox.notification.consumer.push_notification" class="%libbit_lox.notification.consumer.push_notification.class%">

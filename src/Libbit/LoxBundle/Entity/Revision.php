@@ -22,6 +22,7 @@ class Revision
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -29,20 +30,22 @@ class Revision
     /**
      * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
      *
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\JoinColumn(
      *   name="owner_id",
      *   referencedColumnName="id",
      *   onDelete="CASCADE")
      */
     protected $user;
-
     /**
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\Column(type="integer")
      */
     protected $revision;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      */
     protected $createdAt;
 

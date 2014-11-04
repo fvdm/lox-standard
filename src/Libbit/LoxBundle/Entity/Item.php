@@ -60,6 +60,7 @@ class Item
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      */
 	protected $createdAt;
 

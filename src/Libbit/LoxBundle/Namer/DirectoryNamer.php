@@ -39,6 +39,9 @@ class DirectoryNamer implements DirectoryNamerInterface
      */
     private function getDirectory()
     {
+        // Please use ext4 or another filesystem without a maximum number of directory links
+        return substr(md5(rand(0, getrandmax())), 0, 21) ;
+/*
         $folderList = array();
 
         for ($i = 0; $i <= 30000; $i++) {
@@ -48,5 +51,6 @@ class DirectoryNamer implements DirectoryNamerInterface
         }
 
         return $folderList[rand(0, 30000)];
+*/
     }
 }

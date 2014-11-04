@@ -29,6 +29,8 @@ class InvitationGroupListener implements EventSubscriberInterface
     public function afterUserChange(UserEvent $event)
     {
         $user = $event->getUser();
+//	$logger = $this->get('logger');
+//      $logger->info("updated user");
 
         // Get current invites and validate them.
         $currentInvites = $this->sm->findInvitationsForUser($user);

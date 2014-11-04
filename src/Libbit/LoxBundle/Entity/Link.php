@@ -18,6 +18,7 @@ class Link
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Assert\Regex("/[0-9]+/")
      *
      * @Serializer\Groups({"list", "details"})
      */
@@ -26,6 +27,7 @@ class Link
     /**
      * @ORM\ManyToOne(targetEntity="Rednose\FrameworkBundle\Entity\User")
      *
+     * @Assert\Regex("/[0-9]+/")
      * @ORM\JoinColumn(
      *   name="owner_id",
      *   referencedColumnName="id",
