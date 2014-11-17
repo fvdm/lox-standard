@@ -59,7 +59,7 @@ class KeyControllerTest extends WebTestCase
         $this->key = hash('SHA256', $rndString, true);
 
         // Create InitVector
-        $size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CBC);
+        $size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $this->iv = mcrypt_create_iv($size, MCRYPT_RAND);
     }
 

@@ -1,7 +1,7 @@
 Name:		localbox
 BuildArch: noarch
-Version:	1.1.1
-Release:	5%{?dist}
+Version:	1.1.4
+Release:	rc2%{?dist}
 License:	EUGPL
 URL:		http://www.libbit.eu/nl/producten-nl/localbox
 Source0:	lox-standard.tar.gz
@@ -12,9 +12,9 @@ BuildRoot:  %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:	doxygen
 # localbox
-Requires:	localbox-server localbox-dependencies
+Requires:	localbox-server localbox-vendor
 # centos
-Requires:   php php-mysql
+Requires:   php php-mysql policycoreutils policycoreutils-python
 # epel
 Requires:   php-symfony
 
@@ -51,14 +51,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %build
 doxygen Doxyfile
+rm -rf app/cache app/logs Doxyfile composer.lock
 
 mv app/config/parameters.yml.dist app/config/parameters.yml
-rm -rf cache logs Doxyfile composer.lock
-ln -s /var/log/localbox/ logs
-ln -s /var/cache/localbox/ cache
+sleep 1
+ln -s %{_localstatedir}/log/localbox/ app/logs
+sleep 1
+ln -s %{_localstatedir}/cache/localbox/ app/cache
+sleep 1
 find . -type f -iname .gitkeep -exec rm {} \;
-checkmodule -M -m -o conf/localbox.mod conf/localbox.te
-semodule_package -o localbox.pp -m conf/localbox.mod
+#checkmodule -M -m -o conf/localbox.mod conf/localbox.te
+#semodule_package -o localbox.pp -m conf/localbox.mod
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -69,8 +72,8 @@ mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/localbox/app
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/log/localbox/
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/cache/localbox/
 
-mkdir -p -m 700 ${RPM_BUILD_ROOT}%{_datadir}/var/cache/localbox
-mkdir -p -m 750 ${RPM_BUILD_ROOT}%{_datadir}/var/log/localbox
+mkdir -p -m 700 ${RPM_BUILD_ROOT}/var/cache/localbox
+mkdir -p -m 750 ${RPM_BUILD_ROOT}/var/log/localbox
 
 mv README.md LICENSE ${RPM_BUILD_ROOT}%{_defaultdocdir}/localbox
 
@@ -90,13 +93,22 @@ cp -pr app composer.json  data  src  web ${RPM_BUILD_ROOT}%{_datadir}/localbox
 
 %post
 %{_datadir}/localbox/app/deployment/post-update2.sh
-semodule -i localbox.pp
+#semodule -i localbox.pp
+semanage fcontext -a -t httpd_log_t "/var/log/localbox(/.*)?"
+restorecon -Rv "/var/log/localbox"
+semanage fcontext -a -t httpd_cache_t "/var/cache/localbox(/.*)?"
+restorecon -Rv "/var/cache/localbox"
+semanage fcontext -a -t httpd_sys_content_t "/usr/share/localbox(/.*)?"
+restorecon -Rv "/usr/share/localbox"
+
 
 %files
 %files server
 /etc/php.d/localbox.ini
 %attr(0700, apache, apache) /var/cache/localbox
-%attr(0750, apache, apache) /var/log/localbox
+%{_datadir}/localbox/app/cache
+%attr(0755, apache, apache) /var/log/localbox
+%{_datadir}/localbox/app/logs
 %attr(0755, root, root)
 %{_datadir}/localbox/app/console
 %{_datadir}/localbox/app/deployment/*.sh

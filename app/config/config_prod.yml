@@ -1,19 +1,32 @@
 imports:
     - { resource: config.yml }
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+#framework:
+#    router:   { resource: "%kernel.root_dir%/config/routing.yml" }
+    #xprofiler: { only_exceptions: false }
+
+#xweb_profiler:
+#    toolbar: false
+#    intercept_redirects: false
 
 monolog:
     handlers:
         main:
-            type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nested:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
+        firephp:
+            type:  firephp
+            level: info
+
+#assetic:
+#    use_controller: true
+
+#security:
+#    firewalls:
+#        api:
+#            fos_oauth: false
+#            http_basic: ~
+
+#swiftmailer:
+#    delivery_address: me@example.com
