@@ -11,10 +11,13 @@ BuildRoot:  %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 
 BuildRequires:	doxygen
+
 # localbox
 Requires:	localbox-server localbox-vendor
+
 # centos
-Requires:   php php-mysql policycoreutils policycoreutils-python
+Requires:   php php-mysql policycoreutils policycoreutils-python mod_php mysql
+
 # epel
 Requires:   php-symfony
 
@@ -94,6 +97,7 @@ cp -pr app composer.json  data  src  web ${RPM_BUILD_ROOT}%{_datadir}/localbox
 %post
 %{_datadir}/localbox/app/deployment/post-update2.sh
 #semodule -i localbox.pp
+setsebool httpd_can_network_connect_db on
 semanage fcontext -a -t httpd_log_t "/var/log/localbox(/.*)?"
 restorecon -Rv "/var/log/localbox"
 semanage fcontext -a -t httpd_cache_t "/var/cache/localbox(/.*)?"
