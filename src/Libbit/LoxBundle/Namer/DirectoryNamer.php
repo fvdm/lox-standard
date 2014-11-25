@@ -33,14 +33,20 @@ class DirectoryNamer implements DirectoryNamerInterface
 
     /**
      * Get a pseudo random directory name based on internal logic
-     * The maximum amount of the combinations is 30.000 to avoid inodes overloads.
      *
      * @return string A pseudo random directory
      */
     private function getDirectory()
     {
         // Please use ext4 or another filesystem without a maximum number of directory links
-        return substr(md5(rand(0, getrandmax())), 0, 21) ;
+        $not_broken;
+        $string = substr(md5(openssl_random_pseudo_bytes(21,$not_broken)));
+        if($not_broken == false){
+            //TODO Some sensical logging and stuff perhaps?
+            print("This machine uses a broken openssl random pseudo bytes function! ");
+        }
+        return $string
+        //return substr(md5(rand(0, getrandmax())), 0, 21) ;
 /*
         $folderList = array();
 
