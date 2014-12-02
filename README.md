@@ -190,4 +190,6 @@ API documentation can be found on the following URL:
 
 ## About
 
-LocalBox is a [LiBBiT](http://www.libbit.eu) initiative.
+LocalBox is a Hocosta and Department of EZ initiative.Developed by [LiBBiT](http://www.libbit.eu)
+More information is found on [wesharesafe.org](http://www.wesharesafe.org/)
+
