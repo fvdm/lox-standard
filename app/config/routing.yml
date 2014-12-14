@@ -1,25 +1,19 @@
 _rednose_framework_security:
     resource: "@RednoseFrameworkBundle/Resources/config/routing/security.xml"
 
-_rednose_framework_device:
-    resource: "@RednoseFrameworkBundle/Resources/config/routing/device.xml"
-    prefix:   /lox_api
+#_rednose_framework_device:
+#    resource: "@RednoseFrameworkBundle/Resources/config/routing/device.xml"
+#    prefix:   /lox_api
 
 libbit_lox:
     resource: "@LibbitLoxBundle/Resources/config/routing.yml"
     prefix:   /
 
-rednose_framework_oauth2_authorize:
-    pattern: /oauth2/authorize
-    defaults: { _controller: RednoseFrameworkBundle:Authorize:authorize }
-    requirements:
-        _method: GET|POST
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 
-rednose_framework_oauth2_token:
-    pattern: /lox_api/oauth2/token
-    defaults: { _controller: RednoseFrameworkBundle:Authorize:token }
-    requirements:
-        _method: GET|POST
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

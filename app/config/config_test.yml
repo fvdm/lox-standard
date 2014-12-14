@@ -35,8 +35,3 @@ vich_uploader:
     mappings:
         file:
             upload_destination: %kernel.root_dir%/../data/test-data
-
-security:
-    firewalls:
-        api:
-            http_basic: ~

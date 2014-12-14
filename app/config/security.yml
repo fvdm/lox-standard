@@ -16,7 +16,7 @@ security:
 
     firewalls:
         oauth_token:
-            pattern: ^/lox_api/oauth2/token
+            pattern: ^/oauth/v2/token
             security: false
 
         api:
@@ -46,7 +46,8 @@ security:
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/lox_api, roles: [ IS_AUTHENTICATED_FULLY ] }
         - { path: ^/combo, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, role: ROLE_SUPER_ADMIN}
+        - { path: ^/admin, role: ROLE_SUPER_ADMIN }
+        - { path: ^/lox_api, roles: [ IS_AUTHENTICATED_FULLY ] }
         - { path: ^/.*, roles: ROLE_USER }
+
