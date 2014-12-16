@@ -5,6 +5,7 @@
     "LogoUrl"   : "{{ app.request.getSchemeAndHttpHost() }}{{ asset('')}}{{ application_logo }}",
     "BackColor" : "{{ app_backcolor }}",
     "FontColor" : "{{ app_fontcolor }}",
+    "pin_cert"  : "{{ pin_cert }}",
     "APIKeys"   : [
         {% for client in clients %}
             {
