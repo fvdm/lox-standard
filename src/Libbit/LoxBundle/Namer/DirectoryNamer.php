@@ -45,7 +45,7 @@ class DirectoryNamer implements DirectoryNamerInterface
             //TODO Some sensical logging and stuff perhaps?
             print("This machine uses a broken openssl random pseudo bytes function! ");
         }
-        return $string
+        return $string;
         //return substr(md5(rand(0, getrandmax())), 0, 21) ;
 /*
         $folderList = array();
