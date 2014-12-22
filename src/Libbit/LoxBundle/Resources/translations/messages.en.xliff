@@ -210,6 +210,22 @@
                 <source>mail_notification_body</source>
                 <target>%actor% has changed the file "%item%", in the following folder: %path%.</target>
             </trans-unit>
+            <trans-unit id="oauth_authorize">
+                <source>oauth_authorize</source>
+                <target>Authorize</target>
+            </trans-unit>
+            <trans-unit id="oauth_authorize_explanation">
+                <source>oauth_authorize_explanation</source>
+                <target>Permit this application to access your Localbox account?</target>
+            </trans-unit>            
+            <trans-unit id="oauth_allow">
+                <source>oauth_allow</source>
+                <target>Allow</target>            
+            </trans-unit>
+            <trans-unit id="oauth_deny">
+                <source>oauth_deny</source>
+                <target>Deny</target>            
+            </trans-unit>            
         </body>
     </file>
 </xliff>

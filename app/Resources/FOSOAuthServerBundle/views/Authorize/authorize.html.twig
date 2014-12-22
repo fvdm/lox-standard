@@ -1,0 +1,30 @@
+{% extends "RednoseFrameworkBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('bundles/rednoseframework/css/login.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block title %}{% trans %}oauth_authorize{% endtrans %}{% endblock %}
+
+{% block content %}
+
+    <div class="content">
+        <h2>{% trans %}oauth_authorize{% endtrans %}</h2>
+        <p>{% trans %}oauth_authorize_explanation{% endtrans %}</p>
+		<form action="{{ path('fos_oauth_server_authorize') }}" method="POST" 
+		class="fos_oauth_server_authorize" {{ form_enctype(form) }}>
+		    <input class="btn btn-success" type="submit" name="accepted" value="{% trans %}oauth_allow{% endtrans %}" />
+		    <input class="btn" type="submit" name="rejected" value="{% trans %}oauth_deny{% endtrans %}" />
+
+		    {{ form_row(form.client_id) }}
+		    {{ form_row(form.response_type) }}
+		    {{ form_row(form.redirect_uri) }}
+		    {{ form_row(form.state) }}
+		    {{ form_row(form.scope) }}
+		    {{ form_rest(form) }}
+		</form>
+    </div>
+
+{% endblock content %}
