@@ -22,11 +22,5 @@ monolog:
 assetic:
     use_controller: true
 
-security:
-    firewalls:
-        api:
-            fos_oauth: false
-            http_basic: ~
-
 #swiftmailer:
 #    delivery_address: me@example.com

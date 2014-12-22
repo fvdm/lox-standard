@@ -210,6 +210,22 @@
                 <source>mail_notification_body</source>
                 <target>%actor% heeft het bestand "%item%" gewijzigd, in de volgende map: %path%.</target>
             </trans-unit>
+            <trans-unit id="oauth_authorize">
+                <source>oauth_authorize</source>
+                <target>Toestemming</target>
+            </trans-unit>
+            <trans-unit id="oauth_authorize_explanation">
+                <source>oauth_authorize_explanation</source>
+                <target>Wilt u deze applicatie toegang geven tot uw Localbox account?</target>
+            </trans-unit>            
+            <trans-unit id="oauth_allow">
+                <source>oauth_allow</source>
+                <target>Toestaan</target>            
+            </trans-unit>
+            <trans-unit id="oauth_deny">
+                <source>oauth_deny</source>
+                <target>Weigeren</target>            
+            </trans-unit>                         
         </body>
     </file>
 </xliff>
