@@ -1,6 +1,6 @@
 Name:		localbox
 BuildArch: noarch
-Version:	1.1.4
+Version:	1.1.5
 Release:	rc2%{?dist}
 License:	EUGPL
 URL:		http://www.libbit.eu/nl/producten-nl/localbox
@@ -129,6 +129,7 @@ restorecon -Rv "/usr/share/localbox"
 %{_datadir}/localbox/app/config/*.yml
 %{_datadir}/localbox/app/*.php
 %{_datadir}/localbox/app/phpunit.xml.dist
+%{_datadir}/localbox/app/Resources/FOSOAuthServerBundle/views/Authorize/authorize.html.twig
 %{_datadir}/localbox/app/Resources/apns/apns_certificate_dev.pem
 %{_datadir}/localbox/app/Resources/views/base.html.twig
 %{_datadir}/localbox/composer.json

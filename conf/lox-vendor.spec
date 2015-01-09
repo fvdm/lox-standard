@@ -1,6 +1,6 @@
 Name:		localbox-vendor
 BuildArch: noarch
-Version:	1.1.4
+Version:	1.1.5
 Release:	rc2%{?dist}
 Summary:	'Vendor' dependencies for Localbox
 Group:		Applications/Publishing
@@ -10,6 +10,7 @@ Source0:	vendor.tar.bz2
 BuildRoot:  %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 
+Obsoletes: localbox-dependencies
 #BuildRequires:	
 #Requires:	
 
