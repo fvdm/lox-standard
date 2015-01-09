@@ -11,5 +11,5 @@ class LibbitLoxBundle extends Bundle
      *
      * @var string
      */
-    const VERSION = '1.1.3';
+    const VERSION = '1.1.5RC2';
 }
