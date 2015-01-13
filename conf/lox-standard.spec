@@ -1,7 +1,7 @@
 Name:		localbox
 BuildArch: noarch
 Version:	1.1.5
-Release:	rc2%{?dist}
+Release:	rc3%{?dist}
 License:	EUGPL
 URL:		http://www.libbit.eu/nl/producten-nl/localbox
 Source0:	lox-standard.tar.gz
