@@ -1,0 +1,15 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: "\e[3~\e[B\e[B\e[B\e[B\e[B\e[B\e[B"
+    database_name: lox-standard
+    database_user: root
+    database_password: root
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: sAUwuNmLzqxJY8WL3dqmoAGQ
+    pin_cert: /path/to/pem/file
