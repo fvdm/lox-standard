@@ -17,7 +17,10 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/knp-gaufrette-bundle": "dev-master",
         "rednose/yui-bundle": "1.0.0",
-        "rednose/rednose-ui": "1.4.2"
+        "rednose/rednose-ui": "1.4.2",
+        "rednose/framework-bundle": "1.6.x-dev",
+        "sonata-project/admin-bundle": "2.3.0",
+        "richsage/rms-push-notifications-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
