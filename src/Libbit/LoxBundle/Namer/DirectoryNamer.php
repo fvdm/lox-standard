@@ -40,7 +40,7 @@ class DirectoryNamer implements DirectoryNamerInterface
     {
         // Please use ext4 or another filesystem without a maximum number of directory links
         $not_broken;
-        $string = substr(md5(openssl_random_pseudo_bytes(21,$not_broken)));
+        $string = substr(md5(openssl_random_pseudo_bytes(21,$not_broken)),0 ,21);
         if($not_broken == false){
             //TODO Some sensical logging and stuff perhaps?
             print("This machine uses a broken openssl random pseudo bytes function! ");
