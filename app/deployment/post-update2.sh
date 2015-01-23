@@ -24,5 +24,3 @@ host/port/user/pass. If this is a new install, please run post-install
 instead
 EOF
 fi
-
-

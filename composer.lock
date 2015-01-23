@@ -210,12 +210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "38ed66e6606309bec203a9df506ffa26d956d21d"
+                "reference": "c63f2e637c6ac759d83002906c30e6c96d91e5f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/38ed66e6606309bec203a9df506ffa26d956d21d",
-                "reference": "38ed66e6606309bec203a9df506ffa26d956d21d",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/c63f2e637c6ac759d83002906c30e6c96d91e5f3",
+                "reference": "c63f2e637c6ac759d83002906c30e6c96d91e5f3",
                 "shasum": ""
             },
             "require": {
@@ -268,7 +268,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2014-11-05 15:56:21"
+            "time": "2015-01-21 05:12:54"
         },
         {
             "name": "doctrine/common",
@@ -834,12 +834,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "ee9aebf5690cc63ca40824d4e4b41842adfe0fc3"
+                "reference": "ba04c9801d623d46b29dddd3ee69fc3ac32a8512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/ee9aebf5690cc63ca40824d4e4b41842adfe0fc3",
-                "reference": "ee9aebf5690cc63ca40824d4e4b41842adfe0fc3",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/ba04c9801d623d46b29dddd3ee69fc3ac32a8512",
+                "reference": "ba04c9801d623d46b29dddd3ee69fc3ac32a8512",
                 "shasum": ""
             },
             "require": {
@@ -899,7 +899,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2015-01-18 15:43:31"
+            "time": "2015-01-22 14:03:10"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -948,17 +948,16 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "1.5.3",
-            "target-dir": "FOS/JsRoutingBundle",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "dade3bb0b21007e5c0fb40f203ed197841eb913c"
+                "reference": "539a6ac0c1fb6b010f92a1c877426a4caa5abba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/dade3bb0b21007e5c0fb40f203ed197841eb913c",
-                "reference": "dade3bb0b21007e5c0fb40f203ed197841eb913c",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/539a6ac0c1fb6b010f92a1c877426a4caa5abba1",
+                "reference": "539a6ac0c1fb6b010f92a1c877426a4caa5abba1",
                 "shasum": ""
             },
             "require": {
@@ -968,6 +967,9 @@
                 "symfony/serializer": "~2.0",
                 "willdurand/jsonp-callback-validator": "~1.0"
             },
+            "require-dev": {
+                "symfony/expression-language": "~2.4"
+            },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -975,8 +977,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "FOS\\JsRoutingBundle": ""
+                "psr-4": {
+                    "FOS\\JsRoutingBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -985,13 +987,12 @@
             ],
             "authors": [
                 {
-                    "name": "William Durand",
-                    "email": "william.durand1@gmail.com",
-                    "homepage": "http://www.willdurand.fr"
-                },
-                {
                     "name": "FriendsOfSymfony Community",
                     "homepage": "https://github.com/friendsofsymfony/FOSJsRoutingBundle/contributors"
+                },
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com"
                 }
             ],
             "description": "A pretty nice way to expose your Symfony2 routing to client applications.",
@@ -1001,7 +1002,7 @@
                 "javascript",
                 "routing"
             ],
-            "time": "2014-01-23 21:25:39"
+            "time": "2015-01-23 02:44:26"
         },
         {
             "name": "friendsofsymfony/oauth-server-bundle",
@@ -2040,12 +2041,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
-                "reference": "5a36089e012883d92cbcfab65f648921cec91801"
+                "reference": "9f38090b49c3e32d216c14bd974f0ffa441a0a3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/5a36089e012883d92cbcfab65f648921cec91801",
-                "reference": "5a36089e012883d92cbcfab65f648921cec91801",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/9f38090b49c3e32d216c14bd974f0ffa441a0a3a",
+                "reference": "9f38090b49c3e32d216c14bd974f0ffa441a0a3a",
                 "shasum": ""
             },
             "require": {
@@ -2088,7 +2089,7 @@
             "keywords": [
                 "menu"
             ],
-            "time": "2015-01-19 16:51:00"
+            "time": "2015-01-21 14:23:27"
         },
         {
             "name": "knplabs/knp-time-bundle",
@@ -2876,12 +2877,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rednose-public/RednoseFrameworkBundle.git",
-                "reference": "e02c447ad8b3da6a53fa1f8724c2168bb15b1785"
+                "reference": "cfc87f70fc62d22da2bf611325a97d3b2f40ed85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/e02c447ad8b3da6a53fa1f8724c2168bb15b1785",
-                "reference": "e02c447ad8b3da6a53fa1f8724c2168bb15b1785",
+                "url": "https://api.github.com/repos/rednose-public/RednoseFrameworkBundle/zipball/cfc87f70fc62d22da2bf611325a97d3b2f40ed85",
+                "reference": "cfc87f70fc62d22da2bf611325a97d3b2f40ed85",
                 "shasum": ""
             },
             "require": {
@@ -2941,7 +2942,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-01-19 19:50:10"
+            "time": "2015-01-20 21:46:18"
         },
         {
             "name": "rednose/kerberos-bundle",
@@ -4162,12 +4163,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "b8e4b4af3d5839cd16f517d73fcd571bcfed8a43"
+                "reference": "7be7e62cfcc2775262374686f2950d704596ea90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/b8e4b4af3d5839cd16f517d73fcd571bcfed8a43",
-                "reference": "b8e4b4af3d5839cd16f517d73fcd571bcfed8a43",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/7be7e62cfcc2775262374686f2950d704596ea90",
+                "reference": "7be7e62cfcc2775262374686f2950d704596ea90",
                 "shasum": ""
             },
             "require": {
@@ -4261,7 +4262,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-01-18 13:31:14"
+            "time": "2015-01-20 23:58:45"
         },
         {
             "name": "twig/extensions",
@@ -4316,12 +4317,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "68e5db52f8ac3957c233c51f506c8063094c2529"
+                "reference": "ae72b5dccf7d05d3b2bc9980aa75ed17e9e0bf3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/68e5db52f8ac3957c233c51f506c8063094c2529",
-                "reference": "68e5db52f8ac3957c233c51f506c8063094c2529",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ae72b5dccf7d05d3b2bc9980aa75ed17e9e0bf3b",
+                "reference": "ae72b5dccf7d05d3b2bc9980aa75ed17e9e0bf3b",
                 "shasum": ""
             },
             "require": {
@@ -4365,7 +4366,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-01-20 17:12:53"
+            "time": "2015-01-21 15:28:26"
         },
         {
             "name": "vich/uploader-bundle",
