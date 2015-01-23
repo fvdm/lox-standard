@@ -10,12 +10,11 @@ SIZ=`app/console doctrine:query:sql "SELECT COUNT(*) FROM information_schema.tab
 if
   test -z "$SIZ" 
 then
-  app/console --env=prod cache:clear
+  sudo -u apache app/console --env=prod cache:clear
   app/console --env=prod doctrine:migrations:migrate -n
   app/console --env=prod assets:install --symlink web
   app/console --env=prod rednose:yui:install
-  app/console --env=prod cache:warm
-  chown -R apache:apache /var/cache/localbox/
+  sudo -u apache app/console --env=prod cache:warm
 else
   cat > /dev/stderr <<EOF
 The update script is unable to find the old database, or said database
