@@ -117,7 +117,7 @@ class WebController extends Controller
                 'application_logo' => $settings->getApplicationLogo(),
                 'app_fontcolor' => $settings->getAppFontcolor(),
                 'app_backcolor' => $settings->getAppBackcolor(),
-                'pin_cert' => $this->container->getParameter('pin_cert'),
+                'pin_cert' => str_replace(array("\n", "\r"), '', file_get_contents($this->container->getParameter('pin_cert'))),
             ),
             $response
         );
