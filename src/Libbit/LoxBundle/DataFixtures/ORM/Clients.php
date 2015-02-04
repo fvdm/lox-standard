@@ -21,7 +21,7 @@ class Clients extends AbstractFixture implements OrderedFixtureInterface, Contai
 
         $client->setName('LocalBox iOS');
 
-        $client->setRedirectUris(array('http://www.rednose.nl'));
+        $client->setRedirectUris(array('lbox://oauth-return'));
         $client->setAllowedGrantTypes(array('token', 'authorization_code', 'password', 'refresh_token'));
 
         $client->setRandomId('32yqjbq9u38koggk040w408cccss8og4c0ckso4sgoocwgkkoc');
