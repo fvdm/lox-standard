@@ -1,7 +1,7 @@
 Name:		localbox
 BuildArch: noarch
 Version:	1.1.5
-Release:	rc6%{?dist}
+Release:	rc7%{?dist}
 License:	EUGPL
 URL:		http://www.libbit.eu/nl/producten-nl/localbox
 Source0:	lox-standard.tar.gz
@@ -153,15 +153,9 @@ restorecon -Rv "/usr/share/localbox"
 %{_datadir}/localbox/src/Libbit/LoxBundle/Resources/config/*.yml
 %{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/css/*.css
 %{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/favicon.png
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/files/icons.ai
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/files/icons.png
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/files/icons.pdf
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/files/LICENSE
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/files/README.md
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/files/*/*.png
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/folders/*/*.png
-%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/folders/ReadMe.rtf
 %{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/js/*/*.js
+%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/folders/ReadMe.rtf
+%{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/icons/folders/*/*.png
 %{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/js/*/lang/*.js
 %{_datadir}/localbox/src/Libbit/LoxBundle/Resources/public/logo/*png
 %{_datadir}/localbox/src/Libbit/LoxBundle/Resources/translations/*.xliff
