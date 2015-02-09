@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use FOS\RestBundle\Util\Codes;
 
 class FileController extends Controller
@@ -36,26 +37,17 @@ class FileController extends Controller
 
     	$item = $im->findItemByPath($user, $path);
 
-    	$response = new Response();
-
     	if ($item === null || $item->getIsDir()) {
+            $response = new Response();
 	    	$response->setStatusCode(Codes::HTTP_NOT_FOUND);
 
 	    	return $response;
     	}
 
-        $content = file_get_contents($item->getRevision()->getFile()->getRealpath());
-    	$response->setContent($content);
-
-        $response->headers->add(array(
-            'Content-Type'   => $item->getMimeType(),
-            'Content-Length' => strlen($content),
-        ));
+        $response = new BinaryFileResponse($item->getRevision()->getFile()->getRealpath());
 
     	if ($download) {
-	        $response->headers->add(array(
-	    		'Content-Disposition' => 'attachment; filename="'.$item->getTitle().'"',
-    		));
+            $response->setContentDisposition('attachment', $item->getTitle());
     	}
 
     	return $response;
@@ -152,17 +144,10 @@ class FileController extends Controller
 
         $item = $im->findItemByPath($user, $path);
 
-        $response = new JsonResponse();
-
         if ($item) {
-            $content = file_get_contents($item->getRevision()->getFile()->getRealpath());
-            $response->setContent($content);
-
-            $response->headers->add(array(
-                'Content-Type'   => $item->getMimeType(),
-                'Content-Length' => strlen($content),
-            ));
+            $response = new BinaryFileResponse($item->getRevision()->getFile()->getRealpath());
         } else {
+            $response = new JsonResponse();
             $response->setStatusCode(404);
         }
 
