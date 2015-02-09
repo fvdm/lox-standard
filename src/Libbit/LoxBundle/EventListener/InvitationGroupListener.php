@@ -44,7 +44,7 @@ class InvitationGroupListener implements EventSubscriberInterface
                 unset($allowedShares[$i->getShare()->getId()]);
             } else {
                 // User has no longer access, remove his invite.
-                $this->sm->removeInvitation($invite);
+                $this->sm->removeInvitation($i);
             }
         }
 
