@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file datatype="plaintext" original="" source-language="en">
+        <body>
+            <trans-unit id="sign_in_title">
+                <source>sign_in_title</source>
+                <target>Inloggen</target>
+            </trans-unit>
+            <trans-unit id="sign_in">
+                <source>sign_in</source>
+                <target>Inloggen</target>
+            </trans-unit>
+            <trans-unit id="error">
+                <source>error</source>
+                <target>Foutmelding</target>
+            </trans-unit>
+            <trans-unit id="username">
+                <source>username</source>
+                <target>Gebruikersnaam</target>
+            </trans-unit>
+            <trans-unit id="password">
+                <source>password</source>
+                <target>Wachtwoord</target>
+            </trans-unit>
+            <trans-unit id="remember_me">
+                <source>remember_me</source>
+                <target>Ingelogd blijven</target>
+            </trans-unit>
+            <trans-unit id="forgot_password">
+                <source>forgot_password</source>
+                <target>Wachtwoord vergeten?</target>
+            </trans-unit>
+            <trans-unit id="sign_in_button">
+                <source>sign_in_button</source>
+                <target>Inloggen</target>
+            </trans-unit>
+            <!--Forms-->
+            <trans-unit id="type_here_placeholder">
+                <source>type_here_placeholder</source>
+                <target>Vul hier de tekst in…</target>
+            </trans-unit>
+            <trans-unit id="type_to_search_placeholder">
+                <source>type_to_search_placeholder</source>
+                <target>Type hier om te zoeken…</target>
+            </trans-unit>
+            <!--Admin-->
+            <trans-unit id="users">
+                <source>users</source>
+                <target>Gebruikers</target>
+            </trans-unit>
+            <trans-unit id="groups">
+                <source>groups</source>
+                <target>Groepen</target>
+            </trans-unit>
+            <trans-unit id="forms">
+                <source>forms</source>
+                <target>Formulieren</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
