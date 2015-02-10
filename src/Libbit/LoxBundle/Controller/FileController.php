@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use FOS\RestBundle\Util\Codes;
 
 class FileController extends Controller
@@ -27,38 +28,29 @@ class FileController extends Controller
      */
     public function getAction($path)
     {
-    	$request  = $this->get('request');
-    	$download = $request->query->get('download');
+        $request  = $this->get('request');
+        $download = $request->query->get('download');
         $user     = $this->get('security.context')->getToken()->getUser();
 
         /** @var ItemManager $im */
         $im = $this->get('libbit_lox.item_manager');
 
-    	$item = $im->findItemByPath($user, $path);
+        $item = $im->findItemByPath($user, $path);
 
-    	$response = new Response();
+        if ($item === null || $item->getIsDir()) {
+            $response = new Response();
+            $response->setStatusCode(Codes::HTTP_NOT_FOUND);
 
-    	if ($item === null || $item->getIsDir()) {
-	    	$response->setStatusCode(Codes::HTTP_NOT_FOUND);
+            return $response;
+        }
 
-	    	return $response;
-    	}
+        $response = new BinaryFileResponse($item->getRevision()->getFile()->getRealpath());
 
-        $content = file_get_contents($item->getRevision()->getFile()->getRealpath());
-    	$response->setContent($content);
+        if ($download) {
+            $response->setContentDisposition('attachment', $item->getTitle());
+        }
 
-        $response->headers->add(array(
-            'Content-Type'   => $item->getMimeType(),
-            'Content-Length' => strlen($content),
-        ));
-
-    	if ($download) {
-	        $response->headers->add(array(
-	    		'Content-Disposition' => 'attachment; filename="'.$item->getTitle().'"',
-    		));
-    	}
-
-    	return $response;
+        return $response;
     }
 
     // -- API Methods ----------------------------------------------------------
@@ -69,12 +61,12 @@ class FileController extends Controller
      */
     public function uploadAction()
     {
-    	$request  = $this->get('request');
+        $request  = $this->get('request');
         $token    = $request->request->get('token');
-		$path     = $request->request->get('path');
- 	   	$im       = $this->get('libbit_lox.item_manager');
+        $path     = $request->request->get('path');
+        $im       = $this->get('libbit_lox.item_manager');
         $user     = $this->get('security.context')->getToken()->getUser();
-    	$response = new Response();
+        $response = new Response();
 
         if ($this->get('form.csrf_provider')->isCsrfTokenValid('web', $token) === false) {
             $response = new Response();
@@ -84,22 +76,22 @@ class FileController extends Controller
             return $response;
         }
 
-    	foreach($request->files as $uploadedFile) {
-		    if ($uploadedFile->isValid()) {
-		    	$parent = $im->findItemByPath($user, $path);
+        foreach($request->files as $uploadedFile) {
+            if ($uploadedFile->isValid()) {
+                $parent = $im->findItemByPath($user, $path);
 
-	    		if ($parent === null) {
-					$response->setStatusCode(Codes::HTTP_NOT_FOUND);
+                if ($parent === null) {
+                    $response->setStatusCode(Codes::HTTP_NOT_FOUND);
 
-					return $response;
-	    		}
+                    return $response;
+                }
 
                 $title = $uploadedFile->getClientOriginalName();
 
                 $item = $im->findItemByPath($user, $path.'/'.$title);
 
                 if ($item === null) {
-    	    		$item = $im->createFileItem($user, $parent);
+                    $item = $im->createFileItem($user, $parent);
                     $item->setTitle($title);
                 }
 
@@ -115,15 +107,15 @@ class FileController extends Controller
                 $revision->setFile($uploadedFile);
                 $item->addRevision($revision);
 
-		    	$im->saveItem($item);
+                $im->saveItem($item);
 
-		    	return $response;
-		    }
-		}
+                return $response;
+            }
+        }
 
-    	$response->setStatusCode(Codes::HTTP_BAD_REQUEST);
+        $response->setStatusCode(Codes::HTTP_BAD_REQUEST);
 
-    	return $response;
+        return $response;
     }
 
     /**
@@ -152,17 +144,10 @@ class FileController extends Controller
 
         $item = $im->findItemByPath($user, $path);
 
-        $response = new JsonResponse();
-
         if ($item) {
-            $content = file_get_contents($item->getRevision()->getFile()->getRealpath());
-            $response->setContent($content);
-
-            $response->headers->add(array(
-                'Content-Type'   => $item->getMimeType(),
-                'Content-Length' => strlen($content),
-            ));
+            $response = new BinaryFileResponse($item->getRevision()->getFile()->getRealpath());
         } else {
+            $response = new JsonResponse();
             $response->setStatusCode(404);
         }
 
