@@ -1,7 +1,7 @@
 Name:		localbox-vendor
 BuildArch: noarch
 Version:	1.1.5
-Release:	rc7%{?dist}
+Release:	rc9%{?dist}
 Summary:	'Vendor' dependencies for Localbox
 Group:		Applications/Publishing
 License:	EUGPL

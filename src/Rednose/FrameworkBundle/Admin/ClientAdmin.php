@@ -34,17 +34,17 @@ class ClientAdmin extends Admin
                     'edit'    => array(),
                     'delete'  => array(),
                 )
-            ));
+            ))->end();
     }
 
     public function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->with('General')
-                ->add('name')
+                ->add('name')->end()
             ->with('Identification')
                 ->add('publicId', 'text', array('label' => 'Client key'))
-                ->add('secret', 'text', array('label' => 'Client secret'))
+                ->add('secret', 'text', array('label' => 'Client secret'))->end()
             ->with('OAuth')
                 ->add('redirect_uris', 'array', array('label' => 'Redirect URIs'))
                 ->add('allowed_grant_types', 'array', array('label' => 'Grant types'));
@@ -54,13 +54,13 @@ class ClientAdmin extends Admin
     {
         $formMapper
             ->with('General')
-                ->add('name');
+                ->add('name')->end();
 
         if ($this->getSubject()->getId() !== null) {
             $formMapper
                 ->with('Identification')
                     ->add('publicId', 'text', array('label' => 'Client key', 'disabled' => true, 'required' => false))
-                    ->add('secret', 'text', array('label' => 'Client secret', 'disabled' => true, 'required' => false));
+                    ->add('secret', 'text', array('label' => 'Client secret', 'disabled' => true, 'required' => false))->end();
         }
 
         $formMapper
@@ -83,6 +83,6 @@ class ClientAdmin extends Admin
                     'label'             => 'Grant types',
                     'multiple'          => true,
                     'required'          => true,
-                ));
+                ))->end();
     }
 }

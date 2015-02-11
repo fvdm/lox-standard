@@ -1,7 +1,7 @@
 Name:		localbox
 BuildArch: noarch
 Version:	1.1.5
-Release:	rc7%{?dist}
+Release:	rc9%{?dist}
 License:	EUGPL
 URL:		http://www.libbit.eu/nl/producten-nl/localbox
 Source0:	lox-standard.tar.gz
@@ -13,7 +13,7 @@ BuildRoot:  %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	doxygen
 
 # localbox
-Requires:	localbox-server localbox-vendor
+Requires:	localbox-server-%{version}-%{release} localbox-vendor-%{version}-%{release}
 
 # centos
 Requires:   php php-mysql policycoreutils policycoreutils-python mod_php mysql
@@ -169,6 +169,7 @@ restorecon -Rv "/usr/share/localbox"
 %{_datadir}/localbox/src/Libbit/LoxBundle/Tests/Functional/Fixtures/*.txt
 %{_datadir}/localbox/src/Libbit/LoxBundle/Tests/Functional/*.php
 %{_datadir}/localbox/src/Libbit/LoxBundle/Tests/*.php
+%{_datadir}/localbox/src/Rednose/*
 %{_datadir}/localbox/web/.htaccess
 %{_datadir}/localbox/web/logo/logo_title.png
 %{_datadir}/localbox/web/*.php
