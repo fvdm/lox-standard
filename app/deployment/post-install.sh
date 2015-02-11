@@ -2,41 +2,43 @@
 RELDIR=$(readlink -f $(dirname "${0}"))
 cd "${RELDIR}/../.."
 
-if 
-  app/console doctrine:query:sql "select * from libbit_lox_link"
+if
+  test ! -f "app/config/parameters.yml"
 then
-  echo You already seem to have localbox installed on that database.
+  echo "Please create a file app/config/parameters.yml based on app/config/parameters.yml.dist"
+  exit
+fi
+
+if
+test -z "`app/console doctrine:query:sql "select 1" 2>/dev/null`"
+then
+  problem=`app/console doctrine:query:sql "select 1" 2>&1`
+  if
+    echo "$problem" | grep -q "Unknown database"
+  then
+    app/console doctrine:database:create
+  else
+    echo "doctrine problem contacting database: $problem"
+    echo "Please check the settings in app/config/parameters.yml"
+    exit
+  fi
+fi
+
+
+if 
+  app/console doctrine:query:sql "select * from libbit_lox_link" >/dev/null 2>/dev/null
+then
+  echo You already seem to have localbox installed in your database.
   echo Please check app/config/parameters.yml and try again or run
-  echo post-update.sh instead
+  echo post-update.sh instead.
 
 else
-  if 
-    app/console doctrine:query:sql "select 1"
-  then
-    # Create the database.
-    app/console doctrine:database:create
-
-    # Create the database schema.
     app/console doctrine:schema:create -q
-
-    # Load the fixtures.
     app/console doctrine:fixtures:load -n
-
-    # Install assets.
     app/console --env=prod assets:install --symlink web
-
-    # Install YUI assets.
     app/console --env=prod rednose:yui:install
-
-    # Warm the cache.
     app/console --env=prod cache:warm
-
+    # above actions can be done more elegantly when sudoed as apache; but this
+    # (chown after the fact) method seems more reliable, especially when changes are made
     chown -R apache .
-  else
-    echo Unable to connect to the database defined in the file
-    echo app/config/parameters.yml. Please check your settings, check
-    echo if the database is indeed up, and try again.
-
-  fi
-
 fi
