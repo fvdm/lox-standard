@@ -59,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 doxygen Doxyfile
 rm -rf app/cache app/logs Doxyfile composer.lock
 
-mv app/config/parameters.yml.dist app/config/parameters.yml
+#mv app/config/parameters.yml.dist app/config/parameters.yml
 sleep 1
 ln -s %{_localstatedir}/log/localbox/ app/logs
 sleep 1
@@ -127,6 +127,7 @@ restorecon -Rv "/usr/share/localbox"
 %{_datadir}/localbox/app/bootstrap.php.cache
 %{_datadir}/localbox/app/DoctrineMigrations/*.php
 %{_datadir}/localbox/app/config/*.yml
+%{_datadir}/localbox/app/config/parameters.yml.dist
 %{_datadir}/localbox/app/*.php
 %{_datadir}/localbox/app/phpunit.xml.dist
 %{_datadir}/localbox/app/Resources/FOSOAuthServerBundle/views/Authorize/authorize.html.twig
