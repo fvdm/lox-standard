@@ -19,9 +19,9 @@ then
     echo "creating database"
     app/console doctrine:database:create
   else
-    echo "ERROR: doctrine problem contacting database:"
+    echo "ERROR: problem contacting database:"
     echo "$problem"
-    echo "Please check the settings in app/config/parameters.yml"
+    echo "Please check the settings in app/config/parameters.yml and try again"
     exit
   fi
 fi
@@ -30,7 +30,7 @@ fi
 if 
   app/console doctrine:query:sql "select * from libbit_lox_link" >/dev/null 2>/dev/null
 then
-  echo "ERROR: You already seem to have localbox installed in your database. Please check app/config/parameters.yml and try again."
+  echo "ERROR: You already seem to have the localbox database schema installed. Please check app/config/parameters.yml and the database"
 else
     echo "installing database schema"
     app/console doctrine:schema:create -q

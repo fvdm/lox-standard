@@ -34,7 +34,7 @@ class ClientAdmin extends Admin
                     'edit'    => array(),
                     'delete'  => array(),
                 )
-            ))->end();
+            ));
     }
 
     public function configureShowFields(ShowMapper $showMapper)
