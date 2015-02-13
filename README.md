@@ -2,6 +2,23 @@
 
 LocalBox is built on top of the [Symfony](http://symfony.com) framework and the [YUI](http://yuilibrary.com) library.
 
+## Instalation from the github repository:
+
+git clone ${localboxurl}
+cd lox-standard
+composer.phar update
+app/deployment/post-install.sh
+
+## Instalation from RPM
+
+yum install localbox\*-${version}.rpm
+create a app/parameters.yml based on app/parameters.yml.dist
+app/deployment/post-install.sh
+
+
+
+# Deprecated information
+
 ## Installing LocalBox using the installer script
 
 The installer script was tested on Ubuntu (12.04/14.04), Debian (Wheezy 7) and CentOS (6.5).
