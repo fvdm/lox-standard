@@ -17,11 +17,7 @@
         "knplabs/knp-gaufrette-bundle": "dev-master",
         "rednose/yui-bundle": "1.0.0",
         "rednose/rednose-ui": "1.4.2",
-
         "symfony/symfony": "2.3.*",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle": "1.2.*",
-        "doctrine/doctrine-migrations-bundle": "dev-master",
         "twig/extensions": "1.0.*",
         "symfony/assetic-bundle": "2.3.*",
         "symfony/swiftmailer-bundle": "2.3.*",
@@ -36,8 +32,6 @@
         "friendsofsymfony/jsrouting-bundle": "1.5.2",
         "friendsofsymfony/rest-bundle": "1.2.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "doctrine/doctrine-fixtures-bundle": "*@dev",
-        "sonata-project/doctrine-orm-admin-bundle": "2.2.7",
         "sonata-project/intl-bundle": "2.2.1",
         "jms/serializer-bundle": "0.12.*@dev",
         "knplabs/knp-time-bundle": "dev-master",
@@ -45,7 +39,12 @@
         "liip/monitor-bundle": "dev-master",
         "ezyang/htmlpurifier": "dev-master",
         "richsage/rms-push-notifications-bundle": "dev-master",
-        "rednose/api-doc-bundle": "dev-master"
+        "rednose/api-doc-bundle": "dev-master",
+        "doctrine/doctrine-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+	"doctrine/doctrine-migrations-bundle": "dev-master",
+	"sonata-project/admin-bundle": "dev-master",
+	"sonata-project/doctrine-orm-admin-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
