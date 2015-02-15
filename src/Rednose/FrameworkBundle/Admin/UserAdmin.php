@@ -82,6 +82,7 @@ class UserAdmin extends Admin
                 ->add('realname')
                 ->add('email')
                 ->add('email_canonical')
+                ->end()
             ->with('Details')
                 ->add('enabled')
                 ->add('locked')
@@ -89,7 +90,8 @@ class UserAdmin extends Admin
                 ->add('expiresAt')
                 ->add('passwordRequestedAt')
                 ->add('credentialsExpired')
-                ->add('credentialsExpireAt');
+                ->add('credentialsExpireAt')
+                ->end();
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -102,12 +104,14 @@ class UserAdmin extends Admin
                 ->add('realname')
                 ->add('email')
                 ->add('plainPassword', 'text', array('required' => false))
+                ->end()
             ->with('Details')
                 ->add('groups', null, array('required' => false, 'expanded' => true))
                 ->add('enabled', 'checkbox', array('required' => false))
                 ->add('locked', 'checkbox', array('required' => false))
                 ->add('Admin', 'checkbox', array('required' => false))
                 ->add('superAdmin', 'checkbox', array('required' => false))
+                ->end()
 
             ->setHelps(array(
                'username' => $this->trans('help_user_username')
