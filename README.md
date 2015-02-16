@@ -2,32 +2,48 @@
 
 LocalBox is built on top of the [Symfony](http://symfony.com) framework and the [YUI](http://yuilibrary.com) library.
 ## Installation of the LAMP stack (you need this)
-For CentOS:
+For CentOS/Ubuntu:
+
 yum install php httpd mariadb-server php-bcmath php-mbstring php-pdo git php-xml php-mysql php-intl
+
+apt-get install apache mariadb-server php-bcmath php-mbstring php-pdo git php-xml php-mysql php-intl
+
 # install composer
 curl -sS https://getcomposer.org/installer | php
+
 mv composer.phar /usr/local/bin/composer
+
 chmod +x /usr/local/bin/composer
 
 
 ## Installation from the github repository:
 
 git clone ${localboxurl}
+
 in this case:
+
 git clone https://github.com/2EK/lox-standard /usr/share/lox-standard (or any pre-directory of your liking)
+
 cd lox-standard
 
 before we update composer, make sure you have enough memory for it.
+
 look in your /etc/php.ini or/and the /etc/php5/cli
+
 for the parameter: memory_limit make it at least 2048M
+
 composer is a little bit memory hungry when its installing and updating.
 
 Its smart to update 2 more parameters,find post_max_size make it 4096M
+
 and upload_max_filesize make it 4096M.
+
 so your user can send bigger files to the box.
+
 There are plenty more settings to fiddle with but that's up to you.
 
 ## Update the vendor library
+
 next give the following command: composer update
 
 You have to wait a while, go walk the dog or drink some coffee:-)
@@ -38,23 +54,35 @@ but you have to use ofcourse the same value's as below with a new installation.
 You can alway's copy the parameters.yml.dist to parameters.yml and manually edit the file.
 
 ## Starting your engines.
+
 # for boot
+
 systemctl enable httpd.service
+
 systemctl enable mariadb.service
+
 # for now
+
 systemctl start httpd.service
+
 systemctl start mariadb.service
 
 ## For a new installation
 For a brand new install it is easier to create the database first with a database owner.
 
 first run: mysql_secure_installation
+
 to tighten the databses if your not done that already.(remebered you pwd?)
 then:
+
 mysql -h localhost -u root -p <your pwd>
+
 MariaDB [(none)]> CREATE DATABASE localbox;
+
 MariaDB [(none)]> GRANT ALL PRIVILEGES ON localbox.* TO 'localbox'@'localhost' IDENTIFIED BY '<yourownpwd';
+
 MariaDB [(none)]> FLUSH PRIVILEGES;
+
 exit
 
 standing in you localbox root directory (cd /usr/share/localbox)
@@ -63,13 +91,19 @@ app/deployment/post-install.sh
 
 ## Some things to check:
 do you have a data directory?
+
 mkdir /usr/share/lox-standard/data
+
 Make sure the data app/cache app/logs folders are writable for httpd  (mostly apache, or www-data)
+
 cd /usr/share/lox-standard
+
 chown -R apache data app/cache app/logs
+
 don't use a alias in your apache config , it's better to set its documentroot to /usr/share/lox-standard/web
 
-We removed some (install) scripts because the were out of date, and we are working on the rpm system to replace most of the scripting.and are working on a WiKi and improving the web site , so most of the documentation and guides will be published
+We removed some (install) scripts because the were out of date, and we are working on the rpm system to replace most of the
+ scripting.and are working on a WiKi and improving the web site , so most of the documentation and guides will be published
 on wiki.yourlocalbox.org overtime.
 
 Happy Boxing;-)
@@ -77,7 +111,9 @@ Happy Boxing;-)
 ## Installation from RPM not yet possible :-( but coming soon
 
 yum install localbox\*-${version}.rpm
+
 create a app/parameters.yml based on app/parameters.yml.dist
+
 app/deployment/post-install.sh
 
 
