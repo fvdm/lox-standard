@@ -22,7 +22,7 @@ git clone ${localboxurl}
 
 in this case:
 
-git clone https://github.com/2EK/lox-standard /usr/share/lox-standard (or any pre-directory of your liking)
+git clone https://github.com/TweedeKamer/lox-standard /usr/share/lox-standard (or any pre-directory of your liking)
 
 cd lox-standard
 
